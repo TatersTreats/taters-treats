@@ -62,7 +62,7 @@
     .header-inner {
       display: flex;
       align-items: center;
-      min-height: 100px;
+      min-height: 72px;
       width: 100%;
     }
 
@@ -101,13 +101,6 @@
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
     }
 
-    .hero-buttons .btn {
-      min-height: 50px;
-      border-radius: 12px;
-      padding: 0 24px;
-      letter-spacing: 0.01em;
-    }
-
     .btn:hover,
     .pill-btn:hover,
     .add-button:hover,
@@ -126,21 +119,11 @@
       box-shadow: 0 10px 24px rgba(36, 57, 42, 0.18);
     }
 
-    .hero-buttons .btn-primary {
-      background: #1f3d2b;
-      box-shadow: 0 8px 18px rgba(31, 61, 43, 0.20);
-      font-weight: 600;
-    }
-
     .btn-primary:hover,
     .add-button:hover,
     .checkout-button:hover,
     .newsletter-button:hover {
       background: #1b2c20;
-    }
-
-    .hero-buttons .btn-primary:hover {
-      box-shadow: 0 12px 22px rgba(31, 61, 43, 0.24);
     }
 
     .btn-secondary {
@@ -211,7 +194,7 @@
       color: #2f4a35;
     }
 
-    h2 { font-size: clamp(1.8rem, 2.5vw, 2.6rem); }
+    h2 { font-size: clamp(2rem, 3vw, 3rem); }
     h3 { font-size: 1.26rem; }
     h4 { font-size: 1.06rem; }
 
@@ -229,7 +212,7 @@
     .hero-buttons {
       display: flex;
       flex-wrap: wrap;
-      gap: 0;
+      gap: 12px;
       margin-top: 18px;
     }
 
@@ -239,10 +222,10 @@
       color: rgba(75,53,40,0.74);
     }
 
-    .section { padding: 48px 0; }
+    .section { padding: 64px 0; }
 
     .section-head {
-      margin-bottom: 12px;
+      margin-bottom: 24px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -255,7 +238,7 @@
 
     .signature-shell {
       display: grid;
-      gap: 14px;
+      gap: 12px;
     }
 
     .signature-top {
@@ -269,14 +252,14 @@
       background: rgba(255,253,250,0.76);
       border: 1px solid rgba(53, 83, 59, 0.10);
       border-radius: 24px;
-      padding: 16px;
+      padding: 20px;
       box-shadow: var(--shadow-soft);
     }
 
     .signature-points {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 12px;
     }
 
     .signature-point {
@@ -323,11 +306,12 @@
     }
 
     .product-body {
-  padding: 14px 14px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+    }
 
     .mini-badge {
       display: inline-block;
@@ -381,7 +365,7 @@
     .product-trust {
       list-style: none;
       display: grid;
-      gap: 6px;
+      gap: 4px;
       margin: 0;
       padding: 0;
       font-size: 0.92rem;
@@ -933,51 +917,127 @@
     }
 
   
-    @media (min-width: 981px) {
-      #shop .section-head .section-intro {
-        max-width: 700px;
-      }
-
-      .signature-top {
-        gap: 14px;
-      }
-
-      .product-grid {
-        gap: 14px;
-      }
-
-      .product-card {
-        box-shadow: 0 18px 44px rgba(45, 32, 20, 0.12);
-      }
-
-      .product-image {
-        aspect-ratio: 4 / 2.3;
-      }
-
-      .product-benefit {
-        font-size: 0.94rem;
-      }
-
-      .product-trust {
-        font-size: 0.88rem;
-      }
-
-      .control-label {
-        margin-bottom: 4px;
-      }
-
-      .quantity-row {
-        gap: 10px;
-      }
+    .hero-content {
+      padding: 24px 28px 22px;
     }
 
-  
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-top: 16px;
+    }
+
     .hero-buttons .btn-primary {
-      width: auto;
-      min-width: 240px;
-      justify-content: center;
+      min-height: 50px;
+      min-width: 250px;
+      border-radius: 12px;
+      padding: 0 24px;
+      letter-spacing: 0.01em;
+      background: #1f3d2b;
+      box-shadow: 0 8px 18px rgba(31, 61, 43, 0.20);
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
+    }
+
+    .hero-buttons .btn-primary:hover {
+      box-shadow: 0 12px 22px rgba(31, 61, 43, 0.24);
+    }
+
+    #shop.section {
+      padding-top: 28px;
+      padding-bottom: 32px;
+    }
+
+    .section-head {
+      margin-bottom: 12px;
+    }
+
+    .section-intro {
+      max-width: 720px;
+    }
+
+    .product-grid {
+      gap: 16px;
+    }
+
+    .product-card {
+      box-shadow: 0 16px 38px rgba(45, 32, 20, 0.10);
+    }
+
+    .product-image {
+      aspect-ratio: 4 / 2.2;
+    }
+
+    .product-body .add-button {
+      margin-top: 4px;
+      margin-bottom: 0;
+    }
+
+    .why-strip {
+      padding: 18px 0 26px;
+      text-align: center;
+    }
+
+    .why-line {
+      margin: 0;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #2f4a36;
+      opacity: 0.78;
+    }
+
+    .story-single {
+      max-width: 980px;
+    }
+
+    .story-copy-card {
+      padding: 24px;
+      box-shadow: 0 16px 36px rgba(45, 32, 20, 0.08);
+    }
+
+    .story-lower-wrap {
+      max-width: 1240px;
+    }
+
+    .lower-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+
+    .future-card,
+    .newsletter-card {
+      padding: 22px;
+      box-shadow: 0 14px 34px rgba(45, 32, 20, 0.08);
+    }
+
+    .future-card h2,
+    .newsletter-card h2 {
+      font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+      line-height: 1.08;
+      margin-bottom: 12px;
+    }
+
+    .future-card p,
+    .newsletter-card p {
+      margin-bottom: 12px;
+    }
+
+    .newsletter-form {
+      margin-top: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .lower-cards {
+        grid-template-columns: 1fr;
+        margin-top: 14px;
+      }
     }
 
     @media (max-width: 640px) {
@@ -985,15 +1045,7 @@
         width: 100%;
         min-width: 0;
       }
-    }
 
-  
-    .hero-buttons .btn-primary {
-      min-width: 260px;
-    }
-
-  
-    @media (max-width: 640px) {
       .product-grid {
         gap: 18px;
       }
@@ -1004,21 +1056,14 @@
       }
 
       .product-body {
-        padding: 16px;
+        padding: 16px 16px 12px;
+      }
+
+      .why-strip {
+        padding: 14px 0 20px;
       }
     }
-.why-strip {
-  padding: 24px 0;
-  text-align: center;
-}
 
-.why-line {
-  font-size: 0.9rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #2f4a36;
-  opacity: 0.75;
-}
   </style>
 </head>
 <body>
@@ -1034,7 +1079,6 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-content">
-          
           <h1>Dogs Deserve The Best.</h1>
           <p class="subtext">
             Small-batch WOOFLES™ made with real ingredients, bakery-style care,
@@ -1064,7 +1108,20 @@
         </div>
 
         <div class="signature-shell" style="margin-top: 4px;">
-          
+<div class="signature-points">
+              <div class="signature-point">
+                <strong>Small Batch</strong>
+                <span>Made in thoughtful batches for freshness and consistency.</span>
+              </div>
+              <div class="signature-point">
+                <strong>Real Ingredients</strong>
+                <span>Warm, honest ingredients with bakery-inspired flavor.</span>
+              </div>
+              <div class="signature-point">
+                <strong>DogBowl™ Ready</strong>
+                <span>Mix flavors, sizes, and quantities in one clean order.</span>
+              </div>
+            </div>
           </div>
 
           <div class="product-grid" id="productGrid"></div>
@@ -1072,13 +1129,11 @@
       </div>
     </section>
 
-  <section class="why-strip">
-  <div class="container">
-    <p class="why-line">
-      Small batch • Real ingredients • No artificial additives • Made with care
-    </p>
-  </div>
-</section>
+    <section class="why-strip">
+      <div class="container">
+        <p class="why-line">Small batch • Real ingredients • No artificial additives • Made with care</p>
+      </div>
+    </section>
 
     
     <section class="section bowl-studio-section" id="dogbowl">
@@ -1140,7 +1195,8 @@
     </section>
 
     <section class="section">
-      <div class="container lower-grid">
+      <div class="container story-lower-wrap">
+        <div class="lower-cards">
         <div class="future-card">
           <span class="coming-chip">Coming Soon</span>
           <h2>The Barker's Dozen</h2>
@@ -1164,8 +1220,6 @@
         </div>
       </div>
     </section>
-
-    
   </main>
 
   <footer class="site-footer">
@@ -1354,10 +1408,7 @@
 
           <p class="product-benefit">${product.benefit}</p>
           ${product.description ? `<p class="product-desc">${product.description}</p>` : ""}
-
-          
-
-          <div>
+<div>
             <div class="control-label">Select Size</div>
             <div class="size-options">${sizeButtons}</div>
           </div>
