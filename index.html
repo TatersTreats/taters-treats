@@ -59,17 +59,17 @@
       padding-left: 12px;
     }
 
-.header-inner {
-  display: flex;
-  align-items: center;
-  min-height: 72px;
-  width: 100%;
-}
+    .header-inner {
+      display: flex;
+      align-items: center;
+      min-height: 72px;
+      width: 100%;
+    }
 
     .brand {
       display: block;
       width: 100%;
-      max-width: 450px;
+      max-width: 420px;
     }
 
     .brand-mark {
@@ -703,6 +703,47 @@
       font-size: .92rem;
     }
 
+    
+    .floating-dogbowl {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 40;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 0 26px;
+      border-radius: 999px;
+      background: var(--green-deep);
+      color: var(--white);
+      box-shadow: 0 16px 34px rgba(36, 57, 42, 0.24);
+      font-weight: 700;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .floating-dogbowl:hover {
+      transform: translateY(-1px);
+      background: #1b2c20;
+      box-shadow: 0 18px 38px rgba(36, 57, 42, 0.28);
+    }
+
+    .story-card {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .floating-dogbowl {
+        right: 12px;
+        left: 12px;
+        bottom: 12px;
+        width: auto;
+        padding: 0 18px;
+        min-height: 52px;
+      }
+    }
+
+
     @media (max-width: 1080px) {
       .product-grid,
       .signature-points,
@@ -805,8 +846,6 @@
       <a href="#top" class="brand" aria-label="Tater's Treats home">
         <img src="/assets/images/branding/wordmark-clean.png" alt="Tater's Treats Canine Confections" class="brand-mark" />
       </a>
-
-      
     </div>
   </header>
 
@@ -1340,5 +1379,7 @@
     renderProducts();
     renderBowl();
   </script>
+
+  <a class="floating-dogbowl" href="#dogbowl">Fill Your DogBowl™</a>
 </body>
 </html>
