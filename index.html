@@ -1,201 +1,1324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tater's Treats</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Tater's Treats | Canine Confections</title>
+  <meta
+    name="description"
+    content="Premium small-batch canine confections. Fill Your DogBowl™ with handcrafted WOOFLES™ from Tater's Treats."
+  />
+  <style>
+    :root {
+      --cream: #fbf8f3;
+      --oat: #f4ecdf;
+      --sand: #e8d6bd;
+      --caramel: #b28543;
+      --green: #35533b;
+      --green-deep: #24392a;
+      --brown: #4b3528;
+      --white: #fffdfa;
+      --line: rgba(53, 83, 59, 0.14);
+      --shadow-soft: 0 16px 42px rgba(45, 32, 20, 0.10);
+      --shadow-card: 0 22px 58px rgba(45, 32, 20, 0.14);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1200px;
+    }
 
-<style>
-:root {
-  --green: #35533b;
-  --green-deep: #24392a;
-  --cream: #fbf8f3;
-  --brown: #4b3528;
-}
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--brown);
+      background: linear-gradient(to bottom, #fcfaf6 0%, #f6efe6 100%);
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: var(--cream);
-  color: var(--brown);
-}
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
 
-.container {
-  width: min(1100px, 90%);
-  margin: auto;
-}
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
 
-h1,h2,h3 {
-  font-family: Georgia, serif;
-  color: var(--green-deep);
-}
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(248, 246, 242, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(60, 40, 27, 0.06);
+    }
 
-.section {
-  padding: 70px 0;
-}
+    .site-header .container {
+      padding-left: 16px;
+    }
 
-/* HERO */
-.hero {
-  padding: 100px 0 60px;
-}
+    .header-inner {
+      display: grid;
+      grid-template-columns: minmax(240px, 520px) auto;
+      align-items: center;
+      gap: 24px;
+      min-height: 94px;
+      width: 100%;
+    }
 
-.hero h1 {
-  font-size: 64px;
-  margin-bottom: 10px;
-}
+    .brand {
+      display: block;
+      width: 100%;
+      max-width: 520px;
+    }
 
-.hero p {
-  font-size: 18px;
-}
+    .brand-mark {
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+    }
 
-/* PRODUCTS */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 24px;
-}
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-.product-card {
-  background: #fff;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-}
+    .btn,
+    .pill-btn,
+    .add-button,
+    .checkout-button,
+    .qty-button,
+    .newsletter-button {
+      border: none;
+      border-radius: 999px;
+      min-height: 52px;
+      padding: 0 22px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    }
 
-.product-body {
-  padding: 20px;
-}
+    .btn:hover,
+    .pill-btn:hover,
+    .add-button:hover,
+    .checkout-button:hover,
+    .qty-button:hover,
+    .newsletter-button:hover {
+      transform: translateY(-1px);
+    }
 
-.product-line {
-  font-size: 12px;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: #777;
-}
+    .btn-primary,
+    .add-button,
+    .checkout-button,
+    .newsletter-button {
+      background: var(--green-deep);
+      color: var(--white);
+      box-shadow: 0 10px 24px rgba(36, 57, 42, 0.18);
+    }
 
-.product-flavor {
-  font-size: 20px;
-  font-family: Georgia;
-  margin-bottom: 4px;
-}
+    .btn-primary:hover,
+    .add-button:hover,
+    .checkout-button:hover,
+    .newsletter-button:hover {
+      background: #1b2c20;
+    }
 
-.product-benefit {
-  font-weight: 700;
-  color: var(--green-deep);
-  margin-bottom: 8px;
-}
+    .btn-secondary {
+      background: rgba(255,253,250,0.82);
+      color: var(--green-deep);
+      border: 1px solid var(--line);
+    }
 
-.product-desc {
-  font-size: 14px;
-}
+    .hero {
+      position: relative;
+      min-height: 84vh;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(90deg,
+          rgba(251, 248, 243, 0.84) 0%,
+          rgba(251, 248, 243, 0.56) 28%,
+          rgba(251, 248, 243, 0.16) 50%,
+          rgba(251, 248, 243, 0.02) 70%
+        ),
+        url('/assets/images/hero/hero.jpg') center/cover no-repeat;
+    }
 
-button {
-  margin-top: 12px;
-  padding: 12px 20px;
-  border-radius: 999px;
-  border: none;
-  background: var(--green-deep);
-  color: white;
-  cursor: pointer;
-}
+    .hero-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(320px, 620px);
+      align-items: center;
+      padding: 72px 0;
+    }
 
-/* TRUST */
-.trust {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 20px;
-}
+    .hero-content {
+      background: rgba(255, 252, 247, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 26px;
+      padding: 38px;
+      box-shadow:
+        0 12px 34px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.68);
+    }
 
-/* DOGBOWL */
-.dogbowl {
-  background: #fff;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-}
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(189, 142, 68, 0.10);
+      border: 1px solid rgba(189, 142, 68, 0.20);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
 
-/* MOBILE */
-@media(max-width:900px){
-  .product-grid { grid-template-columns:1fr; }
-  .trust { grid-template-columns:1fr; }
-  .hero h1 { font-size:40px; }
-}
-</style>
+    h1, h2, h3, h4 {
+      margin: 0 0 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--green-deep);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: clamp(2.9rem, 6vw, 5.3rem);
+      color: #2f4a35;
+    }
+
+    h2 { font-size: clamp(2rem, 3vw, 3rem); }
+    h3 { font-size: 1.26rem; }
+    h4 { font-size: 1.06rem; }
+
+    p {
+      margin: 0 0 16px;
+      line-height: 1.62;
+      color: rgba(75,53,40,0.88);
+    }
+
+    .subtext {
+      max-width: 560px;
+      font-size: 1.07rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .hero-note {
+      margin-top: 16px;
+      font-size: .96rem;
+      color: rgba(75,53,40,0.74);
+    }
+
+    .section { padding: 78px 0; }
+
+    .section-head {
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .section-intro {
+      max-width: 760px;
+      font-size: 1.02rem;
+    }
+
+    .signature-shell {
+      display: grid;
+      gap: 26px;
+    }
+
+    .signature-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .signature-summary {
+      background: rgba(255,253,250,0.76);
+      border: 1px solid rgba(53, 83, 59, 0.10);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .signature-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .signature-point {
+      border-radius: 18px;
+      border: 1px solid rgba(53,83,59,0.1);
+      background: rgba(248,242,233,0.82);
+      padding: 16px;
+    }
+
+    .signature-point strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--green-deep);
+      font-size: 0.95rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .product-card {
+      background: rgba(255,253,250,0.92);
+      border: 1px solid rgba(53, 83, 59, 0.08);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-image {
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(180deg, #f0e2cf 0%, #e4d0b4 100%);
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-body {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      height: 100%;
+    }
+
+    .mini-badge {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(189, 142, 68, 0.24);
+      background: rgba(248, 242, 233, 0.9);
+      color: var(--green);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .product-title {
+      display: grid;
+      gap: 4px;
+    }
+
+    .product-line {
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(75,53,40,0.6);
+    }
+
+    .product-flavor {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.12rem;
+      line-height: 1.16;
+      color: var(--green-deep);
+      letter-spacing: -0.015em;
+    }
+
+    .product-benefit {
+      margin: -2px 0 0;
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: var(--green-deep);
+    }
+
+    .product-desc {
+      margin: 0;
+      color: rgba(75,53,40,0.84);
+    }
+
+    .product-trust {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      font-size: 0.92rem;
+      color: rgba(75,53,40,0.88);
+    }
+
+    .product-trust li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .product-trust li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: -1px;
+      color: var(--caramel);
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .control-label {
+      margin-bottom: 8px;
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: rgba(53,83,59,0.74);
+      font-weight: 700;
+    }
+
+    .size-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill-btn {
+      min-height: 42px;
+      padding: 0 16px;
+      background: #f8f2e9;
+      color: var(--green-deep);
+      border: 1px solid rgba(53,83,59,0.14);
+      box-shadow: none;
+    }
+
+    .pill-btn.active {
+      background: var(--green-deep);
+      color: var(--white);
+      border-color: var(--green-deep);
+      box-shadow: 0 8px 18px rgba(36,57,42,0.18);
+    }
+
+    .quantity-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .quantity-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8f2e9;
+      border: 1px solid rgba(53,83,59,0.12);
+      border-radius: 999px;
+      padding: 6px;
+    }
+
+    .qty-button {
+      min-height: 40px;
+      min-width: 40px;
+      padding: 0;
+      background: var(--white);
+      color: var(--green-deep);
+      border: 1px solid rgba(53,83,59,0.12);
+      box-shadow: none;
+    }
+
+    .qty-value {
+      min-width: 24px;
+      text-align: center;
+      font-weight: 700;
+      color: var(--green-deep);
+    }
+
+    .selected-copy,
+    .status-message {
+      font-size: .92rem;
+      font-weight: 700;
+      color: rgba(53,83,59,0.78);
+      min-height: 22px;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .trust-card,
+    .dogbowl-card,
+    .story-card,
+    .future-card,
+    .newsletter-card,
+    .story-copy-card {
+      background: rgba(255,253,250,0.9);
+      border: 1px solid rgba(53, 83, 59, 0.08);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .trust-card {
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .trust-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      margin: 0 auto 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(189, 142, 68, 0.12);
+      color: var(--caramel);
+      font-weight: 700;
+    }
+
+    .dogbowl-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(320px, 1.08fr);
+      gap: 26px;
+      align-items: start;
+    }
+
+    .dogbowl-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .dogbowl-card {
+      padding: 24px;
+    }
+
+    .dogbowl-intro {
+      background: linear-gradient(180deg, rgba(255,253,250,0.8) 0%, rgba(248,242,233,0.84) 100%);
+      padding: 26px;
+      border-radius: 28px;
+      border: 1px solid rgba(53,83,59,0.08);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .cart-list {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .empty-state {
+      padding: 20px;
+      border-radius: 18px;
+      background: #f8f2e9;
+      color: rgba(75,53,40,0.78);
+      text-align: center;
+    }
+
+    .cart-item {
+      border: 1px solid rgba(53,83,59,0.1);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,0.68);
+    }
+
+    .cart-item-top,
+    .cart-item-bottom,
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .cart-item-name {
+      font-weight: 700;
+      color: var(--green-deep);
+    }
+
+    .cart-item-meta {
+      font-size: .92rem;
+      color: rgba(75,53,40,0.76);
+      margin-top: 4px;
+    }
+
+    .link-button {
+      appearance: none;
+      background: transparent;
+      border: none;
+      color: var(--green);
+      padding: 0;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .link-button:hover { text-decoration: underline; }
+
+    .cart-summary {
+      border-top: 1px solid rgba(53,83,59,0.1);
+      padding-top: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .summary-row {
+      font-weight: 700;
+      color: var(--green-deep);
+    }
+
+    .cart-note {
+      font-size: .92rem;
+      color: rgba(75,53,40,0.72);
+      margin-top: 2px;
+    }
+
+    .story-grid,
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .story-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .story-card {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .story-card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      background: linear-gradient(180deg, #f7f1e7 0%, #eadfce 100%);
+      padding: 30px;
+    }
+
+    .story-copy-card,
+    .future-card,
+    .newsletter-card {
+      padding: 26px;
+    }
+
+    .coming-chip {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(36,57,42,0.08);
+      border: 1px solid rgba(36,57,42,0.12);
+      color: var(--green-deep);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .newsletter-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .newsletter-input {
+      min-height: 52px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(53,83,59,0.16);
+      background: rgba(255,255,255,0.92);
+      color: var(--brown);
+      outline: none;
+    }
+
+    .newsletter-input:focus {
+      border-color: rgba(53,83,59,0.34);
+      box-shadow: 0 0 0 4px rgba(53,83,59,0.08);
+    }
+
+    .newsletter-note {
+      font-size: 0.9rem;
+      color: rgba(75,53,40,0.72);
+      margin-top: 12px;
+    }
+
+    .final-cta {
+      padding-top: 8px;
+      padding-bottom: 86px;
+    }
+
+    .cta-card {
+      border-radius: 30px;
+      padding: 46px 30px;
+      text-align: center;
+      background:
+        linear-gradient(rgba(36,57,42,0.34), rgba(36,57,42,0.34)),
+        linear-gradient(180deg, #dbc4a6 0%, #bd8e44 100%);
+      color: var(--white);
+      box-shadow: var(--shadow-card);
+    }
+
+    .cta-card h2,
+    .cta-card p { color: var(--white); }
+
+    .cta-card .btn-primary {
+      background: var(--white);
+      color: var(--green-deep);
+      box-shadow: none;
+    }
+
+    .site-footer {
+      padding: 24px 0 40px;
+      border-top: 1px solid rgba(53,83,59,0.08);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: rgba(75,53,40,0.72);
+      font-size: .92rem;
+    }
+
+    @media (max-width: 1080px) {
+      .product-grid,
+      .signature-points,
+      .dogbowl-wrap,
+      .story-grid,
+      .lower-grid,
+      .signature-top {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .trust-grid { grid-template-columns: 1fr 1fr; }
+      .hero {
+        min-height: auto;
+        background-position: 62% center;
+      }
+      .hero-grid { padding: 36px 0 48px; }
+    }
+
+    @media (max-width: 640px) {
+      .container { width: min(var(--max), calc(100% - 22px)); }
+      .site-header { position: static; }
+      .header-inner {
+        min-height: 72px;
+        grid-template-columns: 1fr;
+        padding: 12px 0;
+      }
+      .brand-mark {
+        width: 190px;
+        max-width: 62vw;
+      }
+      .header-actions .btn-secondary { display: none; }
+      .hero-content,
+      .dogbowl-card,
+      .cta-card,
+      .future-card,
+      .newsletter-card,
+      .story-copy-card,
+      .dogbowl-intro,
+      .signature-summary {
+        padding: 20px;
+      }
+      .hero-buttons,
+      .header-actions,
+      .newsletter-form {
+        grid-template-columns: 1fr;
+        display: grid;
+        align-items: stretch;
+      }
+      .btn,
+      .add-button,
+      .checkout-button,
+      .newsletter-button {
+        width: 100%;
+      }
+      .product-body { padding: 18px; }
+      .section { padding: 58px 0; }
+      .cart-item-top,
+      .cart-item-bottom,
+      .summary-row,
+      .quantity-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .trust-grid { grid-template-columns: 1fr; }
+      .product-flavor { font-size: 1.08rem; }
+    }
+  </style>
 </head>
-
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Tater's Treats home">
+        <img src="/assets/images/branding/wordmark-clean.png" alt="Tater's Treats Canine Confections" class="brand-mark" />
+      </a>
 
-<!-- HERO -->
-<section class="hero container">
-  <h1>Dogs Deserve The Best.</h1>
-  <p>Small-batch WOOFLES™ made with real ingredients and bakery-style care.</p>
-</section>
-
-<!-- PRODUCTS -->
-<section class="section container">
-  <h2>Three core flavors. Three sizes. One very happy Dog.</h2>
-  <p>Our signature WOOFLES™ are handcrafted in small batches and made to mix beautifully inside your DogBowl™.</p>
-
-  <div class="product-grid">
-
-    <!-- PBMC -->
-    <div class="product-card">
-      <div class="product-body">
-        <div class="product-line">WOOFLES™</div>
-        <div class="product-flavor">Peanut Butter Mint Carob</div>
-        <div class="product-benefit">Helps freshen breath</div>
-        <div class="product-desc">A rich blend of peanut butter, mint, and carob.</div>
-        <button>Fill Your DogBowl™</button>
+      <div class="header-actions">
+        <a class="btn btn-secondary" href="#story">Our Story</a>
+        <a class="btn btn-primary" href="#dogbowl">Fill Your DogBowl™</a>
       </div>
     </div>
+  </header>
 
-    <!-- Pumpkin -->
-    <div class="product-card">
-      <div class="product-body">
-        <div class="product-line">WOOFLES™</div>
-        <div class="product-flavor">Pumpkin Turmeric</div>
-        <div class="product-benefit">Supports gentle digestion</div>
-        <div class="product-desc">A warm blend of pumpkin and turmeric.</div>
-        <button>Fill Your DogBowl™</button>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="eyebrow">Premium Small-Batch Canine Confections</span>
+          <h1>Dogs Deserve The Best.</h1>
+          <p class="subtext">
+            Small-batch WOOFLES™ made with real ingredients, bakery-style care,
+            and flavor combinations crafted to feel warm, special, and worth sharing.
+          </p>
+
+          <div class="hero-buttons">
+            <a class="btn btn-primary" href="#shop">Shop WOOFLES™</a>
+            <a class="btn btn-secondary" href="#dogbowl">Fill Your DogBowl™</a>
+          </div>
+
+          <p class="hero-note">
+            Small-batch. Real ingredients. No artificial additives. Made with care.
+          </p>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Ginger -->
-    <div class="product-card">
-      <div class="product-body">
-        <div class="product-line">WOOFLES™</div>
-        <div class="product-flavor">Peanut Butter Ginger</div>
-        <div class="product-benefit">Helps soothe the tummy</div>
-        <div class="product-desc">A cozy blend of peanut butter and ginger.</div>
-        <button>Fill Your DogBowl™</button>
+    <section class="section" id="shop">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Signature WOOFLES™</span>
+          <h2>Three core flavors. Three sizes. One very happy Dog.</h2>
+          <p class="section-intro">
+            Our signature WOOFLES™ are handcrafted in small batches and made to mix beautifully inside your DogBowl™ —
+            with comforting flavors and subtle feel-good benefits in every bite.
+          </p>
+        </div>
+
+        <div class="signature-shell">
+          <div class="signature-top">
+            <div class="signature-summary">
+              <h3>Freshly baked, thoughtfully crafted, easy to mix.</h3>
+              <p>
+                Start with your dog's favorite flavor, choose the batch size that fits best, and build a DogBowl™
+                that feels a little more special than the usual treat routine.
+              </p>
+            </div>
+
+            <div class="signature-points">
+              <div class="signature-point">
+                <strong>Small Batch</strong>
+                <span>Made in thoughtful batches for freshness and consistency.</span>
+              </div>
+              <div class="signature-point">
+                <strong>Real Ingredients</strong>
+                <span>Warm, honest ingredients with bakery-inspired flavor.</span>
+              </div>
+              <div class="signature-point">
+                <strong>DogBowl™ Ready</strong>
+                <span>Mix flavors, sizes, and quantities in one clean order.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-grid" id="productGrid"></div>
+        </div>
       </div>
+    </section>
+
+    <section class="section" id="why">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Why Tater's Treats</span>
+          <h2>Simple standards, made with care.</h2>
+          <p class="section-intro">
+            Premium doesn't have to feel loud. It should feel thoughtful, warm, and intentional.
+          </p>
+        </div>
+
+        <div class="trust-grid">
+          <div class="trust-card">
+            <div class="trust-icon">01</div>
+            <h3>Small Batch</h3>
+            <p>Made in thoughtful batches for quality, freshness, and consistency.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">02</div>
+            <h3>Real Ingredients</h3>
+            <p>Wholesome ingredients chosen to feel warm, honest, and bakery-inspired.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">03</div>
+            <h3>No Artificial Additives</h3>
+            <p>Clean, straightforward recipes without unnecessary extras.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">04</div>
+            <h3>Made with Care</h3>
+            <p>Every batch is inspired by the love we give our own dogs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="dogbowl">
+      <div class="container dogbowl-wrap">
+        <div class="dogbowl-panel">
+          <div class="dogbowl-intro">
+            <span class="eyebrow">DogBowl™</span>
+            <h2>Fill Your DogBowl™</h2>
+            <p>
+              Mix flavors, sizes, and quantities in one simple order. Your DogBowl™ stays saved on this device
+              until you check out or clear it.
+            </p>
+          </div>
+
+          <div class="dogbowl-card">
+            <div id="cartList" class="cart-list"></div>
+
+            <div class="cart-summary">
+              <div class="summary-row">
+                <span>Total items</span>
+                <span id="cartCount">0</span>
+              </div>
+              <button type="button" class="checkout-button" id="checkoutButton">Secure Your DogBowl™</button>
+              <button type="button" class="link-button" id="clearCartButton">Clear DogBowl™</button>
+              <div class="status-message" id="cartStatus"></div>
+              <p class="cart-note">Secure checkout. Ships fresh. Mixed flavors supported.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-panel" id="story">
+          <div class="story-copy-card">
+            <span class="eyebrow">Inspired by Tater</span>
+            <h2>From one very loved corgi to treats worth sharing.</h2>
+            <p>
+              Inspired by <strong>Tater</strong>, our Pembroke Welsh Corgi, we created
+              <strong>WOOFLES™</strong> — handcrafted treats made with the same care we give our own dogs.
+            </p>
+            <p>
+              Tater's Treats was built to feel less like a generic pet brand and more like a small artisan bakery —
+              warm, thoughtful, and made for dogs who deserve something special.
+            </p>
+          </div>
+
+          <div class="story-card">
+            <img src="/assets/images/story/badge-mark.png" alt="Tater's Treats badge mark" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container lower-grid">
+        <div class="future-card">
+          <span class="coming-chip">Coming Soon</span>
+          <h2>The Barker's Dozen</h2>
+          <p>
+            A future limited-run collection for dogs who deserve something extra special.
+            Seasonal drops, festive flavors, and small-batch surprises are on the way.
+          </p>
+        </div>
+
+        <div class="newsletter-card">
+          <span class="coming-chip">Stay in the loop</span>
+          <h2>Be first to hear about fresh batches.</h2>
+          <p>
+            Join the list for seasonal releases, future launches, and updates from Tater's Treats.
+          </p>
+          <form class="newsletter-form" onsubmit="event.preventDefault()">
+            <input class="newsletter-input" type="email" placeholder="Enter your email" aria-label="Email address" />
+            <button class="newsletter-button" type="submit">Join The List</button>
+          </form>
+          <p class="newsletter-note">No spam. Just good dogs, fresh batches, and future drops.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-cta">
+      <div class="container">
+        <div class="cta-card">
+          <span class="eyebrow" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.22); color:#fff;">Ready To Order</span>
+          <h2>Treat Your Dog Today</h2>
+          <p>Shop small-batch WOOFLES™ and Fill Your DogBowl™ with treats made for dogs who deserve the best.</p>
+          <a class="btn btn-primary" href="#shop">Shop WOOFLES™</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 Tater's Treats</div>
+      <div>Canine Confections · WOOFLES™ · DogBowl™</div>
     </div>
+  </footer>
 
-  </div>
-</section>
+  <script>
+    const PRODUCTS = [
+      {
+        id: "pbmc",
+        line: "WOOFLES™",
+        flavor: "Peanut Butter Mint Carob",
+        benefit: "Helps freshen breath",
+        description: "A rich bakery-style blend with peanut butter, mint, and carob for a fresh finish.",
+        image: "/assets/images/products/pbmc.jpg",
+        defaultSize: "regular",
+        sizes: {
+          trial:   { label: "Small",  priceId: "price_1TD3rlDywMn3O3R84BZEFkVl" },
+          regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8Kw2mxifP" },
+          value:   { label: "Large",  priceId: "price_1TD3rkDywMn3O3R8LhNyxt0V" }
+        }
+      },
+      {
+        id: "pumpkin",
+        line: "WOOFLES™",
+        flavor: "Pumpkin Turmeric",
+        benefit: "Supports gentle digestion",
+        description: "A warm, wholesome blend of pumpkin and turmeric in a comforting small-batch bake.",
+        image: "/assets/images/products/pumpkin.jpg",
+        defaultSize: "regular",
+        sizes: {
+          trial:   { label: "Small",  priceId: "price_1TD3rlDywMn3O3R8C2mIqpVZ" },
+          regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8psJph7ti" },
+          value:   { label: "Large",  priceId: "price_1TD3rlDywMn3O3R8fHQICEqm" }
+        }
+      },
+      {
+        id: "ginger",
+        line: "WOOFLES™",
+        flavor: "Peanut Butter Ginger",
+        benefit: "Helps soothe the tummy",
+        description: "A cozy blend of peanut butter and ginger crafted for dogs who deserve something special.",
+        image: "/assets/images/products/ginger.jpg",
+        defaultSize: "regular",
+        sizes: {
+          trial:   { label: "Small",  priceId: "price_1TD3rmDywMn3O3R81CgJYyr4" },
+          regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8CDw2xmaI" },
+          value:   { label: "Large",  priceId: "price_1TD3rkDywMn3O3R8PquAjDEM" }
+        }
+      }
+    ];
 
-<!-- TRUST -->
-<section class="section container">
-  <div class="trust">
-    <div><h3>Small Batch</h3><p>Fresh, consistent quality.</p></div>
-    <div><h3>Real Ingredients</h3><p>Simple, honest recipes.</p></div>
-    <div><h3>No Junk</h3><p>No fillers or artificial additives.</p></div>
-  </div>
-</section>
+    const STORAGE_KEY = "taters_dogbowl_v2";
+    const productGrid = document.getElementById("productGrid");
+    const cartListEl = document.getElementById("cartList");
+    const cartCountEl = document.getElementById("cartCount");
+    const cartStatusEl = document.getElementById("cartStatus");
+    const checkoutButton = document.getElementById("checkoutButton");
+    const clearCartButton = document.getElementById("clearCartButton");
 
-<!-- DOGBOWL -->
-<section class="section container">
-  <div class="dogbowl">
-    <h2>Fill Your DogBowl™</h2>
-    <p>Mix flavors, choose sizes, and build your order.</p>
-  </div>
-</section>
+    let bowl = loadBowl();
 
-<!-- STORY -->
-<section class="section container">
-  <h2>Inspired by Tater</h2>
-  <p>From one very loved corgi to treats worth sharing.</p>
-</section>
+    function loadBowl() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : [];
+      } catch (error) {
+        return [];
+      }
+    }
 
+    function saveBowl() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(bowl));
+    }
+
+    function getProduct(productId) {
+      return PRODUCTS.find(product => product.id === productId);
+    }
+
+    function getSelectedSizeKey(productId) {
+      const active = document.querySelector(`.pill-btn[data-product="${productId}"].active`);
+      return active ? active.dataset.size : null;
+    }
+
+    function getSelectedQuantity(productId) {
+      const valueEl = document.getElementById(`qty-${productId}`);
+      return Number(valueEl ? valueEl.textContent : "1") || 1;
+    }
+
+    function setStatus(productId, message) {
+      const statusEl = document.getElementById(`status-${productId}`);
+      if (statusEl) statusEl.textContent = message;
+    }
+
+    function bowlKey(productId, sizeKey) {
+      return `${productId}__${sizeKey}`;
+    }
+
+    function addToBowl(productId) {
+      const product = getProduct(productId);
+      if (!product) return;
+
+      const sizeKey = getSelectedSizeKey(productId);
+      const quantity = getSelectedQuantity(productId);
+
+      if (!sizeKey || !product.sizes[sizeKey]) {
+        setStatus(productId, "Please choose a size first.");
+        return;
+      }
+
+      const itemKey = bowlKey(productId, sizeKey);
+      const existing = bowl.find(item => item.key === itemKey);
+
+      if (existing) {
+        existing.quantity += quantity;
+      } else {
+        bowl.push({
+          key: itemKey,
+          productId,
+          sizeKey,
+          quantity,
+          priceId: product.sizes[sizeKey].priceId,
+          name: `${product.line} — ${product.flavor}`,
+          sizeLabel: product.sizes[sizeKey].label
+        });
+      }
+
+      saveBowl();
+      setStatus(productId, "Added to your DogBowl™.");
+      renderBowl();
+    }
+
+    function removeFromBowl(itemKey) {
+      bowl = bowl.filter(item => item.key !== itemKey);
+      saveBowl();
+      renderBowl();
+    }
+
+    function changeBowlQuantity(itemKey, delta) {
+      const item = bowl.find(entry => entry.key === itemKey);
+      if (!item) return;
+
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        removeFromBowl(itemKey);
+        return;
+      }
+
+      saveBowl();
+      renderBowl();
+    }
+
+    function clearBowl() {
+      bowl = [];
+      saveBowl();
+      renderBowl();
+      cartStatusEl.textContent = "DogBowl™ cleared.";
+    }
+
+    function renderProductCard(product) {
+      const card = document.createElement("article");
+      card.className = "product-card";
+
+      const sizeButtons = Object.entries(product.sizes).map(([key, size]) => `
+        <button type="button" class="pill-btn ${key === product.defaultSize ? "active" : ""}" data-product="${product.id}" data-size="${key}">
+          ${size.label}
+        </button>
+      `).join("");
+
+      card.innerHTML = `
+        <div class="product-image">
+          <img src="${product.image}" alt="${product.line} ${product.flavor}">
+        </div>
+        <div class="product-body">
+          <span class="mini-badge">Small Batch</span>
+
+          <div class="product-title">
+            <span class="product-line">${product.line}</span>
+            <span class="product-flavor">${product.flavor}</span>
+          </div>
+
+          <p class="product-benefit">${product.benefit}</p>
+          <p class="product-desc">${product.description}</p>
+
+          <ul class="product-trust">
+            <li>Human-grade ingredients</li>
+            <li>No fillers or artificial junk</li>
+            <li>Handcrafted in small batches</li>
+          </ul>
+
+          <div>
+            <div class="control-label">Select Size</div>
+            <div class="size-options">${sizeButtons}</div>
+          </div>
+
+          <div class="quantity-row">
+            <div>
+              <div class="control-label">Quantity</div>
+              <div class="quantity-controls">
+                <button type="button" class="qty-button" data-qty-action="decrease" data-product="${product.id}">−</button>
+                <span class="qty-value" id="qty-${product.id}">1</span>
+                <button type="button" class="qty-button" data-qty-action="increase" data-product="${product.id}">+</button>
+              </div>
+            </div>
+
+            <div class="selected-copy" id="selected-${product.id}">
+              Selected: ${product.sizes[product.defaultSize].label}
+            </div>
+          </div>
+
+          <button type="button" class="add-button" data-add="${product.id}">Fill Your DogBowl™</button>
+          <div class="status-message" id="status-${product.id}"></div>
+        </div>
+      `;
+
+      return card;
+    }
+
+    function renderProducts() {
+      productGrid.innerHTML = "";
+      PRODUCTS.forEach(product => productGrid.appendChild(renderProductCard(product)));
+    }
+
+    function renderBowl() {
+      if (!bowl.length) {
+        cartListEl.innerHTML = '<div class="empty-state">Your DogBowl™ is empty. Add a few WOOFLES™ to get started.</div>';
+        cartCountEl.textContent = "0";
+        return;
+      }
+
+      const totalItems = bowl.reduce((sum, item) => sum + item.quantity, 0);
+      cartCountEl.textContent = String(totalItems);
+
+      cartListEl.innerHTML = bowl.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-top">
+            <div>
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-meta">${item.sizeLabel} · Qty ${item.quantity}</div>
+            </div>
+            <button type="button" class="link-button" data-remove="${item.key}">Remove</button>
+          </div>
+
+          <div class="cart-item-bottom">
+            <div class="quantity-controls">
+              <button type="button" class="qty-button" data-cart-action="decrease" data-key="${item.key}">−</button>
+              <span class="qty-value">${item.quantity}</span>
+              <button type="button" class="qty-button" data-cart-action="increase" data-key="${item.key}">+</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function checkout() {
+      if (!bowl.length) {
+        cartStatusEl.textContent = "Fill your DogBowl™ first.";
+        return;
+      }
+
+      cartStatusEl.textContent = "Redirecting to secure checkout...";
+
+      try {
+        const response = await fetch("/api/create-checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: bowl.map(item => ({
+              priceId: item.priceId,
+              quantity: item.quantity
+            }))
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Checkout failed.");
+        }
+
+        if (!data.url) {
+          throw new Error("Missing checkout URL.");
+        }
+
+        window.location.href = data.url;
+      } catch (error) {
+        cartStatusEl.textContent = error.message || "Checkout failed.";
+      }
+    }
+
+    document.addEventListener("click", event => {
+      const sizeButton = event.target.closest(".pill-btn");
+      if (sizeButton) {
+        const { product: productId, size } = sizeButton.dataset;
+        const product = getProduct(productId);
+        if (!product) return;
+
+        document.querySelectorAll(`.pill-btn[data-product="${productId}"]`).forEach(btn => btn.classList.remove("active"));
+        sizeButton.classList.add("active");
+        document.getElementById(`selected-${productId}`).textContent = `Selected: ${product.sizes[size].label}`;
+        setStatus(productId, "");
+        return;
+      }
+
+      const qtyButton = event.target.closest(".qty-button[data-qty-action]");
+      if (qtyButton) {
+        const productId = qtyButton.dataset.product;
+        const valueEl = document.getElementById(`qty-${productId}`);
+        let current = Number(valueEl.textContent) || 1;
+        current += qtyButton.dataset.qtyAction === "increase" ? 1 : -1;
+        if (current < 1) current = 1;
+        valueEl.textContent = String(current);
+        return;
+      }
+
+      const addButton = event.target.closest(".add-button");
+      if (addButton) {
+        addToBowl(addButton.dataset.add);
+        return;
+      }
+
+      const removeButton = event.target.closest("[data-remove]");
+      if (removeButton) {
+        removeFromBowl(removeButton.dataset.remove);
+        return;
+      }
+
+      const cartQtyButton = event.target.closest(".qty-button[data-cart-action]");
+      if (cartQtyButton) {
+        changeBowlQuantity(
+          cartQtyButton.dataset.key,
+          cartQtyButton.dataset.cartAction === "increase" ? 1 : -1
+        );
+      }
+    });
+
+    checkoutButton.addEventListener("click", checkout);
+    clearCartButton.addEventListener("click", clearBowl);
+
+    renderProducts();
+    renderBowl();
+  </script>
 </body>
 </html>
