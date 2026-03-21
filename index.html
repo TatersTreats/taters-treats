@@ -252,9 +252,28 @@
       height: 100%;
     }
 
+    .product-benefit {
+      margin: -4px 0 2px;
+      font-size: .96rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
     .product-desc {
-      min-height: 74px;
+      min-height: auto;
       margin-bottom: 0;
+    }
+
+    .product-trust {
+      margin: 2px 0 0;
+      padding-left: 18px;
+      color: rgba(75,53,40,0.82);
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+
+    .product-trust li + li {
+      margin-top: 4px;
     }
 
     .control-label {
@@ -578,10 +597,10 @@
     <section class="section" id="shop">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">Shop The Collection</span>
-          <h2>Choose your favorites, then Fill Your DogBowl™.</h2>
+          <span class="eyebrow">Signature WOOFLES™</span>
+          <h2>Three core flavors. Three sizes. One very happy DogBowl™.</h2>
           <p class="section-intro">
-            Mix flavors, adjust sizes, set quantities, and check out in one clean flow using the DogBowl™.
+            Our signature WOOFLES™ are handcrafted in small batches and made to mix beautifully inside your DogBowl™ — with comforting flavors and subtle feel-good benefits in every bite.
           </p>
         </div>
 
@@ -686,8 +705,9 @@
     const PRODUCTS = [
       {
         id: "pbmc",
-        name: "Peanut Butter Mint Carob WOOFLES™",
-        description: "A rich, bakery-style blend with peanut butter, refreshing mint, and carob.",
+        name: "WOOFLES™ — Peanut Butter Mint Carob",
+        benefit: "Helps freshen breath",
+        description: "A rich bakery-style blend with peanut butter, mint, and carob for a fresh finish.",
         image: "assets/images/products/pbmc.jpg",
         defaultSize: "regular",
         sizes: {
@@ -698,8 +718,9 @@
       },
       {
         id: "pumpkin",
-        name: "Pumpkin Turmeric WOOFLES™",
-        description: "A warm, wholesome recipe featuring pumpkin and turmeric in a comforting small-batch bake.",
+        name: "WOOFLES™ — Pumpkin Turmeric",
+        benefit: "Supports gentle digestion",
+        description: "A warm, wholesome blend of pumpkin and turmeric in a comforting small-batch bake.",
         image: "assets/images/products/pumpkin.jpg",
         defaultSize: "regular",
         sizes: {
@@ -710,8 +731,9 @@
       },
       {
         id: "ginger",
-        name: "Peanut Butter & Ginger WOOFLES™",
-        description: "A cozy, flavorful combination of peanut butter and ginger crafted for dogs who deserve something special.",
+        name: "WOOFLES™ — Peanut Butter Ginger",
+        benefit: "Helps soothe the tummy",
+        description: "A cozy blend of peanut butter and ginger crafted for dogs who deserve something special.",
         image: "assets/images/products/ginger.jpg",
         defaultSize: "regular",
         sizes: {
@@ -844,8 +866,15 @@
           <img src="${product.image}" alt="${product.name}">
         </div>
         <div class="product-body">
+          <span class="eyebrow">Small Batch</span>
           <h3>${product.name}</h3>
+          <p class="product-benefit">${product.benefit}</p>
           <p class="product-desc">${product.description}</p>
+          <ul class="product-trust">
+            <li>Human-grade ingredients</li>
+            <li>No fillers or artificial junk</li>
+            <li>Handcrafted with bakery-style care</li>
+          </ul>
 
           <div>
             <div class="control-label">Select Size</div>
@@ -867,7 +896,7 @@
             </div>
           </div>
 
-          <button type="button" class="add-button" data-add="${product.id}">Fill Your DogBowl™</button>
+          <button type="button" class="add-button" data-add="${product.id}">Add to DogBowl™</button>
           <div class="status-message" id="status-${product.id}"></div>
         </div>
       `;
