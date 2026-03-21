@@ -1,9 +1,0 @@
-{
-  "name": "taters-treats-site",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Tater's Treats landing page with Vercel serverless Stripe checkout.",
-  "dependencies": {
-    "stripe": "^16.10.0"
-  }
-}
