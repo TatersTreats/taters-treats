@@ -56,27 +56,27 @@
     }
 
     .site-header .container {
-      padding-left: 16px;
+      padding-left: 12px;
     }
 
     .header-inner {
       display: grid;
       grid-template-columns: minmax(240px, 520px) auto;
       align-items: center;
-      gap: 24px;
-      min-height: 94px;
+      gap: 18px;
+      min-height: 82px;
       width: 100%;
     }
 
     .brand {
       display: block;
       width: 100%;
-      max-width: 520px;
+      max-width: 450px;
     }
 
     .brand-mark {
       width: 100%;
-      max-width: 520px;
+      max-width: 450px;
       height: auto;
     }
 
@@ -96,7 +96,7 @@
     .newsletter-button {
       border: none;
       border-radius: 999px;
-      min-height: 52px;
+      min-height: 48px;
       padding: 0 22px;
       font-weight: 700;
       cursor: pointer;
@@ -136,7 +136,7 @@
 
     .hero {
       position: relative;
-      min-height: 84vh;
+      min-height: 78vh;
       display: flex;
       align-items: center;
       background:
@@ -154,7 +154,7 @@
       display: grid;
       grid-template-columns: minmax(320px, 620px);
       align-items: center;
-      padding: 72px 0;
+      padding: 56px 0;
     }
 
     .hero-content {
@@ -163,7 +163,7 @@
       -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.4);
       border-radius: 26px;
-      padding: 38px;
+      padding: 28px;
       box-shadow:
         0 12px 34px rgba(0,0,0,0.08),
         inset 0 1px 0 rgba(255,255,255,0.68);
@@ -192,7 +192,7 @@
     }
 
     h1 {
-      font-size: clamp(2.9rem, 6vw, 5.3rem);
+      font-size: clamp(2.6rem, 5.4vw, 4.8rem);
       color: #2f4a35;
     }
 
@@ -207,27 +207,27 @@
     }
 
     .subtext {
-      max-width: 560px;
+      max-width: 520px;
       font-size: 1.07rem;
     }
 
     .hero-buttons {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 24px;
+      gap: 12px;
+      margin-top: 18px;
     }
 
     .hero-note {
-      margin-top: 16px;
+      margin-top: 12px;
       font-size: .96rem;
       color: rgba(75,53,40,0.74);
     }
 
-    .section { padding: 78px 0; }
+    .section { padding: 64px 0; }
 
     .section-head {
-      margin-bottom: 32px;
+      margin-bottom: 24px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -240,13 +240,13 @@
 
     .signature-shell {
       display: grid;
-      gap: 26px;
+      gap: 18px;
     }
 
     .signature-top {
       display: grid;
       grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr);
-      gap: 24px;
+      gap: 18px;
       align-items: stretch;
     }
 
@@ -254,21 +254,21 @@
       background: rgba(255,253,250,0.76);
       border: 1px solid rgba(53, 83, 59, 0.10);
       border-radius: 24px;
-      padding: 24px;
+      padding: 20px;
       box-shadow: var(--shadow-soft);
     }
 
     .signature-points {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      gap: 12px;
     }
 
     .signature-point {
       border-radius: 18px;
       border: 1px solid rgba(53,83,59,0.1);
       background: rgba(248,242,233,0.82);
-      padding: 16px;
+      padding: 14px;
     }
 
     .signature-point strong {
@@ -281,7 +281,7 @@
     .product-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
+      gap: 18px;
       align-items: stretch;
     }
 
@@ -296,7 +296,7 @@
     }
 
     .product-image {
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 4 / 2.75;
       background: linear-gradient(180deg, #f0e2cf 0%, #e4d0b4 100%);
       overflow: hidden;
     }
@@ -308,10 +308,10 @@
     }
 
     .product-body {
-      padding: 22px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
       height: 100%;
     }
 
@@ -346,7 +346,7 @@
     .product-flavor {
       display: block;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.12rem;
+      font-size: 1.04rem;
       line-height: 1.16;
       color: var(--green-deep);
       letter-spacing: -0.015em;
@@ -367,7 +367,7 @@
     .product-trust {
       list-style: none;
       display: grid;
-      gap: 8px;
+      gap: 6px;
       margin: 0;
       padding: 0;
       font-size: 0.92rem;
@@ -390,7 +390,7 @@
     }
 
     .control-label {
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-size: .82rem;
       text-transform: uppercase;
       letter-spacing: .12em;
@@ -405,7 +405,7 @@
     }
 
     .pill-btn {
-      min-height: 42px;
+      min-height: 36px;
       padding: 0 16px;
       background: #f8f2e9;
       color: var(--green-deep);
@@ -424,13 +424,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
     }
 
     .quantity-controls {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: #f8f2e9;
       border: 1px solid rgba(53,83,59,0.12);
       border-radius: 999px;
@@ -438,7 +438,7 @@
     }
 
     .qty-button {
-      min-height: 40px;
+      min-height: 36px;
       min-width: 40px;
       padding: 0;
       background: var(--white);
@@ -510,12 +510,12 @@
     }
 
     .dogbowl-card {
-      padding: 24px;
+      padding: 20px;
     }
 
     .dogbowl-intro {
       background: linear-gradient(180deg, rgba(255,253,250,0.8) 0%, rgba(248,242,233,0.84) 100%);
-      padding: 26px;
+      padding: 20px;
       border-radius: 28px;
       border: 1px solid rgba(53,83,59,0.08);
       box-shadow: var(--shadow-soft);
@@ -538,7 +538,7 @@
     .cart-item {
       border: 1px solid rgba(53,83,59,0.1);
       border-radius: 18px;
-      padding: 16px;
+      padding: 14px;
       background: rgba(255,255,255,0.68);
     }
 
@@ -547,7 +547,7 @@
     .summary-row {
       display: flex;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
       align-items: center;
     }
 
@@ -615,13 +615,13 @@
       aspect-ratio: 1 / 1;
       object-fit: contain;
       background: linear-gradient(180deg, #f7f1e7 0%, #eadfce 100%);
-      padding: 30px;
+      padding: 22px;
     }
 
     .story-copy-card,
     .future-card,
     .newsletter-card {
-      padding: 26px;
+      padding: 20px;
     }
 
     .coming-chip {
@@ -646,7 +646,7 @@
     }
 
     .newsletter-input {
-      min-height: 52px;
+      min-height: 48px;
       padding: 0 18px;
       border-radius: 999px;
       border: 1px solid rgba(53,83,59,0.16);
@@ -673,11 +673,11 @@
 
     .cta-card {
       border-radius: 30px;
-      padding: 46px 30px;
+      padding: 34px 28px;
       text-align: center;
       background:
         linear-gradient(rgba(36,57,42,0.34), rgba(36,57,42,0.34)),
-        linear-gradient(180deg, #dbc4a6 0%, #bd8e44 100%);
+        linear-gradient(180deg, #c2b48f 0%, #a78d55 100%);
       color: var(--white);
       box-shadow: var(--shadow-card);
     }
@@ -699,7 +699,7 @@
     .footer-inner {
       display: flex;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
       color: rgba(75,53,40,0.72);
       font-size: .92rem;
@@ -774,6 +774,31 @@
       .trust-grid { grid-template-columns: 1fr; }
       .product-flavor { font-size: 1.08rem; }
     }
+  
+    .hero-content p:last-child { margin-bottom: 0; }
+    .signature-summary p:last-child,
+    .trust-card p:last-child,
+    .story-copy-card p:last-child,
+    .future-card p:last-child,
+    .newsletter-card p:last-child,
+    .dogbowl-intro p:last-child,
+    .cta-card p:last-child { margin-bottom: 0; }
+
+    #shop.section { padding-top: 44px; }
+    .signature-summary h3 { margin-bottom: 10px; }
+    .signature-point span { line-height: 1.45; display:block; }
+    .product-desc { margin-bottom: 2px; }
+    .product-trust { margin-top: 2px; }
+    .quantity-row { margin-top: 2px; }
+    .dogbowl-intro h2 { margin-bottom: 10px; }
+    .dogbowl-card .cart-note { margin-top: 6px; }
+    .story-card img { max-height: 420px; }
+    .newsletter-form { margin-top: 14px; }
+    .final-cta .cta-card { box-shadow: 0 18px 44px rgba(45, 32, 20, 0.12); }
+    @media (max-width: 980px) {
+      #shop.section { padding-top: 36px; }
+    }
+
   </style>
 </head>
 <body>
@@ -824,7 +849,7 @@
           </p>
         </div>
 
-        <div class="signature-shell">
+        <div class="signature-shell" style="margin-top: 4px;">
           <div class="signature-top">
             <div class="signature-summary">
               <h3>Freshly baked, thoughtfully crafted, easy to mix.</h3>
@@ -902,15 +927,15 @@
             </p>
           </div>
 
-          <div class="dogbowl-card">
+          <div class="dogbowl-card" style="padding:18px 20px 20px;">
             <div id="cartList" class="cart-list"></div>
 
-            <div class="cart-summary">
+            <div class="cart-summary" style="gap:10px;">
               <div class="summary-row">
                 <span>Total items</span>
                 <span id="cartCount">0</span>
               </div>
-              <button type="button" class="checkout-button" id="checkoutButton">Secure Your DogBowl™</button>
+              <button type="button" class="checkout-button" id="checkoutButton" style="margin-top:2px;">Secure Your DogBowl™</button>
               <button type="button" class="link-button" id="clearCartButton">Clear DogBowl™</button>
               <div class="status-message" id="cartStatus"></div>
               <p class="cart-note">Secure checkout. Ships fresh. Mixed flavors supported.</p>
@@ -932,7 +957,7 @@
             </p>
           </div>
 
-          <div class="story-card">
+          <div class="story-card" style="max-width: 520px; margin: 0 auto;">
             <img src="/assets/images/story/badge-mark.png" alt="Tater's Treats badge mark" />
           </div>
         </div>
@@ -969,8 +994,8 @@
       <div class="container">
         <div class="cta-card">
           <span class="eyebrow" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.22); color:#fff;">Ready To Order</span>
-          <h2>Treat Your Dog Today</h2>
-          <p>Shop small-batch WOOFLES™ and Fill Your DogBowl™ with treats made for dogs who deserve the best.</p>
+          <h2 style="font-size: clamp(1.9rem, 3.2vw, 2.8rem); margin-bottom: 12px;">Treat Your Dog Today</h2>
+          <p style="max-width: 760px; margin: 0 auto 18px;">Shop small-batch WOOFLES™ and Fill Your DogBowl™ with treats made for dogs who deserve the best.</p>
           <a class="btn btn-primary" href="#shop">Shop WOOFLES™</a>
         </div>
       </div>
@@ -1203,7 +1228,7 @@
 
     function renderBowl() {
       if (!bowl.length) {
-        cartListEl.innerHTML = '<div class="empty-state">Your DogBowl™ is empty. Add a few WOOFLES™ to get started.</div>';
+        cartListEl.innerHTML = '<div class="empty-state" style="padding:16px 18px; font-size:0.98rem;">Your DogBowl™ is empty. Add a few WOOFLES™ to get started.</div>';
         cartCountEl.textContent = "0";
         return;
       }
