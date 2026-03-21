@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Tater's Treats | Premium Small-Batch Canine Confections</title>
+  <meta name="description" content="Premium small-batch canine confections. Shop handcrafted WOOFLES from Tater's Treats." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f7f1e7;
+      --oat: #eadfce;
+      --sand: #d9c2a3;
+      --caramel: #b88b5e;
+      --cocoa: #6a4a32;
+      --espresso: #3c281b;
+      --forest: #566d3f;
+      --white: #fffdf9;
+      --line: rgba(60, 40, 27, 0.12);
+      --shadow: 0 18px 48px rgba(60, 40, 27, 0.10);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max-width: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      color: var(--espresso);
+      background: linear-gradient(to bottom, #fbf8f3 0%, #f5ede3 100%);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max-width), calc(100% - 32px)); margin: 0 auto; }
+    .section { padding: 76px 0; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      margin-bottom: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(60, 40, 27, 0.10);
+      background: rgba(184, 139, 94, 0.12);
+      color: var(--cocoa);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 {
+      margin: 0 0 14px;
+      color: var(--espresso);
+      font-family: "Playfair Display", serif;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+    h1 { font-size: clamp(2.8rem, 6vw, 5.2rem); }
+    h2 { font-size: clamp(2rem, 3vw, 3.1rem); }
+    h3 { font-size: 1.4rem; }
+    p {
+      margin: 0 0 16px;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(60, 40, 27, 0.82);
+    }
+    .subtext, .section-intro { max-width: 620px; font-size: 1.05rem; }
+    .btn, .buy-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 24px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: "Inter", sans-serif;
+      font-size: 0.98rem;
+      font-weight: 700;
+      transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+    .btn:hover, .buy-button:hover { transform: translateY(-1px); }
+    .btn-primary, .buy-button {
+      color: var(--white);
+      background: var(--forest);
+      box-shadow: 0 10px 24px rgba(60, 40, 27, 0.16);
+    }
+    .btn-primary:hover, .buy-button:hover { background: #485c35; }
+    .btn-secondary {
+      color: var(--espresso);
+      background: rgba(255, 253, 249, 0.72);
+      border: 1px solid rgba(60, 40, 27, 0.16);
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(251, 248, 243, 0.84);
+      border-bottom: 1px solid rgba(60, 40, 27, 0.06);
+    }
+    .header-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+    .brand-copy { display: flex; flex-direction: column; gap: 2px; }
+    .brand-title { font-size: 1rem; font-weight: 700; }
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: rgba(60, 40, 27, 0.60);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+
+    .hero {
+      position: relative;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(90deg, rgba(251, 248, 243, 0.92) 0%, rgba(251, 248, 243, 0.78) 34%, rgba(251, 248, 243, 0.38) 60%, rgba(251, 248, 243, 0.18) 100%),
+        url('assets/images/hero/hero.jpg') center/cover no-repeat;
+    }
+    .hero-inner {
+      width: 100%;
+      padding: 56px 0;
+    }
+    .hero-content {
+      max-width: 590px;
+      padding: 28px;
+      border-radius: 30px;
+      background: rgba(255, 253, 249, 0.62);
+      border: 1px solid rgba(60, 40, 27, 0.08);
+      box-shadow: var(--shadow);
+    }
+    .hero-note {
+      margin-top: 14px;
+      font-size: 0.95rem;
+      color: rgba(60, 40, 27, 0.72);
+    }
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .announcement {
+      display: none;
+      margin-bottom: 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(86, 109, 63, 0.14);
+      border: 1px solid rgba(86, 109, 63, 0.22);
+      color: #334226;
+      font-weight: 600;
+    }
+    .announcement.show { display: block; }
+
+    .section-head { margin-bottom: 30px; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(60, 40, 27, 0.08);
+      background: rgba(255, 253, 249, 0.84);
+      box-shadow: var(--shadow);
+    }
+    .product-image {
+      aspect-ratio: 4 / 4.7;
+      overflow: hidden;
+      background: linear-gradient(180deg, #f0e2cf 0%, #e4d0b4 100%);
+    }
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .product-body {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      height: 100%;
+      padding: 22px;
+    }
+    .product-desc { min-height: 72px; margin-bottom: 0; }
+    .size-label {
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: rgba(60, 40, 27, 0.70);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .size-options { display: flex; flex-wrap: wrap; gap: 10px; }
+    .size-option {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(60, 40, 27, 0.14);
+      background: #f9f4ed;
+      color: var(--espresso);
+      cursor: pointer;
+      font-family: "Inter", sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: all 0.18s ease;
+    }
+    .size-option:hover {
+      transform: translateY(-1px);
+      border-color: rgba(60, 40, 27, 0.28);
+    }
+    .size-option.active {
+      color: var(--white);
+      background: var(--espresso);
+      border-color: var(--espresso);
+      box-shadow: 0 8px 18px rgba(60, 40, 27, 0.16);
+    }
+    .product-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+    .selected-size {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: rgba(60, 40, 27, 0.72);
+    }
+    .status-message {
+      min-height: 22px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cocoa);
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .trust-card {
+      padding: 24px 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(60, 40, 27, 0.08);
+      background: rgba(255, 253, 249, 0.80);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .trust-icon {
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(184, 139, 94, 0.12);
+      color: var(--cocoa);
+      font-weight: 700;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .story-media, .cta-card {
+      overflow: hidden;
+      border-radius: 30px;
+      border: 1px solid rgba(60, 40, 27, 0.08);
+      background: rgba(255, 253, 249, 0.82);
+      box-shadow: var(--shadow);
+    }
+    .story-media {
+      padding: 32px;
+      display: grid;
+      place-items: center;
+      min-height: 420px;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.75), rgba(255,253,249,0.82));
+    }
+    .story-media img {
+      width: min(320px, 100%);
+      object-fit: contain;
+    }
+
+    .final-cta {
+      padding-top: 10px;
+      padding-bottom: 84px;
+    }
+    .cta-card {
+      padding: 42px 28px;
+      text-align: center;
+      color: var(--white);
+      background:
+        linear-gradient(rgba(60, 40, 27, 0.40), rgba(60, 40, 27, 0.40)),
+        url('assets/images/hero/hero.jpg') center/cover no-repeat;
+    }
+    .cta-card h2, .cta-card p { color: var(--white); }
+    .cta-card .btn-primary {
+      color: var(--espresso);
+      background: var(--white);
+      box-shadow: none;
+    }
+    .cta-card .btn-primary:hover { background: #f6f0e9; }
+
+    .site-footer {
+      padding: 24px 0 40px;
+      border-top: 1px solid rgba(60, 40, 27, 0.08);
+    }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
+      color: rgba(60, 40, 27, 0.70);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        min-height: auto;
+        background:
+          linear-gradient(180deg, rgba(251, 248, 243, 0.94) 0%, rgba(251, 248, 243, 0.78) 46%, rgba(251, 248, 243, 0.54) 100%),
+          url('assets/images/hero/hero.jpg') center/cover no-repeat;
+      }
+      .hero-content {
+        max-width: none;
+      }
+      .product-grid, .trust-grid, .story-grid {
+        grid-template-columns: 1fr;
+      }
+      .story-media { min-height: 320px; }
+      .product-desc { min-height: auto; }
+    }
+
+    @media (max-width: 640px) {
+      .section { padding: 56px 0; }
+      .header-inner { min-height: 68px; }
+      .brand img { width: 42px; height: 42px; }
+      .brand-subtitle, .header-actions .btn-secondary { display: none; }
+      .hero-inner { padding: 28px 0 38px; }
+      .hero-content, .cta-card, .story-media { padding: 20px; }
+      .hero-buttons { flex-direction: column; }
+      .btn, .buy-button { width: 100%; }
+      .product-body { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Tater's Treats home">
+        <img src="assets/images/brand/logo-badge.png" alt="Tater's Treats badge logo" />
+        <div class="brand-copy">
+          <span class="brand-title">Tater's Treats</span>
+          <span class="brand-subtitle">Canine Confections</span>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a class="btn btn-secondary" href="#story">Our Story</a>
+        <a class="btn btn-primary" href="#shop">Shop WOOFLES</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <div class="announcement" id="checkoutAnnouncement">Thanks for your order. Your checkout was completed successfully.</div>
+          <span class="eyebrow">Premium Small-Batch Canine Confections</span>
+          <h1>Dogs Deserve The Best.</h1>
+          <p class="subtext">
+            Handcrafted WOOFLES made with bakery-style care, warm ingredients,
+            and the same love we give our own dogs.
+          </p>
+
+          <div class="hero-buttons">
+            <a class="btn btn-primary" href="#shop">Shop WOOFLES</a>
+            <a class="btn btn-secondary" href="#story">Meet the Brand</a>
+          </div>
+
+          <p class="hero-note">
+            Small-batch. Real ingredients. No artificial additives. Made with care.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="shop">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Shop The Collection</span>
+          <h2>Choose a flavor. Pick a size. Buy in seconds.</h2>
+          <p class="section-intro">
+            No clutter and no complicated cart flow — just a clean way to order the flavor and size that fits your dog best.
+          </p>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Why Tater's Treats</span>
+          <h2>Simple standards, made with care.</h2>
+        </div>
+
+        <div class="trust-grid">
+          <div class="trust-card">
+            <div class="trust-icon">01</div>
+            <h3>Small Batch</h3>
+            <p>Made in thoughtful batches for quality, freshness, and consistency.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">02</div>
+            <h3>Real Ingredients</h3>
+            <p>Wholesome ingredients chosen to feel warm, honest, and bakery-inspired.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">03</div>
+            <h3>No Artificial Additives</h3>
+            <p>Clean, straightforward recipes without unnecessary extras.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">04</div>
+            <h3>Made with Care</h3>
+            <p>Every batch is inspired by the love we give our own dogs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="story">
+      <div class="container story-grid">
+        <div class="story-media">
+          <img src="assets/images/brand/logo-badge.png" alt="Tater's Treats logo badge" />
+        </div>
+
+        <div>
+          <span class="eyebrow">Inspired by Tater</span>
+          <h2>From one very loved corgi to treats worth sharing.</h2>
+          <p>
+            Inspired by <strong>Tater</strong>, our Pembroke Welsh Corgi, we created
+            <strong>WOOFLES</strong> — handcrafted treats made with the same care
+            we give our own dogs.
+          </p>
+          <p>
+            Tater's Treats was built to feel less like a generic pet brand and more
+            like a small artisan bakery: warm, thoughtful, and made for dogs who
+            deserve something special.
+          </p>
+          <p>
+            If you want this section to feature a real Tater photo later, just replace
+            <strong>assets/images/brand/logo-badge.png</strong> with your preferred image path.
+          </p>
+          <a class="btn btn-primary" href="#shop">Treat Your Dog Today</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-cta">
+      <div class="container">
+        <div class="cta-card">
+          <span class="eyebrow" style="background: rgba(255,255,255,0.14); color: #fff; border-color: rgba(255,255,255,0.18);">
+            Ready To Order
+          </span>
+          <h2>Treat Your Dog Today</h2>
+          <p>
+            Shop small-batch WOOFLES made with care and crafted for dogs who deserve the best.
+          </p>
+          <a class="btn btn-primary" href="#shop">Shop WOOFLES</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 Tater's Treats</div>
+      <div>Premium Small-Batch Canine Confections</div>
+    </div>
+  </footer>
+
+  <script>
+    const PRODUCTS = [
+      {
+        id: "pbmc",
+        name: "Peanut Butter Mint Carob WOOFLES",
+        description: "A rich, bakery-style blend with peanut butter, refreshing mint, and carob.",
+        image: "assets/images/products/pbmc.jpg",
+        defaultSize: "regular",
+        sizes: {
+          trial:   { label: "Small",  priceId: "price_1TD3rlDywMn3O3R84BZEFkVl" },
+          regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8Kw2mxifP" },
+          value:   { label: "Large",  priceId: "price_1TD3rkDywMn3O3R8LhNyxt0V" }
+        }
+      },
+      {
+        id: "pumpkin",
+        name: "Pumpkin Turmeric WOOFLES",
+        description: "A warm, wholesome recipe featuring pumpkin and turmeric in a comforting small-batch bake.",
+        image: "assets/images/products/pumpkin.jpg",
+        defaultSize: "regular",
+        sizes: {
+          trial:   { label: "Small",  priceId: "price_1TD3rlDywMn3O3R8C2mIqpVZ" },
+          regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8psJph7ti" },
+          value:   { label: "Large",  priceId: "price_1TD3rlDywMn3O3R8fHQICEqm" }
+        }
+      },
+      {
+        id: "ginger",
+        name: "Peanut Butter and Ginger WOOFLES",
+        description: "A cozy, flavorful combination of peanut butter and ginger crafted for dogs who deserve something special.",
+        image: "assets/images/products/ginger.jpg",
+        defaultSize: "regular",
+        sizes: {
+          trial:   { label: "Small",  priceId: "price_1TD3rmDywMn3O3R81CgJYyr4" },
+          regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8CDw2xmaI" },
+          value:   { label: "Large",  priceId: "price_1TD3rkDywMn3O3R8PquAjDEM" }
+        }
+      }
+    ];
+
+    const productGrid = document.getElementById("productGrid");
+    const announcement = document.getElementById("checkoutAnnouncement");
+
+    function createProductCard(product) {
+      const card = document.createElement("article");
+      card.className = "product-card";
+
+      const sizeButtons = Object.entries(product.sizes).map(([key, size]) => `
+        <button
+          type="button"
+          class="size-option ${key === product.defaultSize ? "active" : ""}"
+          data-product="${product.id}"
+          data-size="${key}"
+        >
+          ${size.label}
+        </button>
+      `).join("");
+
+      card.innerHTML = `
+        <div class="product-image">
+          <img src="${product.image}" alt="${product.name}" loading="lazy">
+        </div>
+        <div class="product-body">
+          <h3>${product.name}</h3>
+          <p class="product-desc">${product.description}</p>
+
+          <div>
+            <div class="size-label">Select Size</div>
+            <div class="size-options">${sizeButtons}</div>
+          </div>
+
+          <div class="product-footer">
+            <div class="selected-size" id="selected-${product.id}">
+              Selected: ${product.sizes[product.defaultSize].label}
+            </div>
+            <button
+              class="buy-button"
+              type="button"
+              id="buy-${product.id}"
+              data-product="${product.id}"
+            >
+              Buy Now
+            </button>
+            <div class="status-message" id="status-${product.id}"></div>
+          </div>
+        </div>
+      `;
+
+      return card;
+    }
+
+    PRODUCTS.forEach(product => {
+      productGrid.appendChild(createProductCard(product));
+    });
+
+    function getSelectedSizeKey(productId) {
+      const active = document.querySelector(`.size-option[data-product="${productId}"].active`);
+      return active ? active.dataset.size : null;
+    }
+
+    async function startCheckout(productId) {
+      const product = PRODUCTS.find(item => item.id === productId);
+      const statusEl = document.getElementById(`status-${productId}`);
+
+      if (!product) return;
+
+      const selectedSizeKey = getSelectedSizeKey(productId);
+      if (!selectedSizeKey || !product.sizes[selectedSizeKey]) {
+        statusEl.textContent = "Please choose a size first.";
+        return;
+      }
+
+      statusEl.textContent = "Redirecting to secure checkout...";
+
+      try {
+        const response = await fetch("/api/create-checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: [
+              {
+                priceId: product.sizes[selectedSizeKey].priceId,
+                quantity: 1
+              }
+            ]
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Checkout failed.");
+        }
+
+        if (!data.url) {
+          throw new Error("Missing checkout URL.");
+        }
+
+        window.location.href = data.url;
+      } catch (error) {
+        statusEl.textContent = error.message || "Checkout failed.";
+      }
+    }
+
+    document.addEventListener("click", function (event) {
+      const sizeButton = event.target.closest(".size-option");
+
+      if (sizeButton) {
+        const { product: productId, size } = sizeButton.dataset;
+        const product = PRODUCTS.find(item => item.id === productId);
+        const allButtons = document.querySelectorAll(`.size-option[data-product="${productId}"]`);
+
+        allButtons.forEach(button => button.classList.remove("active"));
+        sizeButton.classList.add("active");
+
+        if (product) {
+          document.getElementById(`selected-${productId}`).textContent = `Selected: ${product.sizes[size].label}`;
+          document.getElementById(`status-${productId}`).textContent = "";
+        }
+        return;
+      }
+
+      const buyButton = event.target.closest(".buy-button");
+      if (buyButton) {
+        startCheckout(buyButton.dataset.product);
+      }
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("checkout") === "success") {
+      announcement.classList.add("show");
+      history.replaceState({}, "", window.location.pathname + window.location.hash);
+    }
+  </script>
+</body>
+</html>
