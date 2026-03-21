@@ -7,22 +7,22 @@
 
 <style>
 :root {
-  --green-deep:#24392a;
-  --green:#35533b;
-  --brown:#4b3528;
-  --cream:#fbf8f3;
+  --green: #35533b;
+  --green-deep: #24392a;
+  --cream: #fbf8f3;
+  --brown: #4b3528;
 }
 
 body {
-  margin:0;
+  margin: 0;
   font-family: Arial, sans-serif;
   background: var(--cream);
   color: var(--brown);
 }
 
 .container {
-  width:min(1100px, 92%);
-  margin:auto;
+  width: min(1100px, 90%);
+  margin: auto;
 }
 
 h1,h2,h3 {
@@ -30,81 +30,95 @@ h1,h2,h3 {
   color: var(--green-deep);
 }
 
-.section { padding:60px 0; }
+.section {
+  padding: 70px 0;
+}
 
 /* HERO */
 .hero {
-  padding:100px 0;
+  padding: 100px 0 60px;
 }
 
 .hero h1 {
-  font-size: clamp(2.5rem,5vw,4rem);
+  font-size: 64px;
+  margin-bottom: 10px;
 }
 
-/* PRODUCT GRID */
+.hero p {
+  font-size: 18px;
+}
+
+/* PRODUCTS */
 .product-grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:24px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
 }
 
 .product-card {
-  background:white;
-  border-radius:24px;
-  overflow:hidden;
-  box-shadow:0 22px 60px rgba(0,0,0,0.12);
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
 }
 
 .product-body {
-  padding:20px;
+  padding: 20px;
 }
 
-/* TITLE FIX */
 .product-line {
-  font-size:.75rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:#7a6a5d;
+  font-size: 12px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: #777;
 }
 
 .product-flavor {
-  font-size:1.2rem;
-  margin-top:4px;
+  font-size: 20px;
+  font-family: Georgia;
+  margin-bottom: 4px;
 }
 
-/* BENEFIT */
 .product-benefit {
-  font-weight:700;
-  color:var(--green-deep);
-  margin:8px 0;
+  font-weight: 700;
+  color: var(--green-deep);
+  margin-bottom: 8px;
+}
+
+.product-desc {
+  font-size: 14px;
+}
+
+button {
+  margin-top: 12px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: none;
+  background: var(--green-deep);
+  color: white;
+  cursor: pointer;
 }
 
 /* TRUST */
-.product-trust {
-  font-size:.9rem;
-  padding-left:18px;
-}
-
-/* BUTTON */
-.btn {
-  display:block;
-  width:100%;
-  margin-top:14px;
-  padding:14px;
-  border:none;
-  border-radius:999px;
-  background:var(--green-deep);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
+.trust {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
 }
 
 /* DOGBOWL */
 .dogbowl {
-  background:white;
-  border-radius:24px;
-  padding:30px;
-  box-shadow:0 18px 50px rgba(0,0,0,0.1);
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .product-grid { grid-template-columns:1fr; }
+  .trust { grid-template-columns:1fr; }
+  .hero h1 { font-size:40px; }
 }
 </style>
 </head>
@@ -117,92 +131,70 @@ h1,h2,h3 {
   <p>Small-batch WOOFLES™ made with real ingredients and bakery-style care.</p>
 </section>
 
-<!-- PRODUCT -->
+<!-- PRODUCTS -->
 <section class="section container">
-  <h2>Three core flavors. Three sizes. One very happy DogBowl™.</h2>
+  <h2>Three core flavors. Three sizes. One very happy Dog.</h2>
+  <p>Our signature WOOFLES™ are handcrafted in small batches and made to mix beautifully inside your DogBowl™.</p>
 
   <div class="product-grid">
 
-    <!-- CARD -->
+    <!-- PBMC -->
     <div class="product-card">
-      <img src="assets/images/products/pbmc.jpg">
       <div class="product-body">
-
         <div class="product-line">WOOFLES™</div>
         <div class="product-flavor">Peanut Butter Mint Carob</div>
-
         <div class="product-benefit">Helps freshen breath</div>
-
-        <p>A rich bakery-style blend with peanut butter, mint, and carob.</p>
-
-        <ul class="product-trust">
-          <li>Human-grade ingredients</li>
-          <li>No fillers or junk</li>
-          <li>Small-batch baked</li>
-        </ul>
-
-        <button class="btn">Fill Your DogBowl™</button>
-
+        <div class="product-desc">A rich blend of peanut butter, mint, and carob.</div>
+        <button>Fill Your DogBowl™</button>
       </div>
     </div>
 
-    <!-- CARD -->
+    <!-- Pumpkin -->
     <div class="product-card">
-      <img src="assets/images/products/pumpkin.jpg">
       <div class="product-body">
-
         <div class="product-line">WOOFLES™</div>
         <div class="product-flavor">Pumpkin Turmeric</div>
-
         <div class="product-benefit">Supports gentle digestion</div>
-
-        <p>A warm, wholesome blend of pumpkin and turmeric.</p>
-
-        <ul class="product-trust">
-          <li>Human-grade ingredients</li>
-          <li>No fillers or junk</li>
-          <li>Small-batch baked</li>
-        </ul>
-
-        <button class="btn">Fill Your DogBowl™</button>
-
+        <div class="product-desc">A warm blend of pumpkin and turmeric.</div>
+        <button>Fill Your DogBowl™</button>
       </div>
     </div>
 
-    <!-- CARD -->
+    <!-- Ginger -->
     <div class="product-card">
-      <img src="assets/images/products/ginger.jpg">
       <div class="product-body">
-
         <div class="product-line">WOOFLES™</div>
         <div class="product-flavor">Peanut Butter Ginger</div>
-
         <div class="product-benefit">Helps soothe the tummy</div>
-
-        <p>A cozy blend of peanut butter and ginger.</p>
-
-        <ul class="product-trust">
-          <li>Human-grade ingredients</li>
-          <li>No fillers or junk</li>
-          <li>Small-batch baked</li>
-        </ul>
-
-        <button class="btn">Fill Your DogBowl™</button>
-
+        <div class="product-desc">A cozy blend of peanut butter and ginger.</div>
+        <button>Fill Your DogBowl™</button>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- DOGBOWL (MOVED DOWN) -->
+<!-- TRUST -->
 <section class="section container">
-  <h2>Fill Your DogBowl™</h2>
-  <p>Choose flavors, sizes, and quantities in one simple order.</p>
-
-  <div class="dogbowl">
-    <p>Your DogBowl™ is empty.</p>
+  <div class="trust">
+    <div><h3>Small Batch</h3><p>Fresh, consistent quality.</p></div>
+    <div><h3>Real Ingredients</h3><p>Simple, honest recipes.</p></div>
+    <div><h3>No Junk</h3><p>No fillers or artificial additives.</p></div>
   </div>
+</section>
+
+<!-- DOGBOWL -->
+<section class="section container">
+  <div class="dogbowl">
+    <h2>Fill Your DogBowl™</h2>
+    <p>Mix flavors, choose sizes, and build your order.</p>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="section container">
+  <h2>Inspired by Tater</h2>
+  <p>From one very loved corgi to treats worth sharing.</p>
 </section>
 
 </body>
