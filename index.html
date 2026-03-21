@@ -242,7 +242,7 @@
     .section { padding: 48px 0; }
 
     .section-head {
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -311,7 +311,7 @@
     }
 
     .product-image {
-      aspect-ratio: 4 / 2.4;
+      aspect-ratio: 4 / 2.2;
       background: linear-gradient(180deg, #f0e2cf 0%, #e4d0b4 100%);
       overflow: hidden;
     }
@@ -993,6 +993,22 @@
       min-width: 260px;
     }
 
+  
+    @media (max-width: 640px) {
+      .product-grid {
+        gap: 18px;
+      }
+
+      .product-card {
+        border: 1px solid rgba(53, 83, 59, 0.12);
+        box-shadow: 0 10px 22px rgba(45, 32, 20, 0.10);
+      }
+
+      .product-body {
+        padding: 16px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1038,29 +1054,7 @@
         </div>
 
         <div class="signature-shell" style="margin-top: 4px;">
-          <div class="signature-top">
-            <div class="signature-summary">
-              <h3>Freshly baked, thoughtfully crafted, easy to mix.</h3>
-              <p>
-                Start with your dog's favorite flavor, choose the batch size that fits best, and build a DogBowl™
-                that feels a little more special than the usual treat routine.
-              </p>
-            </div>
-
-            <div class="signature-points">
-              <div class="signature-point">
-                <strong>Small Batch</strong>
-                <span>Made in thoughtful batches for freshness and consistency.</span>
-              </div>
-              <div class="signature-point">
-                <strong>Real Ingredients</strong>
-                <span>Warm, honest ingredients with bakery-inspired flavor.</span>
-              </div>
-              <div class="signature-point">
-                <strong>DogBowl™ Ready</strong>
-                <span>Mix flavors, sizes, and quantities in one clean order.</span>
-              </div>
-            </div>
+          
           </div>
 
           <div class="product-grid" id="productGrid"></div>
