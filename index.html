@@ -306,7 +306,7 @@
     }
 
     .product-body {
-      padding: 18px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -365,7 +365,7 @@
     .product-trust {
       list-style: none;
       display: grid;
-      gap: 4px;
+      gap: 6px;
       margin: 0;
       padding: 0;
       font-size: 0.92rem;
@@ -774,8 +774,8 @@
         padding: 12px 0;
       }
       .brand-mark {
-        width: 190px;
-        max-width: 62vw;
+        width: 240px;
+        max-width: 74vw;
       }
       .header-actions .btn-secondary { display: none; }
       .hero-content,
@@ -828,7 +828,7 @@
     .signature-point span { line-height: 1.45; display:block; }
     .product-desc { margin-bottom: 2px; }
     .product-trust { margin-top: 2px; }
-    .quantity-row { margin-top: 4px; }
+    .quantity-row { margin-top: 2px; }
     .dogbowl-intro h2 { margin-bottom: 10px; }
     .dogbowl-card .cart-note { margin-top: 6px; }
     .story-card img { max-height: 420px; }
@@ -836,6 +836,14 @@
     .final-cta .cta-card { box-shadow: 0 18px 44px rgba(45, 32, 20, 0.12); }
     @media (max-width: 980px) {
       #shop.section { padding-top: 36px; }
+    }
+
+  
+    .story-panel {
+      grid-template-columns: 1fr;
+    }
+    .product-desc:empty {
+      display: none;
     }
 
   </style>
@@ -862,7 +870,7 @@
 
           <div class="hero-buttons">
             <a class="btn btn-primary" href="#shop">Shop WOOFLES™</a>
-            <a class="btn btn-secondary" href="#dogbowl">Fill Your DogBowl™</a>
+            <a class="btn btn-secondary" href="#dogbowl">Check Your DogBowl™</a>
           </div>
 
           <p class="hero-note">
@@ -954,10 +962,9 @@
         <div class="dogbowl-panel">
           <div class="dogbowl-intro">
             <span class="eyebrow">DogBowl™</span>
-            <h2>Fill Your DogBowl™</h2>
+            <h2>Check Your DogBowl™</h2>
             <p>
-              Mix flavors, sizes, and quantities in one simple order. Your DogBowl™ stays saved on this device
-              until you check out or clear it.
+              Your selected WOOFLES™ appear here. Review your picks, adjust quantities, and secure checkout when you're ready.
             </p>
           </div>
 
@@ -989,10 +996,6 @@
               Tater's Treats was built to feel less like a generic pet brand and more like a small artisan bakery —
               warm, thoughtful, and made for dogs who deserve something special.
             </p>
-          </div>
-
-          <div class="story-card" style="max-width: 520px; margin: 0 auto;">
-            <img src="/assets/images/story/badge-mark.png" alt="Tater's Treats badge mark" />
           </div>
         </div>
       </div>
@@ -1050,7 +1053,7 @@
         line: "WOOFLES™",
         flavor: "Peanut Butter Mint Carob",
         benefit: "Helps freshen breath",
-        description: "A rich bakery-style blend with peanut butter, mint, and carob for a fresh finish.",
+        description: "",
         image: "/assets/images/products/pbmc.jpg",
         defaultSize: "regular",
         sizes: {
@@ -1064,7 +1067,7 @@
         line: "WOOFLES™",
         flavor: "Pumpkin Turmeric",
         benefit: "Supports gentle digestion",
-        description: "A warm, wholesome blend of pumpkin and turmeric in a comforting small-batch bake.",
+        description: "",
         image: "/assets/images/products/pumpkin.jpg",
         defaultSize: "regular",
         sizes: {
@@ -1078,7 +1081,7 @@
         line: "WOOFLES™",
         flavor: "Peanut Butter Ginger",
         benefit: "Helps soothe the tummy",
-        description: "A cozy blend of peanut butter and ginger crafted for dogs who deserve something special.",
+        description: "",
         image: "/assets/images/products/ginger.jpg",
         defaultSize: "regular",
         sizes: {
@@ -1219,7 +1222,7 @@
           </div>
 
           <p class="product-benefit">${product.benefit}</p>
-          <p class="product-desc">${product.description}</p>
+          ${product.description ? `<p class="product-desc">${product.description}</p>` : ""}
 
           <ul class="product-trust">
             <li>Human-grade ingredients</li>
@@ -1262,7 +1265,7 @@
 
     function renderBowl() {
       if (!bowl.length) {
-        cartListEl.innerHTML = '<div class="empty-state" style="padding:16px 18px; font-size:0.98rem;">Your DogBowl™ is empty. Add a few WOOFLES™ to get started.</div>';
+        cartListEl.innerHTML = '<div class="empty-state" style="padding:16px 18px; font-size:0.98rem;">Your DogBowl™ is empty.</div>';
         cartCountEl.textContent = "0";
         return;
       }
@@ -1380,6 +1383,6 @@
     renderBowl();
   </script>
 
-  <a class="floating-dogbowl" href="#dogbowl">Fill Your DogBowl™</a>
+  <a class="floating-dogbowl" href="#dogbowl">Check Your DogBowl™</a>
 </body>
 </html>
