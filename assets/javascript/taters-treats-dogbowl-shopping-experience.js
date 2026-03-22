@@ -40,7 +40,19 @@ const PRODUCTS = [
   }
 ];
 
-const STORAGE_KEY = "taters_dogbowl_v3";
+const STORAGE_KEY = "taters_dogbowl_v4";
+
+const DOGBOWL_BACKGROUND_IMAGE =
+  "/assets/images/dogbowl/dogbowl-hardwood-floor-with-oat-flour-dusting.png";
+
+const DOGBOWL_BOWL_IMAGE =
+  "/assets/images/dogbowl/dogbowl-ceramic-bowl-top-down.png";
+
+const SIZE_TO_WOOFLE_COUNT = {
+  trial: 1,
+  regular: 2,
+  value: 3
+};
 
 const productsEl = document.getElementById("products");
 const cartListEl = document.getElementById("cartList");
@@ -51,7 +63,12 @@ const bowlNoteEl = document.getElementById("bowlNote");
 const checkoutButton = document.getElementById("checkoutButton");
 const clearCartButton = document.getElementById("clearCartButton");
 
+const bowlFrameEl = document.querySelector(".bowl-frame");
+
 let bowl = loadBowl();
+let dogbowlStageEl = null;
+let dogbowlTreatLayerEl = null;
+let dogbowlBowlEl = null;
 
 function loadBowl() {
   try {
@@ -82,64 +99,239 @@ function getSelectedQuantity(productId) {
 
 function setProductStatus(productId, message) {
   const statusEl = document.getElementById(`status-${productId}`);
-  if (statusEl) statusEl.textContent = message;
+  if (statusEl) {
+    statusEl.textContent = message;
+  }
 }
 
 function bowlKey(productId, sizeKey) {
   return `${productId}__${sizeKey}`;
 }
 
-function getBowlVisualState(totalItems) {
-  if (totalItems <= 0) {
-    return {
-      src: "/assets/images/dogbowl/dogbowl-empty-state.png",
-      alt: "An empty DogBowl™",
-      note: "Your DogBowl™ is waiting."
-    };
-  }
+function injectDogBowlStyles() {
+  if (document.getElementById("dogbowl-layered-styles")) return;
 
-  if (totalItems <= 2) {
-    return {
-      src: "/assets/images/dogbowl/dogbowl-lightly-filled-state.png",
-      alt: "A DogBowl™ with a few WOOFLES™ inside",
-      note: "A good start."
-    };
-  }
+  const style = document.createElement("style");
+  style.id = "dogbowl-layered-styles";
+  style.textContent = `
+    .dogbowl-stage {
+      position: relative;
+      width: min(100%, 500px);
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 18px;
+    }
 
-  if (totalItems <= 4) {
-    return {
-      src: "/assets/images/dogbowl/dogbowl-medium-filled-state.png",
-      alt: "A DogBowl™ with more WOOFLES™ inside",
-      note: "Coming together nicely."
-    };
-  }
+    .dogbowl-stage__background,
+    .dogbowl-stage__bowl {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+    }
 
-  if (totalItems <= 6) {
-    return {
-      src: "/assets/images/dogbowl/dogbowl-generously-filled-state.png",
-      alt: "A generously filled DogBowl™",
-      note: "Now we're talking."
-    };
-  }
+    .dogbowl-stage__bowl {
+      z-index: 2;
+    }
 
-  return {
-    src: "/assets/images/dogbowl/dogbowl-full-state.png",
-    alt: "A full DogBowl™ of WOOFLES™",
-    note: "That's a full DogBowl™."
-  };
+    .dogbowl-stage__treat-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .dogbowl-stage__treat {
+      position: absolute;
+      width: clamp(30px, 8vw, 58px);
+      height: auto;
+      transform: translate(-50%, -50%);
+      transform-origin: center center;
+      filter: drop-shadow(0 2px 3px rgba(45, 32, 20, 0.10));
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .dogbowl-stage__bowl.is-pulsing,
+    .dogbowl-stage__treat-layer.is-pulsing {
+      animation: dogbowlPulse 0.38s ease;
+    }
+
+    @keyframes dogbowlPulse {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    @media (max-width: 640px) {
+      .dogbowl-stage {
+        width: min(100%, 420px);
+      }
+
+      .dogbowl-stage__treat {
+        width: clamp(28px, 9vw, 48px);
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
 }
 
-function renderBowlVisual(totalItems) {
-  const state = getBowlVisualState(totalItems);
-  bowlImageEl.src = state.src;
-  bowlImageEl.alt = state.alt;
-  bowlNoteEl.textContent = state.note;
+function ensureDogBowlStage() {
+  if (!bowlFrameEl) return;
+
+  injectDogBowlStyles();
+
+  bowlFrameEl.innerHTML = `
+    <div class="dogbowl-stage" id="dogbowlStage" aria-hidden="true">
+      <img
+        class="dogbowl-stage__background"
+        src="${DOGBOWL_BACKGROUND_IMAGE}"
+        alt=""
+      />
+      <img
+        class="dogbowl-stage__bowl"
+        id="dogbowlBowlLayer"
+        src="${DOGBOWL_BOWL_IMAGE}"
+        alt=""
+      />
+      <div
+        class="dogbowl-stage__treat-layer"
+        id="dogbowlTreatLayer"
+      ></div>
+    </div>
+  `;
+
+  dogbowlStageEl = document.getElementById("dogbowlStage");
+  dogbowlTreatLayerEl = document.getElementById("dogbowlTreatLayer");
+  dogbowlBowlEl = document.getElementById("dogbowlBowlLayer");
+}
+
+function getTotalRenderedWoofles() {
+  return bowl.reduce((sum, item) => {
+    const visualCountPerSelection = SIZE_TO_WOOFLE_COUNT[item.sizeKey] || 1;
+    return sum + (item.quantity * visualCountPerSelection);
+  }, 0);
+}
+
+function getDogBowlNote(woofleCount) {
+  if (woofleCount <= 0) {
+    return "Your DogBowl™ is waiting.";
+  }
+
+  if (woofleCount === 1) {
+    return "1 WOOFLE™ in your DogBowl™.";
+  }
+
+  return `${woofleCount} WOOFLES™ in your DogBowl™.`;
+}
+
+function getRenderedWoofles() {
+  const renderedWoofles = [];
+
+  bowl.forEach((item) => {
+    const product = getProduct(item.productId);
+    if (!product) return;
+
+    const countPerSelection = SIZE_TO_WOOFLE_COUNT[item.sizeKey] || 1;
+    const totalVisualCount = item.quantity * countPerSelection;
+
+    for (let i = 0; i < totalVisualCount; i += 1) {
+      renderedWoofles.push({
+        productId: product.id,
+        flavor: product.flavor,
+        image: product.image
+      });
+    }
+  });
+
+  return renderedWoofles;
+}
+
+function getWoofleSlots() {
+  return [
+    { x: 50, y: 64, r: 0,   s: 1.00 },
+    { x: 42, y: 63, r: -10, s: 0.98 },
+    { x: 58, y: 63, r: 10,  s: 0.98 },
+
+    { x: 35, y: 60, r: -18, s: 0.96 },
+    { x: 65, y: 60, r: 18,  s: 0.96 },
+
+    { x: 50, y: 56, r: 6,   s: 0.98 },
+    { x: 42, y: 54, r: -8,  s: 0.96 },
+    { x: 58, y: 54, r: 8,   s: 0.96 },
+
+    { x: 34, y: 52, r: -22, s: 0.94 },
+    { x: 66, y: 52, r: 22,  s: 0.94 },
+
+    { x: 50, y: 48, r: -2,  s: 0.96 },
+    { x: 42, y: 46, r: -10, s: 0.94 },
+    { x: 58, y: 46, r: 10,  s: 0.94 },
+
+    { x: 36, y: 44, r: -18, s: 0.92 },
+    { x: 64, y: 44, r: 18,  s: 0.92 },
+
+    { x: 50, y: 40, r: 4,   s: 0.94 },
+    { x: 43, y: 38, r: -10, s: 0.92 },
+    { x: 57, y: 38, r: 10,  s: 0.92 },
+
+    { x: 38, y: 34, r: -14, s: 0.90 },
+    { x: 62, y: 34, r: 14,  s: 0.90 },
+
+    { x: 50, y: 30, r: 0,   s: 0.90 },
+    { x: 45, y: 27, r: -8,  s: 0.88 },
+    { x: 55, y: 27, r: 8,   s: 0.88 },
+
+    { x: 40, y: 68, r: -12, s: 0.96 },
+    { x: 60, y: 68, r: 12,  s: 0.96 },
+    { x: 50, y: 70, r: 0,   s: 0.98 }
+  ];
+}
+
+function renderDogBowlLayered() {
+  if (!dogbowlTreatLayerEl) return;
+
+  const renderedWoofles = getRenderedWoofles();
+  const slots = getWoofleSlots();
+
+  dogbowlTreatLayerEl.innerHTML = "";
+
+  renderedWoofles.forEach((woofle, index) => {
+    const slot = slots[index];
+
+    if (!slot) return;
+
+    const treat = document.createElement("img");
+    treat.className = "dogbowl-stage__treat";
+    treat.src = woofle.image;
+    treat.alt = woofle.flavor;
+    treat.style.left = `${slot.x}%`;
+    treat.style.top = `${slot.y}%`;
+    treat.style.zIndex = String(100 + index + Math.round(slot.y));
+    treat.style.transform =
+      `translate(-50%, -50%) rotate(${slot.r}deg) scale(${slot.s})`;
+
+    dogbowlTreatLayerEl.appendChild(treat);
+  });
+
+  bowlNoteEl.textContent = getDogBowlNote(renderedWoofles.length);
 }
 
 function pulseBowl() {
-  bowlImageEl.classList.remove("bowl-pulse");
-  void bowlImageEl.offsetWidth;
-  bowlImageEl.classList.add("bowl-pulse");
+  if (!dogbowlBowlEl || !dogbowlTreatLayerEl) return;
+
+  dogbowlBowlEl.classList.remove("is-pulsing");
+  dogbowlTreatLayerEl.classList.remove("is-pulsing");
+
+  void dogbowlBowlEl.offsetWidth;
+
+  dogbowlBowlEl.classList.add("is-pulsing");
+  dogbowlTreatLayerEl.classList.add("is-pulsing");
 }
 
 function addToBowl(productId) {
@@ -309,16 +501,14 @@ function renderProducts() {
 }
 
 function renderBowl() {
+  const totalSelections = bowl.reduce((sum, item) => sum + item.quantity, 0);
+  cartCountEl.textContent = String(totalSelections);
+
   if (!bowl.length) {
     cartListEl.innerHTML = `<div class="empty-state">Your DogBowl™ is empty.</div>`;
-    cartCountEl.textContent = "0";
-    renderBowlVisual(0);
+    renderDogBowlLayered();
     return;
   }
-
-  const totalItems = bowl.reduce((sum, item) => sum + item.quantity, 0);
-  cartCountEl.textContent = String(totalItems);
-  renderBowlVisual(totalItems);
 
   cartListEl.innerHTML = bowl.map((item) => `
     <div class="cart-item">
@@ -353,6 +543,8 @@ function renderBowl() {
       </div>
     </div>
   `).join("");
+
+  renderDogBowlLayered();
 }
 
 async function checkout() {
@@ -447,6 +639,7 @@ document.addEventListener("click", (event) => {
   }
 });
 
+ensureDogBowlStage();
 checkoutButton.addEventListener("click", checkout);
 clearCartButton.addEventListener("click", clearBowl);
 
