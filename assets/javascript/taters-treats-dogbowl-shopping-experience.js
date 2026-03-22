@@ -40,7 +40,7 @@ const PRODUCTS = [
   }
 ];
 
-const STORAGE_KEY = "taters_dogbowl_v5";
+const STORAGE_KEY = "taters_dogbowl_v6";
 
 const DOGBOWL_BACKGROUND_IMAGE =
   "/assets/images/dogbowl/dogbowl-hardwood-floor-with-oat-flour-dusting.png";
@@ -114,7 +114,7 @@ function injectDogBowlStyles() {
   style.textContent = `
     .dogbowl-stage {
       position: relative;
-      width: min(100%, 500px);
+      width: min(100%, 540px);
       aspect-ratio: 1 / 1;
       margin: 0 auto;
       overflow: hidden;
@@ -151,11 +151,11 @@ function injectDogBowlStyles() {
 
     .dogbowl-stage__treat {
       position: absolute;
-      width: clamp(34px, 8vw, 58px);
+      width: clamp(44px, 10vw, 74px);
       height: auto;
       transform: translate(-50%, -50%);
       transform-origin: center center;
-      filter: drop-shadow(0 2px 3px rgba(45, 32, 20, 0.10));
+      filter: drop-shadow(0 3px 4px rgba(45, 32, 20, 0.12));
       user-select: none;
       pointer-events: none;
     }
@@ -173,11 +173,11 @@ function injectDogBowlStyles() {
 
     @media (max-width: 640px) {
       .dogbowl-stage {
-        width: min(100%, 440px);
+        width: min(100%, 460px);
       }
 
       .dogbowl-stage__treat {
-        width: clamp(30px, 9vw, 48px);
+        width: clamp(40px, 11vw, 62px);
       }
     }
   `;
@@ -251,44 +251,44 @@ function getRenderedWoofles() {
 
 function getWoofleSlots() {
   return [
-    { x: 50, y: 63, r: 0, s: 1.0 },
-    { x: 42, y: 62, r: -12, s: 0.98 },
-    { x: 58, y: 62, r: 12, s: 0.98 },
+    { x: 50, y: 66, r: 0, s: 1.12 },
+    { x: 42, y: 64, r: -12, s: 1.08 },
+    { x: 58, y: 64, r: 12, s: 1.08 },
 
-    { x: 35, y: 58, r: -18, s: 0.96 },
-    { x: 65, y: 58, r: 18, s: 0.96 },
+    { x: 35, y: 60, r: -18, s: 1.04 },
+    { x: 65, y: 60, r: 18, s: 1.04 },
 
-    { x: 50, y: 56, r: 6, s: 0.96 },
-    { x: 43, y: 54, r: -10, s: 0.95 },
-    { x: 57, y: 54, r: 10, s: 0.95 },
+    { x: 50, y: 57, r: 5, s: 1.02 },
+    { x: 43, y: 55, r: -10, s: 1.0 },
+    { x: 57, y: 55, r: 10, s: 1.0 },
 
-    { x: 36, y: 50, r: -18, s: 0.94 },
-    { x: 64, y: 50, r: 18, s: 0.94 },
+    { x: 36, y: 51, r: -18, s: 0.98 },
+    { x: 64, y: 51, r: 18, s: 0.98 },
 
-    { x: 50, y: 48, r: 0, s: 0.94 },
-    { x: 42, y: 46, r: -12, s: 0.93 },
-    { x: 58, y: 46, r: 12, s: 0.93 },
+    { x: 50, y: 48, r: 0, s: 0.98 },
+    { x: 42, y: 46, r: -12, s: 0.96 },
+    { x: 58, y: 46, r: 12, s: 0.96 },
 
-    { x: 38, y: 42, r: -16, s: 0.92 },
-    { x: 62, y: 42, r: 16, s: 0.92 },
+    { x: 38, y: 42, r: -16, s: 0.94 },
+    { x: 62, y: 42, r: 16, s: 0.94 },
 
-    { x: 50, y: 40, r: 4, s: 0.91 },
-    { x: 44, y: 37, r: -10, s: 0.9 },
-    { x: 56, y: 37, r: 10, s: 0.9 },
+    { x: 50, y: 39, r: 4, s: 0.94 },
+    { x: 44, y: 36, r: -10, s: 0.92 },
+    { x: 56, y: 36, r: 10, s: 0.92 },
 
-    { x: 40, y: 67, r: -10, s: 0.96 },
-    { x: 60, y: 67, r: 10, s: 0.96 },
+    { x: 40, y: 69, r: -10, s: 1.04 },
+    { x: 60, y: 69, r: 10, s: 1.04 },
 
-    { x: 33, y: 64, r: -20, s: 0.95 },
-    { x: 67, y: 64, r: 20, s: 0.95 },
+    { x: 33, y: 65, r: -20, s: 1.0 },
+    { x: 67, y: 65, r: 20, s: 1.0 },
 
-    { x: 34, y: 54, r: -18, s: 0.93 },
-    { x: 66, y: 54, r: 18, s: 0.93 },
+    { x: 34, y: 56, r: -18, s: 0.96 },
+    { x: 66, y: 56, r: 18, s: 0.96 },
 
-    { x: 39, y: 34, r: -12, s: 0.88 },
-    { x: 61, y: 34, r: 12, s: 0.88 },
+    { x: 39, y: 33, r: -12, s: 0.9 },
+    { x: 61, y: 33, r: 12, s: 0.9 },
 
-    { x: 50, y: 31, r: 0, s: 0.88 }
+    { x: 50, y: 30, r: 0, s: 0.9 }
   ];
 }
 
@@ -302,7 +302,7 @@ function getOverflowSlot(index, slots) {
     x: 50 + Math.cos(angle) * radiusX,
     y: 50 + Math.sin(angle) * radiusY,
     r: ((ringIndex * 19) % 28) - 14,
-    s: 0.84 + ((ringIndex % 3) * 0.03)
+    s: 0.9 + ((ringIndex % 3) * 0.04)
   };
 }
 
