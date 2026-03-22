@@ -79,12 +79,6 @@ body {
   object-fit: contain;
 }
 
-#bowlNote {
-  font-size: 0.9rem;
-  text-align: center;
-  margin: 6px 0 10px;
-}
-
 .checkout {
   width: 100%;
   margin-top: 10px;
@@ -95,7 +89,7 @@ body {
   border: none;
 }
 
-/* PRODUCTS (COMPACT LIST STYLE) */
+/* PRODUCTS (COMPACT LIST) */
 .products {
   display: flex;
   flex-direction: column;
@@ -156,7 +150,7 @@ body {
   }
 
   .dogbowl {
-    width: 340px;
+    width: 320px;
     position: sticky;
     top: 80px;
   }
