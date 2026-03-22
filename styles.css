@@ -1,42 +1,101 @@
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Arial, Helvetica, sans-serif;
   background: #f6efe6;
-}
-
-.container {
-  padding: 12px;
+  color: #3b2a1f;
 }
 
 /* HEADER */
+.site-header {
+  padding: 10px 14px;
+}
+
 .brand-mark {
   width: 100%;
 }
 
 /* HERO */
 .hero {
-  height: 60vh;
+  position: relative;
+  height: 55vh;
   display: flex;
   align-items: flex-end;
-  background: url('/assets/images/hero/hero.jpg') center/cover;
+  background: url('/assets/images/hero/hero.jpg') center/cover no-repeat;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.1),
+    rgba(255,255,255,0.85)
+  );
 }
 
 .hero-content {
-  background: rgba(255,255,255,0.85);
-  padding: 16px;
-  border-radius: 16px;
-  margin: 16px;
+  position: relative;
+  padding: 18px;
+}
+
+.hero h1 {
+  font-family: Georgia, serif;
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+}
+
+.hero p {
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+}
+
+.hero button {
+  background: #24392a;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  width: 100%;
 }
 
 /* SHOP */
-.shop-layout {
+.shop {
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px;
 }
 
-/* PRODUCTS */
+/* DOGBOWL */
+.dogbowl {
+  background: white;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.dogbowl img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: contain;
+}
+
+#bowlNote {
+  font-size: 0.9rem;
+  text-align: center;
+  margin: 6px 0 10px;
+}
+
+.checkout {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #24392a;
+  color: white;
+  border: none;
+}
+
+/* PRODUCTS (COMPACT LIST STYLE) */
 .products {
   display: flex;
   flex-direction: column;
@@ -48,32 +107,56 @@ body {
   gap: 10px;
   background: white;
   padding: 10px;
-  border-radius: 12px;
+  border-radius: 14px;
 }
 
 .product img {
-  width: 100px;
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-title {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.product-benefit {
+  font-size: 0.8rem;
+  margin: 4px 0;
 }
 
 .product button {
   margin-top: 6px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #24392a;
+  color: white;
+  border: none;
 }
 
-/* DOGBOWL */
-.dogbowl {
-  background: white;
+/* TRUST */
+.trust {
+  text-align: center;
+  font-size: 0.75rem;
   padding: 12px;
-  border-radius: 12px;
+  opacity: 0.8;
 }
 
 /* DESKTOP */
 @media(min-width: 900px) {
-  .shop-layout {
+  .shop {
     flex-direction: row;
+    align-items: flex-start;
   }
 
   .dogbowl {
-    width: 300px;
+    width: 340px;
     position: sticky;
     top: 80px;
   }
