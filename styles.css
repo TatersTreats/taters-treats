@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f6efe6;
+}
+
+.container {
+  padding: 12px;
+}
+
+/* HEADER */
+.brand-mark {
+  width: 100%;
+}
+
+/* HERO */
+.hero {
+  height: 60vh;
+  display: flex;
+  align-items: flex-end;
+  background: url('/assets/images/hero/hero.jpg') center/cover;
+}
+
+.hero-content {
+  background: rgba(255,255,255,0.85);
+  padding: 16px;
+  border-radius: 16px;
+  margin: 16px;
+}
+
+/* SHOP */
+.shop-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* PRODUCTS */
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.product {
+  display: flex;
+  gap: 10px;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.product img {
+  width: 100px;
+}
+
+.product button {
+  margin-top: 6px;
+}
+
+/* DOGBOWL */
+.dogbowl {
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+/* DESKTOP */
+@media(min-width: 900px) {
+  .shop-layout {
+    flex-direction: row;
+  }
+
+  .dogbowl {
+    width: 300px;
+    position: sticky;
+    top: 80px;
+  }
+
+  .products {
+    flex: 1;
+  }
+}
