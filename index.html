@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Tater's Treats | Premium Small-Batch Canine Confections</title>
-  <meta name="description" content="Premium small-batch canine confections from Tater's Treats. Handcrafted WOOFLES made with bakery-inspired care." />
+  <meta name="description" content="Premium small-batch canine confections from Tater&apos;s Treats. Fill your DogBowl with handcrafted WOOFLES made with bakery-inspired care." />
   <link rel="stylesheet" href="/assets/css/taters-treats-premium-small-batch-dog-treats.css" />
 </head>
 <body>
@@ -26,6 +27,10 @@
       <div class="container hero-grid">
         <div class="hero-content">
           <h1>Dogs Deserve The Best.</h1>
+
+          <div class="hero-buttons">
+            <a class="btn btn-primary" href="#shop">Fill Your DogBowl™</a>
+          </div>
         </div>
       </div>
     </section>
@@ -33,25 +38,31 @@
     <section id="shop" class="shop section">
       <div class="container shop-layout">
         <section class="shop-main">
-          <div class="section-head section-head--clean">
+          <div class="section-head">
             <h2>Fill Your Bowl With The Best.</h2>
           </div>
 
           <div id="products" class="products"></div>
         </section>
 
-        <aside class="dogbowl dogbowl--clean" id="dogbowl">
-          <div class="dogbowl-top dogbowl-top--clean">
+        <aside class="dogbowl" id="dogbowl">
+          <div class="dogbowl-top">
+            <span class="eyebrow">Your DogBowl™</span>
+            <h2>Build your box in real time.</h2>
+            <p class="dogbowl-copy">
+              Your selected WOOFLES™ appear here as you build your order.
+            </p>
+
             <div class="bowl-frame">
               <img
                 id="bowlImage"
                 class="bowl-image"
                 src="/assets/images/dogbowl/dogbowl-empty-state.png"
-                alt="An empty DogBowl"
+                alt="An empty DogBowl™"
               />
             </div>
 
-            <p id="bowlNote" class="bowl-note">Your DogBowl is waiting.</p>
+            <p id="bowlNote" class="bowl-note">Your DogBowl™ is waiting.</p>
           </div>
 
           <div class="dogbowl-body">
@@ -64,15 +75,15 @@
               </div>
 
               <button class="checkout-button" id="checkoutButton" type="button">
-                Secure Your DogBowl
+                Secure Your DogBowl™
               </button>
 
               <button class="link-button" id="clearCartButton" type="button">
-                Clear DogBowl
+                Clear DogBowl™
               </button>
 
               <div id="cartStatus" class="status-message"></div>
-              <p class="cart-note">Mixed flavors supported. Ships fresh.</p>
+              <p class="cart-note">Secure checkout. Ships fresh. Mixed flavors supported.</p>
             </div>
           </div>
         </aside>
