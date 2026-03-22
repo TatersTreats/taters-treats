@@ -939,4 +939,46 @@ p {
   .lower-grid {
     gap: 12px;
   }
+
+  /* MOBILE CHECKOUT + TAP IMPROVEMENTS */
+  .checkout-container,
+  #payment-form {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 4px;
+    box-sizing: border-box;
+  }
+
+  .StripeElement {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 12px;
+  }
+
+  button#submit,
+  .checkout-button,
+  .add-button {
+    width: 100%;
+    min-height: 48px;
+    font-size: 16px;
+    border-radius: 12px;
+  }
+
+  .cart-item {
+    padding: 12px;
+  }
+
+  .qty-button {
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .cart-item-top,
+  .cart-item-bottom,
+  .summary-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
 }
