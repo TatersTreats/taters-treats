@@ -448,29 +448,23 @@ function renderProductCard(product) {
     </div>
 
     <div class="product-body">
-      <span class="mini-badge">Small Batch</span>
-
       <div class="product-title">
-        <span class="product-line">${product.line}</span>
         <span class="product-flavor">${product.flavor}</span>
       </div>
 
       <p class="product-benefit">${product.benefit}</p>
 
-      <div>
-        <div class="control-label">Select Size</div>
-        <div class="size-options">${sizeButtons}</div>
-      </div>
+      <div class="card-controls">
+        <div class="size-options" aria-label="Size">${sizeButtons}</div>
 
-      <div class="quantity-row">
-        <div>
-          <div class="control-label">Quantity</div>
+        <div class="quantity-row compact-row">
           <div class="quantity-controls">
             <button
               type="button"
               class="qty-button"
               data-qty-action="decrease"
               data-product="${product.id}"
+              aria-label="Decrease quantity"
             >
               −
             </button>
@@ -480,20 +474,17 @@ function renderProductCard(product) {
               class="qty-button"
               data-qty-action="increase"
               data-product="${product.id}"
+              aria-label="Increase quantity"
             >
               +
             </button>
           </div>
-        </div>
 
-        <div class="selected-copy" id="selected-${product.id}">
-          Selected: ${product.sizes[product.defaultSize].label}
+          <button type="button" class="add-button" data-add="${product.id}">
+            Add
+          </button>
         </div>
       </div>
-
-      <button type="button" class="add-button" data-add="${product.id}">
-        Add to DogBowl™
-      </button>
 
       <div class="status-message" id="status-${product.id}"></div>
     </div>
@@ -604,11 +595,6 @@ document.addEventListener("click", (event) => {
       .forEach((btn) => btn.classList.remove("active"));
 
     sizeButton.classList.add("active");
-
-    const selectedEl = document.getElementById(`selected-${productId}`);
-    if (selectedEl) {
-      selectedEl.textContent = `Selected: ${product.sizes[size].label}`;
-    }
 
     setProductStatus(productId, "");
     return;
