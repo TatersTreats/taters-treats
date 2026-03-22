@@ -58,9 +58,6 @@ function updateCart() {
   } else if (cart.length <= 2) {
     bowl.src = "/assets/images/dogbowl/bowl-1.png";
     note.innerText = "A good start.";
-  } else if (cart.length <= 4) {
-    bowl.src = "/assets/images/dogbowl/bowl-2.png";
-    note.innerText = "Coming together nicely.";
   } else {
     bowl.src = "/assets/images/dogbowl/bowl-full.png";
     note.innerText = "That’s a full DogBowl™.";
