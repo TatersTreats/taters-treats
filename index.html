@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Tater's Treats | Premium Small-Batch Canine Confections</title>
+  <meta name="description" content="Premium small-batch canine confections from Tater's Treats. Handcrafted WOOFLES made with bakery-inspired care." />
+  <link rel="stylesheet" href="/assets/css/taters-treats-premium-small-batch-dog-treats.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Tater's Treats home">
+        <img
+          src="/assets/images/branding/taters-treats-wordmark-premium-small-batch-canine-confections.png"
+          alt="Tater's Treats Canine Confections"
+          class="brand-mark"
+        />
+      </a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1>Dogs Deserve The Best.</h1>
+        </div>
+      </div>
+    </section>
+
+    <section id="shop" class="shop section">
+      <div class="container shop-layout">
+        <section class="shop-main">
+          <div class="section-head section-head--clean">
+            <h2>Fill Your Bowl With The Best.</h2>
+          </div>
+
+          <div id="products" class="products"></div>
+        </section>
+
+        <aside class="dogbowl dogbowl--clean" id="dogbowl">
+          <div class="dogbowl-top dogbowl-top--clean">
+            <div class="bowl-frame">
+              <img
+                id="bowlImage"
+                class="bowl-image"
+                src="/assets/images/dogbowl/dogbowl-empty-state.png"
+                alt="An empty DogBowl"
+              />
+            </div>
+
+            <p id="bowlNote" class="bowl-note">Your DogBowl is waiting.</p>
+          </div>
+
+          <div class="dogbowl-body">
+            <div id="cartList" class="cart-list"></div>
+
+            <div class="cart-summary">
+              <div class="summary-row">
+                <span>Total items</span>
+                <span id="cartCount">0</span>
+              </div>
+
+              <button class="checkout-button" id="checkoutButton" type="button">
+                Secure Your DogBowl
+              </button>
+
+              <button class="link-button" id="clearCartButton" type="button">
+                Clear DogBowl
+              </button>
+
+              <div id="cartStatus" class="status-message"></div>
+              <p class="cart-note">Mixed flavors supported. Ships fresh.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="trust-strip">
+      <div class="container">
+        <p class="trust-line">Small batch • Real ingredients • No artificial additives • Made with care</p>
+      </div>
+    </section>
+
+    <section class="section" id="story">
+      <div class="container narrow">
+        <div class="story-card">
+          <span class="eyebrow">Inspired by Tater</span>
+          <h2>From one very loved corgi to treats worth sharing.</h2>
+          <p>
+            Inspired by <strong>Tater</strong>, our Pembroke Welsh Corgi, we created
+            <strong>WOOFLES™</strong> — handcrafted treats made with the same care we give our own dogs.
+          </p>
+          <p>
+            Tater's Treats was built to feel less like a generic pet brand and more like a small artisan bakery —
+            warm, thoughtful, and made for dogs who deserve something special.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lower-section">
+      <div class="container">
+        <div class="lower-grid">
+          <div class="info-card">
+            <span class="eyebrow eyebrow-muted">Coming Soon</span>
+            <h2>The Barker's Dozen</h2>
+            <p>
+              A future limited-run collection for dogs who deserve something extra special.
+              Seasonal drops, festive flavors, and small-batch surprises are on the way.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <span class="eyebrow eyebrow-muted">Stay in the loop</span>
+            <h2>Be first to hear about fresh batches.</h2>
+            <p>
+              Join the list for seasonal releases, future launches, and updates from Tater's Treats.
+            </p>
+
+            <form class="newsletter-form" onsubmit="event.preventDefault()">
+              <input
+                class="newsletter-input"
+                type="email"
+                placeholder="Enter your email"
+                aria-label="Email address"
+              />
+              <button class="newsletter-button" type="submit">Join The List</button>
+            </form>
+
+            <p class="newsletter-note">No spam. Just good dogs, fresh batches, and future drops.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 Tater's Treats</div>
+      <div>Canine Confections · WOOFLES™ · DogBowl™</div>
+    </div>
+  </footer>
+
+  <script src="/assets/javascript/taters-treats-dogbowl-shopping-experience.js" defer></script>
+</body>
+</html>
