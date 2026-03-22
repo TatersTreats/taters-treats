@@ -7,9 +7,9 @@ const PRODUCTS = [
     image: "/assets/images/products/peanut-butter-mint-carob-woofle.png",
     defaultSize: "regular",
     sizes: {
-      trial:   { label: "Small",  priceId: "price_1TD3rlDywMn3O3R84BZEFkVl" },
+      trial: { label: "Small", priceId: "price_1TD3rlDywMn3O3R84BZEFkVl" },
       regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8Kw2mxifP" },
-      value:   { label: "Large",  priceId: "price_1TD3rkDywMn3O3R8LhNyxt0V" }
+      value: { label: "Large", priceId: "price_1TD3rkDywMn3O3R8LhNyxt0V" }
     }
   },
   {
@@ -20,9 +20,9 @@ const PRODUCTS = [
     image: "/assets/images/products/pumpkin-turmeric-woofle.png",
     defaultSize: "regular",
     sizes: {
-      trial:   { label: "Small",  priceId: "price_1TD3rlDywMn3O3R8C2mIqpVZ" },
+      trial: { label: "Small", priceId: "price_1TD3rlDywMn3O3R8C2mIqpVZ" },
       regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8psJph7ti" },
-      value:   { label: "Large",  priceId: "price_1TD3rlDywMn3O3R8fHQICEqm" }
+      value: { label: "Large", priceId: "price_1TD3rlDywMn3O3R8fHQICEqm" }
     }
   },
   {
@@ -33,14 +33,14 @@ const PRODUCTS = [
     image: "/assets/images/products/peanut-butter-ginger-woofle.png",
     defaultSize: "regular",
     sizes: {
-      trial:   { label: "Small",  priceId: "price_1TD3rmDywMn3O3R81CgJYyr4" },
+      trial: { label: "Small", priceId: "price_1TD3rmDywMn3O3R81CgJYyr4" },
       regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8CDw2xmaI" },
-      value:   { label: "Large",  priceId: "price_1TD3rkDywMn3O3R8PquAjDEM" }
+      value: { label: "Large", priceId: "price_1TD3rkDywMn3O3R8PquAjDEM" }
     }
   }
 ];
 
-const STORAGE_KEY = "taters_dogbowl_v4";
+const STORAGE_KEY = "taters_dogbowl_v5";
 
 const DOGBOWL_BACKGROUND_IMAGE =
   "/assets/images/dogbowl/dogbowl-hardwood-floor-with-oat-flour-dusting.png";
@@ -58,11 +58,9 @@ const productsEl = document.getElementById("products");
 const cartListEl = document.getElementById("cartList");
 const cartCountEl = document.getElementById("cartCount");
 const cartStatusEl = document.getElementById("cartStatus");
-const bowlImageEl = document.getElementById("bowlImage");
 const bowlNoteEl = document.getElementById("bowlNote");
 const checkoutButton = document.getElementById("checkoutButton");
 const clearCartButton = document.getElementById("clearCartButton");
-
 const bowlFrameEl = document.querySelector(".bowl-frame");
 
 let bowl = loadBowl();
@@ -129,13 +127,18 @@ function injectDogBowlStyles() {
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
       display: block;
       pointer-events: none;
       user-select: none;
     }
 
+    .dogbowl-stage__background {
+      object-fit: cover;
+      z-index: 1;
+    }
+
     .dogbowl-stage__bowl {
+      object-fit: contain;
       z-index: 2;
     }
 
@@ -148,7 +151,7 @@ function injectDogBowlStyles() {
 
     .dogbowl-stage__treat {
       position: absolute;
-      width: clamp(30px, 8vw, 58px);
+      width: clamp(34px, 8vw, 58px);
       height: auto;
       transform: translate(-50%, -50%);
       transform-origin: center center;
@@ -170,11 +173,11 @@ function injectDogBowlStyles() {
 
     @media (max-width: 640px) {
       .dogbowl-stage {
-        width: min(100%, 420px);
+        width: min(100%, 440px);
       }
 
       .dogbowl-stage__treat {
-        width: clamp(28px, 9vw, 48px);
+        width: clamp(30px, 9vw, 48px);
       }
     }
   `;
@@ -210,13 +213,6 @@ function ensureDogBowlStage() {
   dogbowlStageEl = document.getElementById("dogbowlStage");
   dogbowlTreatLayerEl = document.getElementById("dogbowlTreatLayer");
   dogbowlBowlEl = document.getElementById("dogbowlBowlLayer");
-}
-
-function getTotalRenderedWoofles() {
-  return bowl.reduce((sum, item) => {
-    const visualCountPerSelection = SIZE_TO_WOOFLE_COUNT[item.sizeKey] || 1;
-    return sum + (item.quantity * visualCountPerSelection);
-  }, 0);
 }
 
 function getDogBowlNote(woofleCount) {
@@ -255,42 +251,59 @@ function getRenderedWoofles() {
 
 function getWoofleSlots() {
   return [
-    { x: 50, y: 64, r: 0,   s: 1.00 },
-    { x: 42, y: 63, r: -10, s: 0.98 },
-    { x: 58, y: 63, r: 10,  s: 0.98 },
+    { x: 50, y: 63, r: 0, s: 1.0 },
+    { x: 42, y: 62, r: -12, s: 0.98 },
+    { x: 58, y: 62, r: 12, s: 0.98 },
 
-    { x: 35, y: 60, r: -18, s: 0.96 },
-    { x: 65, y: 60, r: 18,  s: 0.96 },
+    { x: 35, y: 58, r: -18, s: 0.96 },
+    { x: 65, y: 58, r: 18, s: 0.96 },
 
-    { x: 50, y: 56, r: 6,   s: 0.98 },
-    { x: 42, y: 54, r: -8,  s: 0.96 },
-    { x: 58, y: 54, r: 8,   s: 0.96 },
+    { x: 50, y: 56, r: 6, s: 0.96 },
+    { x: 43, y: 54, r: -10, s: 0.95 },
+    { x: 57, y: 54, r: 10, s: 0.95 },
 
-    { x: 34, y: 52, r: -22, s: 0.94 },
-    { x: 66, y: 52, r: 22,  s: 0.94 },
+    { x: 36, y: 50, r: -18, s: 0.94 },
+    { x: 64, y: 50, r: 18, s: 0.94 },
 
-    { x: 50, y: 48, r: -2,  s: 0.96 },
-    { x: 42, y: 46, r: -10, s: 0.94 },
-    { x: 58, y: 46, r: 10,  s: 0.94 },
+    { x: 50, y: 48, r: 0, s: 0.94 },
+    { x: 42, y: 46, r: -12, s: 0.93 },
+    { x: 58, y: 46, r: 12, s: 0.93 },
 
-    { x: 36, y: 44, r: -18, s: 0.92 },
-    { x: 64, y: 44, r: 18,  s: 0.92 },
+    { x: 38, y: 42, r: -16, s: 0.92 },
+    { x: 62, y: 42, r: 16, s: 0.92 },
 
-    { x: 50, y: 40, r: 4,   s: 0.94 },
-    { x: 43, y: 38, r: -10, s: 0.92 },
-    { x: 57, y: 38, r: 10,  s: 0.92 },
+    { x: 50, y: 40, r: 4, s: 0.91 },
+    { x: 44, y: 37, r: -10, s: 0.9 },
+    { x: 56, y: 37, r: 10, s: 0.9 },
 
-    { x: 38, y: 34, r: -14, s: 0.90 },
-    { x: 62, y: 34, r: 14,  s: 0.90 },
+    { x: 40, y: 67, r: -10, s: 0.96 },
+    { x: 60, y: 67, r: 10, s: 0.96 },
 
-    { x: 50, y: 30, r: 0,   s: 0.90 },
-    { x: 45, y: 27, r: -8,  s: 0.88 },
-    { x: 55, y: 27, r: 8,   s: 0.88 },
+    { x: 33, y: 64, r: -20, s: 0.95 },
+    { x: 67, y: 64, r: 20, s: 0.95 },
 
-    { x: 40, y: 68, r: -12, s: 0.96 },
-    { x: 60, y: 68, r: 12,  s: 0.96 },
-    { x: 50, y: 70, r: 0,   s: 0.98 }
+    { x: 34, y: 54, r: -18, s: 0.93 },
+    { x: 66, y: 54, r: 18, s: 0.93 },
+
+    { x: 39, y: 34, r: -12, s: 0.88 },
+    { x: 61, y: 34, r: 12, s: 0.88 },
+
+    { x: 50, y: 31, r: 0, s: 0.88 }
   ];
+}
+
+function getOverflowSlot(index, slots) {
+  const ringIndex = index - slots.length;
+  const angle = (ringIndex * 37) * (Math.PI / 180);
+  const radiusX = 12 + (ringIndex % 4) * 2.4;
+  const radiusY = 8 + (ringIndex % 4) * 1.8;
+
+  return {
+    x: 50 + Math.cos(angle) * radiusX,
+    y: 50 + Math.sin(angle) * radiusY,
+    r: ((ringIndex * 19) % 28) - 14,
+    s: 0.84 + ((ringIndex % 3) * 0.03)
+  };
 }
 
 function renderDogBowlLayered() {
@@ -302,9 +315,7 @@ function renderDogBowlLayered() {
   dogbowlTreatLayerEl.innerHTML = "";
 
   renderedWoofles.forEach((woofle, index) => {
-    const slot = slots[index];
-
-    if (!slot) return;
+    const slot = slots[index] || getOverflowSlot(index, slots);
 
     const treat = document.createElement("img");
     treat.className = "dogbowl-stage__treat";
@@ -327,9 +338,7 @@ function pulseBowl() {
 
   dogbowlBowlEl.classList.remove("is-pulsing");
   dogbowlTreatLayerEl.classList.remove("is-pulsing");
-
   void dogbowlBowlEl.offsetWidth;
-
   dogbowlBowlEl.classList.add("is-pulsing");
   dogbowlTreatLayerEl.classList.add("is-pulsing");
 }
