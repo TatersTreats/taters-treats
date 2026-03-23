@@ -76,14 +76,13 @@ function openDetail(card) {
 
     <h2>${product.flavor}</h2>
     <p class="modal-description">${product.description}</p>
-
-    <div class="size-options">
-      ${SIZE_OPTIONS.map((size, i) => `
-        <button class="pill ${i === 1 ? "active" : ""}" data-size="${size}">
-          ${size}
-        </button>
-      `).join("")}
-    </div>
+<div class="size-options">
+  ${SIZE_OPTIONS.map((size, i) => `
+    <button class="pill ${i === 1 ? "active" : ""}" data-size="${size}">
+      ${size}
+    </button>
+  `).join("")}
+</div>
 
     <div class="quantity">
       <button class="qty minus">−</button>
