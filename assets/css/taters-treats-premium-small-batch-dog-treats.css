@@ -521,24 +521,24 @@ p {
 
   /* 3-UP GRID */
   .products {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
     align-items: start;
   }
 
   /* CARD */
   .product-card {
-    padding: 8px;
+    padding: 6px !important;
     border-radius: 16px;
     min-width: 0;
-    background: rgba(255,253,250,0.95);
+    background: rgba(255,253,250,0.98);
     box-shadow: 0 6px 14px rgba(45,32,20,0.08);
   }
 
-  /* IMAGE (BIGGER PRESENCE) */
+  /* IMAGE — FORCE BIGGER */
   .product-image {
-    min-height: 92px;
-    margin-bottom: 6px;
+    min-height: 110px !important;
+    margin-bottom: 4px !important;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -546,15 +546,11 @@ p {
   }
 
   .product-image img {
-    width: min(100%, 96px);
+    width: 100% !important;
+    max-width: none !important;
   }
 
-  /* TEXT SPACING */
-  .product-body {
-    gap: 4px;
-  }
-
-  /* REMOVE CLUTTER */
+  /* REMOVE CLUTTER (FORCED) */
   .card-controls,
   .size-options,
   .quantity-row,
@@ -564,15 +560,20 @@ p {
   .selected-copy,
   .mini-badge,
   .product-line,
-  .product-benefit {
+  .product-benefit,
+  .product-desc {
     display: none !important;
   }
 
-  /* FLAVOR NAME (PREMIUM LABEL STYLE) */
+  /* TEXT */
+  .product-body {
+    gap: 2px !important;
+  }
+
   .product-flavor {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 0.82rem;
-    line-height: 1.08;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 0.82rem !important;
+    line-height: 1.08 !important;
     font-weight: 700;
     letter-spacing: -0.01em;
     text-align: center;
