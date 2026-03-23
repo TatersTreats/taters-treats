@@ -1,30 +1,47 @@
 const PRODUCTS = [
   {
-    id: "pbmc",
-    line: "WOOFLES™",
-    flavor: "Peanut Butter Mint Carob",
-    benefit: "Helps freshen breath",
-    image: "/assets/images/products/peanut-butter-mint-carob-woofle.png",
-    defaultSize: "regular",
-    sizes: {
-      trial: { label: "Small", priceId: "price_1TD3rlDywMn3O3R84BZEFkVl" },
-      regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8Kw2mxifP" },
-      value: { label: "Large", priceId: "price_1TD3rkDywMn3O3R8LhNyxt0V" }
-    }
-  },
-  {
     id: "pumpkin",
     line: "WOOFLES™",
     flavor: "Pumpkin Turmeric",
     benefit: "Supports gentle digestion",
-    image: "/assets/images/products/pumpkin-turmeric-woofle.png",
+    description: "",
+    image: "/assets/images/products/pumpkin.jpg",
     defaultSize: "regular",
     sizes: {
-      trial: { label: "Small", priceId: "price_1TD3rlDywMn3O3R8C2mIqpVZ" },
+      trial:   { label: "Small",  priceId: "price_1TD3rlDywMn3O3R8C2mIqpVZ" },
       regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8psJph7ti" },
-      value: { label: "Large", priceId: "price_1TD3rlDywMn3O3R8fHQICEqm" }
+      value:   { label: "Large",  priceId: "price_1TD3rlDywMn3O3R8fHQICEqm" }
     }
   },
+  {
+    id: "pbmc",
+    line: "WOOFLES™",
+    flavor: "Peanut Butter Mint Carob",
+    benefit: "Helps freshen breath",
+    description: "",
+    image: "/assets/images/products/pbmc.jpg",
+    defaultSize: "regular",
+    sizes: {
+      trial:   { label: "Small",  priceId: "price_1TD3rlDywMn3O3R84BZEFkVl" },
+      regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8Kw2mxifP" },
+      value:   { label: "Large",  priceId: "price_1TD3rkDywMn3O3R8LhNyxt0V" }
+    }
+  },
+  {
+    id: "ginger",
+    line: "WOOFLES™",
+    flavor: "Peanut Butter Ginger",
+    benefit: "Helps soothe the tummy",
+    description: "",
+    image: "/assets/images/products/ginger.jpg",
+    defaultSize: "regular",
+    sizes: {
+      trial:   { label: "Small",  priceId: "price_1TD3rmDywMn3O3R81CgJYyr4" },
+      regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8CDw2xmaI" },
+      value:   { label: "Large",  priceId: "price_1TD3rkDywMn3O3R8PquAjDEM" }
+    }
+  }
+];
   {
     id: "ginger",
     line: "WOOFLES™",
