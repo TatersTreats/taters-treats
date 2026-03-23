@@ -126,7 +126,7 @@ function openDetail(card) {
     modal.style.width = `${modalWidth}px`;
     modal.style.height = "auto";
     modal.style.maxHeight = "86vh";
-    modal.style.transform = "translateY(-50%)";
+    modal.style.transform = "translateY(-42%)";
     modal.style.borderRadius = "20px";
   });
 }
