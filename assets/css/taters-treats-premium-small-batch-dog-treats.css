@@ -620,6 +620,10 @@ p {
    FLOATING BUY CARD SYSTEM
 ========================= */
 
+/* =========================
+   FLOATING BUY CARD SYSTEM
+========================= */
+
 body.product-detail-open {
   overflow: hidden;
 }
@@ -648,7 +652,7 @@ body.product-detail-open {
   align-items: center;
 }
 
-/* lower text/control block */
+/* PANEL (TEXT BLOCK) */
 .product-modal::after {
   content: "";
   position: absolute;
@@ -669,20 +673,21 @@ body.product-detail-open {
   z-index: 1;
 }
 
-/* floating woofle */
+/* FLOATING WOOFLE */
 .modal-image {
   position: relative;
-  top: -28px;
+  top: -60px;
   width: 82%;
   max-width: none;
   height: auto;
   margin: 0 auto;
   filter: drop-shadow(0 12px 22px rgba(0,0,0,0.18));
 }
-/* text block content */
+
+/* TEXT CONTENT */
 .product-modal h2 {
   width: 100%;
-  margin: 18px 0 8px;
+  margin: 8px 0 8px;
   padding: 0 18px;
   text-align: center;
   font-family: Georgia, "Times New Roman", serif;
@@ -701,6 +706,7 @@ body.product-detail-open {
   color: rgba(77, 56, 41, 0.78);
 }
 
+/* SIZE */
 .product-modal .size-options {
   width: 100%;
   padding: 0 18px;
@@ -724,9 +730,9 @@ body.product-detail-open {
   background: var(--green);
   border-color: var(--green);
   color: var(--white);
-  box-shadow: 0 8px 18px rgba(41, 65, 43, 0.18);
 }
 
+/* QUANTITY */
 .product-modal .quantity {
   width: 100%;
   padding: 0 18px;
@@ -756,18 +762,19 @@ body.product-detail-open {
   color: var(--green-deep);
 }
 
+/* CTA */
 .product-modal .cta {
   width: calc(100% - 36px);
   min-height: 48px;
   margin: 0 18px;
-  border-radius: 999px;
+  border-radius: 14px;
   background: var(--green-deep);
   color: var(--white);
   font-weight: 700;
   font-size: 0.95rem;
-  box-shadow: 0 10px 20px rgba(41, 65, 43, 0.16);
 }
 
+/* MOBILE */
 @media (max-width: 640px) {
   .product-modal {
     width: min(94vw, 420px);
@@ -775,18 +782,18 @@ body.product-detail-open {
   }
 
   .product-modal::after {
-    top: 156px;
+    top: 180px;
     border-radius: 18px;
   }
 
   .modal-image {
-    width: 82%;
+    top: -50px;
+    width: 86%;
     max-width: none;
-    margin-bottom: 2px;
   }
 
   .product-modal h2 {
-    margin-top: 16px;
+    margin-top: 6px;
     font-size: 1.05rem;
     padding: 0 16px;
   }
