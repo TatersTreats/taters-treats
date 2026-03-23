@@ -172,7 +172,6 @@ p {
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
-/* BROWSE CARD IMAGE */
 .product-image {
   height: 110px !important;
   width: 100%;
@@ -634,11 +633,11 @@ body.product-detail-open {
 
 .product-modal {
   position: fixed;
-  width: min(92vw, 420px);
-  max-height: 80vh;
+  width: min(84vw, 368px);
+  max-height: 74vh;
   overflow: visible;
   background: transparent;
-  padding-bottom: 28px;
+  padding-bottom: 32px;
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -667,51 +666,51 @@ body.product-detail-open {
 
 .modal-image {
   position: relative;
-  top: -42px;
-  width: 88%;
-  margin-bottom: -4px;
+  top: -38px;
+  width: 78%;
+  margin-bottom: -8px;
   filter: drop-shadow(0 12px 22px rgba(0,0,0,0.18));
 }
 
 .product-modal h2 {
-  width: 84%;
-  margin: 2px auto 10px;
+  width: 82%;
+  margin: 6px auto 10px;
   padding: 0;
   text-align: center;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.38rem;
+  font-size: 1.28rem;
   line-height: 1.16;
   letter-spacing: -0.02em;
   color: var(--green-deep);
 }
 
 .modal-description {
-  width: 84%;
-  margin: 0 auto 22px;
+  width: 82%;
+  margin: 0 auto 26px;
   padding: 0;
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.96rem;
   line-height: 1.42;
   color: rgba(77, 56, 41, 0.78);
 }
 
 .product-modal .size-options {
   width: 100%;
-  padding: 0 20px;
+  padding: 0 24px;
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .product-modal .pill {
-  min-height: 46px;
-  padding: 0 10px;
+  min-height: 44px;
+  padding: 0 8px;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
   background: rgba(255,255,255,0.95);
   color: var(--green-deep);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 700;
 }
 
@@ -724,37 +723,38 @@ body.product-detail-open {
 
 .product-modal .quantity {
   width: 100%;
-  padding: 0 20px;
+  padding: 0 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 26px;
+  gap: 18px;
+  margin-bottom: 30px;
 }
 
 .product-modal .qty {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   border: 1px solid var(--line);
   background: rgba(249, 245, 238, 0.96);
   color: var(--green-deep);
-  font-size: 1.15rem;
+  font-size: 1.18rem;
   font-weight: 700;
+  flex: 0 0 auto;
 }
 
 .product-modal .qty-value {
-  min-width: 30px;
+  min-width: 32px;
   text-align: center;
-  font-size: 1.08rem;
+  font-size: 1.06rem;
   font-weight: 700;
   color: var(--green-deep);
 }
 
 .product-modal .cta {
-  width: calc(100% - 40px);
+  width: calc(100% - 48px);
   min-height: 52px;
-  margin: 0 20px;
+  margin: 0 24px;
   border-radius: 14px;
   background: var(--green-deep);
   color: var(--white);
@@ -765,64 +765,65 @@ body.product-detail-open {
 
 @media (max-width: 640px) {
   .product-modal {
-    width: min(94vw, 420px);
+    width: min(84vw, 368px);
+    max-height: 74vh;
     padding-bottom: 30px;
   }
 
   .product-modal::after {
-    top: 164px;
+    top: 160px;
     border-radius: 18px;
   }
 
   .modal-image {
-    top: -38px;
-    width: 89%;
-    margin-bottom: -2px;
+    top: -34px;
+    width: 80%;
+    margin-bottom: -8px;
   }
 
   .product-modal h2 {
-    width: 86%;
-    margin: 4px auto 10px;
-    font-size: 1.28rem;
+    width: 84%;
+    margin: 6px auto 8px;
+    font-size: 1.18rem;
   }
 
   .modal-description {
-    width: 86%;
-    margin: 0 auto 20px;
-    font-size: 0.98rem;
-    line-height: 1.4;
+    width: 84%;
+    margin: 0 auto 24px;
+    font-size: 0.9rem;
+    line-height: 1.38;
   }
 
   .product-modal .size-options {
-    padding: 0 16px;
+    padding: 0 20px;
     gap: 8px;
-    margin-bottom: 22px;
+    margin-bottom: 26px;
   }
 
   .product-modal .pill {
-    min-height: 44px;
-    font-size: 0.88rem;
+    min-height: 42px;
+    font-size: 0.84rem;
   }
 
   .product-modal .quantity {
-    padding: 0 16px;
-    gap: 14px;
-    margin-bottom: 24px;
+    padding: 0 20px;
+    gap: 16px;
+    margin-bottom: 28px;
   }
 
   .product-modal .qty {
-    width: 44px;
-    height: 44px;
-    font-size: 1.1rem;
+    width: 46px;
+    height: 46px;
+    font-size: 1.12rem;
   }
 
   .product-modal .qty-value {
-    font-size: 1.04rem;
+    font-size: 1rem;
   }
 
   .product-modal .cta {
-    width: calc(100% - 32px);
+    width: calc(100% - 40px);
     min-height: 50px;
-    margin: 0 16px;
+    margin: 0 20px;
   }
 }
