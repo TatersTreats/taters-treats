@@ -1,39 +1,33 @@
-// TOGGLE CARD
+// EXPAND
 function toggleCard(card) {
-  document.querySelectorAll('.product-card').forEach(c => {
-    if (c !== card) c.classList.remove('active');
+  document.querySelectorAll('.product-card').forEach(c=>{
+    if(c!==card) c.classList.remove('active');
   });
   card.classList.toggle('active');
 }
 
-// QUANTITY
+// QTY
 function changeQty(e, delta) {
   e.stopPropagation();
+  let span = e.target.parentElement.querySelector("span");
+  let val = parseInt(span.textContent);
 
-  const wrap = e.target.closest('.qty-section');
-  const display = wrap.querySelector('.qty');
-
-  let val = parseInt(display.textContent);
   val += delta;
+  if(val<1) val=1;
+  if(val>9) val=9;
 
-  if (val < 1) val = 1;
-  if (val > 9) val = 9;
-
-  display.textContent = val;
+  span.textContent = val;
 }
 
-// ADD TO BOWL (basic visual feedback)
-function addToBowl(e) {
+// ADD
+function addToBowl(e, btn){
   e.stopPropagation();
 
-  const countEl = document.getElementById("cartCount");
-  let count = parseInt(countEl.textContent);
+  let count = document.getElementById("cartCount");
+  count.textContent = parseInt(count.textContent)+1;
 
-  count++;
-  countEl.textContent = count;
-
-  const list = document.getElementById("cartList");
-  const li = document.createElement("li");
+  let list = document.getElementById("cartList");
+  let li = document.createElement("li");
   li.textContent = "Woofle added";
   list.appendChild(li);
 }
