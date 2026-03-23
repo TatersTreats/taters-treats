@@ -1,23 +1,25 @@
 const PRODUCTS = [
   {
     id: "pumpkin",
-    flavor: "Pumpkin Turmeric",
-    description: "Supports gentle digestion",
+    flavor: "Pumpkin & Turmeric",
+    description: "Gentle on sensitive stomachs",
     image: "/assets/images/products/pumpkin-turmeric-woofle.png"
   },
   {
     id: "pbmc",
-    flavor: "Peanut Butter Mint Carob",
-    description: "Helps freshen breath",
+    flavor: "Mint & Carob",
+    description: "Freshens breath naturally",
     image: "/assets/images/products/peanut-butter-mint-carob-woofle.png"
   },
   {
     id: "ginger",
-    flavor: "Peanut Butter Ginger",
-    description: "Helps soothe the tummy",
+    flavor: "Peanut Butter & Ginger",
+    description: "Comforts and settles the tummy",
     image: "/assets/images/products/peanut-butter-ginger-woofle.png"
   }
 ];
+
+const SIZE_OPTIONS = ["Trial", "Regular", "Value"];
 
 const productsEl = document.getElementById("products");
 
@@ -68,6 +70,7 @@ function openDetail(card) {
 
   const modal = document.createElement("div");
   modal.className = "product-modal";
+
   modal.innerHTML = `
     <img src="${product.image}" class="modal-image" alt="${product.flavor}" />
 
@@ -75,18 +78,20 @@ function openDetail(card) {
     <p class="modal-description">${product.description}</p>
 
     <div class="size-options">
-      <button class="pill active" type="button">Trial</button>
-      <button class="pill" type="button">Regular</button>
-      <button class="pill" type="button">Value</button>
+      ${SIZE_OPTIONS.map((size, i) => `
+        <button class="pill ${i === 1 ? "active" : ""}" data-size="${size}">
+          ${size}
+        </button>
+      `).join("")}
     </div>
 
     <div class="quantity">
-      <button class="qty minus" type="button">−</button>
+      <button class="qty minus">−</button>
       <span class="qty-value">1</span>
-      <button class="qty plus" type="button">+</button>
+      <button class="qty plus">+</button>
     </div>
 
-    <button class="cta" type="button">Fill the DogBowl™</button>
+    <button class="cta">Fill the DogBowl™</button>
   `;
 
   modal.style.position = "fixed";
@@ -96,7 +101,6 @@ function openDetail(card) {
   modal.style.height = `${originRect.height}px`;
   modal.style.margin = "0";
   modal.style.transform = "none";
-  modal.style.transformOrigin = "center center";
   modal.style.overflow = "visible";
   modal.style.transition =
     "left 260ms ease, top 260ms ease, width 260ms ease, height 260ms ease, border-radius 260ms ease";
@@ -116,7 +120,7 @@ function openDetail(card) {
   requestAnimationFrame(() => {
     overlay.style.opacity = "1";
     modal.style.left = `${modalLeft}px`;
-    modal.style.top = "54%";               // ⬅️ LOWERED
+    modal.style.top = "58%";
     modal.style.width = `${modalWidth}px`;
     modal.style.height = "auto";
     modal.style.maxHeight = "86vh";
@@ -127,44 +131,51 @@ function openDetail(card) {
 
 function attachModalEvents(modal, overlay) {
   let qty = 1;
+  let selectedSize = "Regular";
+
   const qtyEl = modal.querySelector(".qty-value");
 
-  modal.querySelector(".plus").addEventListener("click", (event) => {
-    event.stopPropagation();
-    qty += 1;
+  modal.querySelector(".plus").onclick = (e) => {
+    e.stopPropagation();
+    qty++;
     qtyEl.textContent = qty;
-  });
+  };
 
-  modal.querySelector(".minus").addEventListener("click", (event) => {
-    event.stopPropagation();
-    qty -= 1;
-    if (qty < 1) qty = 1;
+  modal.querySelector(".minus").onclick = (e) => {
+    e.stopPropagation();
+    qty = Math.max(1, qty - 1);
     qtyEl.textContent = qty;
-  });
+  };
 
   modal.querySelectorAll(".pill").forEach((btn) => {
-    btn.addEventListener("click", (event) => {
-      event.stopPropagation();
-      modal.querySelectorAll(".pill").forEach((b) => b.classList.remove("active"));
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      modal.querySelectorAll(".pill").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
+      selectedSize = btn.dataset.size;
+    };
+  });
+
+  modal.querySelector(".cta").onclick = (e) => {
+    e.stopPropagation();
+
+    console.log({
+      product: modal.querySelector("h2").textContent,
+      size: selectedSize,
+      quantity: qty
     });
-  });
 
-  modal.querySelector(".cta").addEventListener("click", (event) => {
-    event.stopPropagation();
     closeModal();
-  });
+  };
 
-  overlay.addEventListener("click", closeModal);
+  overlay.onclick = closeModal;
 }
 
 function closeModal() {
   if (!activeModal || !activeOverlay) return;
 
   const originCard = activeOriginCard;
-  const originRect = originCard
-    ? originCard.getBoundingClientRect()
-    : null;
+  const originRect = originCard?.getBoundingClientRect();
 
   activeOverlay.style.opacity = "0";
 
@@ -189,16 +200,12 @@ function closeModal() {
     overlayToRemove.remove();
     modalToRemove.remove();
     document.body.classList.remove("product-detail-open");
-    if (cardToRestore) {
-      cardToRestore.style.visibility = "";
-    }
+    if (cardToRestore) cardToRestore.style.visibility = "";
   }, 260);
 }
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    closeModal();
-  }
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
 });
 
 renderProducts();
