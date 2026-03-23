@@ -67,26 +67,26 @@ function openDetail(card) {
   modal.className = "product-modal";
 
   modal.innerHTML = `
-    <img src="${product.image}" class="modal-image" />
+    <img src="${product.image}" class="modal-image" alt="${product.flavor}" />
 
     <h2>${product.flavor}</h2>
     <p class="modal-description">${product.description}</p>
 
     <div class="size-options">
       ${SIZE_OPTIONS.map((s, i) => `
-        <button class="pill ${i === 1 ? "active" : ""}" data-size="${s}">
+        <button class="pill ${i === 1 ? "active" : ""}" data-size="${s}" type="button">
           ${s}
         </button>
       `).join("")}
     </div>
 
     <div class="quantity">
-      <button class="qty minus">−</button>
+      <button class="qty minus" type="button" aria-label="Decrease quantity">−</button>
       <span class="qty-value">1</span>
-      <button class="qty plus">+</button>
+      <button class="qty plus" type="button" aria-label="Increase quantity">+</button>
     </div>
 
-    <button class="cta">Fill the DogBowl™</button>
+    <button class="cta" type="button">Fill the DogBowl™</button>
   `;
 
   Object.assign(modal.style, {
@@ -112,11 +112,11 @@ function openDetail(card) {
   requestAnimationFrame(() => {
     Object.assign(modal.style, {
       left: left + "px",
-      top: "9vh",          // ✅ anchored
+      top: "9vh",
       width: width + "px",
       height: "auto",
       maxHeight: "72vh",
-      transform: "none",    // ✅ no centering
+      transform: "none",
       borderRadius: "20px"
     });
   });
@@ -128,28 +128,28 @@ function bindModal(modal, overlay) {
 
   const qtyEl = modal.querySelector(".qty-value");
 
-  modal.querySelector(".plus").onclick = e => {
+  modal.querySelector(".plus").onclick = (e) => {
     e.stopPropagation();
-    qty++;
+    qty += 1;
     qtyEl.textContent = qty;
   };
 
-  modal.querySelector(".minus").onclick = e => {
+  modal.querySelector(".minus").onclick = (e) => {
     e.stopPropagation();
     qty = Math.max(1, qty - 1);
     qtyEl.textContent = qty;
   };
 
-  modal.querySelectorAll(".pill").forEach(btn => {
-    btn.onclick = e => {
+  modal.querySelectorAll(".pill").forEach((btn) => {
+    btn.onclick = (e) => {
       e.stopPropagation();
-      modal.querySelectorAll(".pill").forEach(b => b.classList.remove("active"));
+      modal.querySelectorAll(".pill").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       size = btn.dataset.size;
     };
   });
 
-  modal.querySelector(".cta").onclick = e => {
+  modal.querySelector(".cta").onclick = (e) => {
     e.stopPropagation();
     console.log({ size, qty });
     closeModal();
@@ -178,7 +178,9 @@ function closeModal() {
   const o = activeOverlay;
   const c = activeOriginCard;
 
-  activeModal = activeOverlay = activeOriginCard = null;
+  activeModal = null;
+  activeOverlay = null;
+  activeOriginCard = null;
 
   setTimeout(() => {
     m.remove();
@@ -188,7 +190,7 @@ function closeModal() {
   }, 260);
 }
 
-document.addEventListener("keydown", e => {
+document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
 
