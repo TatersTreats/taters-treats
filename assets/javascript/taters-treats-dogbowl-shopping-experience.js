@@ -124,15 +124,12 @@ function attachLongPressHandlers() {
   const cards = document.querySelectorAll(".product-card");
 
   cards.forEach(card => {
-    const productId = card.dataset.product;
-
-    let timer = null;
-
-    const start = () => {
-      timer = setTimeout(() => {
-        openProductDetail(card, productId);
-      }, 350);
-    };
+    card.addEventListener("click", (event) => {
+      if (event.target.closest(".add-button, .pill-btn, .qty-button")) return;
+      openProductDetail(card, card.dataset.product);
+    });
+  });
+}
 
     const cancel = () => {
       if (timer) {
