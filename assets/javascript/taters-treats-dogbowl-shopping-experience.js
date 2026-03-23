@@ -45,7 +45,7 @@ const PRODUCTS = [
 
 const STORAGE_KEY = "taters_dogbowl_v6";
 
-/* 🔒 Disable image long press */
+/* Optional safeguard for native image behavior */
 (function () {
   const style = document.createElement("style");
   style.textContent = `
@@ -59,7 +59,7 @@ const STORAGE_KEY = "taters_dogbowl_v6";
     .product-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(20,18,14,0.35);
+      background: rgba(20, 18, 14, 0.35);
       backdrop-filter: blur(6px);
       z-index: 50;
     }
@@ -78,8 +78,8 @@ const STORAGE_KEY = "taters_dogbowl_v6";
       background: white;
       border-radius: 18px;
       box-shadow:
-        0 18px 40px rgba(0,0,0,0.18),
-        0 6px 14px rgba(0,0,0,0.12);
+        0 18px 40px rgba(0, 0, 0, 0.18),
+        0 6px 14px rgba(0, 0, 0, 0.12);
     }
   `;
   document.head.appendChild(style);
@@ -109,45 +109,38 @@ function renderProductCard(product) {
 
 function renderProducts() {
   const productsEl = document.getElementById("products");
+  if (!productsEl) return;
+
   productsEl.innerHTML = "";
 
-  PRODUCTS.forEach(product => {
+  PRODUCTS.forEach((product) => {
     productsEl.appendChild(renderProductCard(product));
   });
 
-  attachLongPressHandlers();
+  attachProductCardHandlers();
 }
 
-/* --- LONG PRESS → EXPAND --- */
+/* --- TAP TO OPEN --- */
 
-function attachLongPressHandlers() {
+function attachProductCardHandlers() {
   const cards = document.querySelectorAll(".product-card");
 
-  cards.forEach(card => {
+  cards.forEach((card) => {
     card.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
       if (event.target.closest(".add-button, .pill-btn, .qty-button")) return;
+
       openProductDetail(card, card.dataset.product);
     });
-  });
-}
-
-    const cancel = () => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-    };
-
-    card.addEventListener("touchstart", start);
-    card.addEventListener("touchend", cancel);
-    card.addEventListener("touchmove", cancel);
-    card.addEventListener("touchcancel", cancel);
   });
 }
 
 /* --- OPEN / CLOSE --- */
 
 function openProductDetail(card, productId) {
+  if (!card) return;
   if (document.body.classList.contains("product-detail-open")) return;
 
   document.body.classList.add("product-detail-open");
@@ -155,6 +148,7 @@ function openProductDetail(card, productId) {
 
   const overlay = document.createElement("div");
   overlay.className = "product-overlay";
+  overlay.dataset.product = productId;
   document.body.appendChild(overlay);
 
   overlay.addEventListener("click", closeProductDetail);
@@ -163,11 +157,13 @@ function openProductDetail(card, productId) {
 function closeProductDetail() {
   document.body.classList.remove("product-detail-open");
 
-  document.querySelectorAll(".product-card.active").forEach(card => {
+  document.querySelectorAll(".product-card.active").forEach((card) => {
     card.classList.remove("active");
   });
 
-  document.querySelectorAll(".product-overlay").forEach(el => el.remove());
+  document.querySelectorAll(".product-overlay").forEach((el) => {
+    el.remove();
+  });
 }
 
 /* --- INIT --- */
