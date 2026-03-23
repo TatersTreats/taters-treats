@@ -166,23 +166,21 @@ p {
   margin-bottom: 4px !important;
   border-radius: 12px;
   overflow: hidden;
+  background: #ffffff;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #ffffff; /* clean product stage */
+  position: relative;
 }
-.product-image img {
-  width: 112% !important;
-  height: 112% !important;
-  object-fit: contain;
-  display: block;
 
-  transform: translateY(2px);
+.product-image img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 138% !important;
+  max-width: none !important;
+  height: auto !important;
+  transform: translate(-50%, -50%);
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.14));
 }
-
 .product-body {
   display: grid;
   gap: 10px;
