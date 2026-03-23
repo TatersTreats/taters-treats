@@ -730,6 +730,7 @@ body.product-detail-open {
   background: var(--green);
   border-color: var(--green);
   color: var(--white);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
 }
 
 /* QUANTITY */
