@@ -64,7 +64,7 @@ function openDetail(card) {
   activeOriginCard = card;
 
   const originRect = card.getBoundingClientRect();
-  const modalWidth = Math.min(window.innerWidth * 0.92, 480);
+  const modalWidth = Math.min(window.innerWidth * 0.92, 420);
   const modalLeft = (window.innerWidth - modalWidth) / 2;
 
   const overlay = document.createElement("div");
