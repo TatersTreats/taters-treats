@@ -42,20 +42,7 @@ const PRODUCTS = [
     }
   }
 ];
-  {
-    id: "ginger",
-    line: "WOOFLES™",
-    flavor: "Peanut Butter Ginger",
-    benefit: "Helps soothe the tummy",
-    image: "/assets/images/products/peanut-butter-ginger-woofle.png",
-    defaultSize: "regular",
-    sizes: {
-      trial: { label: "Small", priceId: "price_1TD3rmDywMn3O3R81CgJYyr4" },
-      regular: { label: "Medium", priceId: "price_1TD3rlDywMn3O3R8CDw2xmaI" },
-      value: { label: "Large", priceId: "price_1TD3rkDywMn3O3R8PquAjDEM" }
-    }
-  }
-];
+  
 
 const STORAGE_KEY = "taters_dogbowl_v6";
 
