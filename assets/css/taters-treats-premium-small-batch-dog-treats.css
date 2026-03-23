@@ -778,7 +778,8 @@ body.product-detail-open {
   }
 
   .modal-image {
-    max-width: 216px;
+    width: 82%;
+    max-width: none;
     margin-bottom: 2px;
   }
 
