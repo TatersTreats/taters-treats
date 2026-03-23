@@ -19,12 +19,14 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   color: var(--brown);
   background: linear-gradient(to bottom, #fdfaf5 0%, #f7f0e6 100%);
 }
+
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; }
 button, input { font: inherit; }
@@ -124,7 +126,9 @@ p {
 .checkout-button:hover,
 .qty-button:hover,
 .newsletter-button:hover,
-.link-button:hover { transform: translateY(-1px); }
+.link-button:hover {
+  transform: translateY(-1px);
+}
 
 .shop {
   padding-top: 28px;
@@ -157,6 +161,9 @@ p {
   padding: 14px;
   box-shadow: var(--shadow-soft);
   min-width: 0;
+  position: relative;
+  will-change: transform;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
 /* IMAGE — UNIFORM FULL-FILL */
@@ -167,7 +174,6 @@ p {
   border-radius: 12px;
   overflow: hidden;
   background: #ffffff;
-
   position: relative;
 }
 
@@ -180,7 +186,12 @@ p {
   height: auto !important;
   transform: translate(-50%, -50%);
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.14));
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+  pointer-events: none;
 }
+
 .product-body {
   display: grid;
   gap: 10px;
@@ -195,7 +206,9 @@ p {
 .product-line,
 .mini-badge,
 .control-label,
-.selected-copy { display: none; }
+.selected-copy {
+  display: none;
+}
 
 .product-flavor {
   font-family: Georgia, 'Times New Roman', serif;
@@ -409,6 +422,7 @@ p {
 #cartStatus { width: 100%; min-height: 16px; }
 
 .trust-strip { padding: 8px 0 12px; }
+
 .trust-line {
   text-align: center;
   font-size: 0.84rem;
@@ -416,6 +430,7 @@ p {
 }
 
 .narrow { max-width: 760px; }
+
 .story-card,
 .info-card {
   background: rgba(255, 253, 250, 0.78);
@@ -447,6 +462,7 @@ p {
 }
 
 .lower-section { padding-top: 4px; }
+
 .lower-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -507,16 +523,20 @@ p {
 
 @media (max-width: 860px) {
   .hero { min-height: 54vh; }
+
   .shop-layout { grid-template-columns: 1fr; }
+
   .dogbowl {
     position: static;
     top: auto;
   }
+
   .products {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 8px;
     align-items: start;
   }
+
   .lower-grid { grid-template-columns: 1fr; }
 }
 
@@ -527,45 +547,40 @@ p {
   .shop { padding-top: 18px; }
   .section { padding: 26px 0; }
 
-  /* 3-UP GRID */
   .products {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 8px !important;
     align-items: start;
   }
 
-  /* CARD */
   .product-card {
-    padding: 6px !important;
+    padding: 10px;
     border-radius: 16px;
     min-width: 0;
     background: rgba(255,253,250,0.98);
     box-shadow: 0 6px 14px rgba(45,32,20,0.08);
   }
 
-  /* IMAGE — FORCE BIGGER */
   .product-image {
-  height: 110px !important;
-  width: 100%;
-  margin-bottom: 4px !important;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #ffffff;
+    height: 110px !important;
+    width: 100%;
+    margin-bottom: 4px !important;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.12));
+  }
 
-.product-image img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;
-  display: block;
-
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.12));
-}
-  /* REMOVE CLUTTER (FORCED) */
   .card-controls,
   .size-options,
   .quantity-row,
@@ -580,7 +595,6 @@ p {
     display: none !important;
   }
 
-  /* TEXT */
   .product-body {
     gap: 2px !important;
   }
@@ -596,282 +610,11 @@ p {
 
   .newsletter-form { grid-template-columns: 1fr; }
 }
+
 /* =========================
-   MOBILE PRODUCT ROW
+   EXPANDING BUY CARD
 ========================= */
-@media (max-width: 640px) {
 
-  .products {
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: 8px !important;
-  align-items: start;
-}
-
-  .product-card {
-    padding: 10px;
-    border-radius: 16px;
-    box-shadow: 0 6px 14px rgba(45,32,20,0.08);
-    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-  }
-
-  .product-image {
-    aspect-ratio: 1 / 1;
-  }
-
-  .product-body {
-    padding: 8px 6px 4px;
-    gap: 4px;
-  }
-
-  .mini-badge,
-  .product-trust,
-  .control-label,
-  .size-options,
-  .quantity-row,
-  .add-button,
-  .status-message {
-    display: none !important;
-  }
-
-  .product-line {
-    display: none;
-  }
-
-  .product-flavor {
-    font-size: 0.85rem;
-    line-height: 1.2;
-  }
-
-  .product-benefit {
-    font-size: 0.75rem;
-    font-weight: 500;
-    opacity: 0.8;
-  }
-
-  /* INTERACTION FEEL */
-  .product-card:active {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 18px rgba(45,32,20,0.12);
-  }
-
-  .product-card.active {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 20px rgba(45,32,20,0.14);
-    background: rgba(255,253,250,1);
-  }
-}
-/* --- PRODUCT CARD BASE --- */
-
-.product-card {
-  position: relative;
-  will-change: transform;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-/* --- LOCK BACKGROUND WHEN OPEN --- */
-
-body.product-detail-open {
-  overflow: hidden;
-}
-
-/* --- OVERLAY --- */
-
-.product-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(20, 18, 14, 0.35);
-  backdrop-filter: blur(6px);
-  z-index: 50;
-}
-
-/* --- ACTIVE CARD (EXPANDED STATE) --- */
-
-.product-card.active {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-
-  width: min(92vw, 420px);
-  max-height: 80vh;
-
-  transform: translate(-50%, -50%) scale(1.05);
-
-  z-index: 60;
-
-  background: #ffffff;
-  border-radius: 18px;
-
-  box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.18),
-    0 6px 14px rgba(0, 0, 0, 0.12);
-
-  overflow: hidden;
-}
-
-/* --- IMAGE BEHAVIOR --- */
-
-.product-image img {
-  display: block;
-  width: 100%;
-  height: auto;
-
-  -webkit-user-drag: none;
-  -webkit-touch-callout: none;
-  user-select: none;
-  pointer-events: none;
-}
-
-/* --- EXPANDED CONTENT SPACING --- */
-
-.product-card.active .product-body {
-  padding: 16px 16px 18px;
-}
-
-/* --- TITLE --- */
-
-.product-flavor {
-  display: block;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-/* --- BENEFIT (for next step) --- */
-
-.product-benefit {
-  margin-top: 6px;
-  font-size: 13px;
-  color: #6b7280; /* soft gray */
-}
-
-/* --- SUBTLE PRESS FEEDBACK --- */
-
-.product-card:active {
-  transform: scale(0.97);
-}
-body.product-detail-open {
-  overflow: hidden;
-}
-
-.product-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  background: rgba(20, 18, 14, 0.35);
-  backdrop-filter: blur(6px);
-}
-
-.product-card {
-  position: relative;
-  will-change: transform;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.product-image img {
-  -webkit-user-drag: none;
-  -webkit-touch-callout: none;
-  user-select: none;
-  pointer-events: none;
-}
-
-.product-card .card-controls,
-.product-card .product-benefit,
-.product-card .status-message {
-  display: none;
-}
-
-.product-card.active {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 60;
-  width: min(92vw, 420px);
-  max-height: 86vh;
-  overflow-y: auto;
-  transform: translate(-50%, -50%);
-  border-radius: 18px;
-  background: #fff;
-  box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.18),
-    0 6px 14px rgba(0, 0, 0, 0.12);
-}
-
-.product-card.active .product-image {
-  background: #fff;
-  padding: 18px 18px 0;
-}
-
-.product-card.active .product-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-}
-
-.product-card.active .product-body {
-  padding: 14px 18px 18px;
-}
-
-.product-card.active .product-title {
-  margin-bottom: 8px;
-  text-align: center;
-}
-
-.product-card.active .product-flavor {
-  display: block;
-  font-size: 1.125rem;
-  line-height: 1.2;
-}
-
-.product-card.active .product-benefit {
-  display: block;
-  margin: 0 0 18px;
-  text-align: center;
-  line-height: 1.45;
-}
-
-.product-card.active .card-controls {
-  display: grid;
-  gap: 14px;
-}
-
-.product-card.active .size-options {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.product-card.active .pill-btn {
-  min-height: 44px;
-}
-
-.product-card.active .quantity-row.compact-row {
-  display: grid;
-  gap: 12px;
-}
-
-.product-card.active .quantity-controls {
-  justify-content: center;
-}
-
-.product-card.active .add-button {
-  width: 100%;
-  min-height: 48px;
-}
-
-.product-card.active .status-message {
-  display: block;
-  margin-top: 12px;
-  text-align: center;
-}
 body.product-detail-open {
   overflow: hidden;
 }
@@ -883,81 +626,158 @@ body.product-detail-open {
   backdrop-filter: blur(6px);
   z-index: 9998;
 }
-/* =========================
-   BUY CARD (EXPANDED)
-========================= */
 
 .product-card.active {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 9999;
+  width: min(92vw, 420px);
+  max-height: 86vh;
+  overflow-y: auto;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background: #fffdfa;
+  border: 1px solid rgba(63, 95, 62, 0.08);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.18),
+    0 6px 14px rgba(0, 0, 0, 0.12);
+  padding: 18px 18px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  padding: 18px 18px 20px;
   gap: 14px;
 }
 
-/* --- TITLE ABOVE IMAGE --- */
-
-.product-card.active .product-flavor {
-  order: 1;
-  text-align: center;
-  font-size: 1.2rem;
-  line-height: 1.2;
+/* default card stays minimal */
+.product-card .product-benefit,
+.product-card .card-controls,
+.product-card .status-message {
+  display: none;
 }
 
-/* --- IMAGE --- */
+/* BUY CARD LAYOUT */
+
+.product-card.active .product-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 0;
+}
+
+.product-card.active .product-title {
+  order: 1;
+  width: 100%;
+}
+
+.product-card.active .product-flavor {
+  display: block;
+  order: 1;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem !important;
+  line-height: 1.2;
+  color: var(--green-deep);
+}
 
 .product-card.active .product-image {
   order: 2;
-  padding: 0;
+  width: 100%;
+  height: auto !important;
   margin: 0;
+  padding: 0;
+  border-radius: 0;
   background: transparent;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: static;
 }
 
 .product-card.active .product-image img {
+  position: static;
+  transform: none;
   width: 100%;
   max-width: 260px;
-  height: auto;
-  object-fit: contain;
+  height: auto !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.14));
 }
 
-/* --- DESCRIPTION --- */
-
 .product-card.active .product-benefit {
+  display: block !important;
   order: 3;
-  display: block;
   text-align: center;
   font-size: 0.92rem;
   line-height: 1.45;
   max-width: 32ch;
+  color: rgba(77, 56, 41, 0.78);
+  min-height: 0;
+  margin: 0;
 }
 
-/* --- CONTROLS --- */
-
 .product-card.active .card-controls {
+  display: grid !important;
   order: 4;
-  display: grid;
   gap: 14px;
   width: 100%;
 }
 
-/* SIZE */
-
 .product-card.active .size-options {
-  display: grid;
+  display: grid !important;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
-/* QUANTITY */
+.product-card.active .pill-btn {
+  min-height: 44px;
+  padding: 0 8px;
+  border-radius: 999px;
+}
+
+.product-card.active .quantity-row,
+.product-card.active .compact-row {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
 
 .product-card.active .quantity-controls {
+  display: inline-grid !important;
   margin: 0 auto;
 }
 
-/* CTA */
-
 .product-card.active .add-button {
+  display: block !important;
   width: 100%;
   min-height: 48px;
+}
+
+.product-card.active .status-message {
+  display: block !important;
+  text-align: center;
+  margin-top: 4px;
+}
+
+@media (max-width: 640px) {
+  .product-card.active {
+    width: min(94vw, 420px);
+    padding: 16px 16px 18px;
+    gap: 12px;
+  }
+
+  .product-card.active .product-flavor {
+    font-size: 1.08rem !important;
+  }
+
+  .product-card.active .product-image img {
+    max-width: 220px;
+  }
+
+  .product-card.active .product-benefit {
+    font-size: 0.88rem;
+  }
 }
