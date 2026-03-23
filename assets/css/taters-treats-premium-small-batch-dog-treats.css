@@ -620,14 +620,6 @@ p {
    FLOATING BUY CARD SYSTEM
 ========================= */
 
-/* =========================
-   FLOATING BUY CARD SYSTEM
-========================= */
-
-/* =========================
-   FLOATING BUY CARD SYSTEM
-========================= */
-
 body.product-detail-open {
   overflow: hidden;
 }
@@ -646,20 +638,19 @@ body.product-detail-open {
   max-height: 80vh;
   overflow: visible;
   background: transparent;
-  padding-bottom: 24px; /* 👈 adds internal breathing room */
+  padding-bottom: 28px;
   z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* PANEL */
 .product-modal::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  top: 150px;   /* 👈 pulls panel up tighter under woofle */
+  top: 168px;
   bottom: 0;
   background: #fffdfa;
   border: 1px solid rgba(63, 95, 62, 0.08);
@@ -674,71 +665,164 @@ body.product-detail-open {
   z-index: 1;
 }
 
-/* WOOFLE */
 .modal-image {
   position: relative;
-  top: -60px;
-  width: 88%;              /* 👈 bigger */
-  margin-bottom: 8px;      /* 👈 spacing fix */
+  top: -42px;
+  width: 88%;
+  margin-bottom: -4px;
   filter: drop-shadow(0 12px 22px rgba(0,0,0,0.18));
 }
 
-/* TITLE */
 .product-modal h2 {
-  width: 80%;              /* 👈 key fix */
-  margin: 12px auto 10px;  /* 👈 breathing room */
+  width: 84%;
+  margin: 2px auto 10px;
+  padding: 0;
   text-align: center;
-  font-size: 1.2rem;
-  line-height: 1.25;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.38rem;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: var(--green-deep);
 }
 
-/* DESCRIPTION */
 .modal-description {
-  width: 82%;
-  margin: 0 auto 18px;
+  width: 84%;
+  margin: 0 auto 22px;
+  padding: 0;
   text-align: center;
-  font-size: 0.92rem;
+  font-size: 1rem;
+  line-height: 1.42;
+  color: rgba(77, 56, 41, 0.78);
 }
 
-/* SIZE */
 .product-modal .size-options {
   width: 100%;
-  padding: 0 18px;
+  padding: 0 20px;
   display: grid !important;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 }
 
-/* BUTTONS */
 .product-modal .pill {
-  min-height: 42px;
+  min-height: 46px;
+  padding: 0 10px;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
   background: rgba(255,255,255,0.95);
+  color: var(--green-deep);
+  font-size: 0.92rem;
   font-weight: 700;
 }
 
 .product-modal .pill.active {
   background: var(--green);
+  border-color: var(--green);
   color: #fff;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
 }
 
-/* QUANTITY */
 .product-modal .quantity {
   width: 100%;
-  padding: 0 18px;
+  padding: 0 20px;
   display: flex;
   justify-content: center;
-  gap: 14px;
-  margin-bottom: 20px;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 26px;
 }
 
-/* CTA */
-.product-modal .cta {
-  width: calc(100% - 36px);
-  min-height: 50px;
-  margin: 0 18px;
-  border-radius: 14px;
+.product-modal .qty {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(249, 245, 238, 0.96);
+  color: var(--green-deep);
+  font-size: 1.15rem;
   font-weight: 700;
+}
+
+.product-modal .qty-value {
+  min-width: 30px;
+  text-align: center;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--green-deep);
+}
+
+.product-modal .cta {
+  width: calc(100% - 40px);
+  min-height: 52px;
+  margin: 0 20px;
+  border-radius: 14px;
+  background: var(--green-deep);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.98rem;
+  box-shadow: 0 10px 20px rgba(41, 65, 43, 0.16);
+}
+
+@media (max-width: 640px) {
+  .product-modal {
+    width: min(94vw, 420px);
+    padding-bottom: 30px;
+  }
+
+  .product-modal::after {
+    top: 164px;
+    border-radius: 18px;
+  }
+
+  .modal-image {
+    top: -38px;
+    width: 89%;
+    margin-bottom: -2px;
+  }
+
+  .product-modal h2 {
+    width: 86%;
+    margin: 4px auto 10px;
+    font-size: 1.28rem;
+  }
+
+  .modal-description {
+    width: 86%;
+    margin: 0 auto 20px;
+    font-size: 0.98rem;
+    line-height: 1.4;
+  }
+
+  .product-modal .size-options {
+    padding: 0 16px;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+
+  .product-modal .pill {
+    min-height: 44px;
+    font-size: 0.88rem;
+  }
+
+  .product-modal .quantity {
+    padding: 0 16px;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .product-modal .qty {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+
+  .product-modal .qty-value {
+    font-size: 1.04rem;
+  }
+
+  .product-modal .cta {
+    width: calc(100% - 32px);
+    min-height: 50px;
+    margin: 0 16px;
+  }
 }
