@@ -45,8 +45,8 @@ const PRODUCTS = [
 
 const STORAGE_KEY = "taters_dogbowl_v6";
 
-/* 🔒 Disable native image long-press globally */
-(function injectNoImageTouchStyles() {
+/* 🔒 Disable image long press */
+(function () {
   const style = document.createElement("style");
   style.textContent = `
     .product-image img {
@@ -55,35 +55,70 @@ const STORAGE_KEY = "taters_dogbowl_v6";
       user-select: none;
       pointer-events: none;
     }
+
+    .product-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20,18,14,0.35);
+      backdrop-filter: blur(6px);
+      z-index: 50;
+    }
+
+    .product-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .product-card.active {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: min(92vw, 420px);
+      transform: translate(-50%, -50%) scale(1.05);
+      z-index: 60;
+      background: white;
+      border-radius: 18px;
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.18),
+        0 6px 14px rgba(0,0,0,0.12);
+    }
   `;
   document.head.appendChild(style);
 })();
 
-/* --- EXISTING CODE UNCHANGED UNTIL renderProductCard --- */
+/* --- PRODUCT RENDER --- */
 
 function renderProductCard(product) {
   const card = document.createElement("article");
   card.className = "product-card";
-  card.dataset.product = product.id; // ✅ important
+  card.dataset.product = product.id;
 
   card.innerHTML = `
     <div class="product-image">
-      <img src="${product.image}" alt="${product.line} ${product.flavor}" />
+      <img src="${product.image}" alt="${product.flavor}" />
     </div>
 
     <div class="product-body">
       <div class="product-title">
         <span class="product-flavor">${product.flavor}</span>
       </div>
-
-      <p class="product-benefit">${product.benefit}</p>
     </div>
   `;
 
   return card;
 }
 
-/* --- LONG PRESS SYSTEM --- */
+function renderProducts() {
+  const productsEl = document.getElementById("products");
+  productsEl.innerHTML = "";
+
+  PRODUCTS.forEach(product => {
+    productsEl.appendChild(renderProductCard(product));
+  });
+
+  attachLongPressHandlers();
+}
+
+/* --- LONG PRESS → EXPAND --- */
 
 function attachLongPressHandlers() {
   const cards = document.querySelectorAll(".product-card");
@@ -95,8 +130,8 @@ function attachLongPressHandlers() {
 
     const start = () => {
       timer = setTimeout(() => {
-        openProductDetail(productId);
-      }, 400);
+        openProductDetail(card, productId);
+      }, 350);
     };
 
     const cancel = () => {
@@ -113,26 +148,29 @@ function attachLongPressHandlers() {
   });
 }
 
-/* --- TEMP DETAIL HANDLER --- */
+/* --- OPEN / CLOSE --- */
 
-function openProductDetail(productId) {
-  console.log("OPEN PRODUCT:", productId);
+function openProductDetail(card, productId) {
+  if (document.body.classList.contains("product-detail-open")) return;
 
-  // future:
-  // openBottomSheet(productId)
+  document.body.classList.add("product-detail-open");
+  card.classList.add("active");
+
+  const overlay = document.createElement("div");
+  overlay.className = "product-overlay";
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener("click", closeProductDetail);
 }
 
-/* --- RENDER --- */
+function closeProductDetail() {
+  document.body.classList.remove("product-detail-open");
 
-function renderProducts() {
-  const productsEl = document.getElementById("products");
-  productsEl.innerHTML = "";
-
-  PRODUCTS.forEach(product => {
-    productsEl.appendChild(renderProductCard(product));
+  document.querySelectorAll(".product-card.active").forEach(card => {
+    card.classList.remove("active");
   });
 
-  attachLongPressHandlers(); // ✅ attach after render
+  document.querySelectorAll(".product-overlay").forEach(el => el.remove());
 }
 
 /* --- INIT --- */
