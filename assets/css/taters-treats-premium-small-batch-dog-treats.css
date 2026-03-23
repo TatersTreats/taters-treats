@@ -624,6 +624,10 @@ p {
    FLOATING BUY CARD SYSTEM
 ========================= */
 
+/* =========================
+   FLOATING BUY CARD SYSTEM
+========================= */
+
 body.product-detail-open {
   overflow: hidden;
 }
@@ -639,26 +643,23 @@ body.product-detail-open {
 .product-modal {
   position: fixed;
   width: min(92vw, 420px);
-  max-height: 86vh;
+  max-height: 80vh;
   overflow: visible;
   background: transparent;
-  border: 0;
-  box-shadow: none;
-  padding: 0 0 20px;
-  margin: 0;
+  padding-bottom: 24px; /* 👈 adds internal breathing room */
   z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* PANEL (TEXT BLOCK) */
+/* PANEL */
 .product-modal::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  top: 290px;
+  top: 240px;   /* 👈 pulls panel up tighter under woofle */
   bottom: 0;
   background: #fffdfa;
   border: 1px solid rgba(63, 95, 62, 0.08);
@@ -673,64 +674,54 @@ body.product-detail-open {
   z-index: 1;
 }
 
-/* FLOATING WOOFLE */
+/* WOOFLE */
 .modal-image {
   position: relative;
   top: -60px;
-  width: 82%;
-  max-width: none;
-  height: auto;
-  margin: 0 auto;
+  width: 88%;              /* 👈 bigger */
+  margin-bottom: 8px;      /* 👈 spacing fix */
   filter: drop-shadow(0 12px 22px rgba(0,0,0,0.18));
 }
 
-/* TEXT CONTENT */
+/* TITLE */
 .product-modal h2 {
-  width: 100%;
-  margin: 8px 0 8px;
-  padding: 0 18px;
+  width: 80%;              /* 👈 key fix */
+  margin: 12px auto 10px;  /* 👈 breathing room */
   text-align: center;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.15rem;
-  line-height: 1.2;
-  color: var(--green-deep);
+  font-size: 1.2rem;
+  line-height: 1.25;
 }
 
+/* DESCRIPTION */
 .modal-description {
-  width: 100%;
-  margin: 0 0 18px;
-  padding: 0 18px;
+  width: 82%;
+  margin: 0 auto 18px;
   text-align: center;
   font-size: 0.92rem;
-  line-height: 1.45;
-  color: rgba(77, 56, 41, 0.78);
 }
 
 /* SIZE */
 .product-modal .size-options {
   width: 100%;
   padding: 0 18px;
-  display: grid;
+  display: grid !important;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
+/* BUTTONS */
 .product-modal .pill {
   min-height: 42px;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
-  background: rgba(255,255,255,0.9);
-  color: var(--green-deep);
-  font-size: 0.88rem;
+  background: rgba(255,255,255,0.95);
   font-weight: 700;
 }
 
 .product-modal .pill.active {
   background: var(--green);
-  border-color: var(--green);
-  color: var(--white);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  color: #fff;
 }
 
 /* QUANTITY */
@@ -739,88 +730,15 @@ body.product-detail-open {
   padding: 0 18px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.product-modal .qty {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: rgba(249, 245, 238, 0.92);
-  color: var(--green-deep);
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.product-modal .qty-value {
-  min-width: 24px;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--green-deep);
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
 /* CTA */
 .product-modal .cta {
   width: calc(100% - 36px);
-  min-height: 48px;
+  min-height: 50px;
   margin: 0 18px;
   border-radius: 14px;
-  background: var(--green-deep);
-  color: var(--white);
   font-weight: 700;
-  font-size: 0.95rem;
-}
-
-/* MOBILE */
-@media (max-width: 640px) {
-  .product-modal {
-    width: min(94vw, 420px);
-    padding-bottom: 18px;
-  }
-
-  .product-modal::after {
-    top: 180px;
-    border-radius: 18px;
-  }
-
-  .modal-image {
-    top: -50px;
-    width: 86%;
-    max-width: none;
-  }
-
-  .product-modal h2 {
-    margin-top: 6px;
-    font-size: 1.05rem;
-    padding: 0 16px;
-  }
-
-  .modal-description {
-    font-size: 0.88rem;
-    padding: 0 16px;
-  }
-
-  .product-modal .size-options,
-  .product-modal .quantity {
-    padding: 0 16px;
-  }
-
-  .product-modal .cta {
-    width: calc(100% - 32px);
-    margin: 0 16px;
-  }
-}
-/* FORCE SIZE BUTTONS VISIBLE */
-.product-modal .size-options {
-  display: grid !important;
-}
-
-/* ACTIVE STATE */
-.product-modal .pill.active {
-  background: var(--green);
-  color: #fff;
 }
