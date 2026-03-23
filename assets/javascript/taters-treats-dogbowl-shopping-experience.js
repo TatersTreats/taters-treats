@@ -44,24 +44,21 @@ function renderProducts() {
 
 function attachCardEvents() {
   document.querySelectorAll(".product-card").forEach((card) => {
-    card.addEventListener("click", () => {
-      openDetail(card);
-    });
+    card.addEventListener("click", () => openDetail(card));
   });
 }
 
 function openDetail(card) {
   if (!card || activeModal) return;
 
-  const id = card.dataset.id;
-  const product = PRODUCTS.find((p) => p.id === id);
+  const product = PRODUCTS.find((p) => p.id === card.dataset.id);
   if (!product) return;
 
   activeOriginCard = card;
 
-  const originRect = card.getBoundingClientRect();
-  const modalWidth = Math.min(window.innerWidth * 0.92, 420);
-  const modalLeft = (window.innerWidth - modalWidth) / 2;
+  const rect = card.getBoundingClientRect();
+  const width = Math.min(window.innerWidth * 0.92, 420);
+  const left = (window.innerWidth - width) / 2;
 
   const overlay = document.createElement("div");
   overlay.className = "product-overlay";
@@ -72,17 +69,18 @@ function openDetail(card) {
   modal.className = "product-modal";
 
   modal.innerHTML = `
-    <img src="${product.image}" class="modal-image" alt="${product.flavor}" />
+    <img src="${product.image}" class="modal-image" />
 
     <h2>${product.flavor}</h2>
     <p class="modal-description">${product.description}</p>
-<div class="size-options">
-  ${SIZE_OPTIONS.map((size, i) => `
-    <button class="pill ${i === 1 ? "active" : ""}" data-size="${size}">
-      ${size}
-    </button>
-  `).join("")}
-</div>
+
+    <div class="size-options">
+      ${SIZE_OPTIONS.map((s, i) => `
+        <button class="pill ${i === 1 ? "active" : ""}" data-size="${s}">
+          ${s}
+        </button>
+      `).join("")}
+    </div>
 
     <div class="quantity">
       <button class="qty minus">−</button>
@@ -93,77 +91,72 @@ function openDetail(card) {
     <button class="cta">Fill the DogBowl™</button>
   `;
 
-  modal.style.position = "fixed";
-  modal.style.left = `${originRect.left}px`;
-  modal.style.top = `${originRect.top}px`;
-  modal.style.width = `${originRect.width}px`;
-  modal.style.height = `${originRect.height}px`;
-  modal.style.margin = "0";
-  modal.style.transform = "none";
-  modal.style.overflow = "visible";
-  modal.style.transition =
-    "left 260ms ease, top 260ms ease, width 260ms ease, height 260ms ease, border-radius 260ms ease";
-  modal.style.borderRadius = "16px";
-  modal.style.zIndex = "9999";
+  Object.assign(modal.style, {
+    position: "fixed",
+    left: rect.left + "px",
+    top: rect.top + "px",
+    width: rect.width + "px",
+    height: rect.height + "px",
+    overflow: "visible",
+    transform: "none",
+    transition: "all 260ms ease",
+    borderRadius: "16px",
+    zIndex: 9999
+  });
 
-  document.body.appendChild(overlay);
-  document.body.appendChild(modal);
+  document.body.append(overlay, modal);
   document.body.classList.add("product-detail-open");
   card.style.visibility = "hidden";
 
   activeOverlay = overlay;
   activeModal = modal;
 
-  attachModalEvents(modal, overlay);
+  bindModal(modal, overlay);
 
   requestAnimationFrame(() => {
     overlay.style.opacity = "1";
-    modal.style.left = `${modalLeft}px`;
-    modal.style.top = "58%";
-    modal.style.width = `${modalWidth}px`;
-    modal.style.height = "auto";
-    modal.style.maxHeight = "86vh";
-    modal.style.transform = "translateY(-50%)";
-    modal.style.borderRadius = "20px";
+    Object.assign(modal.style, {
+      left: left + "px",
+      top: "58%",
+      width: width + "px",
+      height: "auto",
+      maxHeight: "86vh",
+      transform: "translateY(-50%)",
+      borderRadius: "20px"
+    });
   });
 }
 
-function attachModalEvents(modal, overlay) {
+function bindModal(modal, overlay) {
   let qty = 1;
-  let selectedSize = "Regular";
+  let size = "Regular";
 
   const qtyEl = modal.querySelector(".qty-value");
 
-  modal.querySelector(".plus").onclick = (e) => {
+  modal.querySelector(".plus").onclick = e => {
     e.stopPropagation();
     qty++;
     qtyEl.textContent = qty;
   };
 
-  modal.querySelector(".minus").onclick = (e) => {
+  modal.querySelector(".minus").onclick = e => {
     e.stopPropagation();
     qty = Math.max(1, qty - 1);
     qtyEl.textContent = qty;
   };
 
-  modal.querySelectorAll(".pill").forEach((btn) => {
-    btn.onclick = (e) => {
+  modal.querySelectorAll(".pill").forEach(btn => {
+    btn.onclick = e => {
       e.stopPropagation();
       modal.querySelectorAll(".pill").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      selectedSize = btn.dataset.size;
+      size = btn.dataset.size;
     };
   });
 
-  modal.querySelector(".cta").onclick = (e) => {
+  modal.querySelector(".cta").onclick = e => {
     e.stopPropagation();
-
-    console.log({
-      product: modal.querySelector("h2").textContent,
-      size: selectedSize,
-      quantity: qty
-    });
-
+    console.log({ size, qty });
     closeModal();
   };
 
@@ -171,39 +164,38 @@ function attachModalEvents(modal, overlay) {
 }
 
 function closeModal() {
-  if (!activeModal || !activeOverlay) return;
+  if (!activeModal) return;
 
-  const originCard = activeOriginCard;
-  const originRect = originCard?.getBoundingClientRect();
+  const rect = activeOriginCard?.getBoundingClientRect();
+
+  if (rect) {
+    Object.assign(activeModal.style, {
+      left: rect.left + "px",
+      top: rect.top + "px",
+      width: rect.width + "px",
+      height: rect.height + "px",
+      transform: "none",
+      borderRadius: "16px"
+    });
+  }
 
   activeOverlay.style.opacity = "0";
 
-  if (originRect) {
-    activeModal.style.left = `${originRect.left}px`;
-    activeModal.style.top = `${originRect.top}px`;
-    activeModal.style.width = `${originRect.width}px`;
-    activeModal.style.height = `${originRect.height}px`;
-    activeModal.style.transform = "none";
-    activeModal.style.borderRadius = "16px";
-  }
+  const m = activeModal;
+  const o = activeOverlay;
+  const c = activeOriginCard;
 
-  const modalToRemove = activeModal;
-  const overlayToRemove = activeOverlay;
-  const cardToRestore = activeOriginCard;
-
-  activeModal = null;
-  activeOverlay = null;
-  activeOriginCard = null;
+  activeModal = activeOverlay = activeOriginCard = null;
 
   setTimeout(() => {
-    overlayToRemove.remove();
-    modalToRemove.remove();
+    m.remove();
+    o.remove();
     document.body.classList.remove("product-detail-open");
-    if (cardToRestore) cardToRestore.style.visibility = "";
+    if (c) c.style.visibility = "";
   }, 260);
 }
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", e => {
   if (e.key === "Escape") closeModal();
 });
 
