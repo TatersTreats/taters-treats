@@ -752,3 +752,123 @@ body.product-detail-open {
 .product-card:active {
   transform: scale(0.97);
 }
+body.product-detail-open {
+  overflow: hidden;
+}
+
+.product-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: rgba(20, 18, 14, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+.product-card {
+  position: relative;
+  will-change: transform;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.product-image img {
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.product-card .card-controls,
+.product-card .product-benefit,
+.product-card .status-message {
+  display: none;
+}
+
+.product-card.active {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 60;
+  width: min(92vw, 420px);
+  max-height: 86vh;
+  overflow-y: auto;
+  transform: translate(-50%, -50%);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.18),
+    0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.product-card.active .product-image {
+  background: #fff;
+  padding: 18px 18px 0;
+}
+
+.product-card.active .product-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.product-card.active .product-body {
+  padding: 14px 18px 18px;
+}
+
+.product-card.active .product-title {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.product-card.active .product-flavor {
+  display: block;
+  font-size: 1.125rem;
+  line-height: 1.2;
+}
+
+.product-card.active .product-benefit {
+  display: block;
+  margin: 0 0 18px;
+  text-align: center;
+  line-height: 1.45;
+}
+
+.product-card.active .card-controls {
+  display: grid;
+  gap: 14px;
+}
+
+.product-card.active .size-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.product-card.active .pill-btn {
+  min-height: 44px;
+}
+
+.product-card.active .quantity-row.compact-row {
+  display: grid;
+  gap: 12px;
+}
+
+.product-card.active .quantity-controls {
+  justify-content: center;
+}
+
+.product-card.active .add-button {
+  width: 100%;
+  min-height: 48px;
+}
+
+.product-card.active .status-message {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+}
