@@ -62,8 +62,6 @@ function openDetail(card) {
 
   const overlay = document.createElement("div");
   overlay.className = "product-overlay";
-  overlay.style.opacity = "0";
-  overlay.style.transition = "opacity 220ms ease";
 
   const modal = document.createElement("div");
   modal.className = "product-modal";
@@ -97,8 +95,6 @@ function openDetail(card) {
     top: rect.top + "px",
     width: rect.width + "px",
     height: rect.height + "px",
-    overflow: "visible",
-    transform: "none",
     transition: "all 260ms ease",
     borderRadius: "16px",
     zIndex: 9999
@@ -114,14 +110,13 @@ function openDetail(card) {
   bindModal(modal, overlay);
 
   requestAnimationFrame(() => {
-    overlay.style.opacity = "1";
     Object.assign(modal.style, {
       left: left + "px",
-      top: "58%",
+      top: "12vh",          // ✅ anchored
       width: width + "px",
       height: "auto",
-      maxHeight: "86vh",
-      transform: "translateY(-50%)",
+      maxHeight: "80vh",
+      transform: "none",    // ✅ no centering
       borderRadius: "20px"
     });
   });
@@ -178,8 +173,6 @@ function closeModal() {
       borderRadius: "16px"
     });
   }
-
-  activeOverlay.style.opacity = "0";
 
   const m = activeModal;
   const o = activeOverlay;
