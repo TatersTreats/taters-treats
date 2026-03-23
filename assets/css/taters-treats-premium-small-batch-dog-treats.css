@@ -671,8 +671,8 @@ body.product-detail-open {
 
 /* floating woofle */
 .modal-image {
-  width: 78%;
-  max-width: 320px;
+  width: 82%;
+  max-width: 340px;
   height: auto;
   margin: 0 auto 2px;
   filter: drop-shadow(0 12px 22px rgba(0,0,0,0.18));
