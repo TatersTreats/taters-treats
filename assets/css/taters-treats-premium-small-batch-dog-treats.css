@@ -661,3 +661,94 @@ p {
     background: rgba(255,253,250,1);
   }
 }
+/* --- PRODUCT CARD BASE --- */
+
+.product-card {
+  position: relative;
+  will-change: transform;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* --- LOCK BACKGROUND WHEN OPEN --- */
+
+body.product-detail-open {
+  overflow: hidden;
+}
+
+/* --- OVERLAY --- */
+
+.product-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 18, 14, 0.35);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+/* --- ACTIVE CARD (EXPANDED STATE) --- */
+
+.product-card.active {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  width: min(92vw, 420px);
+  max-height: 80vh;
+
+  transform: translate(-50%, -50%) scale(1.05);
+
+  z-index: 60;
+
+  background: #ffffff;
+  border-radius: 18px;
+
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.18),
+    0 6px 14px rgba(0, 0, 0, 0.12);
+
+  overflow: hidden;
+}
+
+/* --- IMAGE BEHAVIOR --- */
+
+.product-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* --- EXPANDED CONTENT SPACING --- */
+
+.product-card.active .product-body {
+  padding: 16px 16px 18px;
+}
+
+/* --- TITLE --- */
+
+.product-flavor {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* --- BENEFIT (for next step) --- */
+
+.product-benefit {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #6b7280; /* soft gray */
+}
+
+/* --- SUBTLE PRESS FEEDBACK --- */
+
+.product-card:active {
+  transform: scale(0.97);
+}
