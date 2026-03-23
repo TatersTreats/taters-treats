@@ -170,8 +170,9 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
+  background: #ffffff; /* clean product stage */
+}
 .product-image img {
   width: 100% !important;
   height: 100% !important;
