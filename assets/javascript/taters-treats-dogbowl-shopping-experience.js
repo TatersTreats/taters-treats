@@ -57,7 +57,7 @@ function openDetail(card) {
   activeOriginCard = card;
 
   const rect = card.getBoundingClientRect();
-  const width = Math.min(window.innerWidth * 0.92, 420);
+  const width = Math.min(window.innerWidth * 0.84, 368);
   const left = (window.innerWidth - width) / 2;
 
   const overlay = document.createElement("div");
@@ -115,7 +115,7 @@ function openDetail(card) {
       top: "9vh",
       width: width + "px",
       height: "auto",
-      maxHeight: "72vh",
+      maxHeight: "74vh",
       transform: "none",
       borderRadius: "20px"
     });
