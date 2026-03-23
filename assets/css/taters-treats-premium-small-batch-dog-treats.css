@@ -519,31 +519,42 @@ p {
   .shop { padding-top: 18px; }
   .section { padding: 26px 0; }
 
+  /* 3-UP GRID */
   .products {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 8px;
+    align-items: start;
   }
 
+  /* CARD */
   .product-card {
     padding: 8px;
     border-radius: 16px;
     min-width: 0;
+    background: rgba(255,253,250,0.95);
+    box-shadow: 0 6px 14px rgba(45,32,20,0.08);
   }
 
+  /* IMAGE (BIGGER PRESENCE) */
   .product-image {
-    min-height: 78px;
+    min-height: 92px;
     margin-bottom: 6px;
     border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .product-image img {
-    width: min(100%, 72px);
+    width: min(100%, 96px);
   }
 
+  /* TEXT SPACING */
   .product-body {
     gap: 4px;
   }
 
+  /* REMOVE CLUTTER */
   .card-controls,
   .size-options,
   .quantity-row,
@@ -552,19 +563,19 @@ p {
   .control-label,
   .selected-copy,
   .mini-badge,
-  .product-line {
+  .product-line,
+  .product-benefit {
     display: none !important;
   }
 
+  /* FLAVOR NAME (PREMIUM LABEL STYLE) */
   .product-flavor {
-    font-size: 0.76rem;
-    line-height: 1.12;
-  }
-
-  .product-benefit {
-    min-height: 0;
-    font-size: 0.66rem;
-    line-height: 1.15;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.82rem;
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-align: center;
   }
 
   .newsletter-form { grid-template-columns: 1fr; }
