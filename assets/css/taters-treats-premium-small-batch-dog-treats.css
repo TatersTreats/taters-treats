@@ -504,37 +504,69 @@ p {
     position: static;
     top: auto;
   }
-  .products { grid-template-columns: 1fr; }
+  .products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    align-items: start;
+  }
   .lower-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
-  .container { width: min(var(--max), calc(100% - 22px)); }
+  .container { width: min(var(--max), calc(100% - 18px)); }
   .header-inner { min-height: 74px; }
   .hero-grid { padding: 42px 0 20px; }
   .shop { padding-top: 18px; }
   .section { padding: 26px 0; }
-  .product-card { padding: 12px; }
-  .product-image {
-    min-height: 112px;
-    margin-bottom: 8px;
+
+  .products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
-  .product-image img { width: 96px; }
-  .product-body,
-  .card-controls { gap: 8px; }
+
+  .product-card {
+    padding: 8px;
+    border-radius: 16px;
+    min-width: 0;
+  }
+
+  .product-image {
+    min-height: 78px;
+    margin-bottom: 6px;
+    border-radius: 12px;
+  }
+
+  .product-image img {
+    width: min(100%, 72px);
+  }
+
+  .product-body {
+    gap: 4px;
+  }
+
+  .card-controls,
+  .size-options,
+  .quantity-row,
+  .add-button,
+  .status-message,
+  .control-label,
+  .selected-copy,
+  .mini-badge,
+  .product-line {
+    display: none !important;
+  }
+
+  .product-flavor {
+    font-size: 0.76rem;
+    line-height: 1.12;
+  }
+
   .product-benefit {
     min-height: 0;
-    font-size: 0.88rem;
+    font-size: 0.66rem;
+    line-height: 1.15;
   }
-  .pill-btn {
-    min-height: 32px;
-    font-size: 0.78rem;
-  }
-  .quantity-row,
-  .compact-row { grid-template-columns: 1fr; }
-  .add-button,
-  .checkout-button,
-  .newsletter-button { min-height: 36px; }
+
   .newsletter-form { grid-template-columns: 1fr; }
 }
 /* =========================
