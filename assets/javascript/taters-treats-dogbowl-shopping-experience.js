@@ -3,19 +3,19 @@ const PRODUCTS = [
     id: "pumpkin",
     flavor: "Pumpkin Turmeric",
     description: "Supports gentle digestion",
-    image: "/assets/images/products/pumpkin.png"
+    image: "/assets/images/products/pumpkin-turmeric-woofle.png"
   },
   {
     id: "pbmc",
     flavor: "Peanut Butter Mint Carob",
     description: "Helps freshen breath",
-    image: "/assets/images/products/pbmc.png"
+    image: "/assets/images/products/peanut-butter-mint-carob-woofle.png"
   },
   {
     id: "ginger",
     flavor: "Peanut Butter Ginger",
     description: "Helps soothe the tummy",
-    image: "/assets/images/products/ginger.png"
+    image: "/assets/images/products/peanut-butter-ginger-woofle.png"
   }
 ];
 
@@ -24,7 +24,7 @@ const productsEl = document.getElementById("products");
 /* ---------- RENDER ---------- */
 
 function renderProducts() {
-  productsEl.innerHTML = PRODUCTS.map(p => `
+  productsEl.innerHTML = PRODUCTS.map((p) => `
     <article class="product-card" data-id="${p.id}">
       <div class="product-image">
         <img src="${p.image}" alt="${p.flavor}" />
@@ -39,7 +39,7 @@ function renderProducts() {
 /* ---------- INTERACTION ---------- */
 
 function attachCardEvents() {
-  document.querySelectorAll(".product-card").forEach(card => {
+  document.querySelectorAll(".product-card").forEach((card) => {
     card.addEventListener("click", () => {
       openDetail(card.dataset.id);
     });
@@ -49,7 +49,8 @@ function attachCardEvents() {
 /* ---------- DETAIL VIEW ---------- */
 
 function openDetail(id) {
-  const product = PRODUCTS.find(p => p.id === id);
+  const product = PRODUCTS.find((p) => p.id === id);
+  if (!product) return;
 
   const overlay = document.createElement("div");
   overlay.className = "product-overlay";
@@ -58,24 +59,24 @@ function openDetail(id) {
   modal.className = "product-modal";
 
   modal.innerHTML = `
-    <img src="${product.image}" class="modal-image" />
+    <img src="${product.image}" class="modal-image" alt="${product.flavor}" />
 
     <h2>${product.flavor}</h2>
     <p class="modal-description">${product.description}</p>
 
     <div class="size-options">
-      <button class="pill active">Trial</button>
-      <button class="pill">Regular</button>
-      <button class="pill">Value</button>
+      <button class="pill active" type="button">Trial</button>
+      <button class="pill" type="button">Regular</button>
+      <button class="pill" type="button">Value</button>
     </div>
 
     <div class="quantity">
-      <button class="qty minus">−</button>
+      <button class="qty minus" type="button">−</button>
       <span class="qty-value">1</span>
-      <button class="qty plus">+</button>
+      <button class="qty plus" type="button">+</button>
     </div>
 
-    <button class="cta">Fill the DogBowl™</button>
+    <button class="cta" type="button">Fill the DogBowl™</button>
   `;
 
   document.body.appendChild(overlay);
@@ -89,19 +90,19 @@ function attachModalEvents(modal, overlay) {
   const qtyEl = modal.querySelector(".qty-value");
 
   modal.querySelector(".plus").onclick = () => {
-    qty++;
+    qty += 1;
     qtyEl.textContent = qty;
   };
 
   modal.querySelector(".minus").onclick = () => {
-    qty--;
+    qty -= 1;
     if (qty < 1) qty = 1;
     qtyEl.textContent = qty;
   };
 
-  modal.querySelectorAll(".pill").forEach(btn => {
+  modal.querySelectorAll(".pill").forEach((btn) => {
     btn.onclick = () => {
-      modal.querySelectorAll(".pill").forEach(b => b.classList.remove("active"));
+      modal.querySelectorAll(".pill").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
     };
   });
