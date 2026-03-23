@@ -25,8 +25,6 @@ let activeOverlay = null;
 let activeModal = null;
 let activeOriginCard = null;
 
-/* ---------- RENDER ---------- */
-
 function renderProducts() {
   if (!productsEl) return;
 
@@ -42,8 +40,6 @@ function renderProducts() {
   attachCardEvents();
 }
 
-/* ---------- INTERACTION ---------- */
-
 function attachCardEvents() {
   document.querySelectorAll(".product-card").forEach((card) => {
     card.addEventListener("click", () => {
@@ -51,8 +47,6 @@ function attachCardEvents() {
     });
   });
 }
-
-/* ---------- DETAIL VIEW ---------- */
 
 function openDetail(card) {
   if (!card || activeModal) return;
@@ -105,7 +99,7 @@ function openDetail(card) {
   modal.style.transformOrigin = "center center";
   modal.style.overflow = "hidden";
   modal.style.transition =
-    "left 260ms ease, top 260ms ease, width 260ms ease, height 260ms ease, border-radius 260ms ease, box-shadow 260ms ease";
+    "left 260ms ease, top 260ms ease, width 260ms ease, height 260ms ease, border-radius 260ms ease";
   modal.style.borderRadius = "16px";
   modal.style.zIndex = "9999";
 
@@ -122,11 +116,11 @@ function openDetail(card) {
   requestAnimationFrame(() => {
     overlay.style.opacity = "1";
     modal.style.left = `${modalLeft}px`;
-    modal.style.top = "50%";
+    modal.style.top = "60%";               // ⬅️ LOWERED
     modal.style.width = `${modalWidth}px`;
     modal.style.height = "auto";
     modal.style.maxHeight = "86vh";
-    modal.style.transform = "translateY(-42%)";
+    modal.style.transform = "translateY(-50%)";
     modal.style.borderRadius = "20px";
   });
 }
@@ -179,7 +173,6 @@ function closeModal() {
     activeModal.style.top = `${originRect.top}px`;
     activeModal.style.width = `${originRect.width}px`;
     activeModal.style.height = `${originRect.height}px`;
-    activeModal.style.maxHeight = `${originRect.height}px`;
     activeModal.style.transform = "none";
     activeModal.style.borderRadius = "16px";
   }
@@ -207,7 +200,5 @@ document.addEventListener("keydown", (event) => {
     closeModal();
   }
 });
-
-/* ---------- INIT ---------- */
 
 renderProducts();
