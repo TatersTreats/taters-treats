@@ -116,7 +116,7 @@ function openDetail(card) {
   requestAnimationFrame(() => {
     overlay.style.opacity = "1";
     modal.style.left = `${modalLeft}px`;
-    modal.style.top = "60%";               // ⬅️ LOWERED
+    modal.style.top = "58%";               // ⬅️ LOWERED
     modal.style.width = `${modalWidth}px`;
     modal.style.height = "auto";
     modal.style.maxHeight = "86vh";
