@@ -883,4 +883,81 @@ body.product-detail-open {
   backdrop-filter: blur(6px);
   z-index: 9998;
 }
+/* =========================
+   BUY CARD (EXPANDED)
+========================= */
 
+.product-card.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 18px 18px 20px;
+  gap: 14px;
+}
+
+/* --- TITLE ABOVE IMAGE --- */
+
+.product-card.active .product-flavor {
+  order: 1;
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+/* --- IMAGE --- */
+
+.product-card.active .product-image {
+  order: 2;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+
+.product-card.active .product-image img {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* --- DESCRIPTION --- */
+
+.product-card.active .product-benefit {
+  order: 3;
+  display: block;
+  text-align: center;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  max-width: 32ch;
+}
+
+/* --- CONTROLS --- */
+
+.product-card.active .card-controls {
+  order: 4;
+  display: grid;
+  gap: 14px;
+  width: 100%;
+}
+
+/* SIZE */
+
+.product-card.active .size-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+/* QUANTITY */
+
+.product-card.active .quantity-controls {
+  margin: 0 auto;
+}
+
+/* CTA */
+
+.product-card.active .add-button {
+  width: 100%;
+  min-height: 48px;
+}
