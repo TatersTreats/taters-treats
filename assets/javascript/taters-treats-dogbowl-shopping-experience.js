@@ -5,7 +5,7 @@ const PRODUCTS = [
     flavor: "Pumpkin Turmeric",
     benefit: "Supports gentle digestion",
     description: "",
-    image: "/assets/images/products/pumpkin.jpg",
+    image: "/assets/images/products/pumpkin-turmeric-woofle.png",
     defaultSize: "regular",
     sizes: {
       trial:   { label: "Small",  priceId: "price_1TD3rlDywMn3O3R8C2mIqpVZ" },
@@ -19,7 +19,7 @@ const PRODUCTS = [
     flavor: "Peanut Butter Mint Carob",
     benefit: "Helps freshen breath",
     description: "",
-    image: "/assets/images/products/pbmc.jpg",
+    image: "/assets/images/products/peanut-butter-mint-carob-woofle.png",
     defaultSize: "regular",
     sizes: {
       trial:   { label: "Small",  priceId: "price_1TD3rlDywMn3O3R84BZEFkVl" },
@@ -33,7 +33,7 @@ const PRODUCTS = [
     flavor: "Peanut Butter Ginger",
     benefit: "Helps soothe the tummy",
     description: "",
-    image: "/assets/images/products/ginger.jpg",
+    image: "/assets/images/products/peanut-butter-ginger-woofle.png",
     defaultSize: "regular",
     sizes: {
       trial:   { label: "Small",  priceId: "price_1TD3rmDywMn3O3R81CgJYyr4" },
