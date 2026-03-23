@@ -97,7 +97,7 @@ function openDetail(card) {
   modal.style.margin = "0";
   modal.style.transform = "none";
   modal.style.transformOrigin = "center center";
-  modal.style.overflow = "hidden";
+  modal.style.overflow = "visible";
   modal.style.transition =
     "left 260ms ease, top 260ms ease, width 260ms ease, height 260ms ease, border-radius 260ms ease";
   modal.style.borderRadius = "16px";
