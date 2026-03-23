@@ -671,12 +671,12 @@ body.product-detail-open {
 
 /* floating woofle */
 .modal-image {
-  width: 68%;
+  width: 78%;
+  max-width: 320px;
   height: auto;
   margin: 0 auto 2px;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.16));
+  filter: drop-shadow(0 12px 22px rgba(0,0,0,0.18));
 }
-
 /* text block content */
 .product-modal h2 {
   width: 100%;
