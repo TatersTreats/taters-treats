@@ -814,3 +814,13 @@ body.product-detail-open {
     margin: 0 16px;
   }
 }
+/* FORCE SIZE BUTTONS VISIBLE */
+.product-modal .size-options {
+  display: grid !important;
+}
+
+/* ACTIVE STATE */
+.product-modal .pill.active {
+  background: var(--green);
+  color: #fff;
+}
