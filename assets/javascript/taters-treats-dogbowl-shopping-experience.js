@@ -112,7 +112,7 @@ function openDetail(card) {
   requestAnimationFrame(() => {
     Object.assign(modal.style, {
       left: left + "px",
-      top: "12vh",          // ✅ anchored
+      top: "9vh",          // ✅ anchored
       width: width + "px",
       height: "auto",
       maxHeight: "80vh",
