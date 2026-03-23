@@ -115,7 +115,7 @@ function openDetail(card) {
       top: "9vh",          // ✅ anchored
       width: width + "px",
       height: "auto",
-      maxHeight: "80vh",
+      maxHeight: "72vh",
       transform: "none",    // ✅ no centering
       borderRadius: "20px"
     });
