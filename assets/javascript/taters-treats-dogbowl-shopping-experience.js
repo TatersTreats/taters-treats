@@ -26,10 +26,9 @@ const productsEl = document.getElementById("products");
 let activeOverlay = null;
 let activeModal = null;
 let activeOriginCard = null;
+let bowlActivated = false;
 
 function renderProducts() {
-  if (!productsEl) return;
-
   productsEl.innerHTML = PRODUCTS.map((p) => `
     <article class="product-card" data-id="${p.id}">
       <div class="product-image">
@@ -49,15 +48,12 @@ function attachCardEvents() {
 }
 
 function openDetail(card) {
-  if (!card || activeModal) return;
+  if (activeModal) return;
 
   const product = PRODUCTS.find((p) => p.id === card.dataset.id);
-  if (!product) return;
-
-  activeOriginCard = card;
 
   const rect = card.getBoundingClientRect();
-  const width = Math.min(window.innerWidth * 0.84, 368);
+  const width = Math.min(window.innerWidth * 0.84, 360);
   const left = (window.innerWidth - width) / 2;
 
   const overlay = document.createElement("div");
@@ -67,26 +63,26 @@ function openDetail(card) {
   modal.className = "product-modal";
 
   modal.innerHTML = `
-    <img src="${product.image}" class="modal-image" alt="${product.flavor}" />
+    <img src="${product.image}" class="modal-image" />
 
     <h2>${product.flavor}</h2>
     <p class="modal-description">${product.description}</p>
 
     <div class="size-options">
       ${SIZE_OPTIONS.map((s, i) => `
-        <button class="pill ${i === 1 ? "active" : ""}" data-size="${s}" type="button">
+        <button class="pill ${i === 1 ? "active" : ""}" data-size="${s}">
           ${s}
         </button>
       `).join("")}
     </div>
 
     <div class="quantity">
-      <button class="qty minus" type="button" aria-label="Decrease quantity">−</button>
+      <button class="qty minus">−</button>
       <span class="qty-value">1</span>
-      <button class="qty plus" type="button" aria-label="Increase quantity">+</button>
+      <button class="qty plus">+</button>
     </div>
 
-    <button class="cta" type="button">Fill the DogBowl™</button>
+    <button class="cta">Fill the DogBowl™</button>
   `;
 
   Object.assign(modal.style, {
@@ -106,6 +102,7 @@ function openDetail(card) {
 
   activeOverlay = overlay;
   activeModal = modal;
+  activeOriginCard = card;
 
   bindModal(modal, overlay);
 
@@ -124,74 +121,79 @@ function openDetail(card) {
 
 function bindModal(modal, overlay) {
   let qty = 1;
-  let size = "Regular";
 
   const qtyEl = modal.querySelector(".qty-value");
 
-  modal.querySelector(".plus").onclick = (e) => {
+  modal.querySelector(".plus").onclick = e => {
     e.stopPropagation();
-    qty += 1;
+    qty++;
     qtyEl.textContent = qty;
   };
 
-  modal.querySelector(".minus").onclick = (e) => {
+  modal.querySelector(".minus").onclick = e => {
     e.stopPropagation();
     qty = Math.max(1, qty - 1);
     qtyEl.textContent = qty;
   };
 
-  modal.querySelectorAll(".pill").forEach((btn) => {
-    btn.onclick = (e) => {
+  modal.querySelectorAll(".pill").forEach(btn => {
+    btn.onclick = e => {
       e.stopPropagation();
-      modal.querySelectorAll(".pill").forEach((b) => b.classList.remove("active"));
+      modal.querySelectorAll(".pill").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      size = btn.dataset.size;
     };
   });
 
-  modal.querySelector(".cta").onclick = (e) => {
+  modal.querySelector(".cta").onclick = e => {
     e.stopPropagation();
-    console.log({ size, qty });
+
+    activateBowl();
+
     closeModal();
   };
 
   overlay.onclick = closeModal;
 }
 
+function activateBowl() {
+  if (bowlActivated) return;
+
+  const bowl = document.createElement("div");
+  bowl.className = "floating-bowl";
+  bowl.innerHTML = "🦴";
+
+  document.body.appendChild(bowl);
+
+  setTimeout(() => bowl.classList.add("active"), 10);
+
+  bowlActivated = true;
+}
+
 function closeModal() {
   if (!activeModal) return;
 
-  const rect = activeOriginCard?.getBoundingClientRect();
+  const rect = activeOriginCard.getBoundingClientRect();
 
-  if (rect) {
-    Object.assign(activeModal.style, {
-      left: rect.left + "px",
-      top: rect.top + "px",
-      width: rect.width + "px",
-      height: rect.height + "px",
-      transform: "none",
-      borderRadius: "16px"
-    });
-  }
+  Object.assign(activeModal.style, {
+    left: rect.left + "px",
+    top: rect.top + "px",
+    width: rect.width + "px",
+    height: rect.height + "px",
+    transform: "none"
+  });
 
   const m = activeModal;
   const o = activeOverlay;
   const c = activeOriginCard;
 
-  activeModal = null;
-  activeOverlay = null;
-  activeOriginCard = null;
+  activeModal = activeOverlay = activeOriginCard = null;
 
   setTimeout(() => {
     m.remove();
     o.remove();
     document.body.classList.remove("product-detail-open");
-    if (c) c.style.visibility = "";
+    c.style.visibility = "";
   }, 260);
 }
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
-});
 
 renderProducts();
