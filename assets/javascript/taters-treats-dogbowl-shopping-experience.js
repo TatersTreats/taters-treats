@@ -26,8 +26,8 @@ const SIZE_COUNTS = {
 };
 
 const SCROLL_DURATION_MS = 420;
-const MODAL_CLOSE_DURATION_MS = 260;
-const WOOFLE_FLIGHT_DURATION_MS = 520;
+const MODAL_CLOSE_DURATION_MS = 320;
+const WOOFLE_FLIGHT_DURATION_MS = 620;
 const MODAL_ENTER_DELAY_MS = 70;
 
 const productsEl = document.getElementById("products");
@@ -37,40 +37,19 @@ const bowlFrameEl = document.querySelector(".bowl-frame");
 const state = {
   activeOverlay: null,
   activeModal: null,
+  bowlInnerEl: null,
   bowlItemsLayer: null,
   isOpening: false
 };
 
-function initHeroAndBridge() {
-  const heroHeading = document.querySelector(".hero h1");
-  if (heroHeading) {
-    heroHeading.innerHTML = "Dogs<br>Deserve<br>The Best.";
-  }
+function initShopIntro() {
+  if (!shopEl) return;
 
-  const missionBox = document.querySelector(".hero-bridge");
-  if (missionBox) {
-    missionBox.innerHTML = `
-      <p class="hero-bridge-kicker">Premium, Small-batch Canine Confections</p>
-      <h2>For Dogs Who Deserve More Than Just Treats. Like Tater.</h2>
+  const sectionHead = shopEl.querySelector(".section-head");
+  if (sectionHead) {
+    sectionHead.innerHTML = `
+      <h2 class="shop-intro-line">Three flavors. Two sizes. One happy dog.</h2>
     `;
-  }
-
-  if (shopEl) {
-    const existingIntro = shopEl.querySelector(".shop-intro");
-
-    if (!existingIntro) {
-      const intro = document.createElement("div");
-      intro.className = "shop-intro";
-      intro.innerHTML = `
-        <p class="shop-intro-line">Three flavors. Two sizes. One happy dog.</p>
-      `;
-      shopEl.prepend(intro);
-    } else {
-      const line = existingIntro.querySelector(".shop-intro-line");
-      if (line) {
-        line.textContent = "Three flavors. Two sizes. One happy dog.";
-      }
-    }
   }
 }
 
@@ -96,13 +75,8 @@ function renderProducts() {
 }
 
 function attachCardEvents() {
-  const cards = document.querySelectorAll(".product-card");
-
-  cards.forEach((card) => {
-    card.addEventListener("click", () => {
-      openDetail(card);
-    });
-
+  document.querySelectorAll(".product-card").forEach((card) => {
+    card.addEventListener("click", () => openDetail(card));
     card.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
@@ -121,7 +95,7 @@ function getShopScrollTarget() {
 
   const header = document.querySelector(".site-header");
   const headerOffset = header ? header.offsetHeight : 0;
-  const breathingOffset = 12;
+  const breathingOffset = 10;
 
   return Math.max(
     0,
@@ -131,10 +105,8 @@ function getShopScrollTarget() {
 
 function scrollToShop() {
   return new Promise((resolve) => {
-    const targetTop = getShopScrollTarget();
-
     window.scrollTo({
-      top: targetTop,
+      top: getShopScrollTarget(),
       behavior: "smooth"
     });
 
@@ -213,46 +185,97 @@ async function openDetail(card) {
   await scrollPromise;
 }
 
-function ensureBowlItemsLayer() {
-  if (!bowlFrameEl) return null;
+function ensureBowlLayers() {
+  if (!bowlFrameEl) return { inner: null, items: null };
 
-  if (!state.bowlItemsLayer) {
-    const layer = document.createElement("div");
-    layer.className = "static-bowl-items";
-    bowlFrameEl.appendChild(layer);
-    state.bowlItemsLayer = layer;
+  if (!state.bowlInnerEl) {
+    let inner = bowlFrameEl.querySelector(".bowl-inner-target");
+    if (!inner) {
+      inner = document.createElement("div");
+      inner.className = "bowl-inner-target";
+      bowlFrameEl.appendChild(inner);
+    }
+    state.bowlInnerEl = inner;
   }
 
-  return state.bowlItemsLayer;
+  if (!state.bowlItemsLayer) {
+    let items = state.bowlInnerEl.querySelector(".static-bowl-items");
+    if (!items) {
+      items = document.createElement("div");
+      items.className = "static-bowl-items";
+      state.bowlInnerEl.appendChild(items);
+    }
+    state.bowlItemsLayer = items;
+  }
+
+  return {
+    inner: state.bowlInnerEl,
+    items: state.bowlItemsLayer
+  };
 }
 
 function addWoofleToBowl(imageSrc, indexOffset = 0) {
-  const layer = ensureBowlItemsLayer();
-  if (!layer) return;
+  const { items } = ensureBowlLayers();
+  if (!items) return;
 
   const item = document.createElement("img");
   item.className = "static-bowl-woofle";
   item.src = imageSrc;
   item.alt = "";
 
-  const left = 38 + Math.random() * 24;
-  const bottom = 24 + Math.random() * 18;
-  const rotation = -20 + Math.random() * 40;
-  const scale = 0.8 + Math.random() * 0.2;
+  const left = 24 + Math.random() * 52;
+  const bottom = 8 + Math.random() * 18 + Math.min(indexOffset, 4) * 2;
+  const rotation = -18 + Math.random() * 36;
+  const scale = 0.82 + Math.random() * 0.12;
 
   item.style.left = `${left}%`;
-  item.style.bottom = `${bottom}px`;
-  item.style.maxWidth = "48px";
+  item.style.bottom = `${bottom}%`;
   item.style.transform = `translate(-50%, 0) rotate(${rotation}deg) scale(${scale})`;
 
-  layer.appendChild(item);
+  items.appendChild(item);
+}
+
+function animateWoofleArc(flight, start, control, end, duration, onDone) {
+  const startTime = performance.now();
+
+  function frame(now) {
+    const elapsed = now - startTime;
+    const t = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+
+    const x =
+      (1 - eased) * (1 - eased) * start.x +
+      2 * (1 - eased) * eased * control.x +
+      eased * eased * end.x;
+
+    const y =
+      (1 - eased) * (1 - eased) * start.y +
+      2 * (1 - eased) * eased * control.y +
+      eased * eased * end.y;
+
+    const rotate = -8 + eased * 24;
+    const scale = 0.82 + eased * 0.18;
+
+    flight.style.left = `${x}px`;
+    flight.style.top = `${y}px`;
+    flight.style.transform = `translate(-50%, -50%) rotate(${rotate}deg) scale(${scale})`;
+
+    if (t < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      onDone();
+    }
+  }
+
+  requestAnimationFrame(frame);
 }
 
 function launchWoofleFromCTA(button, imageSrc, count) {
-  if (!button || !bowlFrameEl || count < 1) return;
+  const { inner } = ensureBowlLayers();
+  if (!button || !inner || count < 1) return;
 
   const buttonRect = button.getBoundingClientRect();
-  const bowlRect = bowlFrameEl.getBoundingClientRect();
+  const innerRect = inner.getBoundingClientRect();
 
   for (let index = 0; index < count; index += 1) {
     const flight = document.createElement("img");
@@ -260,28 +283,41 @@ function launchWoofleFromCTA(button, imageSrc, count) {
     flight.src = imageSrc;
     flight.alt = "";
 
-    const startLeft = buttonRect.left + buttonRect.width / 2;
-    const startTop = buttonRect.top + 4;
-    const endLeft = bowlRect.left + bowlRect.width / 2 + (-18 + Math.random() * 36);
-    const endTop = bowlRect.top + bowlRect.height / 2 + (-10 + Math.random() * 18);
+    const start = {
+      x: buttonRect.left + buttonRect.width / 2,
+      y: buttonRect.top + buttonRect.height / 2 - 4
+    };
 
-    flight.style.left = `${startLeft}px`;
-    flight.style.top = `${startTop}px`;
-    flight.style.transform = "translate(-50%, 0) scale(0.82) rotate(0deg)";
+    const end = {
+      x: innerRect.left + innerRect.width * (0.35 + Math.random() * 0.3),
+      y: innerRect.top + innerRect.height * (0.48 + Math.random() * 0.18)
+    };
+
+    const control = {
+      x: start.x + (end.x - start.x) * 0.38,
+      y: Math.min(start.y, end.y) - 90 - Math.random() * 24
+    };
+
+    flight.style.left = `${start.x}px`;
+    flight.style.top = `${start.y}px`;
     flight.style.opacity = "1";
+    flight.style.transform = "translate(-50%, -50%) rotate(-8deg) scale(0.82)";
 
     document.body.appendChild(flight);
 
     window.setTimeout(() => {
-      flight.style.left = `${endLeft}px`;
-      flight.style.top = `${endTop}px`;
-      flight.style.transform = `translate(-50%, -50%) scale(${0.96 + Math.random() * 0.12}) rotate(${-18 + Math.random() * 36}deg)`;
-    }, index * 55);
-
-    window.setTimeout(() => {
-      addWoofleToBowl(imageSrc, index);
-      flight.remove();
-    }, WOOFLE_FLIGHT_DURATION_MS + index * 55);
+      animateWoofleArc(
+        flight,
+        start,
+        control,
+        end,
+        WOOFLE_FLIGHT_DURATION_MS,
+        () => {
+          addWoofleToBowl(imageSrc, index);
+          flight.remove();
+        }
+      );
+    }, index * 65);
   }
 }
 
@@ -297,16 +333,12 @@ function bindModal(modal, overlay, product) {
 
   plusButton?.addEventListener("click", () => {
     quantity += 1;
-    if (quantityValueEl) {
-      quantityValueEl.textContent = String(quantity);
-    }
+    quantityValueEl.textContent = String(quantity);
   });
 
   minusButton?.addEventListener("click", () => {
     quantity = Math.max(1, quantity - 1);
-    if (quantityValueEl) {
-      quantityValueEl.textContent = String(quantity);
-    }
+    quantityValueEl.textContent = String(quantity);
   });
 
   sizeButtons.forEach((button) => {
@@ -335,12 +367,12 @@ function closeModal() {
   const modal = state.activeModal;
   const overlay = state.activeOverlay;
 
+  modal.classList.add("closing");
+  overlay.classList.remove("active");
+
   state.activeModal = null;
   state.activeOverlay = null;
   state.isOpening = false;
-
-  overlay.classList.remove("active");
-  modal.classList.remove("active");
 
   window.setTimeout(() => {
     modal.remove();
@@ -355,5 +387,5 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-initHeroAndBridge();
+initShopIntro();
 renderProducts();
