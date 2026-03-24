@@ -21,8 +21,8 @@ const PRODUCTS = [
 
 const SIZE_OPTIONS = ["Regular", "Value"];
 const SIZE_COUNTS = {
-  Regular: 2,
-  Value: 3
+  Regular: 1,
+  Value: 2
 };
 
 const SCROLL_DURATION_MS = 420;
