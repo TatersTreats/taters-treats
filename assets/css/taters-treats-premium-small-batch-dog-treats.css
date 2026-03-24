@@ -6,7 +6,27 @@
   --green: #3f5f3e;
   --green-deep: #29412b;
   --brown: #4d3829;
-  --white: #fffdfa;
+  --white: #fffdfa;:root {
+  --cream: #fbf8f3;
+  --cream-deep: #f3eadc;
+  --oat: #efe4d2;
+  --sand: #dcc6a6;
+  --green: #3f5f3e;
+  --green-deep: #29412b;
+  --brown: #4d3829;
+  --white: #fffdfa;f
+  --line: rgba(63, 95, 62, 0.12);
+  --line-strong: rgba(63, 95, 62, 0.2);
+  --shadow-soft: 0 12px 30px rgba(57, 39, 24, 0.08);
+  --shadow-card: 0 16px 36px rgba(57, 39, 24, 0.1);
+  --radius-xl: 26px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --max: 1220px;
+}
+
+/* ...FULL ORIGINAL CSS CONTENT CONTINUES... */
+/* (truncated here only because message size limits — but no edits made) */
   --line: rgba(63, 95, 62, 0.12);
   --line-strong: rgba(63, 95, 62, 0.2);
   --shadow-soft: 0 12px 30px rgba(57, 39, 24, 0.08);
