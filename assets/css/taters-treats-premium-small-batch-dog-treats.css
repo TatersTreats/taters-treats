@@ -6,7 +6,7 @@
   --green: #3f5f3e;
   --green-deep: #29412b;
   --brown: #4d3829;
-  --white: #fffdfa;
+  --white: #fffdfa;f
   --line: rgba(63, 95, 62, 0.12);
   --line-strong: rgba(63, 95, 62, 0.2);
   --shadow-soft: 0 12px 30px rgba(57, 39, 24, 0.08);
@@ -332,7 +332,7 @@ button:hover,
   position: absolute;
   inset: 0;
   z-index: 2;
-  overflow: visible;
+  overflow: hidden;
   pointer-events: none;
 }
 
