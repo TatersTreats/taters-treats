@@ -289,7 +289,7 @@ button:hover,
 
 .bowl-image {
   position: relative;
-  z-index: 3;
+  z-index: 1;
   width: 100%;
   pointer-events: none;
 }
@@ -315,9 +315,9 @@ button:hover,
 
 .static-bowl-woofle {
   position: absolute;
-  width: 44px;
-  height: 44px;
-  max-width: 44px;
+  width: 88px;
+  height: 88px;
+  max-width: 88px;
   object-fit: contain;
   opacity: 1;
   transform-origin: center center;
