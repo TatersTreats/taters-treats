@@ -235,7 +235,7 @@ function addWoofleToBowl(imageSrc, indexOffset = 0) {
   item.src = imageSrc;
   item.alt = "";
 
-  const left = 18 + Math.random() * 60;
+  const left = 30 + Math.random() * 40;
   const bottom = 10 + Math.random() * 40 + (indexOffset % 3) * 6;
   const rotation = -20 + Math.random() * 40;
   const scale = 0.8 + Math.random() * 0.2;
