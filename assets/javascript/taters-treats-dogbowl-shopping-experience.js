@@ -242,6 +242,7 @@ function addWoofleToBowl(imageSrc, indexOffset = 0) {
 
   item.style.left = `${left}%`;
   item.style.bottom = `${bottom}px`;
+  item.style.maxWidth = "48px";
   item.style.transform = `translate(-50%, 0) rotate(${rotation}deg) scale(${scale})`;
 
   layer.appendChild(item);
