@@ -22,10 +22,12 @@ const bowlItems = document.querySelector(".static-bowl-items");
 
 function renderProducts() {
   productsEl.innerHTML = PRODUCTS.map(p => `
-    <div class="product-card" data-id="${p.id}">
-      <img src="${p.image}">
-      <span>${p.flavor}</span>
-    </div>
+    <article class="product-card" data-id="${p.id}">
+      <div class="product-image">
+        <img src="${p.image}" />
+      </div>
+      <span class="product-flavor">${p.flavor}</span>
+    </article>
   `).join("");
 
   document.querySelectorAll(".product-card").forEach(card => {
@@ -40,7 +42,7 @@ function launch(card) {
 
   const target = {
     x: innerRect.left + innerRect.width * (0.3 + Math.random() * 0.4),
-    y: innerRect.top + innerRect.height * (0.4 + Math.random() * 0.3)
+    y: innerRect.top + innerRect.height * (0.45 + Math.random() * 0.2)
   };
 
   const flight = document.createElement("img");
@@ -56,7 +58,7 @@ function launch(card) {
 
   const control = {
     x: (start.x + target.x) / 2,
-    y: start.y - 120
+    y: Math.min(start.y, target.y) - 100
   };
 
   animate(flight, start, control, target, () => {
@@ -77,31 +79,32 @@ function placeFinal(src, target) {
 
   item.style.left = `${x}%`;
   item.style.top = `${y}%`;
-  item.style.transform = "translate(-50%, -50%) scale(1.1)";
+  item.style.transform = `translate(-50%, -50%) scale(1.12)`;
 
   bowlItems.appendChild(item);
 }
 
 function animate(el, start, control, end, done) {
-  const duration = 600;
+  const duration = 620;
   const startTime = performance.now();
 
   function frame(now) {
     const t = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
 
     const x =
-      (1 - t) * (1 - t) * start.x +
-      2 * (1 - t) * t * control.x +
-      t * t * end.x;
+      (1 - eased) * (1 - eased) * start.x +
+      2 * (1 - eased) * eased * control.x +
+      eased * eased * end.x;
 
     const y =
-      (1 - t) * (1 - t) * start.y +
-      2 * (1 - t) * t * control.y +
-      t * t * end.y;
+      (1 - eased) * (1 - eased) * start.y +
+      2 * (1 - eased) * eased * control.y +
+      eased * eased * end.y;
 
-    el.style.left = x + "px";
-    el.style.top = y + "px";
-    el.style.transform = `translate(-50%, -50%) scale(${0.8 + t * 0.3})`;
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    el.style.transform = `translate(-50%, -50%) scale(${0.85 + eased * 0.25})`;
 
     if (t < 1) {
       requestAnimationFrame(frame);
