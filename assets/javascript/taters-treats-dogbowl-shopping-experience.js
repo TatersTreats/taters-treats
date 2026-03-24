@@ -117,3 +117,28 @@ function animate(el, start, control, end, done) {
 }
 
 renderProducts();
+
+/* ADDITIONS ONLY — rest of your file unchanged */
+
+.bowl-front-mask {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(0,0,0,0.15), transparent);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* make resting clearly larger than flight */
+.static-bowl-woofle {
+  width: 96px;
+  height: 96px;
+}
+
+/* ensure flight stays smaller */
+.woofle-flight {
+  width: 42px;
+  height: 42px;
+}
