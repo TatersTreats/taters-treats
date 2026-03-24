@@ -1,15 +1,3 @@
-.bowl-frame {
-  position: relative;
-  overflow: hidden;
-  min-height: 180px;
-  border-radius: 18px;
-}
-
-.bowl-image {
-  position: relative;
-  z-index: 1;
-}
-
 .bowl-inner-target {
   position: absolute;
   left: 20%;
@@ -18,7 +6,7 @@
   bottom: 17%;
   border-radius: 50%;
   overflow: hidden;
-  z-index: 2;
+  pointer-events: none;
 }
 
 .static-bowl-items {
@@ -28,16 +16,18 @@
 
 .static-bowl-woofle {
   position: absolute;
-  width: 90px;
-  height: 90px;
+  width: 92px;
+  height: 92px;
   transform-origin: center;
+  filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
 }
 
 .woofle-flight {
   position: fixed;
-  width: 48px;
-  height: 48px;
-  z-index: 10000;
+  width: 44px;
+  height: 44px;
+  pointer-events: none;
+  z-index: 10001;
 }
 
 .bowl-front-mask {
@@ -45,7 +35,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 45%;
+  height: 48%;
   background: url("/assets/images/dogbowl/dogbowl-front-mask.png") center/cover no-repeat;
   z-index: 3;
   pointer-events: none;
