@@ -26,19 +26,25 @@ const SIZE_COUNTS = {
   Value: 3
 };
 
-const productsEl = document.getElementById("products");
+const SCROLL_DURATION_MS = 420;
+const MODAL_CLOSE_DURATION_MS = 260;
+const WOOFLE_FLIGHT_DURATION_MS = 520;
 
-let activeOverlay = null;
-let activeModal = null;
-let activeOriginCard = null;
-let bowlEl = null;
-let bowlItemsEl = null;
-let bowlDragState = null;
+const productsEl = document.getElementById("products");
+const shopEl = document.querySelector(".shop");
+const bowlFrameEl = document.querySelector(".bowl-frame");
+
+const state = {
+  activeOverlay: null,
+  activeModal: null,
+  bowlItemsLayer: null,
+  isOpening: false
+};
 
 function initHeroAndBridge() {
   const heroHeading = document.querySelector(".hero h1");
   if (heroHeading) {
-    heroHeading.innerHTML = `Dogs Deserve<br>The Best.`;
+    heroHeading.innerHTML = "Dogs<br>Deserve<br>The Best.";
   }
 
   const sectionHead = document.querySelector(".shop .section-head");
@@ -55,12 +61,18 @@ function initHeroAndBridge() {
 function renderProducts() {
   if (!productsEl) return;
 
-  productsEl.innerHTML = PRODUCTS.map((p) => `
-    <article class="product-card" data-id="${p.id}">
+  productsEl.innerHTML = PRODUCTS.map((product) => `
+    <article
+      class="product-card"
+      data-id="${product.id}"
+      tabindex="0"
+      role="button"
+      aria-label="Open ${product.flavor}"
+    >
       <div class="product-image">
-        <img src="${p.image}" alt="${p.flavor}" />
+        <img src="${product.image}" alt="${product.flavor}" />
       </div>
-      <span class="product-flavor">${p.flavor}</span>
+      <span class="product-flavor">${product.flavor}</span>
     </article>
   `).join("");
 
@@ -68,39 +80,65 @@ function renderProducts() {
 }
 
 function attachCardEvents() {
-  document.querySelectorAll(".product-card").forEach((card) => {
-    card.addEventListener("click", () => openDetail(card));
+  const cards = document.querySelectorAll(".product-card");
+
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      openDetail(card);
+    });
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openDetail(card);
+      }
+    });
   });
 }
 
-function openDetail(card) {
-  if (!card || activeModal) return;
+function getProductById(id) {
+  return PRODUCTS.find((product) => product.id === id) || null;
+}
 
-  const product = PRODUCTS.find((p) => p.id === card.dataset.id);
-  if (!product) return;
+function scrollToProducts() {
+  return new Promise((resolve) => {
+    if (!shopEl) {
+      resolve();
+      return;
+    }
 
-  activeOriginCard = card;
+    const header = document.querySelector(".site-header");
+    const headerOffset = header ? header.offsetHeight : 0;
 
-  const rect = card.getBoundingClientRect();
-  const width = Math.min(window.innerWidth * 0.82, 352);
-  const left = (window.innerWidth - width) / 2;
+    const targetTop = Math.max(
+      0,
+      window.scrollY + shopEl.getBoundingClientRect().top - headerOffset - 12
+    );
 
-  const overlay = document.createElement("div");
-  overlay.className = "product-overlay";
+    window.scrollTo({
+      top: targetTop,
+      behavior: "smooth"
+    });
 
-  const modal = document.createElement("div");
-  modal.className = "product-modal";
+    window.setTimeout(resolve, SCROLL_DURATION_MS);
+  });
+}
 
-  modal.innerHTML = `
+function createModalMarkup(product) {
+  return `
     <img src="${product.image}" class="modal-image" alt="${product.flavor}" />
 
     <h2>${product.flavor}</h2>
     <p class="modal-description">${product.description}</p>
 
     <div class="size-options">
-      ${SIZE_OPTIONS.map((s, i) => `
-        <button class="pill ${i === 1 ? "active" : ""}" data-size="${s}" type="button">
-          ${s}
+      ${SIZE_OPTIONS.map((size, index) => `
+        <button
+          class="pill ${index === 1 ? "active" : ""}"
+          data-size="${size}"
+          type="button"
+        >
+          ${size}
         </button>
       `).join("")}
     </div>
@@ -113,222 +151,182 @@ function openDetail(card) {
 
     <button class="cta" type="button">Fill the DogBowl™</button>
   `;
+}
 
-  Object.assign(modal.style, {
-    position: "fixed",
-    left: rect.left + "px",
-    top: rect.top + "px",
-    width: rect.width + "px",
-    height: rect.height + "px",
-    transition: "all 260ms ease",
-    borderRadius: "16px",
-    zIndex: 9999
-  });
+async function openDetail(card) {
+  if (!card || state.activeModal || state.isOpening) return;
+
+  const product = getProductById(card.dataset.id);
+  if (!product) return;
+
+  state.isOpening = true;
+
+  await scrollToProducts();
+
+  const overlay = document.createElement("div");
+  overlay.className = "product-overlay";
+
+  const modal = document.createElement("div");
+  modal.className = "product-modal";
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-label", product.flavor);
+  modal.innerHTML = createModalMarkup(product);
 
   document.body.append(overlay, modal);
   document.body.classList.add("product-detail-open");
-  card.style.visibility = "hidden";
 
-  activeOverlay = overlay;
-  activeModal = modal;
+  state.activeOverlay = overlay;
+  state.activeModal = modal;
 
   bindModal(modal, overlay, product);
 
   requestAnimationFrame(() => {
-    Object.assign(modal.style, {
-      left: `${left}px`,
-      top: "8vh",
-      width: `${width}px`,
-      height: "auto",
-      maxHeight: "76vh",
-      transform: "none",
-      borderRadius: "22px"
-    });
+    overlay.classList.add("active");
+    modal.classList.add("active");
+    state.isOpening = false;
   });
 }
 
-function bindModal(modal, overlay, product) {
-  let qty = 1;
-  let size = "Regular";
+function ensureBowlItemsLayer() {
+  if (!bowlFrameEl) return null;
 
-  const qtyEl = modal.querySelector(".qty-value");
-
-  modal.querySelector(".plus").onclick = (e) => {
-    e.stopPropagation();
-    qty += 1;
-    qtyEl.textContent = qty;
-  };
-
-  modal.querySelector(".minus").onclick = (e) => {
-    e.stopPropagation();
-    qty = Math.max(1, qty - 1);
-    qtyEl.textContent = qty;
-  };
-
-  modal.querySelectorAll(".pill").forEach((btn) => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      modal.querySelectorAll(".pill").forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      size = btn.dataset.size;
-    };
-  });
-
-  modal.querySelector(".cta").onclick = (e) => {
-    e.stopPropagation();
-    activateBowl(product, size, qty);
-    closeModal();
-  };
-
-  overlay.onclick = closeModal;
-}
-
-function ensureFloatingBowl() {
-  if (bowlEl) return;
-
-  bowlEl = document.createElement("div");
-  bowlEl.className = "floating-bowl";
-  bowlEl.innerHTML = `
-    <div class="floating-bowl-shell">
-      <div class="floating-bowl-rim"></div>
-      <div class="floating-bowl-inner"></div>
-      <div class="floating-bowl-items"></div>
-    </div>
-  `;
-
-  bowlItemsEl = bowlEl.querySelector(".floating-bowl-items");
-  document.body.appendChild(bowlEl);
-
-  bowlEl.addEventListener("pointerdown", startBowlDrag);
-}
-
-function activateBowl(product, size, quantity) {
-  ensureFloatingBowl();
-
-  bowlEl.classList.add("active", "bounce-in");
-
-  const countPerUnit = SIZE_COUNTS[size] || 1;
-  const totalWoofles = countPerUnit * quantity;
-
-  for (let i = 0; i < totalWoofles; i += 1) {
-    addWoofleToBowl(product.image, i);
+  if (!state.bowlItemsLayer) {
+    const layer = document.createElement("div");
+    layer.className = "static-bowl-items";
+    bowlFrameEl.appendChild(layer);
+    state.bowlItemsLayer = layer;
   }
 
-  window.setTimeout(() => {
-    bowlEl.classList.remove("bounce-in");
-  }, 420);
+  return state.bowlItemsLayer;
 }
 
-function addWoofleToBowl(imageSrc, indexOffset) {
-  if (!bowlItemsEl) return;
+function addWoofleToBowl(imageSrc, indexOffset = 0) {
+  const layer = ensureBowlItemsLayer();
+  if (!layer) return;
 
   const item = document.createElement("img");
-  item.className = "bowl-woofle";
+  item.className = "static-bowl-woofle";
   item.src = imageSrc;
   item.alt = "";
 
-  const left = 14 + Math.random() * 56;
-  const bottom = 10 + Math.random() * 62 + (indexOffset % 3) * 3;
+  const left = 18 + Math.random() * 60;
+  const bottom = 10 + Math.random() * 40 + (indexOffset % 3) * 6;
   const rotation = -20 + Math.random() * 40;
-  const scale = 0.74 + Math.random() * 0.16;
+  const scale = 0.8 + Math.random() * 0.2;
 
   item.style.left = `${left}%`;
   item.style.bottom = `${bottom}px`;
   item.style.transform = `translateX(-50%) rotate(${rotation}deg) scale(${scale})`;
 
-  bowlItemsEl.appendChild(item);
-
-  requestAnimationFrame(() => {
-    item.classList.add("landed");
-  });
+  layer.appendChild(item);
 }
 
-function startBowlDrag(e) {
-  if (!bowlEl) return;
+function launchWoofleFromCTA(button, imageSrc, count) {
+  if (!button || !bowlFrameEl || count < 1) return;
 
-  const rect = bowlEl.getBoundingClientRect();
-  bowlDragState = {
-    offsetX: e.clientX - rect.left,
-    offsetY: e.clientY - rect.top
-  };
+  const buttonRect = button.getBoundingClientRect();
+  const bowlRect = bowlFrameEl.getBoundingClientRect();
 
-  bowlEl.classList.add("dragging");
-  bowlEl.setPointerCapture(e.pointerId);
-  bowlEl.style.left = `${rect.left}px`;
-  bowlEl.style.top = `${rect.top}px`;
-  bowlEl.style.right = "auto";
-  bowlEl.style.bottom = "auto";
+  for (let index = 0; index < count; index += 1) {
+    const flight = document.createElement("img");
+    flight.className = "woofle-flight";
+    flight.src = imageSrc;
+    flight.alt = "";
 
-  bowlEl.addEventListener("pointermove", onBowlDrag);
-  bowlEl.addEventListener("pointerup", stopBowlDrag);
-  bowlEl.addEventListener("pointercancel", stopBowlDrag);
-}
+    const startLeft = buttonRect.left + buttonRect.width / 2;
+    const startTop = buttonRect.top + 4;
+    const endLeft = bowlRect.left + bowlRect.width / 2 + (-18 + Math.random() * 36);
+    const endTop = bowlRect.top + bowlRect.height / 2 + (-10 + Math.random() * 18);
 
-function onBowlDrag(e) {
-  if (!bowlEl || !bowlDragState) return;
+    flight.style.left = `${startLeft}px`;
+    flight.style.top = `${startTop}px`;
+    flight.style.transform = "translate(-50%, 0) scale(0.82) rotate(0deg)";
+    flight.style.opacity = "1";
 
-  const nextLeft = e.clientX - bowlDragState.offsetX;
-  const nextTop = e.clientY - bowlDragState.offsetY;
+    document.body.appendChild(flight);
 
-  bowlEl.style.left = `${Math.max(8, Math.min(window.innerWidth - bowlEl.offsetWidth - 8, nextLeft))}px`;
-  bowlEl.style.top = `${Math.max(8, Math.min(window.innerHeight - bowlEl.offsetHeight - 8, nextTop))}px`;
-}
+    window.setTimeout(() => {
+      flight.style.left = `${endLeft}px`;
+      flight.style.top = `${endTop}px`;
+      flight.style.transform = `translate(-50%, -50%) scale(${0.96 + Math.random() * 0.12}) rotate(${-18 + Math.random() * 36}deg)`;
+    }, index * 55);
 
-function stopBowlDrag(e) {
-  if (!bowlEl) return;
-
-  bowlEl.classList.remove("dragging");
-  bowlDragState = null;
-
-  bowlEl.removeEventListener("pointermove", onBowlDrag);
-  bowlEl.removeEventListener("pointerup", stopBowlDrag);
-  bowlEl.removeEventListener("pointercancel", stopBowlDrag);
-
-  try {
-    bowlEl.releasePointerCapture(e.pointerId);
-  } catch (err) {
-    // no-op
+    window.setTimeout(() => {
+      addWoofleToBowl(imageSrc, index);
+      flight.remove();
+    }, WOOFLE_FLIGHT_DURATION_MS + index * 55);
   }
+}
+
+function bindModal(modal, overlay, product) {
+  let quantity = 1;
+  let selectedSize = "Regular";
+
+  const quantityValueEl = modal.querySelector(".qty-value");
+  const plusButton = modal.querySelector(".plus");
+  const minusButton = modal.querySelector(".minus");
+  const sizeButtons = modal.querySelectorAll(".pill");
+  const ctaButton = modal.querySelector(".cta");
+
+  plusButton?.addEventListener("click", () => {
+    quantity += 1;
+    if (quantityValueEl) {
+      quantityValueEl.textContent = String(quantity);
+    }
+  });
+
+  minusButton?.addEventListener("click", () => {
+    quantity = Math.max(1, quantity - 1);
+    if (quantityValueEl) {
+      quantityValueEl.textContent = String(quantity);
+    }
+  });
+
+  sizeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      sizeButtons.forEach((otherButton) => {
+        otherButton.classList.remove("active");
+      });
+
+      button.classList.add("active");
+      selectedSize = button.dataset.size || "Regular";
+    });
+  });
+
+  ctaButton?.addEventListener("click", () => {
+    const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
+    launchWoofleFromCTA(ctaButton, product.image, totalWoofles);
+    closeModal();
+  });
+
+  overlay.addEventListener("click", closeModal);
 }
 
 function closeModal() {
-  if (!activeModal) return;
+  if (!state.activeModal || !state.activeOverlay) return;
 
-  const rect = activeOriginCard?.getBoundingClientRect();
+  const modal = state.activeModal;
+  const overlay = state.activeOverlay;
 
-  if (rect) {
-    Object.assign(activeModal.style, {
-      left: `${rect.left}px`,
-      top: `${rect.top}px`,
-      width: `${rect.width}px`,
-      height: `${rect.height}px`,
-      transform: "none",
-      borderRadius: "16px"
-    });
-  }
+  state.activeModal = null;
+  state.activeOverlay = null;
+  state.isOpening = false;
 
-  if (activeOverlay) {
-    activeOverlay.style.opacity = "0";
-  }
-
-  const m = activeModal;
-  const o = activeOverlay;
-  const c = activeOriginCard;
-
-  activeModal = null;
-  activeOverlay = null;
-  activeOriginCard = null;
+  overlay.classList.remove("active");
+  modal.classList.remove("active");
 
   window.setTimeout(() => {
-    if (m) m.remove();
-    if (o) o.remove();
+    modal.remove();
+    overlay.remove();
     document.body.classList.remove("product-detail-open");
-    if (c) c.style.visibility = "";
-  }, 260);
+  }, MODAL_CLOSE_DURATION_MS);
 }
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeModal();
+  }
 });
 
 initHeroAndBridge();
