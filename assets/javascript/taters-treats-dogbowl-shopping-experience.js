@@ -43,27 +43,123 @@ const state = {
   isOpening: false
 };
 
+/* ================= INIT ================= */
+
+function initShopIntro() {
+  if (!shopEl) return;
+
+  const existing = shopEl.querySelector(".shop-intro");
+  if (!existing) {
+    const intro = document.createElement("div");
+    intro.className = "shop-intro";
+    intro.innerHTML = `<p class="shop-intro-line">Three flavors. Two sizes. One happy dog.</p>`;
+    shopEl.prepend(intro);
+  }
+}
+
+function renderProducts() {
+  if (!productsEl) return;
+
+  productsEl.innerHTML = PRODUCTS.map(p => `
+    <article class="product-card" data-id="${p.id}">
+      <div class="product-image">
+        <img src="${p.image}" />
+      </div>
+      <span class="product-flavor">${p.flavor}</span>
+    </article>
+  `).join("");
+
+  document.querySelectorAll(".product-card").forEach(card => {
+    card.addEventListener("click", () => openDetail(card));
+  });
+}
+
+/* ================= MODAL ================= */
+
+function createModalMarkup(product) {
+  return `
+    <img src="${product.image}" class="modal-image" />
+    <h2>${product.flavor}</h2>
+    <p class="modal-description">${product.description}</p>
+
+    <div class="size-options">
+      ${SIZE_OPTIONS.map((s,i)=>`
+        <button class="pill ${i===0?'active':''}" data-size="${s}">${s}</button>
+      `).join("")}
+    </div>
+
+    <div class="quantity">
+      <button class="qty minus">−</button>
+      <span class="qty-value">1</span>
+      <button class="qty plus">+</button>
+    </div>
+
+    <button class="cta">Fill the DogBowl™</button>
+  `;
+}
+
+function openDetail(card) {
+  if (state.activeModal || state.isOpening) return;
+
+  const product = PRODUCTS.find(p => p.id === card.dataset.id);
+  if (!product) return;
+
+  state.isOpening = true;
+
+  const overlay = document.createElement("div");
+  overlay.className = "product-overlay";
+
+  const modal = document.createElement("div");
+  modal.className = "product-modal";
+  modal.innerHTML = createModalMarkup(product);
+
+  document.body.append(overlay, modal);
+  document.body.classList.add("product-detail-open");
+
+  state.activeOverlay = overlay;
+  state.activeModal = modal;
+
+  bindModal(modal, overlay, product);
+
+  requestAnimationFrame(()=>overlay.classList.add("active"));
+
+  setTimeout(()=>{
+    modal.classList.add("active");
+    state.isOpening = false;
+  }, MODAL_ENTER_DELAY_MS);
+}
+
+function closeModal() {
+  if (!state.activeModal) return;
+
+  const modal = state.activeModal;
+  const overlay = state.activeOverlay;
+
+  modal.classList.add("closing");
+  overlay.classList.remove("active");
+
+  setTimeout(()=>{
+    modal.remove();
+    overlay.remove();
+    document.body.classList.remove("product-detail-open");
+  }, MODAL_CLOSE_DURATION_MS);
+
+  state.activeModal = null;
+  state.activeOverlay = null;
+  state.isOpening = false;
+}
+
+/* ================= BOWL ================= */
+
 function ensureBowlLayers() {
-  if (!bowlFrameEl) return { inner: null, items: null };
+  if (!bowlFrameEl) return { inner:null, items:null };
 
   if (!state.bowlInnerEl) {
-    let inner = bowlFrameEl.querySelector(".bowl-inner-target");
-    if (!inner) {
-      inner = document.createElement("div");
-      inner.className = "bowl-inner-target";
-      bowlFrameEl.appendChild(inner);
-    }
-    state.bowlInnerEl = inner;
+    state.bowlInnerEl = bowlFrameEl.querySelector(".bowl-inner-target");
   }
 
   if (!state.bowlItemsLayer) {
-    let items = state.bowlInnerEl.querySelector(".static-bowl-items");
-    if (!items) {
-      items = document.createElement("div");
-      items.className = "static-bowl-items";
-      state.bowlInnerEl.appendChild(items);
-    }
-    state.bowlItemsLayer = items;
+    state.bowlItemsLayer = bowlFrameEl.querySelector(".static-bowl-items");
   }
 
   return {
@@ -72,123 +168,122 @@ function ensureBowlLayers() {
   };
 }
 
-/* === deterministic bowl slots === */
-function getBowlSlot(index) {
+function getSlot(i) {
   const slots = [
-    { x: 0.36, y: 0.70, rotation: -16, scale: 1.06 },
-    { x: 0.52, y: 0.60, rotation: 8, scale: 1.08 },
-    { x: 0.67, y: 0.70, rotation: 18, scale: 1.04 },
-    { x: 0.44, y: 0.82, rotation: -8, scale: 1.02 },
-    { x: 0.60, y: 0.82, rotation: 10, scale: 1.03 },
-    { x: 0.29, y: 0.59, rotation: -20, scale: 1.01 },
-    { x: 0.73, y: 0.59, rotation: 22, scale: 1.01 },
-    { x: 0.50, y: 0.73, rotation: -2, scale: 1.05 }
+    [0.35,0.7], [0.5,0.6], [0.65,0.7],
+    [0.45,0.8], [0.6,0.8], [0.3,0.6],
+    [0.7,0.6], [0.5,0.75]
   ];
-
-  return slots[index % slots.length];
+  return slots[i % slots.length];
 }
 
-function getNextBowlTarget() {
-  const { inner } = ensureBowlLayers();
-  if (!inner) return null;
+function addWoofle(target, src) {
+  const {items} = ensureBowlLayers();
+  if (!items) return;
 
-  const rect = inner.getBoundingClientRect();
-  const slot = getBowlSlot(state.nextSlotIndex++);
-  
-  return {
-    viewportX: rect.left + rect.width * slot.x,
-    viewportY: rect.top + rect.height * slot.y,
-    innerX: slot.x,
-    innerY: slot.y,
-    rotation: slot.rotation,
-    scale: slot.scale
-  };
+  const img = document.createElement("img");
+  img.className = "static-bowl-woofle";
+  img.src = src;
+
+  img.style.left = target.x * 100 + "%";
+  img.style.top = target.y * 100 + "%";
+  img.style.transform = "translate(-50%,-50%)";
+
+  items.appendChild(img);
 }
 
-function addWoofleToBowl(target, imageSrc) {
-  const { items } = ensureBowlLayers();
-  if (!items || !target) return;
+/* ================= ANIMATION ================= */
 
-  const item = document.createElement("img");
-  item.className = "static-bowl-woofle";
-  item.src = imageSrc;
-
-  item.style.left = `${target.innerX * 100}%`;
-  item.style.top = `${target.innerY * 100}%`;
-  item.style.transform =
-    `translate(-50%, -50%) rotate(${target.rotation}deg) scale(${target.scale})`;
-
-  items.appendChild(item);
-}
-
-function animateWoofleArc(flight, start, control, end, duration, onDone) {
+function animate(flight, start, control, end, done) {
   const startTime = performance.now();
 
   function frame(now) {
-    const t = Math.min((now - startTime) / duration, 1);
-    const eased = 1 - Math.pow(1 - t, 3);
+    const t = Math.min((now - startTime)/WOOFLE_FLIGHT_DURATION_MS,1);
+    const e = 1 - Math.pow(1 - t, 3);
 
-    const x =
-      (1 - eased) * (1 - eased) * start.x +
-      2 * (1 - eased) * eased * control.x +
-      eased * eased * end.x;
+    const x = (1-e)*(1-e)*start.x + 2*(1-e)*e*control.x + e*e*end.x;
+    const y = (1-e)*(1-e)*start.y + 2*(1-e)*e*control.y + e*e*end.y;
 
-    const y =
-      (1 - eased) * (1 - eased) * start.y +
-      2 * (1 - eased) * eased * control.y +
-      eased * eased * end.y;
+    flight.style.left = x + "px";
+    flight.style.top = y + "px";
 
-    flight.style.left = `${x}px`;
-    flight.style.top = `${y}px`;
-
-    if (t < 1) requestAnimationFrame(frame);
-    else onDone();
+    if (t<1) requestAnimationFrame(frame);
+    else done();
   }
 
   requestAnimationFrame(frame);
 }
 
-function launchWoofleFromCTA(button, imageSrc, count) {
-  const { inner } = ensureBowlLayers();
-  if (!button || !inner || count < 1) return;
+function launchWoofleFromCTA(button, src, count) {
+  const {inner} = ensureBowlLayers();
+  if (!inner) return;
 
-  const buttonRect = button.getBoundingClientRect();
+  const rect = inner.getBoundingClientRect();
+  const btn = button.getBoundingClientRect();
 
-  for (let i = 0; i < count; i++) {
-    const target = getNextBowlTarget();
-    if (!target) return;
+  for (let i=0;i<count;i++) {
 
-    const flight = document.createElement("img");
-    flight.className = "woofle-flight";
-    flight.src = imageSrc;
-
-    const start = {
-      x: buttonRect.left + buttonRect.width / 2,
-      y: buttonRect.top + buttonRect.height / 2
+    const slot = getSlot(state.nextSlotIndex++);
+    const target = {
+      x: rect.left + rect.width * slot[0],
+      y: rect.top + rect.height * slot[1]
     };
 
-    const end = {
-      x: target.viewportX,
-      y: target.viewportY
+    const start = {
+      x: btn.left + btn.width/2,
+      y: btn.top + btn.height/2
     };
 
     const control = {
-      x: start.x + (end.x - start.x) * 0.4,
-      y: Math.min(start.y, end.y) - 100
+      x: (start.x + target.x)/2,
+      y: Math.min(start.y,target.y) - 100
     };
+
+    const flight = document.createElement("img");
+    flight.className = "woofle-flight";
+    flight.src = src;
 
     document.body.appendChild(flight);
 
-    animateWoofleArc(
-      flight,
-      start,
-      control,
-      end,
-      WOOFLE_FLIGHT_DURATION_MS,
-      () => {
-        addWoofleToBowl(target, imageSrc);
-        flight.remove();
-      }
-    );
+    animate(flight, start, control, target, ()=>{
+      addWoofle({x:slot[0], y:slot[1]}, src);
+      flight.remove();
+    });
   }
 }
+
+/* ================= MODAL BIND ================= */
+
+function bindModal(modal, overlay, product) {
+  let qty = 1;
+  let size = "Regular";
+
+  const val = modal.querySelector(".qty-value");
+  modal.querySelector(".plus").onclick = ()=> val.textContent = ++qty;
+  modal.querySelector(".minus").onclick = ()=> val.textContent = qty = Math.max(1, qty-1);
+
+  modal.querySelectorAll(".pill").forEach(p=>{
+    p.onclick = ()=>{
+      modal.querySelectorAll(".pill").forEach(x=>x.classList.remove("active"));
+      p.classList.add("active");
+      size = p.dataset.size;
+    };
+  });
+
+  modal.querySelector(".cta").onclick = ()=>{
+    const total = SIZE_COUNTS[size]*qty;
+    launchWoofleFromCTA(modal.querySelector(".cta"), product.image, total);
+    closeModal();
+  };
+
+  overlay.onclick = closeModal;
+}
+
+/* ================= START ================= */
+
+document.addEventListener("keydown", e=>{
+  if (e.key==="Escape") closeModal();
+});
+
+initShopIntro();
+renderProducts();
