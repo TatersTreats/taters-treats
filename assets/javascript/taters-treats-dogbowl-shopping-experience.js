@@ -19,9 +19,8 @@ const PRODUCTS = [
   }
 ];
 
-const SIZE_OPTIONS = ["Trial", "Regular", "Value"];
+const SIZE_OPTIONS = ["Regular", "Value"];
 const SIZE_COUNTS = {
-  Trial: 1,
   Regular: 2,
   Value: 3
 };
@@ -29,9 +28,10 @@ const SIZE_COUNTS = {
 const SCROLL_DURATION_MS = 420;
 const MODAL_CLOSE_DURATION_MS = 260;
 const WOOFLE_FLIGHT_DURATION_MS = 520;
+const MODAL_ENTER_DELAY_MS = 70;
 
 const productsEl = document.getElementById("products");
-const shopEl = document.querySelector(".shop");
+const shopEl = document.getElementById("shop") || document.querySelector("#shop");
 const bowlFrameEl = document.querySelector(".bowl-frame");
 
 const state = {
@@ -47,14 +47,30 @@ function initHeroAndBridge() {
     heroHeading.innerHTML = "Dogs<br>Deserve<br>The Best.";
   }
 
-  const sectionHead = document.querySelector(".shop .section-head");
-  if (sectionHead) {
-    sectionHead.className = "section-head hero-bridge";
-    sectionHead.innerHTML = `
+  const missionBox = document.querySelector(".hero-bridge");
+  if (missionBox) {
+    missionBox.innerHTML = `
       <p class="hero-bridge-kicker">Premium, Small-batch Canine Confections</p>
       <h2>For Dogs Who Deserve More Than Just Treats. Like Tater.</h2>
-      <p class="hero-bridge-support">Three flavors. Three sizes. One happy dog.</p>
     `;
+  }
+
+  if (shopEl) {
+    const existingIntro = shopEl.querySelector(".shop-intro");
+
+    if (!existingIntro) {
+      const intro = document.createElement("div");
+      intro.className = "shop-intro";
+      intro.innerHTML = `
+        <p class="shop-intro-line">Three flavors. Two sizes. One happy dog.</p>
+      `;
+      shopEl.prepend(intro);
+    } else {
+      const line = existingIntro.querySelector(".shop-intro-line");
+      if (line) {
+        line.textContent = "Three flavors. Two sizes. One happy dog.";
+      }
+    }
   }
 }
 
@@ -100,20 +116,22 @@ function getProductById(id) {
   return PRODUCTS.find((product) => product.id === id) || null;
 }
 
-function scrollToProducts() {
+function getShopScrollTarget() {
+  if (!shopEl) return window.scrollY;
+
+  const header = document.querySelector(".site-header");
+  const headerOffset = header ? header.offsetHeight : 0;
+  const breathingOffset = 12;
+
+  return Math.max(
+    0,
+    window.scrollY + shopEl.getBoundingClientRect().top - headerOffset - breathingOffset
+  );
+}
+
+function scrollToShop() {
   return new Promise((resolve) => {
-    if (!shopEl) {
-      resolve();
-      return;
-    }
-
-    const header = document.querySelector(".site-header");
-    const headerOffset = header ? header.offsetHeight : 0;
-
-    const targetTop = Math.max(
-      0,
-      window.scrollY + shopEl.getBoundingClientRect().top - headerOffset - 12
-    );
+    const targetTop = getShopScrollTarget();
 
     window.scrollTo({
       top: targetTop,
@@ -134,7 +152,7 @@ function createModalMarkup(product) {
     <div class="size-options">
       ${SIZE_OPTIONS.map((size, index) => `
         <button
-          class="pill ${index === 1 ? "active" : ""}"
+          class="pill ${index === 0 ? "active" : ""}"
           data-size="${size}"
           type="button"
         >
@@ -161,8 +179,6 @@ async function openDetail(card) {
 
   state.isOpening = true;
 
-  await scrollToProducts();
-
   const overlay = document.createElement("div");
   overlay.className = "product-overlay";
 
@@ -183,9 +199,18 @@ async function openDetail(card) {
 
   requestAnimationFrame(() => {
     overlay.classList.add("active");
-    modal.classList.add("active");
-    state.isOpening = false;
   });
+
+  const scrollPromise = scrollToShop();
+
+  window.setTimeout(() => {
+    if (state.activeModal === modal) {
+      modal.classList.add("active");
+    }
+    state.isOpening = false;
+  }, MODAL_ENTER_DELAY_MS);
+
+  await scrollPromise;
 }
 
 function ensureBowlItemsLayer() {
