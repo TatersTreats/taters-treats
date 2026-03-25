@@ -79,7 +79,6 @@ body {
 .hero__headline {
   position: absolute;
   left: 14px;
-  right: 14px;
   bottom: 14px;
   z-index: 2;
 }
@@ -94,16 +93,11 @@ body {
   letter-spacing: -0.045em;
   color: #ffffff;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.3);
-}
-
-.hero__line--top {
-  text-align: left;
+  text-align: right;
 }
 
 .hero__line-row {
-  width: 100%;
-  margin-top: -2px;
-  text-align: left;
+  text-align: right;
 }
 
 .hero__line--bottom {
