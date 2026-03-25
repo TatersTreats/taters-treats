@@ -435,8 +435,8 @@ button:hover,
 
 .trust-line {
   text-align: center;
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-  font-size: clamp(1rem, 3.4vw, 1.5rem);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.05rem, 3.6vw, 1.6rem);
   line-height: 1.1;
   letter-spacing: -0.01em;
   color: var(--green-deep);
