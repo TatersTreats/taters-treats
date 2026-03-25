@@ -32,9 +32,9 @@ const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
 const BOWL_TARGET = {
   centerX: 0.5,
-  centerY: 0.7,
-  radiusX: 0.17,
-  radiusY: 0.068
+  centerY: 0.69,
+  radiusX: 0.12,
+  radiusY: 0.04
 };
 
 const productsEl = document.getElementById("products");
@@ -180,6 +180,7 @@ function createModalMarkup(product) {
           class="pill ${index === 0 ? "active" : ""}"
           data-size="${size}"
           type="button"
+          aria-pressed="${index === 0 ? "true" : "false"}"
         >
           ${size}
         </button>
@@ -287,8 +288,8 @@ function createBowlTarget(indexOffset = 0) {
   const xNorm = BOWL_TARGET.centerX + Math.cos(theta) * radial * BOWL_TARGET.radiusX;
   const yNorm = BOWL_TARGET.centerY + Math.sin(theta) * radial * BOWL_TARGET.radiusY;
 
-  const clampedX = Math.min(0.66, Math.max(0.34, xNorm));
-  const clampedY = Math.min(0.76, Math.max(0.58, yNorm));
+  const clampedX = Math.min(0.62, Math.max(0.38, xNorm));
+  const clampedY = Math.min(0.73, Math.max(0.62, yNorm));
   const rotation = -16 + Math.random() * 32;
   const zIndex = 4 + indexOffset;
 
@@ -319,10 +320,10 @@ function addWoofleToBowl(imageSrc, targetPoint) {
   layer.appendChild(item);
 }
 
-function launchWoofleFromCTA(button, imageSrc, count) {
-  if (!button || !bowlFrameEl || count < 1) return;
+function launchWoofleFromModalImage(sourceEl, imageSrc, count) {
+  if (!sourceEl || !bowlFrameEl || count < 1) return;
 
-  const buttonRect = button.getBoundingClientRect();
+  const sourceRect = sourceEl.getBoundingClientRect();
 
   for (let index = 0; index < count; index += 1) {
     const targetPoint = createBowlTarget(index);
@@ -334,14 +335,14 @@ function launchWoofleFromCTA(button, imageSrc, count) {
     flight.src = imageSrc;
     flight.alt = "";
 
-    const startLeft = buttonRect.left + buttonRect.width / 2;
-    const startTop = buttonRect.top + 4;
+    const startLeft = sourceRect.left + sourceRect.width / 2;
+    const startTop = sourceRect.top + sourceRect.height * 0.56;
     const endLeft = bowlRect.left + targetPoint.xPx;
     const endTop = bowlRect.top + targetPoint.yPx;
 
     flight.style.left = `${startLeft}px`;
     flight.style.top = `${startTop}px`;
-    flight.style.transform = "translate(-50%, -50%) rotate(0deg)";
+    flight.style.transform = "translate(-50%, -50%) scale(1.12) rotate(0deg)";
     flight.style.opacity = "1";
 
     document.body.appendChild(flight);
@@ -349,7 +350,7 @@ function launchWoofleFromCTA(button, imageSrc, count) {
     window.setTimeout(() => {
       flight.style.left = `${endLeft}px`;
       flight.style.top = `${endTop}px`;
-      flight.style.transform = `translate(-50%, -50%) rotate(${targetPoint.rotation}deg)`;
+      flight.style.transform = `translate(-50%, -50%) scale(1) rotate(${targetPoint.rotation}deg)`;
     }, index * WOOFLE_STAGGER_MS);
 
     window.setTimeout(() => {
@@ -368,6 +369,7 @@ function bindModal(modal, overlay, product) {
   const minusButton = modal.querySelector(".qty-minus");
   const sizeButtons = modal.querySelectorAll(".pill");
   const ctaButton = modal.querySelector(".cta");
+  const modalImage = modal.querySelector(".modal-image");
 
   const setQuantity = (nextQuantity) => {
     quantity = Math.max(1, nextQuantity);
@@ -389,16 +391,22 @@ function bindModal(modal, overlay, product) {
     button.addEventListener("click", () => {
       sizeButtons.forEach((otherButton) => {
         otherButton.classList.remove("active");
+        otherButton.setAttribute("aria-pressed", "false");
       });
 
       button.classList.add("active");
+      button.setAttribute("aria-pressed", "true");
       selectedSize = button.dataset.size || "Regular";
     });
   });
 
   ctaButton?.addEventListener("click", () => {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
-    launchWoofleFromCTA(ctaButton, product.image, totalWoofles);
+
+    if (modalImage) {
+      launchWoofleFromModalImage(modalImage, product.image, totalWoofles);
+    }
+
     closeModal();
   });
 
