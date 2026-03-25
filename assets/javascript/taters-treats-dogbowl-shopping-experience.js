@@ -27,14 +27,14 @@ const SIZE_COUNTS = {
 
 const SCROLL_DURATION_MS = 420;
 const MODAL_CLOSE_DURATION_MS = 320;
-const WOOFLE_FLIGHT_DURATION_MS = 560;
+const WOOFLE_FLIGHT_DURATION_MS = 620;
 const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
 const BOWL_TARGET = {
   centerX: 0.5,
-  centerY: 0.69,
-  radiusX: 0.12,
-  radiusY: 0.04
+  centerY: 0.685,
+  radiusX: 0.09,
+  radiusY: 0.03
 };
 
 const productsEl = document.getElementById("products");
@@ -52,9 +52,10 @@ const state = {
 function initHeroAndBridge() {
   const heroHeading = document.querySelector(".hero h1");
   if (heroHeading) {
+    heroHeading.className = "hero-title";
     heroHeading.innerHTML = `
-      <span>Dogs Deserve</span>
-      <span>The Best</span>
+      <span class="hero-line-1">Dogs Deserve</span>
+      <span class="hero-line-2">The Best</span>
     `;
   }
 
@@ -66,22 +67,25 @@ function initHeroAndBridge() {
     `;
   }
 
-  if (shopEl) {
-    const existingIntro = shopEl.querySelector(".shop-intro");
+  const shopMain = document.querySelector(".shop-main");
+  if (shopMain) {
+    const existingIntros = shopMain.querySelectorAll(".shop-intro");
+    existingIntros.forEach((intro, index) => {
+      if (index > 0) intro.remove();
+    });
 
-    if (!existingIntro) {
-      const intro = document.createElement("div");
+    let intro = shopMain.querySelector(".shop-intro");
+    if (!intro) {
+      intro = document.createElement("div");
       intro.className = "shop-intro";
-      intro.innerHTML = `
-        <p class="shop-intro-line">Three flavors. Two sizes. One happy dog.</p>
-      `;
-      shopEl.prepend(intro);
-    } else {
-      const line = existingIntro.querySelector(".shop-intro-line");
-      if (line) {
-        line.textContent = "Three flavors. Two sizes. One happy dog.";
-      }
+      shopMain.prepend(intro);
     }
+
+    intro.innerHTML = `
+      <div class="shop-intro-line">Three Flavors.</div>
+      <div class="shop-intro-line">Two Sizes.</div>
+      <div class="shop-intro-line">One Happy Dog.</div>
+    `;
   }
 }
 
@@ -336,13 +340,13 @@ function launchWoofleFromModalImage(sourceEl, imageSrc, count) {
     flight.alt = "";
 
     const startLeft = sourceRect.left + sourceRect.width / 2;
-    const startTop = sourceRect.top + sourceRect.height * 0.56;
+    const startTop = sourceRect.top + sourceRect.height * 0.58;
     const endLeft = bowlRect.left + targetPoint.xPx;
     const endTop = bowlRect.top + targetPoint.yPx;
 
     flight.style.left = `${startLeft}px`;
     flight.style.top = `${startTop}px`;
-    flight.style.transform = "translate(-50%, -50%) scale(1.12) rotate(0deg)";
+    flight.style.transform = "translate(-50%, -50%) scale(1.06) rotate(0deg)";
     flight.style.opacity = "1";
 
     document.body.appendChild(flight);
