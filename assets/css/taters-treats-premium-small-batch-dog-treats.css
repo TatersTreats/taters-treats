@@ -134,16 +134,18 @@ h1 {
     0 10px 26px rgba(20, 16, 12, 0.2);
 }
 
-h1 span {
+.hero-title span {
   display: block;
 }
 
-.hero-line-1 {
+.hero-left {
   text-align: left;
+  padding: 0 18px;
 }
 
-.hero-line-2 {
-  text-align: center;
+.hero-right {
+  text-align: right;
+  padding: 0 18px;
 }
 
 h2 {
