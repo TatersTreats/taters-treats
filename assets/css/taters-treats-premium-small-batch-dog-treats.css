@@ -28,7 +28,7 @@ html {
 
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
   color: var(--brown);
   background: linear-gradient(to bottom, #fdfaf5 0%, #f7f0e6 100%);
 }
@@ -116,7 +116,7 @@ h1,
 h2,
 h3 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   color: var(--green-deep);
   line-height: 1.06;
   letter-spacing: -0.02em;
@@ -227,10 +227,10 @@ button:hover,
   margin: 0;
   text-align: center;
   white-space: nowrap;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1rem, 3.9vw, 2.2rem);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(1.22rem, 5.2vw, 2.2rem);
   line-height: 1.02;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: var(--green-deep);
 }
 
@@ -290,11 +290,23 @@ button:hover,
 }
 
 .product-flavor {
-  display: block;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.1rem;
-  line-height: 1.16;
+  display: grid;
+  justify-items: center;
+  gap: 0.02rem;
+  min-height: 3.65em;
+  text-align: center;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  line-height: 1.04;
   color: var(--green-deep);
+}
+
+.product-flavor-line {
+  display: block;
+}
+
+.product-flavor-amp {
+  line-height: 0.9;
 }
 
 .dogbowl {
@@ -318,7 +330,6 @@ button:hover,
 .bowl-frame {
   position: relative;
   overflow: hidden;
-  isolation: isolate;
   min-height: 180px;
   border-radius: 18px;
   background: rgba(243, 234, 220, 0.85);
@@ -333,20 +344,20 @@ button:hover,
 .static-bowl-items {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 2;
   overflow: hidden;
   pointer-events: none;
-  clip-path: ellipse(34% 17% at 50% 64%);
+  clip-path: ellipse(28% 12% at 50% 70%);
 }
 
 .static-bowl-woofle {
   position: absolute;
-  width: 88px;
-  height: 88px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
   opacity: 1;
   transform-origin: center center;
-  filter: drop-shadow(0 8px 10px rgba(35, 25, 17, 0.2));
+  filter: drop-shadow(0 8px 10px rgba(35, 25, 17, 0.18));
 }
 
 .bowl-note {
@@ -381,6 +392,7 @@ button:hover,
 
 .cart-item-top,
 .cart-item-bottom,
+.cart-summary,
 .summary-row {
   display: flex;
   align-items: center;
@@ -423,8 +435,11 @@ button:hover,
 
 .trust-line {
   text-align: center;
-  font-size: 0.92rem;
-  color: rgba(77, 56, 41, 0.74);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 3.4vw, 1.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--green-deep);
 }
 
 .narrow {
@@ -434,10 +449,10 @@ button:hover,
 .story-card,
 .info-card {
   padding: 24px;
-  background: rgba(255, 252, 247, 0.94);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-soft);
+  background: rgba(255, 253, 250, 0.78);
+  border: 1px solid rgba(63, 95, 62, 0.08);
+  border-radius: 22px;
+  box-shadow: 0 10px 24px rgba(57, 39, 24, 0.06);
 }
 
 .story-card {
@@ -453,7 +468,7 @@ button:hover,
 
 .eyebrow {
   display: inline-block;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -485,12 +500,15 @@ button:hover,
 }
 
 .site-footer {
-  padding: 24px 0 34px;
+  padding: 26px 0 34px;
 }
 
 .footer-inner {
-  text-align: center;
-  font-size: 0.88rem;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 0.84rem;
   color: rgba(77, 56, 41, 0.72);
 }
 
@@ -502,14 +520,22 @@ body.product-detail-open {
   overflow: hidden;
 }
 
-body.product-detail-open .site-header,
 body.product-detail-open .hero,
 body.product-detail-open .shop,
 body.product-detail-open .trust-strip,
+body.product-detail-open #story,
 body.product-detail-open .lower-section,
 body.product-detail-open .site-footer {
   transition: filter 220ms ease, opacity 220ms ease;
-  filter: saturate(0.92);
+  opacity: 0.42;
+  filter: saturate(0.82);
+}
+
+body.product-detail-open .site-header {
+  position: sticky;
+  z-index: 10002;
+  opacity: 1;
+  filter: none;
 }
 
 .product-overlay {
@@ -529,13 +555,13 @@ body.product-detail-open .site-footer {
 .product-modal {
   position: fixed;
   left: 50%;
-  top: 96px;
+  top: var(--header-offset, 112px);
   z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: min(84vw, 356px);
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - var(--header-offset, 112px) - 20px);
   overflow: visible;
   padding-bottom: 28px;
   background: transparent;
@@ -549,10 +575,6 @@ body.product-detail-open .site-footer {
 .product-modal.active {
   opacity: 1;
   transform: translateX(-50%) translateY(0) scale(1);
-}
-
-.product-modal:not(.active) {
-  transform: translateX(-50%) translateY(18px) scale(0.94);
 }
 
 .product-modal::after {
@@ -588,7 +610,7 @@ body.product-detail-open .site-footer {
   margin: 2px auto 10px;
   padding: 0;
   text-align: center;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-size: 1.22rem;
   line-height: 1.16;
   letter-spacing: -0.02em;
@@ -687,10 +709,10 @@ body.product-detail-open .site-footer {
   pointer-events: none;
   filter: drop-shadow(0 10px 14px rgba(30, 22, 16, 0.18));
   transition:
-    left 560ms cubic-bezier(0.2, 0.9, 0.25, 1),
-    top 560ms cubic-bezier(0.2, 0.9, 0.25, 1),
-    transform 560ms cubic-bezier(0.2, 0.9, 0.25, 1),
-    opacity 560ms ease;
+    left 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    top 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 520ms ease;
 }
 
 @media (max-width: 1120px) {
@@ -782,10 +804,10 @@ body.product-detail-open .site-footer {
   }
 
   .shop-intro-line {
-    font-size: clamp(0.95rem, 3.8vw, 1.55rem);
+    font-size: clamp(1.08rem, 4.9vw, 1.5rem);
     line-height: 1.03;
     white-space: nowrap;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 
   .products {
@@ -827,17 +849,17 @@ body.product-detail-open .site-footer {
   }
 
   .product-flavor {
-    font-size: 0.72rem;
-    line-height: 1.12;
+    min-height: 3.5em;
+    font-size: 0.68rem;
+    line-height: 1.02;
     font-weight: 700;
     letter-spacing: -0.01em;
     text-align: center;
   }
 
   .product-modal {
-    top: 84px;
     width: min(88vw, 360px);
-    max-height: calc(100vh - 104px);
+    max-height: calc(100vh - var(--header-offset, 98px) - 16px);
   }
 
   .dogbowl {
@@ -849,14 +871,10 @@ body.product-detail-open .site-footer {
     min-height: 156px;
   }
 
-  .static-bowl-woofle {
-    width: 72px;
-    height: 72px;
-  }
-
+  .static-bowl-woofle,
   .woofle-flight {
-    width: 46px;
-    height: 46px;
+    width: 48px;
+    height: 48px;
   }
 
   .newsletter-form {
