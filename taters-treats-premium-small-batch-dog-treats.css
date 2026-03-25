@@ -103,12 +103,13 @@ body {
 .hero__line-row {
   width: 100%;
   margin-top: -2px;
-  text-align: right;
+  text-align: left;
 }
 
 .hero__line--bottom {
-  display: inline-block;
-  text-align: right;
+  display: block;
+  width: max-content;
+  margin-left: 47%;
 }
 
 /* =========================
