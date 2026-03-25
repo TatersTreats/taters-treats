@@ -920,3 +920,28 @@ body.product-detail-open .site-header {
   margin-left: auto;
   margin-right: auto;
 }
+/* =========================
+   FLAVOR TEXT UPGRADE
+========================= */
+
+.product-flavor {
+  display: grid;
+  justify-items: center;
+  gap: 0.1em;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.15rem; /* bigger */
+  line-height: 1.05;
+  text-align: center;
+
+  color: var(--green-deep);
+}
+
+.flavor-line {
+  display: block;
+}
+
+.flavor-line.amp {
+  font-size: 0.9em;
+  line-height: 0.8;
+}
