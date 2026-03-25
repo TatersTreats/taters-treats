@@ -116,31 +116,63 @@ button, input { font: inherit; }
   cursor: pointer;
   min-height: 150px;
 }
-.product-card:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
+/* ===== Product Card Improvements ===== */
+.product-card {
+  position: relative; /* for absolute Woofle positioning */
+  background: #fffefc;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
+  padding-top: 60px; /* space for Woofle overlap */
+  padding-bottom: 20px;
+  display: inline-block;
+  width: 32%;
+  margin: 0 1%;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* ===== Product Image / Woofle ===== */
 .product-image {
   aspect-ratio: 1 / 1;
   display: grid;
   place-items: center;
+  overflow: visible; /* allow Woofle to hang over */
 }
-.product-image img {
-  width: 100%;
-  max-width: 104px;
+
+.product-image img.woofle {
+  position: absolute;
+  top: -50%; /* half hanging over top of card */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%; /* scales with card */
+  max-width: none; /* remove previous 104px cap */
+  height: auto;
+  z-index: 1;
   filter: drop-shadow(0 8px 10px rgba(10,10,10,0.11));
 }
+
+/* ===== Flavor Text ===== */
 .product-flavor {
   display: block;
-  margin-top: 4px;
+  margin-top: 16px; /* space below Woofle */
   text-align: center;
   font-family: "Playfair Display", serif;
-  font-size: 0.98rem;
-  line-height: 1.05;
+  font-size: 1.05rem;
+  font-weight: 700; /* more regal */
+  color: #1d1a17; /* stronger contrast */
+  line-height: 1.2;
 }
-.flavor-line { display: block; }
-.flavor-line.amp { font-size: 0.8em; line-height: 0.85; }
 
+/* ===== Flavor Lines ===== */
+.flavor-line { display: block; }
+.flavor-line.amp { font-size: 0.85em; line-height: 0.9; }
+
+/* ===== DogBowl (unchanged) ===== */
 .dogbowl {
   background: linear-gradient(180deg, #f8f2e8 0%, #f4ebde 100%);
   border: 1px solid rgba(44, 31, 18, 0.08);
@@ -151,6 +183,7 @@ button, input { font: inherit; }
 .dogbowl-top {
   padding: 16px 16px 12px;
 }
+
 .bowl-frame {
   position: relative;
   aspect-ratio: 1 / 0.74;
