@@ -881,3 +881,42 @@ body.product-detail-open .site-header {
     grid-template-columns: 1fr;
   }
 }
+/* =========================
+   HERO FIX (safe override)
+========================= */
+
+.hero-grid {
+  justify-items: center;
+}
+
+.hero h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.08em;
+
+  max-width: 14ch;
+  width: 100%;
+
+  text-align: center;
+  line-height: 0.92;
+}
+
+.hero h1 span {
+  display: block;
+}
+
+/* =========================
+   SHOP INTRO ALIGNMENT FIX
+========================= */
+
+.shop-intro {
+  display: flex;
+  justify-content: center;
+}
+
+.shop-intro-line {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
