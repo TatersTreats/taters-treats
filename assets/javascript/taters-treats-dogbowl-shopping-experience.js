@@ -51,9 +51,12 @@ const state = {
 
 function initHeroAndBridge() {
   const heroHeading = document.querySelector(".hero h1");
-  if (heroHeading) {
-    heroHeading.innerHTML = "Dogs<br>Deserve<br>The Best.";
-  }
+if (heroHeading) {
+  heroHeading.innerHTML = `
+    <span>Dogs Deserve</span>
+    <span>The Best</span>
+  `;
+}
 
   const missionBox = document.querySelector(".hero-bridge");
   if (missionBox) {
