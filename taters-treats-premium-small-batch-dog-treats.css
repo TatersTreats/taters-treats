@@ -33,11 +33,10 @@ button, input { font: inherit; }
   background: rgba(246, 240, 231, 0.94);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
-  padding: 8px 0 6px; /* reduced top + bottom padding */
 }
 .site-header__inner {
   width: 100%;
-  padding: 16px 16px 14px;
+  padding: 8px 16px 6px;
 }
 .brand-mark {
   width: min(92vw, 360px);
