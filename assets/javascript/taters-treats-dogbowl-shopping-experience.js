@@ -141,12 +141,6 @@ function formatFlavorLabel(flavor) {
   `;
 }
 
-  return `
-    <span class="product-flavor-line">${parts[0]}</span>
-    <span class="product-flavor-line product-flavor-amp">&amp;</span>
-    <span class="product-flavor-line">${parts[1]}</span>
-  `;
-}
 
 function getShopScrollTarget() {
   if (!shopEl) return window.scrollY;
