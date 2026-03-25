@@ -32,14 +32,15 @@ const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
 const BOWL_TARGET = {
   centerX: 0.5,
-  centerY: 0.64,
-  radiusX: 0.235,
-  radiusY: 0.12
+  centerY: 0.7,
+  radiusX: 0.17,
+  radiusY: 0.068
 };
 
 const productsEl = document.getElementById("products");
 const shopEl = document.getElementById("shop") || document.querySelector("#shop");
 const bowlFrameEl = document.querySelector(".bowl-frame");
+const headerEl = document.querySelector(".site-header");
 
 const state = {
   activeOverlay: null,
@@ -95,7 +96,7 @@ function renderProducts() {
       <div class="product-image">
         <img src="${product.image}" alt="${product.flavor}" />
       </div>
-      <span class="product-flavor">${product.flavor}</span>
+      <span class="product-flavor">${formatFlavorLabel(product.flavor)}</span>
     </article>
   `).join("");
 
@@ -121,6 +122,20 @@ function attachCardEvents() {
 
 function getProductById(id) {
   return PRODUCTS.find((product) => product.id === id) || null;
+}
+
+function formatFlavorLabel(flavor) {
+  const parts = flavor.split(" & ");
+
+  if (parts.length !== 2) {
+    return flavor;
+  }
+
+  return `
+    <span class="product-flavor-line">${parts[0]}</span>
+    <span class="product-flavor-line product-flavor-amp">&amp;</span>
+    <span class="product-flavor-line">${parts[1]}</span>
+  `;
 }
 
 function getShopScrollTarget() {
@@ -196,6 +211,9 @@ async function openDetail(card) {
   modal.setAttribute("aria-label", product.flavor);
   modal.innerHTML = createModalMarkup(product);
 
+  const headerHeight = headerEl ? headerEl.offsetHeight : 0;
+  document.body.style.setProperty("--header-offset", `${headerHeight + 18}px`);
+
   document.body.append(overlay, modal);
   document.body.classList.add("product-detail-open");
 
@@ -238,7 +256,7 @@ function ensureBowlItemsLayer() {
   return state.bowlItemsLayer;
 }
 
-function createTargetPoint(indexOffset = 0) {
+function createBowlTarget(indexOffset = 0) {
   if (!bowlFrameEl) return null;
 
   const bowlRect = bowlFrameEl.getBoundingClientRect();
@@ -248,22 +266,17 @@ function createTargetPoint(indexOffset = 0) {
   const xNorm = BOWL_TARGET.centerX + Math.cos(theta) * radial * BOWL_TARGET.radiusX;
   const yNorm = BOWL_TARGET.centerY + Math.sin(theta) * radial * BOWL_TARGET.radiusY;
 
-  const clampedX = Math.min(0.72, Math.max(0.28, xNorm));
-  const clampedY = Math.min(0.75, Math.max(0.48, yNorm));
-
-  const xPx = clampedX * bowlRect.width;
-  const yPx = clampedY * bowlRect.height;
-  const rotation = -18 + Math.random() * 36;
-  const scale = 0.98 + Math.random() * 0.18;
+  const clampedX = Math.min(0.66, Math.max(0.34, xNorm));
+  const clampedY = Math.min(0.76, Math.max(0.58, yNorm));
+  const rotation = -16 + Math.random() * 32;
   const zIndex = 4 + indexOffset;
 
   return {
-    xPx,
-    yPx,
-    xPercent: (xPx / bowlRect.width) * 100,
-    yPercent: (yPx / bowlRect.height) * 100,
+    xPx: clampedX * bowlRect.width,
+    yPx: clampedY * bowlRect.height,
+    xPercent: clampedX * 100,
+    yPercent: clampedY * 100,
     rotation,
-    scale,
     zIndex
   };
 }
@@ -280,7 +293,7 @@ function addWoofleToBowl(imageSrc, targetPoint) {
   item.style.left = `${targetPoint.xPercent}%`;
   item.style.top = `${targetPoint.yPercent}%`;
   item.style.zIndex = String(targetPoint.zIndex);
-  item.style.transform = `translate(-50%, -50%) rotate(${targetPoint.rotation}deg) scale(${targetPoint.scale})`;
+  item.style.transform = `translate(-50%, -50%) rotate(${targetPoint.rotation}deg)`;
 
   layer.appendChild(item);
 }
@@ -291,7 +304,7 @@ function launchWoofleFromCTA(button, imageSrc, count) {
   const buttonRect = button.getBoundingClientRect();
 
   for (let index = 0; index < count; index += 1) {
-    const targetPoint = createTargetPoint(index);
+    const targetPoint = createBowlTarget(index);
     if (!targetPoint) continue;
 
     const bowlRect = bowlFrameEl.getBoundingClientRect();
@@ -307,7 +320,7 @@ function launchWoofleFromCTA(button, imageSrc, count) {
 
     flight.style.left = `${startLeft}px`;
     flight.style.top = `${startTop}px`;
-    flight.style.transform = "translate(-50%, 0) scale(0.72) rotate(0deg)";
+    flight.style.transform = "translate(-50%, -50%) rotate(0deg)";
     flight.style.opacity = "1";
 
     document.body.appendChild(flight);
@@ -315,7 +328,7 @@ function launchWoofleFromCTA(button, imageSrc, count) {
     window.setTimeout(() => {
       flight.style.left = `${endLeft}px`;
       flight.style.top = `${endTop}px`;
-      flight.style.transform = `translate(-50%, -50%) scale(${0.82 + Math.random() * 0.08}) rotate(${targetPoint.rotation}deg)`;
+      flight.style.transform = `translate(-50%, -50%) rotate(${targetPoint.rotation}deg)`;
     }, index * WOOFLE_STAGGER_MS);
 
     window.setTimeout(() => {
@@ -386,6 +399,7 @@ function closeModal() {
     modal.remove();
     overlay.remove();
     document.body.classList.remove("product-detail-open");
+    document.body.style.removeProperty("--header-offset");
   }, MODAL_CLOSE_DURATION_MS);
 }
 
