@@ -110,7 +110,8 @@ input {
   grid-template-columns: 1fr;
   align-items: end;
   padding: 56px 0 24px;
-  justify-items: center;
+  justify-items: stretch
+;
 }
 
 h1,
