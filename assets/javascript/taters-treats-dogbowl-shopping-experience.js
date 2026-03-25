@@ -21,14 +21,21 @@ const PRODUCTS = [
 
 const SIZE_OPTIONS = ["Regular", "Value"];
 const SIZE_COUNTS = {
-  Regular: 2,
-  Value: 3
+  Regular: 1,
+  Value: 2
 };
 
 const SCROLL_DURATION_MS = 420;
-const MODAL_CLOSE_DURATION_MS = 260;
-const WOOFLE_FLIGHT_DURATION_MS = 520;
+const MODAL_CLOSE_DURATION_MS = 320;
+const WOOFLE_FLIGHT_DURATION_MS = 560;
 const MODAL_ENTER_DELAY_MS = 70;
+const WOOFLE_STAGGER_MS = 60;
+const BOWL_TARGET = {
+  centerX: 0.5,
+  centerY: 0.64,
+  radiusX: 0.235,
+  radiusY: 0.12
+};
 
 const productsEl = document.getElementById("products");
 const shopEl = document.getElementById("shop") || document.querySelector("#shop");
@@ -217,33 +224,63 @@ function ensureBowlItemsLayer() {
   if (!bowlFrameEl) return null;
 
   if (!state.bowlItemsLayer) {
-    const layer = document.createElement("div");
-    layer.className = "static-bowl-items";
-    bowlFrameEl.appendChild(layer);
+    let layer = bowlFrameEl.querySelector(".static-bowl-items");
+
+    if (!layer) {
+      layer = document.createElement("div");
+      layer.className = "static-bowl-items";
+      bowlFrameEl.appendChild(layer);
+    }
+
     state.bowlItemsLayer = layer;
   }
 
   return state.bowlItemsLayer;
 }
 
-function addWoofleToBowl(imageSrc, indexOffset = 0) {
+function createTargetPoint(indexOffset = 0) {
+  if (!bowlFrameEl) return null;
+
+  const bowlRect = bowlFrameEl.getBoundingClientRect();
+  const theta = Math.random() * Math.PI * 2;
+  const radial = Math.sqrt(Math.random());
+
+  const xNorm = BOWL_TARGET.centerX + Math.cos(theta) * radial * BOWL_TARGET.radiusX;
+  const yNorm = BOWL_TARGET.centerY + Math.sin(theta) * radial * BOWL_TARGET.radiusY;
+
+  const clampedX = Math.min(0.72, Math.max(0.28, xNorm));
+  const clampedY = Math.min(0.75, Math.max(0.48, yNorm));
+
+  const xPx = clampedX * bowlRect.width;
+  const yPx = clampedY * bowlRect.height;
+  const rotation = -18 + Math.random() * 36;
+  const scale = 0.98 + Math.random() * 0.18;
+  const zIndex = 4 + indexOffset;
+
+  return {
+    xPx,
+    yPx,
+    xPercent: (xPx / bowlRect.width) * 100,
+    yPercent: (yPx / bowlRect.height) * 100,
+    rotation,
+    scale,
+    zIndex
+  };
+}
+
+function addWoofleToBowl(imageSrc, targetPoint) {
   const layer = ensureBowlItemsLayer();
-  if (!layer) return;
+  if (!layer || !targetPoint) return;
 
   const item = document.createElement("img");
   item.className = "static-bowl-woofle";
   item.src = imageSrc;
   item.alt = "";
 
-  const left = 38 + Math.random() * 24;
-  const bottom = 24 + Math.random() * 18;
-  const rotation = -20 + Math.random() * 40;
-  const scale = 0.8 + Math.random() * 0.2;
-
-  item.style.left = `${left}%`;
-  item.style.bottom = `${bottom}px`;
-  item.style.maxWidth = "48px";
-  item.style.transform = `translate(-50%, 0) rotate(${rotation}deg) scale(${scale})`;
+  item.style.left = `${targetPoint.xPercent}%`;
+  item.style.top = `${targetPoint.yPercent}%`;
+  item.style.zIndex = String(targetPoint.zIndex);
+  item.style.transform = `translate(-50%, -50%) rotate(${targetPoint.rotation}deg) scale(${targetPoint.scale})`;
 
   layer.appendChild(item);
 }
@@ -252,9 +289,12 @@ function launchWoofleFromCTA(button, imageSrc, count) {
   if (!button || !bowlFrameEl || count < 1) return;
 
   const buttonRect = button.getBoundingClientRect();
-  const bowlRect = bowlFrameEl.getBoundingClientRect();
 
   for (let index = 0; index < count; index += 1) {
+    const targetPoint = createTargetPoint(index);
+    if (!targetPoint) continue;
+
+    const bowlRect = bowlFrameEl.getBoundingClientRect();
     const flight = document.createElement("img");
     flight.className = "woofle-flight";
     flight.src = imageSrc;
@@ -262,12 +302,12 @@ function launchWoofleFromCTA(button, imageSrc, count) {
 
     const startLeft = buttonRect.left + buttonRect.width / 2;
     const startTop = buttonRect.top + 4;
-    const endLeft = bowlRect.left + bowlRect.width / 2 + (-18 + Math.random() * 36);
-    const endTop = bowlRect.top + bowlRect.height / 2 + (-10 + Math.random() * 18);
+    const endLeft = bowlRect.left + targetPoint.xPx;
+    const endTop = bowlRect.top + targetPoint.yPx;
 
     flight.style.left = `${startLeft}px`;
     flight.style.top = `${startTop}px`;
-    flight.style.transform = "translate(-50%, 0) scale(0.82) rotate(0deg)";
+    flight.style.transform = "translate(-50%, 0) scale(0.72) rotate(0deg)";
     flight.style.opacity = "1";
 
     document.body.appendChild(flight);
@@ -275,13 +315,13 @@ function launchWoofleFromCTA(button, imageSrc, count) {
     window.setTimeout(() => {
       flight.style.left = `${endLeft}px`;
       flight.style.top = `${endTop}px`;
-      flight.style.transform = `translate(-50%, -50%) scale(${0.96 + Math.random() * 0.12}) rotate(${-18 + Math.random() * 36}deg)`;
-    }, index * 55);
+      flight.style.transform = `translate(-50%, -50%) scale(${0.82 + Math.random() * 0.08}) rotate(${targetPoint.rotation}deg)`;
+    }, index * WOOFLE_STAGGER_MS);
 
     window.setTimeout(() => {
-      addWoofleToBowl(imageSrc, index);
+      addWoofleToBowl(imageSrc, targetPoint);
       flight.remove();
-    }, WOOFLE_FLIGHT_DURATION_MS + index * 55);
+    }, WOOFLE_FLIGHT_DURATION_MS + index * WOOFLE_STAGGER_MS);
   }
 }
 
