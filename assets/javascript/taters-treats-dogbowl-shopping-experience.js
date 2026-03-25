@@ -27,16 +27,16 @@ const SIZE_COUNTS = {
 
 const SCROLL_DURATION_MS = 420;
 const MODAL_CLOSE_DURATION_MS = 320;
-const WOOFLE_FLIGHT_DURATION_MS = 560;
+const WOOFLE_FLIGHT_DURATION_MS = 620;
 const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
 const QUANTITY_DRAG_STEP_PX = 24;
 const FEEDBACK_PULSE_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
-  centerY: 0.7,
-  radiusX: 0.17,
-  radiusY: 0.068
+  centerY: 0.69,
+  radiusX: 0.11,
+  radiusY: 0.045
 };
 
 const productsEl = document.getElementById("products");
@@ -52,41 +52,7 @@ const state = {
 };
 
 function initHeroAndBridge() {
-  const heroHeading = document.querySelector(".hero h1");
-
-  if (heroHeading) {
-    heroHeading.innerHTML = `
-      <span>Dogs Deserve</span>
-      <span>The Best</span>
-    `;
-  }
-
-  const missionBox = document.querySelector(".hero-bridge");
-
-  if (missionBox) {
-    missionBox.innerHTML = `
-      <p class="hero-bridge-kicker">Premium, Small-batch Canine Confections</p>
-      <h2>For Dogs Who Deserve More Than Just Treats. Like Tater.</h2>
-    `;
-  }
-
-  if (shopEl) {
-    const existingIntro = shopEl.querySelector(".shop-intro");
-
-    if (!existingIntro) {
-      const intro = document.createElement("div");
-      intro.className = "shop-intro";
-      intro.innerHTML = `
-        <p class="shop-intro-line">Three flavors. Two sizes. One happy dog.</p>
-      `;
-      shopEl.prepend(intro);
-    } else {
-      const line = existingIntro.querySelector(".shop-intro-line");
-      if (line) {
-        line.textContent = "Three flavors. Two sizes. One happy dog.";
-      }
-    }
-  }
+  // Content is now source-of-truth in HTML.
 }
 
 function renderProducts() {
@@ -331,10 +297,10 @@ function addWoofleToBowl(imageSrc, targetPoint) {
   layer.appendChild(item);
 }
 
-function launchWoofleFromCTA(button, imageSrc, count) {
-  if (!button || !bowlFrameEl || count < 1) return;
+function launchWoofleFromCTA(sourceEl, imageSrc, count) {
+  if (!sourceEl || !bowlFrameEl || count < 1) return;
 
-  const buttonRect = button.getBoundingClientRect();
+  const sourceRect = sourceEl.getBoundingClientRect();
 
   for (let index = 0; index < count; index += 1) {
     const targetPoint = createBowlTarget(index);
@@ -346,14 +312,14 @@ function launchWoofleFromCTA(button, imageSrc, count) {
     flight.src = imageSrc;
     flight.alt = "";
 
-    const startLeft = buttonRect.left + buttonRect.width / 2;
-    const startTop = buttonRect.top + 4;
+    const startLeft = sourceRect.left + sourceRect.width / 2;
+    const startTop = sourceRect.top + sourceRect.height * 0.58;
     const endLeft = bowlRect.left + targetPoint.xPx;
     const endTop = bowlRect.top + targetPoint.yPx;
 
     flight.style.left = `${startLeft}px`;
     flight.style.top = `${startTop}px`;
-    flight.style.transform = "translate(-50%, -50%) rotate(0deg)";
+    flight.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
     flight.style.opacity = "1";
 
     document.body.appendChild(flight);
@@ -361,7 +327,7 @@ function launchWoofleFromCTA(button, imageSrc, count) {
     window.setTimeout(() => {
       flight.style.left = `${endLeft}px`;
       flight.style.top = `${endTop}px`;
-      flight.style.transform = `translate(-50%, -50%) rotate(${targetPoint.rotation}deg)`;
+      flight.style.transform = `translate(-50%, -50%) scale(0.9) rotate(${targetPoint.rotation}deg)`;
     }, index * WOOFLE_STAGGER_MS);
 
     window.setTimeout(() => {
@@ -483,6 +449,7 @@ function bindModal(modal, overlay, product) {
   const minusButton = modal.querySelector(".qty-minus");
   const sizeButtons = modal.querySelectorAll(".pill");
   const ctaButton = modal.querySelector(".cta");
+  const modalImage = modal.querySelector(".modal-image");
 
   const setQuantity = (nextQuantity) => {
     quantity = Math.max(1, nextQuantity);
@@ -532,7 +499,7 @@ function bindModal(modal, overlay, product) {
 
   ctaButton?.addEventListener("click", () => {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
-    launchWoofleFromCTA(ctaButton, product.image, totalWoofles);
+    launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
     closeModal();
   });
 
