@@ -1120,17 +1120,3 @@ body.product-detail-open .site-header {
    HERO FIX (safe override)
 ========================= */
 
-.hero h1 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.08em;
-  max-width: 14ch;
-  width: 100%;
-  text-align: center;
-  line-height: 0.92;
-}
-
-.hero h1 span {
-  display: block;
-}
