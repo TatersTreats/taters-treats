@@ -123,11 +123,8 @@ button, input { font: inherit; }
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   text-align: center;
-  padding-top: 60px; /* space for Woofle overlap */
+  padding-top: 40px; /* space for Woofle overlap */
   padding-bottom: 20px;
-  display: inline-block;
-  width: 32%;
-  margin: 0 1%;
   transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
