@@ -105,6 +105,7 @@ button, input { font: inherit; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
+  padding: 0 8px 32px; /* add horizontal padding to reduce empty edges */
 }
 .product-card {
   appearance: none;
