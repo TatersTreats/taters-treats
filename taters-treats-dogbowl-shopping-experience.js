@@ -1,3 +1,7 @@
+// ==========================
+// Tater's Treats JS — Clean Baseline
+// ==========================
+
 const PRODUCTS = [
   {
     id: "pumpkin",
@@ -27,16 +31,16 @@ const SIZE_COUNTS = {
 
 const SCROLL_DURATION_MS = 420;
 const MODAL_CLOSE_DURATION_MS = 320;
-const WOOFLE_FLIGHT_DURATION_MS = 560;
+const WOOFLE_FLIGHT_DURATION_MS = 620;
 const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
 const QUANTITY_DRAG_STEP_PX = 24;
 const FEEDBACK_PULSE_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
-  centerY: 0.7,
-  radiusX: 0.17,
-  radiusY: 0.068
+  centerY: 0.69,
+  radiusX: 0.11,
+  radiusY: 0.045
 };
 
 const productsEl = document.getElementById("products");
@@ -51,38 +55,12 @@ const state = {
   isOpening: false
 };
 
+// ======= PASS 1: Empty function to prevent Shop Intro duplication =======
 function initHeroAndBridge() {
-  // intentionally empty to prevent Shop Intro duplication
+  // intentionally empty
 }
 
-  const missionBox = document.querySelector(".hero-bridge");
-
-  if (missionBox) {
-    missionBox.innerHTML = `
-      <p class="hero-bridge-kicker">Premium, Small-batch Canine Confections</p>
-      <h2>For Dogs Who Deserve More Than Just Treats. Like Tater.</h2>
-    `;
-  }
-
-  if (shopEl) {
-    const existingIntro = shopEl.querySelector(".shop-intro");
-
-    if (!existingIntro) {
-      const intro = document.createElement("div");
-      intro.className = "shop-intro";
-      intro.innerHTML = `
-        <p class="shop-intro-line">Three flavors. Two sizes. One happy dog.</p>
-      `;
-      shopEl.prepend(intro);
-    } else {
-      const line = existingIntro.querySelector(".shop-intro-line");
-      if (line) {
-        line.textContent = "Three flavors. Two sizes. One happy dog.";
-      }
-    }
-  }
-}
-
+// ======= Product rendering =======
 function renderProducts() {
   if (!productsEl) return;
 
@@ -108,9 +86,7 @@ function attachCardEvents() {
   const cards = document.querySelectorAll(".product-card");
 
   cards.forEach((card) => {
-    card.addEventListener("click", () => {
-      openDetail(card);
-    });
+    card.addEventListener("click", () => openDetail(card));
 
     card.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
@@ -139,11 +115,11 @@ function formatFlavorLabel(flavor) {
   `;
 }
 
+// ======= Scroll helpers =======
 function getShopScrollTarget() {
   if (!shopEl) return window.scrollY;
 
-  const header = document.querySelector(".site-header");
-  const headerOffset = header ? header.offsetHeight : 0;
+  const headerOffset = headerEl ? headerEl.offsetHeight : 0;
   const breathingOffset = 12;
 
   return Math.max(
@@ -165,6 +141,7 @@ function scrollToShop() {
   });
 }
 
+// ======= Modal markup =======
 function createModalMarkup(product) {
   return `
     <img src="${product.image}" class="modal-image" alt="${product.flavor}" />
@@ -186,33 +163,12 @@ function createModalMarkup(product) {
 
     <div class="quantity">
       <div class="brass-stepper" data-quantity-stepper>
-        <button
-          class="qty qty-minus"
-          type="button"
-          aria-label="Decrease quantity"
-        >
-          −
-        </button>
-
-        <div
-          class="qty-dial"
-          tabindex="0"
-          role="spinbutton"
-          aria-label="Quantity"
-          aria-valuemin="1"
-          aria-valuenow="1"
-        >
+        <button class="qty qty-minus" type="button" aria-label="Decrease quantity">−</button>
+        <div class="qty-dial" tabindex="0" role="spinbutton" aria-label="Quantity" aria-valuemin="1" aria-valuenow="1">
           <span class="qty-value">1</span>
           <span class="qty-drag-hint">Swipe</span>
         </div>
-
-        <button
-          class="qty qty-plus"
-          type="button"
-          aria-label="Increase quantity"
-        >
-          +
-        </button>
+        <button class="qty qty-plus" type="button" aria-label="Increase quantity">+</button>
       </div>
     </div>
 
@@ -220,6 +176,7 @@ function createModalMarkup(product) {
   `;
 }
 
+// ======= Modal open/close =======
 async function openDetail(card) {
   if (!card || state.activeModal || state.isOpening) return;
 
@@ -249,34 +206,54 @@ async function openDetail(card) {
 
   bindModal(modal, overlay, product);
 
-  requestAnimationFrame(() => {
-    overlay.classList.add("active");
-  });
+  requestAnimationFrame(() => overlay.classList.add("active"));
 
   const scrollPromise = scrollToShop();
 
   window.setTimeout(() => {
-    if (state.activeModal === modal) {
-      modal.classList.add("active");
-    }
+    if (state.activeModal === modal) modal.classList.add("active");
     state.isOpening = false;
   }, MODAL_ENTER_DELAY_MS);
 
   await scrollPromise;
 }
 
+function closeModal() {
+  if (!state.activeModal || !state.activeOverlay) return;
+
+  const modal = state.activeModal;
+  const overlay = state.activeOverlay;
+
+  state.activeModal = null;
+  state.activeOverlay = null;
+  state.isOpening = false;
+
+  overlay.classList.remove("active");
+  modal.classList.remove("active");
+
+  window.setTimeout(() => {
+    modal.remove();
+    overlay.remove();
+    document.body.classList.remove("product-detail-open");
+    document.body.style.removeProperty("--header-offset");
+  }, MODAL_CLOSE_DURATION_MS);
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeModal();
+});
+
+// ======= DogBowl & Woofle Motion =======
 function ensureBowlItemsLayer() {
   if (!bowlFrameEl) return null;
 
   if (!state.bowlItemsLayer) {
     let layer = bowlFrameEl.querySelector(".static-bowl-items");
-
     if (!layer) {
       layer = document.createElement("div");
       layer.className = "static-bowl-items";
       bowlFrameEl.appendChild(layer);
     }
-
     state.bowlItemsLayer = layer;
   }
 
@@ -316,7 +293,6 @@ function addWoofleToBowl(imageSrc, targetPoint) {
   item.className = "static-bowl-woofle";
   item.src = imageSrc;
   item.alt = "";
-
   item.style.left = `${targetPoint.xPercent}%`;
   item.style.top = `${targetPoint.yPercent}%`;
   item.style.zIndex = String(targetPoint.zIndex);
@@ -325,12 +301,12 @@ function addWoofleToBowl(imageSrc, targetPoint) {
   layer.appendChild(item);
 }
 
-function launchWoofleFromCTA(button, imageSrc, count) {
-  if (!button || !bowlFrameEl || count < 1) return;
+function launchWoofleFromCTA(sourceEl, imageSrc, count) {
+  if (!sourceEl || !bowlFrameEl || count < 1) return;
 
-  const buttonRect = button.getBoundingClientRect();
+  const sourceRect = sourceEl.getBoundingClientRect();
 
-  for (let index = 0; index < count; index += 1) {
+  for (let index = 0; index < count; index++) {
     const targetPoint = createBowlTarget(index);
     if (!targetPoint) continue;
 
@@ -340,14 +316,14 @@ function launchWoofleFromCTA(button, imageSrc, count) {
     flight.src = imageSrc;
     flight.alt = "";
 
-    const startLeft = buttonRect.left + buttonRect.width / 2;
-    const startTop = buttonRect.top + 4;
+    const startLeft = sourceRect.left + sourceRect.width / 2;
+    const startTop = sourceRect.top + sourceRect.height * 0.58;
     const endLeft = bowlRect.left + targetPoint.xPx;
     const endTop = bowlRect.top + targetPoint.yPx;
 
     flight.style.left = `${startLeft}px`;
     flight.style.top = `${startTop}px`;
-    flight.style.transform = "translate(-50%, -50%) rotate(0deg)";
+    flight.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
     flight.style.opacity = "1";
 
     document.body.appendChild(flight);
@@ -355,7 +331,7 @@ function launchWoofleFromCTA(button, imageSrc, count) {
     window.setTimeout(() => {
       flight.style.left = `${endLeft}px`;
       flight.style.top = `${endTop}px`;
-      flight.style.transform = `translate(-50%, -50%) rotate(${targetPoint.rotation}deg)`;
+      flight.style.transform = `translate(-50%, -50%) scale(0.9) rotate(${targetPoint.rotation}deg)`;
     }, index * WOOFLE_STAGGER_MS);
 
     window.setTimeout(() => {
@@ -365,30 +341,19 @@ function launchWoofleFromCTA(button, imageSrc, count) {
   }
 }
 
+// ======= Quantity control & modal binding =======
 function pulseQuantityFeedback(stepper) {
   if (!stepper) return;
-
   stepper.classList.remove("is-changing");
   void stepper.offsetWidth;
   stepper.classList.add("is-changing");
-
-  window.setTimeout(() => {
-    stepper.classList.remove("is-changing");
-  }, FEEDBACK_PULSE_MS);
+  window.setTimeout(() => stepper.classList.remove("is-changing"), FEEDBACK_PULSE_MS);
 }
 
-function bindQuantityDial({
-  dialEl,
-  valueEl,
-  stepperEl,
-  getQuantity,
-  setQuantity
-}) {
+function bindQuantityDial({ dialEl, valueEl, stepperEl, getQuantity, setQuantity }) {
   if (!dialEl || !valueEl) return;
 
-  let pointerId = null;
-  let startY = 0;
-  let carry = 0;
+  let pointerId = null, startY = 0, carry = 0;
 
   const updateAria = () => {
     dialEl.setAttribute("aria-valuenow", String(getQuantity()));
@@ -398,33 +363,22 @@ function bindQuantityDial({
   const applyStepFromDrag = (deltaY) => {
     const raw = carry + deltaY;
     const steps = Math.trunc(raw / QUANTITY_DRAG_STEP_PX);
-
     if (steps === 0) return;
-
     carry = raw - steps * QUANTITY_DRAG_STEP_PX;
-
-    if (steps > 0) {
-      setQuantity(Math.max(1, getQuantity() - steps));
-    } else {
-      setQuantity(getQuantity() + Math.abs(steps));
-    }
-
+    if (steps > 0) setQuantity(Math.max(1, getQuantity() - steps));
+    else setQuantity(getQuantity() + Math.abs(steps));
     pulseQuantityFeedback(stepperEl);
     updateAria();
   };
 
   dialEl.addEventListener("pointerdown", (event) => {
-    pointerId = event.pointerId;
-    startY = event.clientY;
-    carry = 0;
-
+    pointerId = event.pointerId; startY = event.clientY; carry = 0;
     dialEl.classList.add("is-dragging");
     dialEl.setPointerCapture(pointerId);
   });
 
   dialEl.addEventListener("pointermove", (event) => {
     if (pointerId !== event.pointerId) return;
-
     const deltaY = event.clientY - startY;
     applyStepFromDrag(deltaY);
     startY = event.clientY;
@@ -432,35 +386,17 @@ function bindQuantityDial({
 
   const endDrag = (event) => {
     if (pointerId !== event.pointerId) return;
-
     dialEl.classList.remove("is-dragging");
-
-    if (dialEl.hasPointerCapture(pointerId)) {
-      dialEl.releasePointerCapture(pointerId);
-    }
-
-    pointerId = null;
-    carry = 0;
-    updateAria();
+    if (dialEl.hasPointerCapture(pointerId)) dialEl.releasePointerCapture(pointerId);
+    pointerId = null; carry = 0; updateAria();
   };
 
   dialEl.addEventListener("pointerup", endDrag);
   dialEl.addEventListener("pointercancel", endDrag);
 
   dialEl.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowUp" || event.key === "ArrowRight") {
-      event.preventDefault();
-      setQuantity(getQuantity() + 1);
-      pulseQuantityFeedback(stepperEl);
-      updateAria();
-    }
-
-    if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
-      event.preventDefault();
-      setQuantity(Math.max(1, getQuantity() - 1));
-      pulseQuantityFeedback(stepperEl);
-      updateAria();
-    }
+    if (event.key === "ArrowUp" || event.key === "ArrowRight") { event.preventDefault(); setQuantity(getQuantity()+1); pulseQuantityFeedback(stepperEl); updateAria(); }
+    if (event.key === "ArrowDown" || event.key === "ArrowLeft") { event.preventDefault(); setQuantity(Math.max(1,getQuantity()-1)); pulseQuantityFeedback(stepperEl); updateAria(); }
   });
 
   updateAria();
@@ -477,48 +413,24 @@ function bindModal(modal, overlay, product) {
   const minusButton = modal.querySelector(".qty-minus");
   const sizeButtons = modal.querySelectorAll(".pill");
   const ctaButton = modal.querySelector(".cta");
+  const modalImage = modal.querySelector(".modal-image");
 
   const setQuantity = (nextQuantity) => {
     quantity = Math.max(1, nextQuantity);
-
-    if (valueEl) {
-      valueEl.textContent = String(quantity);
-    }
-
-    if (dialEl) {
-      dialEl.setAttribute("aria-valuenow", String(quantity));
-      dialEl.setAttribute("aria-valuetext", `${quantity}`);
-    }
+    if (valueEl) valueEl.textContent = String(quantity);
+    if (dialEl) { dialEl.setAttribute("aria-valuenow", String(quantity)); dialEl.setAttribute("aria-valuetext", `${quantity}`); }
   };
 
-  modal.addEventListener("click", (event) => {
-    event.stopPropagation();
-  });
+  modal.addEventListener("click", e => e.stopPropagation());
 
-  plusButton?.addEventListener("click", () => {
-    setQuantity(quantity + 1);
-    pulseQuantityFeedback(stepperEl);
-  });
+  plusButton?.addEventListener("click", () => { setQuantity(quantity+1); pulseQuantityFeedback(stepperEl); });
+  minusButton?.addEventListener("click", () => { setQuantity(quantity-1); pulseQuantityFeedback(stepperEl); });
 
-  minusButton?.addEventListener("click", () => {
-    setQuantity(quantity - 1);
-    pulseQuantityFeedback(stepperEl);
-  });
+  bindQuantityDial({ dialEl, valueEl, stepperEl, getQuantity: () => quantity, setQuantity });
 
-  bindQuantityDial({
-    dialEl,
-    valueEl,
-    stepperEl,
-    getQuantity: () => quantity,
-    setQuantity
-  });
-
-  sizeButtons.forEach((button) => {
+  sizeButtons.forEach(button => {
     button.addEventListener("click", () => {
-      sizeButtons.forEach((otherButton) => {
-        otherButton.classList.remove("active");
-      });
-
+      sizeButtons.forEach(b => b.classList.remove("active"));
       button.classList.add("active");
       selectedSize = button.dataset.size || "Regular";
     });
@@ -526,39 +438,14 @@ function bindModal(modal, overlay, product) {
 
   ctaButton?.addEventListener("click", () => {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
-    launchWoofleFromCTA(ctaButton, product.image, totalWoofles);
+    launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
     closeModal();
   });
 
   overlay.addEventListener("click", closeModal);
 }
 
-function closeModal() {
-  if (!state.activeModal || !state.activeOverlay) return;
-
-  const modal = state.activeModal;
-  const overlay = state.activeOverlay;
-
-  state.activeModal = null;
-  state.activeOverlay = null;
-  state.isOpening = false;
-
-  overlay.classList.remove("active");
-  modal.classList.remove("active");
-
-  window.setTimeout(() => {
-    modal.remove();
-    overlay.remove();
-    document.body.classList.remove("product-detail-open");
-    document.body.style.removeProperty("--header-offset");
-  }, MODAL_CLOSE_DURATION_MS);
-}
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    closeModal();
-  }
-});
-
+// ======= Initialize =======
+document.addEventListener("keydown", e => { if (e.key==="Escape") closeModal(); });
 initHeroAndBridge();
 renderProducts();
