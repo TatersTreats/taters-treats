@@ -52,14 +52,8 @@ const state = {
 };
 
 function initHeroAndBridge() {
-  const heroHeading = document.querySelector(".hero h1");
-
-  if (heroHeading) {
-    heroHeading.innerHTML = `
-      <span>Dogs Deserve</span>
-      <span>The Best</span>
-    `;
-  }
+  // intentionally empty to prevent Shop Intro duplication
+}
 
   const missionBox = document.querySelector(".hero-bridge");
 
