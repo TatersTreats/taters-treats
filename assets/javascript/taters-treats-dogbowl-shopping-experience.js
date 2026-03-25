@@ -30,6 +30,8 @@ const MODAL_CLOSE_DURATION_MS = 320;
 const WOOFLE_FLIGHT_DURATION_MS = 560;
 const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
+const QUANTITY_DRAG_STEP_PX = 24;
+const FEEDBACK_PULSE_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
   centerY: 0.7,
@@ -51,14 +53,16 @@ const state = {
 
 function initHeroAndBridge() {
   const heroHeading = document.querySelector(".hero h1");
-if (heroHeading) {
-  heroHeading.innerHTML = `
-    <span>Dogs Deserve</span>
-    <span>The Best</span>
-  `;
-}
+
+  if (heroHeading) {
+    heroHeading.innerHTML = `
+      <span>Dogs Deserve</span>
+      <span>The Best</span>
+    `;
+  }
 
   const missionBox = document.querySelector(".hero-bridge");
+
   if (missionBox) {
     missionBox.innerHTML = `
       <p class="hero-bridge-kicker">Premium, Small-batch Canine Confections</p>
@@ -141,7 +145,6 @@ function formatFlavorLabel(flavor) {
   `;
 }
 
-
 function getShopScrollTarget() {
   if (!shopEl) return window.scrollY;
 
@@ -188,9 +191,35 @@ function createModalMarkup(product) {
     </div>
 
     <div class="quantity">
-      <button class="qty minus" type="button" aria-label="Decrease quantity">−</button>
-      <span class="qty-value">1</span>
-      <button class="qty plus" type="button" aria-label="Increase quantity">+</button>
+      <div class="brass-stepper" data-quantity-stepper>
+        <button
+          class="qty qty-minus"
+          type="button"
+          aria-label="Decrease quantity"
+        >
+          −
+        </button>
+
+        <div
+          class="qty-dial"
+          tabindex="0"
+          role="spinbutton"
+          aria-label="Quantity"
+          aria-valuemin="1"
+          aria-valuenow="1"
+        >
+          <span class="qty-value">1</span>
+          <span class="qty-drag-hint">Swipe</span>
+        </div>
+
+        <button
+          class="qty qty-plus"
+          type="button"
+          aria-label="Increase quantity"
+        >
+          +
+        </button>
+      </div>
     </div>
 
     <button class="cta" type="button">Fill the DogBowl™</button>
@@ -342,28 +371,152 @@ function launchWoofleFromCTA(button, imageSrc, count) {
   }
 }
 
+function pulseQuantityFeedback(stepper) {
+  if (!stepper) return;
+
+  stepper.classList.remove("is-changing");
+  void stepper.offsetWidth;
+  stepper.classList.add("is-changing");
+
+  window.setTimeout(() => {
+    stepper.classList.remove("is-changing");
+  }, FEEDBACK_PULSE_MS);
+}
+
+function bindQuantityDial({
+  dialEl,
+  valueEl,
+  stepperEl,
+  getQuantity,
+  setQuantity
+}) {
+  if (!dialEl || !valueEl) return;
+
+  let pointerId = null;
+  let startY = 0;
+  let carry = 0;
+
+  const updateAria = () => {
+    dialEl.setAttribute("aria-valuenow", String(getQuantity()));
+    dialEl.setAttribute("aria-valuetext", `${getQuantity()}`);
+  };
+
+  const applyStepFromDrag = (deltaY) => {
+    const raw = carry + deltaY;
+    const steps = Math.trunc(raw / QUANTITY_DRAG_STEP_PX);
+
+    if (steps === 0) return;
+
+    carry = raw - steps * QUANTITY_DRAG_STEP_PX;
+
+    if (steps > 0) {
+      setQuantity(Math.max(1, getQuantity() - steps));
+    } else {
+      setQuantity(getQuantity() + Math.abs(steps));
+    }
+
+    pulseQuantityFeedback(stepperEl);
+    updateAria();
+  };
+
+  dialEl.addEventListener("pointerdown", (event) => {
+    pointerId = event.pointerId;
+    startY = event.clientY;
+    carry = 0;
+
+    dialEl.classList.add("is-dragging");
+    dialEl.setPointerCapture(pointerId);
+  });
+
+  dialEl.addEventListener("pointermove", (event) => {
+    if (pointerId !== event.pointerId) return;
+
+    const deltaY = event.clientY - startY;
+    applyStepFromDrag(deltaY);
+    startY = event.clientY;
+  });
+
+  const endDrag = (event) => {
+    if (pointerId !== event.pointerId) return;
+
+    dialEl.classList.remove("is-dragging");
+
+    if (dialEl.hasPointerCapture(pointerId)) {
+      dialEl.releasePointerCapture(pointerId);
+    }
+
+    pointerId = null;
+    carry = 0;
+    updateAria();
+  };
+
+  dialEl.addEventListener("pointerup", endDrag);
+  dialEl.addEventListener("pointercancel", endDrag);
+
+  dialEl.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowUp" || event.key === "ArrowRight") {
+      event.preventDefault();
+      setQuantity(getQuantity() + 1);
+      pulseQuantityFeedback(stepperEl);
+      updateAria();
+    }
+
+    if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
+      event.preventDefault();
+      setQuantity(Math.max(1, getQuantity() - 1));
+      pulseQuantityFeedback(stepperEl);
+      updateAria();
+    }
+  });
+
+  updateAria();
+}
+
 function bindModal(modal, overlay, product) {
   let quantity = 1;
   let selectedSize = "Regular";
 
-  const quantityValueEl = modal.querySelector(".qty-value");
-  const plusButton = modal.querySelector(".plus");
-  const minusButton = modal.querySelector(".minus");
+  const valueEl = modal.querySelector(".qty-value");
+  const dialEl = modal.querySelector(".qty-dial");
+  const stepperEl = modal.querySelector("[data-quantity-stepper]");
+  const plusButton = modal.querySelector(".qty-plus");
+  const minusButton = modal.querySelector(".qty-minus");
   const sizeButtons = modal.querySelectorAll(".pill");
   const ctaButton = modal.querySelector(".cta");
 
-  plusButton?.addEventListener("click", () => {
-    quantity += 1;
-    if (quantityValueEl) {
-      quantityValueEl.textContent = String(quantity);
+  const setQuantity = (nextQuantity) => {
+    quantity = Math.max(1, nextQuantity);
+
+    if (valueEl) {
+      valueEl.textContent = String(quantity);
     }
+
+    if (dialEl) {
+      dialEl.setAttribute("aria-valuenow", String(quantity));
+      dialEl.setAttribute("aria-valuetext", `${quantity}`);
+    }
+  };
+
+  modal.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
+
+  plusButton?.addEventListener("click", () => {
+    setQuantity(quantity + 1);
+    pulseQuantityFeedback(stepperEl);
   });
 
   minusButton?.addEventListener("click", () => {
-    quantity = Math.max(1, quantity - 1);
-    if (quantityValueEl) {
-      quantityValueEl.textContent = String(quantity);
-    }
+    setQuantity(quantity - 1);
+    pulseQuantityFeedback(stepperEl);
+  });
+
+  bindQuantityDial({
+    dialEl,
+    valueEl,
+    stepperEl,
+    getQuantity: () => quantity,
+    setQuantity
   });
 
   sizeButtons.forEach((button) => {
