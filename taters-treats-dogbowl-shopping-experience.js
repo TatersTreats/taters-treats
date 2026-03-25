@@ -1,4 +1,3 @@
-
 const PRODUCTS = [
   {
     id: "pumpkin",
