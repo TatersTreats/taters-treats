@@ -16,9 +16,47 @@ function bindModal(modal, overlay, product) {
   const sizeButtons = modal.querySelectorAll(".pill");
   const ctaButton = modal.querySelector(".cta");
 
-  function updateQuantity() {
-    if (valueEl) valueEl.textContent = String(quantity);
-  }
+  const setQuantity = (nextQuantity) => {
+    quantity = Math.max(1, nextQuantity);
+
+    if (valueEl) {
+      valueEl.textContent = String(quantity);
+    }
+  };
+
+  modal.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
+
+  plusButton?.addEventListener("click", () => {
+    setQuantity(quantity + 1);
+  });
+
+  minusButton?.addEventListener("click", () => {
+    setQuantity(quantity - 1);
+  });
+
+  sizeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      sizeButtons.forEach((otherButton) => {
+        otherButton.classList.remove("active");
+      });
+
+      button.classList.add("active");
+      selectedSize = button.dataset.size || "Regular";
+    });
+  });
+
+  ctaButton?.addEventListener("click", () => {
+    const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
+    launchWoofleFromCTA(ctaButton, product.image, totalWoofles);
+    closeModal();
+  });
+
+  overlay.addEventListener("click", () => {
+    closeModal();
+  });
+}
 
   // FIX: prevent modal clicks from bubbling, but allow overlay
   modal.addEventListener("click", (e) => {
