@@ -11,22 +11,24 @@ body {
 }
 
 /* =========================
-   HEADER
+   HEADER FULL WIDTH
    ========================= */
-
-
 .site-header {
   background: #f6f0e7;
   border-bottom: 1px solid rgba(29, 26, 23, 0.08);
+  width: 100%;      /* full width */
+  padding: 12px 0;  /* remove horizontal padding */
+  box-sizing: border-box;
 }
 
 .site-header__inner {
-  padding: 18px 24px; /* increase vertical padding */
+  max-width: 100%;   /* full width container */
+  padding: 0 16px;   /* optional small horizontal margin */
 }
 
 .site-header__logo {
   display: block;
-  height: 48px; /* restore proportional height */
+  height: 48px;      /* maintain proportional size */
   width: auto;
 }
 
