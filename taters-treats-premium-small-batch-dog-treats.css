@@ -162,7 +162,7 @@ button, input { font: inherit; }
 /* ===== Flavor Lines ===== */
 .flavor-line { display: block; }
 .flavor-line.amp { font-size: 0.85em; line-height: 0.9; }
-
+}
 /* ===== DogBowl (unchanged) ===== */
 .dogbowl {
   background: linear-gradient(180deg, #f8f2e8 0%, #f4ebde 100%);
