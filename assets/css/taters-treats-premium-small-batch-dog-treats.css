@@ -1,7 +1,4 @@
-:root {
-  --cream: #fbf8f3;
-  --cream-deep: #f3eadc;
-  --oat: #efe4d2;
+
   --sand: #dcc6a6;
   --green: #3f5f3e;
   --green-deep: #29412b;
@@ -567,9 +564,9 @@ body.product-detail-open .site-header {
   flex-direction: column;
   align-items: center;
   width: min(88vw, 386px);
-  max-height: calc(100vh - var(--header-offset, 112px) - 16px);
+  max-height: calc(100vh - var(--header-offset, 112px) - 60px);
   overflow: visible;
-  padding: 0 0 54px;
+  padding: 0 0 80px;
   background: transparent;
   opacity: 0;
   transform: translateX(-50%) translateY(22px) scale(0.975);
@@ -632,17 +629,17 @@ body.product-detail-open .site-header {
   position: relative;
   top: -42px;
   width: 80%;
-  margin-bottom: -2px;
+  margin-bottom: -6px;
   filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.18));
 }
 
 .product-modal h2 {
   width: 84%;
-  margin: 8px auto 12px;
+  margin: 4px auto 10px;
   padding: 0;
   text-align: center;
   font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-size: clamp(1.8rem, 5vw, 2.3rem);
   line-height: 1.06;
   letter-spacing: -0.025em;
   color: var(--green-deep);
@@ -715,10 +712,10 @@ body.product-detail-open .site-header {
   border: 1px solid rgba(103, 75, 34, 0.38);
   background: linear-gradient(
     135deg,
-    #ddc78f 0%,
-    #c09b58 28%,
-    #a37e44 62%,
-    #7d5f31 100%
+    #e6d3a3 0%,
+    #d1b073 40%,
+    #b89155 75%,
+    #9c743c 100%
   );
   box-shadow:
     inset 0 1px 0 rgba(255, 248, 228, 0.42),
@@ -755,12 +752,11 @@ body.product-detail-open .site-header {
   min-height: 74px;
   border: none;
   background: transparent;
-  color: rgba(67, 45, 18, 0.92);
+  color: #f8f4ea;
   font-size: 1.9rem;
   font-weight: 700;
   line-height: 1;
 }
-
 .product-modal .qty:hover {
   transform: none;
 }
@@ -811,6 +807,7 @@ body.product-detail-open .site-header {
   font-size: 1.7rem;
   line-height: 1;
   letter-spacing: -0.02em;
+  color: #f8f4ea;
 }
 
 .product-modal .qty-drag-hint {
@@ -829,12 +826,11 @@ body.product-detail-open .site-header {
   min-height: 58px;
   margin: 4px 17px 0;
   border-radius: 999px;
-  border: 1px solid rgba(208, 177, 104, 0.88);
+  border: 1px solid rgba(210, 180, 110, 0.7);
   background: linear-gradient(
     180deg,
-    #3f5f3e 0%,
-    #2f4a30 54%,
-    #254026 100%
+    #446a45 0%,
+    #2f4a30 100%
   );
   color: #fffdfa;
   font-weight: 700;
@@ -846,7 +842,6 @@ body.product-detail-open .site-header {
     0 0 0 1px rgba(123, 94, 45, 0.1);
   transform: translateY(16px);
 }
-
 .product-modal .cta:hover {
   transform: translateY(14px);
 }
