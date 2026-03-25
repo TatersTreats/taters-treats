@@ -27,14 +27,16 @@ const SIZE_COUNTS = {
 
 const SCROLL_DURATION_MS = 420;
 const MODAL_CLOSE_DURATION_MS = 320;
-const WOOFLE_FLIGHT_DURATION_MS = 620;
+const WOOFLE_FLIGHT_DURATION_MS = 560;
 const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
+const QUANTITY_DRAG_STEP_PX = 24;
+const FEEDBACK_PULSE_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
-  centerY: 0.685,
-  radiusX: 0.09,
-  radiusY: 0.03
+  centerY: 0.7,
+  radiusX: 0.17,
+  radiusY: 0.068
 };
 
 const productsEl = document.getElementById("products");
@@ -51,15 +53,16 @@ const state = {
 
 function initHeroAndBridge() {
   const heroHeading = document.querySelector(".hero h1");
+
   if (heroHeading) {
-    heroHeading.className = "hero-title";
     heroHeading.innerHTML = `
-      <span class="hero-line-1">Dogs Deserve</span>
-      <span class="hero-line-2">The Best</span>
+      <span>Dogs Deserve</span>
+      <span>The Best</span>
     `;
   }
 
   const missionBox = document.querySelector(".hero-bridge");
+
   if (missionBox) {
     missionBox.innerHTML = `
       <p class="hero-bridge-kicker">Premium, Small-batch Canine Confections</p>
@@ -67,25 +70,22 @@ function initHeroAndBridge() {
     `;
   }
 
-  const shopMain = document.querySelector(".shop-main");
-  if (shopMain) {
-    const existingIntros = shopMain.querySelectorAll(".shop-intro");
-    existingIntros.forEach((intro, index) => {
-      if (index > 0) intro.remove();
-    });
+  if (shopEl) {
+    const existingIntro = shopEl.querySelector(".shop-intro");
 
-    let intro = shopMain.querySelector(".shop-intro");
-    if (!intro) {
-      intro = document.createElement("div");
+    if (!existingIntro) {
+      const intro = document.createElement("div");
       intro.className = "shop-intro";
-      shopMain.prepend(intro);
+      intro.innerHTML = `
+        <p class="shop-intro-line">Three flavors. Two sizes. One happy dog.</p>
+      `;
+      shopEl.prepend(intro);
+    } else {
+      const line = existingIntro.querySelector(".shop-intro-line");
+      if (line) {
+        line.textContent = "Three flavors. Two sizes. One happy dog.";
+      }
     }
-
-    intro.innerHTML = `
-      <div class="shop-intro-line">Three Flavors.</div>
-      <div class="shop-intro-line">Two Sizes.</div>
-      <div class="shop-intro-line">One Happy Dog.</div>
-    `;
   }
 }
 
@@ -184,7 +184,6 @@ function createModalMarkup(product) {
           class="pill ${index === 0 ? "active" : ""}"
           data-size="${size}"
           type="button"
-          aria-pressed="${index === 0 ? "true" : "false"}"
         >
           ${size}
         </button>
@@ -192,7 +191,7 @@ function createModalMarkup(product) {
     </div>
 
     <div class="quantity">
-      <div class="brass-stepper">
+      <div class="brass-stepper" data-quantity-stepper>
         <button
           class="qty qty-minus"
           type="button"
@@ -201,8 +200,16 @@ function createModalMarkup(product) {
           −
         </button>
 
-        <div class="qty-dial" aria-hidden="true">
+        <div
+          class="qty-dial"
+          tabindex="0"
+          role="spinbutton"
+          aria-label="Quantity"
+          aria-valuemin="1"
+          aria-valuenow="1"
+        >
           <span class="qty-value">1</span>
+          <span class="qty-drag-hint">Swipe</span>
         </div>
 
         <button
@@ -292,8 +299,8 @@ function createBowlTarget(indexOffset = 0) {
   const xNorm = BOWL_TARGET.centerX + Math.cos(theta) * radial * BOWL_TARGET.radiusX;
   const yNorm = BOWL_TARGET.centerY + Math.sin(theta) * radial * BOWL_TARGET.radiusY;
 
-  const clampedX = Math.min(0.62, Math.max(0.38, xNorm));
-  const clampedY = Math.min(0.73, Math.max(0.62, yNorm));
+  const clampedX = Math.min(0.66, Math.max(0.34, xNorm));
+  const clampedY = Math.min(0.76, Math.max(0.58, yNorm));
   const rotation = -16 + Math.random() * 32;
   const zIndex = 4 + indexOffset;
 
@@ -324,10 +331,10 @@ function addWoofleToBowl(imageSrc, targetPoint) {
   layer.appendChild(item);
 }
 
-function launchWoofleFromModalImage(sourceEl, imageSrc, count) {
-  if (!sourceEl || !bowlFrameEl || count < 1) return;
+function launchWoofleFromCTA(button, imageSrc, count) {
+  if (!button || !bowlFrameEl || count < 1) return;
 
-  const sourceRect = sourceEl.getBoundingClientRect();
+  const buttonRect = button.getBoundingClientRect();
 
   for (let index = 0; index < count; index += 1) {
     const targetPoint = createBowlTarget(index);
@@ -339,14 +346,14 @@ function launchWoofleFromModalImage(sourceEl, imageSrc, count) {
     flight.src = imageSrc;
     flight.alt = "";
 
-    const startLeft = sourceRect.left + sourceRect.width / 2;
-    const startTop = sourceRect.top + sourceRect.height * 0.58;
+    const startLeft = buttonRect.left + buttonRect.width / 2;
+    const startTop = buttonRect.top + 4;
     const endLeft = bowlRect.left + targetPoint.xPx;
     const endTop = bowlRect.top + targetPoint.yPx;
 
     flight.style.left = `${startLeft}px`;
     flight.style.top = `${startTop}px`;
-    flight.style.transform = "translate(-50%, -50%) scale(1.06) rotate(0deg)";
+    flight.style.transform = "translate(-50%, -50%) rotate(0deg)";
     flight.style.opacity = "1";
 
     document.body.appendChild(flight);
@@ -354,7 +361,7 @@ function launchWoofleFromModalImage(sourceEl, imageSrc, count) {
     window.setTimeout(() => {
       flight.style.left = `${endLeft}px`;
       flight.style.top = `${endTop}px`;
-      flight.style.transform = `translate(-50%, -50%) scale(1) rotate(${targetPoint.rotation}deg)`;
+      flight.style.transform = `translate(-50%, -50%) rotate(${targetPoint.rotation}deg)`;
     }, index * WOOFLE_STAGGER_MS);
 
     window.setTimeout(() => {
@@ -364,16 +371,118 @@ function launchWoofleFromModalImage(sourceEl, imageSrc, count) {
   }
 }
 
+function pulseQuantityFeedback(stepper) {
+  if (!stepper) return;
+
+  stepper.classList.remove("is-changing");
+  void stepper.offsetWidth;
+  stepper.classList.add("is-changing");
+
+  window.setTimeout(() => {
+    stepper.classList.remove("is-changing");
+  }, FEEDBACK_PULSE_MS);
+}
+
+function bindQuantityDial({
+  dialEl,
+  valueEl,
+  stepperEl,
+  getQuantity,
+  setQuantity
+}) {
+  if (!dialEl || !valueEl) return;
+
+  let pointerId = null;
+  let startY = 0;
+  let carry = 0;
+
+  const updateAria = () => {
+    dialEl.setAttribute("aria-valuenow", String(getQuantity()));
+    dialEl.setAttribute("aria-valuetext", `${getQuantity()}`);
+  };
+
+  const applyStepFromDrag = (deltaY) => {
+    const raw = carry + deltaY;
+    const steps = Math.trunc(raw / QUANTITY_DRAG_STEP_PX);
+
+    if (steps === 0) return;
+
+    carry = raw - steps * QUANTITY_DRAG_STEP_PX;
+
+    if (steps > 0) {
+      setQuantity(Math.max(1, getQuantity() - steps));
+    } else {
+      setQuantity(getQuantity() + Math.abs(steps));
+    }
+
+    pulseQuantityFeedback(stepperEl);
+    updateAria();
+  };
+
+  dialEl.addEventListener("pointerdown", (event) => {
+    pointerId = event.pointerId;
+    startY = event.clientY;
+    carry = 0;
+
+    dialEl.classList.add("is-dragging");
+    dialEl.setPointerCapture(pointerId);
+  });
+
+  dialEl.addEventListener("pointermove", (event) => {
+    if (pointerId !== event.pointerId) return;
+
+    const deltaY = event.clientY - startY;
+    applyStepFromDrag(deltaY);
+    startY = event.clientY;
+  });
+
+  const endDrag = (event) => {
+    if (pointerId !== event.pointerId) return;
+
+    dialEl.classList.remove("is-dragging");
+
+    if (dialEl.hasPointerCapture(pointerId)) {
+      dialEl.releasePointerCapture(pointerId);
+    }
+
+    pointerId = null;
+    carry = 0;
+    updateAria();
+  };
+
+  dialEl.addEventListener("pointerup", endDrag);
+  dialEl.addEventListener("pointercancel", endDrag);
+
+  dialEl.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowUp" || event.key === "ArrowRight") {
+      event.preventDefault();
+      setQuantity(getQuantity() + 1);
+      pulseQuantityFeedback(stepperEl);
+      updateAria();
+    }
+
+    if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
+      event.preventDefault();
+      setQuantity(Math.max(1, getQuantity() - 1));
+      pulseQuantityFeedback(stepperEl);
+      updateAria();
+    }
+  });
+
+  updateAria();
+}
+
 function bindModal(modal, overlay, product) {
   let quantity = 1;
   let selectedSize = "Regular";
 
   const valueEl = modal.querySelector(".qty-value");
+  const dialEl = modal.querySelector(".qty-dial");
+  const stepperEl = modal.querySelector("[data-quantity-stepper]");
   const plusButton = modal.querySelector(".qty-plus");
   const minusButton = modal.querySelector(".qty-minus");
   const sizeButtons = modal.querySelectorAll(".pill");
   const ctaButton = modal.querySelector(".cta");
-  const modalImage = modal.querySelector(".modal-image");
 
   const setQuantity = (nextQuantity) => {
     quantity = Math.max(1, nextQuantity);
@@ -381,36 +490,49 @@ function bindModal(modal, overlay, product) {
     if (valueEl) {
       valueEl.textContent = String(quantity);
     }
+
+    if (dialEl) {
+      dialEl.setAttribute("aria-valuenow", String(quantity));
+      dialEl.setAttribute("aria-valuetext", `${quantity}`);
+    }
   };
+
+  modal.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
 
   plusButton?.addEventListener("click", () => {
     setQuantity(quantity + 1);
+    pulseQuantityFeedback(stepperEl);
   });
 
   minusButton?.addEventListener("click", () => {
     setQuantity(quantity - 1);
+    pulseQuantityFeedback(stepperEl);
+  });
+
+  bindQuantityDial({
+    dialEl,
+    valueEl,
+    stepperEl,
+    getQuantity: () => quantity,
+    setQuantity
   });
 
   sizeButtons.forEach((button) => {
     button.addEventListener("click", () => {
       sizeButtons.forEach((otherButton) => {
         otherButton.classList.remove("active");
-        otherButton.setAttribute("aria-pressed", "false");
       });
 
       button.classList.add("active");
-      button.setAttribute("aria-pressed", "true");
       selectedSize = button.dataset.size || "Regular";
     });
   });
 
   ctaButton?.addEventListener("click", () => {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
-
-    if (modalImage) {
-      launchWoofleFromModalImage(modalImage, product.image, totalWoofles);
-    }
-
+    launchWoofleFromCTA(ctaButton, product.image, totalWoofles);
     closeModal();
   });
 
