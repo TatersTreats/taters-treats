@@ -945,3 +945,12 @@ body.product-detail-open .site-header {
   font-size: 0.9em;
   line-height: 0.8;
 }
+/* =========================
+   SHOP INTRO POLISH
+========================= */
+
+.shop-intro-line {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.3rem, 5.5vw, 2.3rem);
+  letter-spacing: -0.02em;
+}
