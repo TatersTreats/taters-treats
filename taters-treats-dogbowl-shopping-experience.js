@@ -3,24 +3,27 @@ const PRODUCTS = [
     id: "pumpkin",
     flavor: "Pumpkin & Turmeric",
     description: "Gentle on sensitive stomachs",
+    price: "$8",
     image: "assets/images/products/pumpkin-turmeric-woofle.png"
   },
   {
     id: "pbmc",
     flavor: "Mint & Carob",
     description: "Freshens breath naturally",
+    price: "$8",
     image: "assets/images/products/peanut-butter-mint-carob-woofle.png"
   },
   {
     id: "ginger",
     flavor: "Peanut Butter & Ginger",
     description: "Comforts and settles the tummy",
+    price: "$8",
     image: "assets/images/products/peanut-butter-ginger-woofle.png"
   }
 ];
 
-const SIZE_OPTIONS = ["Regular", "Value"];
-const SIZE_COUNTS = { Regular: 1, Value: 2 };
+const SIZE_OPTIONS = ["Regular", "Double"];
+const SIZE_COUNTS = { Regular: 1, Double: 2 };
 const SCROLL_DURATION_MS = 420;
 const MODAL_CLOSE_DURATION_MS = 320;
 const WOOFLE_FLIGHT_DURATION_MS = 620;
@@ -138,6 +141,7 @@ function createModalMarkup(product) {
   return `
     <img src="${product.image}" class="modal-image" alt="${product.flavor}" />
     <h2>${product.flavor}</h2>
+    <p class="modal-price">${product.price}</p>
     <p class="modal-description">${product.description}</p>
     <div class="size-options">
       ${SIZE_OPTIONS.map((size, index) => `
