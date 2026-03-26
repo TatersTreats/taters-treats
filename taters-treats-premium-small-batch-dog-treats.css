@@ -138,7 +138,7 @@ button, input { font: inherit; }
 
 .product-image img.woofle {
   position: absolute;
-  top: -50%; /* half hanging over top of card */
+  top: -25%; /* half hanging over top of card */
   left: 50%;
   transform: translateX(-50%);
   width: 80%; /* scales with card */
