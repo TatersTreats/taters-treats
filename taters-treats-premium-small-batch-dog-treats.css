@@ -603,3 +603,9 @@ body.product-detail-open { overflow: hidden; }
     inset 0 1px 0 rgba(255,255,255,0.1),
     0 12px 22px rgba(18, 13, 10, 0.18);
 }
+
+
+/* Swipe removed: quantity is button-only */
+.qty-dial {
+  cursor: default;
+}

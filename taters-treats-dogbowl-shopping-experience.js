@@ -147,9 +147,8 @@ function createModalMarkup(product) {
     <div class="quantity">
       <div class="brass-stepper" data-quantity-stepper>
         <button class="qty qty-minus" type="button" aria-label="Decrease quantity">−</button>
-        <div class="qty-dial" tabindex="0" role="spinbutton" aria-label="Quantity" aria-valuemin="1" aria-valuenow="1">
+        <div class="qty-dial" aria-label="Quantity display">
           <span class="qty-value">1</span>
-          <span class="qty-drag-hint">Swipe</span>
         </div>
         <button class="qty qty-plus" type="button" aria-label="Increase quantity">+</button>
       </div>
@@ -407,14 +406,6 @@ function bindModal(modal, overlay, product) {
   minusButton?.addEventListener("click", () => {
     setQuantity(quantity - 1);
     pulseQuantityFeedback(stepperEl);
-  });
-
-  bindQuantityDial({
-    dialEl,
-    valueEl,
-    stepperEl,
-    getQuantity: () => quantity,
-    setQuantity
   });
 
   sizeButtons.forEach((button) => {
