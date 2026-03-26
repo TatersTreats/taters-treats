@@ -109,7 +109,7 @@ button, input { font: inherit; }
   padding: 0 8px 32px; /* reduced side padding to maximize card width */
 }
 
-/* ===== Product Card — Enhanced Shadow & Gradient ===== */
+/* ===== Product Card — Gold Inner Border with Corner Cutouts ===== */
 .product-card {
   position: relative;
   background: linear-gradient(180deg, #fff9f2 0%, #fde9d9 100%);
@@ -121,6 +121,13 @@ button, input { font: inherit; }
   cursor: pointer;
   transition: transform 0.18s ease, box-shadow 0.25s ease, background 0.3s ease;
   min-height: 0;
+
+  /* Gold inner border */
+  border: 2px solid #c9a25f;
+  /* Use clip-path to create corner cutouts */
+  clip-path: polygon(
+    10% 0%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 90%, 0% 10%
+  );
 }
 
 .product-card:hover {
@@ -128,7 +135,6 @@ button, input { font: inherit; }
   box-shadow: 0 14px 32px rgba(25,16,10,0.22);
   background: linear-gradient(180deg, #fff7ee 0%, #fcd9ba 100%);
 }
-
 /* ===== Product Image / Woofle ===== */
 .product-image {
   aspect-ratio: auto;
