@@ -295,8 +295,6 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
 
     window.setTimeout(() => {
       addWoofleToBowl(imageSrc, targetPoint);
-      
-      updateBowlUi();
       flight.remove();
     }, WOOFLE_FLIGHT_DURATION_MS + index * WOOFLE_STAGGER_MS);
   }
