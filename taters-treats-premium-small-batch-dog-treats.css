@@ -609,3 +609,23 @@ body.product-detail-open { overflow: hidden; }
 .qty-dial {
   cursor: default;
 }
+
+/* Card gradient polish */
+.product-card {
+  background: linear-gradient(180deg, #fffaf4 0%, #f8e4cc 100%);
+}
+
+.product-card:hover {
+  background: linear-gradient(180deg, #fff6ee 0%, #f4d7b6 100%);
+}
+
+/* CTA border break refinement */
+.product-modal .cta {
+  margin: 20px auto -36px;
+  width: 84%;
+  border-radius: 999px;
+}
+
+.product-modal {
+  padding-bottom: 40px;
+}
