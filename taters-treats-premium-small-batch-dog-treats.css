@@ -116,7 +116,7 @@ button, input { font: inherit; }
   border-radius: 16px;
   box-shadow: 0 6px 16px rgba(25,16,10,0.08);
   text-align: center;
-  padding-top: 0px; /* space for Woofle to hang */
+  padding-top: 12px; /* space for Woofle to hang */
   padding-bottom: 16px;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.2s ease;
