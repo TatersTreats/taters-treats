@@ -153,7 +153,7 @@ function createModalMarkup(product) {
         <button class="qty qty-minus" type="button" aria-label="Decrease quantity">−</button>
         <div class="qty-dial" tabindex="0" role="spinbutton" aria-label="Quantity" aria-valuemin="1" aria-valuenow="1">
           <span class="qty-value">1</span>
-          <span class="qty-drag-hint">Swipe</span>
+          
         </div>
         <button class="qty qty-plus" type="button" aria-label="Increase quantity">+</button>
       </div>
@@ -314,15 +314,7 @@ function pulseQuantityFeedback(stepper) {
   window.setTimeout(() => stepper.classList.remove("is-changing"), FEEDBACK_PULSE_MS);
 }
 
-function bindQuantityDial({ dialEl, valueEl, stepperEl, getQuantity, setQuantity }) {
-  if (!dialEl || !valueEl) return;
-  let pointerId = null;
-  let startY = 0;
-  let carry = 0;
-
-  const updateAria = () => {
-    dialEl.setAttribute("aria-valuenow", String(getQuantity()));
-    dialEl.setAttribute("aria-valuetext", `${getQuantity()}`);
+function     dialEl.setAttribute("aria-valuetext", `${getQuantity()}`);
   };
 
   const applyStepFromDrag = (deltaY) => {
@@ -415,14 +407,7 @@ function bindModal(modal, overlay, product) {
     pulseQuantityFeedback(stepperEl);
   });
 
-  bindQuantityDial({
-    dialEl,
-    valueEl,
-    stepperEl,
-    getQuantity: () => quantity,
-    setQuantity
-  });
-
+  
   sizeButtons.forEach((button) => {
     button.addEventListener("click", () => {
       sizeButtons.forEach((otherButton) => otherButton.classList.remove("active"));
