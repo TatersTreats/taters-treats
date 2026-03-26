@@ -151,7 +151,7 @@ button, input { font: inherit; }
 /* ===== Flavor Text ===== */
 .product-flavor {
   display: block;
-  margin-top: 12px; /* space below Woofle */
+  margin-top: 40px; /* space below Woofle */
   text-align: center;
   font-family: "Playfair Display", serif;
   font-size: 1.05rem;
