@@ -112,20 +112,21 @@ button, input { font: inherit; }
 /* ===== Product Card ===== */
 .product-card {
   position: relative; /* allows Woofle overlap */
-  background: #fffefc;
+  background: linear-gradient(180deg, #fffdf9 0%, #fef7ed 100%);
   border-radius: 16px;
-  box-shadow: 0 6px 16px rgba(25,16,10,0.08);
+  box-shadow: 0 8px 20px rgba(25,16,10,0.12);
   text-align: center;
   padding-top: 12px; /* space for Woofle to hang */
   padding-bottom: 16px;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  transition: transform 0.18s ease, box-shadow 0.25s ease, background 0.3s ease;
   min-height: 0; /* prevents tall skinny cards */
 }
 
 .product-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(25,16,10,0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(25,16,10,0.18);
+  background: linear-gradient(180deg, #fffdf9 0%, #fff1e0 100%);
 }
 
 /* ===== Product Image / Woofle ===== */
