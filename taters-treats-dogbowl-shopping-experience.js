@@ -3,19 +3,31 @@ const PRODUCTS = [
     id: "pumpkin",
     flavor: "Pumpkin & Turmeric",
     description: "Gentle on sensitive stomachs",
-    image: "assets/images/products/pumpkin-turmeric-woofle.png"
+    image: "assets/images/products/pumpkin-turmeric-woofle.png",
+    displayPrices: {
+      Regular: "$18 — delivered",
+      Double: "$32 — delivered"
+    }
   },
   {
     id: "pbmc",
     flavor: "Mint & Carob",
     description: "Freshens breath naturally",
-    image: "assets/images/products/peanut-butter-mint-carob-woofle.png"
+    image: "assets/images/products/peanut-butter-mint-carob-woofle.png",
+    displayPrices: {
+      Regular: "$18 — delivered",
+      Double: "$32 — delivered"
+    }
   },
   {
     id: "ginger",
     flavor: "Peanut Butter & Ginger",
     description: "Comforts and settles the tummy",
-    image: "assets/images/products/peanut-butter-ginger-woofle.png"
+    image: "assets/images/products/peanut-butter-ginger-woofle.png",
+    displayPrices: {
+      Regular: "$18 — delivered",
+      Double: "$32 — delivered"
+    }
   }
 ];
 
@@ -139,6 +151,7 @@ function createModalMarkup(product) {
   return `
     <img src="${product.image}" class="modal-image" alt="${product.flavor}" />
     <h2>${product.flavor}</h2>
+    <p class="modal-price">${product.displayPrices?.Regular || "$18 — delivered"}</p>
     <p class="modal-description">${product.description}</p>
     <div class="size-options">
       ${SIZE_OPTIONS.map((size, index) => `
@@ -477,6 +490,7 @@ function bindModal(modal, overlay, product) {
   const sizeButtons = modal.querySelectorAll(".pill");
   const ctaButton = modal.querySelector(".cta");
   const modalImage = modal.querySelector(".modal-image");
+  const priceEl = modal.querySelector(".modal-price");
 
   const setQuantity = (nextQuantity) => {
     quantity = Math.max(1, nextQuantity);
@@ -502,6 +516,9 @@ function bindModal(modal, overlay, product) {
       sizeButtons.forEach((otherButton) => otherButton.classList.remove("active"));
       button.classList.add("active");
       selectedSize = button.dataset.size || "Regular";
+      if (priceEl) {
+        priceEl.textContent = product.displayPrices?.[selectedSize] || "$18 — delivered";
+      }
     });
   });
 

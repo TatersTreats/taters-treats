@@ -609,3 +609,13 @@ body.product-detail-open { overflow: hidden; }
 .qty-dial {
   cursor: default;
 }
+
+
+.modal-price {
+  margin: 6px 0 8px;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: 1.02rem;
+  line-height: 1.1;
+  color: rgba(29, 26, 23, 0.88);
+}
