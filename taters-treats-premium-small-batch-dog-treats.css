@@ -109,8 +109,7 @@ button, input { font: inherit; }
   padding: 0 8px 32px; /* reduced side padding to maximize card width */
 }
 
-/* ===== Product Card with Gold Inner Border — Woofle on Top ===== */
-/* ===== Product Card — Gold Inner Border, No Cutouts ===== */
+/* ===== Product Card with Gold Inner Border — Woofle on Top (Mobile Row Updated) ===== */
 .product-card {
   position: relative;
   background: linear-gradient(180deg, #fff9f2 0%, #fde9d9 100%);
@@ -123,6 +122,7 @@ button, input { font: inherit; }
   transition: transform 0.18s ease, box-shadow 0.25s ease, background 0.3s ease;
   min-height: 0;
   overflow: visible; /* allows Woofle to hang above */
+  width: 100%; /* fill available grid column */
 }
 
 .product-card::before {
@@ -151,6 +151,20 @@ button, input { font: inherit; }
   transform: translateY(-3px);
   box-shadow: 0 14px 32px rgba(25,16,10,0.22);
   background: linear-gradient(180deg, #fff7ee 0%, #fcd9ba 100%);
+}
+
+/* ===== Mobile Product Row Spacing ===== */
+.shop-layout {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal cards */
+  gap: 6px; /* minimal spacing */
+  padding-left: 0;
+  padding-right: 0;
 }
 /* ===== Flavor Text ===== */
 .product-flavor {
