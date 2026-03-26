@@ -1,5 +1,4 @@
 
-// === Stripe price map (surgical insert) ===
 const PRICE_MAP = {
   pumpkin: { Regular: "price_1TD3rlDywMn3O3R8psJph7ti", Double: "price_1TD3rlDywMn3O3R8fHQICEqm" },
   pbmc: { Regular: "price_1TD3rlDywMn3O3R8Kw2mxifP", Double: "price_1TD3rkDywMn3O3R8LhNyxt0V" },
@@ -16,13 +15,11 @@ function addToCart(productId, size, quantity) {
 
 async function checkoutNow() {
   if (!window.cartItems.length) return;
-
   const res = await fetch("/api/create-dogbowl-checkout-session", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ items: window.cartItems })
   });
-
   const data = await res.json();
   if (data?.url) window.location.href = data.url;
 }
