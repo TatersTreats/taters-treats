@@ -85,7 +85,7 @@ function renderProducts() {
       aria-label="Open ${product.flavor}"
     >
       <div class="product-image">
-        <img src="${product.image}" alt="${product.flavor}" />
+        <img src="${product.image}" alt="${product.flavor}" class="woofle">
       </div>
       <span class="product-flavor">${formatFlavorLabel(product.flavor)}</span>
     </article>
