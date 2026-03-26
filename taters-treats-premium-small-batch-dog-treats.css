@@ -696,3 +696,31 @@ body.product-detail-open { overflow: hidden; }
     margin-top: 46px;
   }
 }
+
+
+/* === Strong 50/50 split refinement === */
+
+/* Woofle top break */
+.modal-image {
+  width: 88%;
+  max-width: 260px;
+  margin: -120px auto 0;
+}
+
+/* tighten modal so break feels intentional */
+.product-modal {
+  padding-top: 60px;
+  padding-bottom: 48px;
+}
+
+/* CTA bottom break */
+.product-modal .cta {
+  width: 78%;
+  margin: 24px auto -44px;
+  z-index: 3;
+}
+
+/* ensure modal allows overflow */
+.product-modal {
+  overflow: visible;
+}
