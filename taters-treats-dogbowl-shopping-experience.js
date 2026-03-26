@@ -1,30 +1,3 @@
-
-const PRICE_MAP = {
-  pumpkin: { Regular: "price_1TD3rlDywMn3O3R8psJph7ti", Double: "price_1TD3rlDywMn3O3R8fHQICEqm" },
-  pbmc: { Regular: "price_1TD3rlDywMn3O3R8Kw2mxifP", Double: "price_1TD3rkDywMn3O3R8LhNyxt0V" },
-  ginger: { Regular: "price_1TD3rlDywMn3O3R8CDw2xmaI", Double: "price_1TD3rkDywMn3O3R8PquAjDEM" }
-};
-
-if (!window.cartItems) window.cartItems = [];
-
-function addToCart(productId, size, quantity) {
-  const priceId = PRICE_MAP[productId]?.[size];
-  if (!priceId) return;
-  window.cartItems.push({ priceId, quantity });
-}
-
-async function checkoutNow() {
-  if (!window.cartItems.length) return;
-  const res = await fetch("/api/create-dogbowl-checkout-session", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ items: window.cartItems })
-  });
-  const data = await res.json();
-  if (data?.url) window.location.href = data.url;
-}
-
-
 const PRODUCTS = [
   {
     id: "pumpkin",
@@ -446,7 +419,6 @@ function bindModal(modal, overlay, product) {
   ctaButton?.addEventListener("click", () => {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
     launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
-    addToCart(product.id, selectedSize, quantity);
     state.bowlCount += quantity;
     updateBowlUi();
     closeModal();
@@ -484,8 +456,7 @@ clearCartButton?.addEventListener("click", () => {
   }, 1400);
 });
 
-checkoutButton?.addEventListener("click", checkoutNow);
-  }
+}
 });
 
 document.addEventListener("keydown", (event) => {
