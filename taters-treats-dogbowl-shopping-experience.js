@@ -481,12 +481,17 @@ clearCartButton?.addEventListener("click", () => {
 });
 
 checkoutButton?.addEventListener("click", () => {
-  if (cartStatus) {
-    cartStatus.textContent = state.bowlCount > 0 ? "Checkout flow placeholder." : "Add a few Woofles first.";
-    window.setTimeout(() => {
-      cartStatus.textContent = "";
-    }, 1400);
+  if (!state.cartItems.length) {
+    if (cartStatus) {
+      cartStatus.textContent = "Add a few Woofles first.";
+      window.setTimeout(() => {
+        cartStatus.textContent = "";
+      }, 1400);
+    }
+    return;
   }
+
+  window.alert(JSON.stringify(state.cartItems, null, 2));
 });
 
 document.addEventListener("keydown", (event) => {
