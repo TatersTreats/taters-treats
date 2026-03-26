@@ -70,7 +70,8 @@ const state = {
   activeModal: null,
   bowlItemsLayer: null,
   isOpening: false,
-  bowlCount: 0
+  bowlCount: 0,
+  cartItems: []
 };
 
 function renderProducts() {
@@ -239,6 +240,28 @@ function addWoofleToBowl(imageSrc, targetPoint) {
   item.style.zIndex = String(targetPoint.zIndex);
   item.style.transform = `translate(-50%, -50%) rotate(${targetPoint.rotation}deg)`;
   layer.appendChild(item);
+}
+
+
+function addCartSelection(product, size, quantity) {
+  if (!product || !product.id || !size || quantity < 1) return;
+
+  const existing = state.cartItems.find((item) => item.productId === product.id && item.size === size);
+
+  if (existing) {
+    existing.quantity += quantity;
+  } else {
+    state.cartItems.push({
+      productId: product.id,
+      flavor: product.flavor,
+      size,
+      quantity
+    });
+  }
+}
+
+function clearCartSelections() {
+  state.cartItems = [];
 }
 
 function updateBowlUi() {
@@ -419,6 +442,7 @@ function bindModal(modal, overlay, product) {
   ctaButton?.addEventListener("click", () => {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
     launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
+    addCartSelection(product, selectedSize, quantity);
     state.bowlCount += quantity;
     updateBowlUi();
     closeModal();
@@ -449,6 +473,7 @@ clearCartButton?.addEventListener("click", () => {
   const layer = ensureBowlItemsLayer();
   if (layer) layer.innerHTML = "";
   state.bowlCount = 0;
+  clearCartSelections();
   updateBowlUi();
   if (cartStatus) cartStatus.textContent = "DogBowl™ cleared.";
   window.setTimeout(() => {
@@ -456,13 +481,7 @@ clearCartButton?.addEventListener("click", () => {
   }, 1400);
 });
 
-checkoutButton?.addEventListener("click", () => {
-  if (cartStatus) {
-    cartStatus.textContent = state.bowlCount > 0 ? "Checkout flow placeholder." : "Add a few Woofles first.";
-    window.setTimeout(() => {
-      cartStatus.textContent = "";
-    }, 1400);
-  }
+}
 });
 
 document.addEventListener("keydown", (event) => {
