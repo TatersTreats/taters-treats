@@ -420,7 +420,7 @@ body.product-detail-open { overflow: hidden; }
   z-index: 1;
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 8px;
   margin-bottom: 14px;
 }
 .pill {
@@ -433,7 +433,6 @@ body.product-detail-open { overflow: hidden; }
   cursor: pointer;
 }
 .pill.active {
-  background: linear-gradient(180deg, #fff4e2 0%, #e8c98f 100%);
   background: linear-gradient(180deg, #fff6ea 0%, #f2ddbb 100%);
   border-color: rgba(201, 162, 95, 0.8);
   color: var(--ink);
@@ -519,25 +518,4 @@ body.product-detail-open { overflow: hidden; }
   .product-card { min-height: 220px; }
   .product-image img { max-width: 148px; }
   .lower-grid { grid-template-columns: 1fr 1fr; }
-}
-
-.qty-dial {
-  width: 70px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.6);
-}
-
-.qty-value {
-  font-size: 1.1rem;
-}
-
-.qty {
-  transition: transform 0.1s ease;
-}
-.qty:active {
-  transform: scale(0.92);
 }
