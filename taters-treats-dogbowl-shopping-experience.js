@@ -442,6 +442,7 @@ function bindModal(modal, overlay, product) {
   ctaButton?.addEventListener("click", () => {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
     launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
+    addCartSelection(product, selectedSize, quantity);
     state.bowlCount += quantity;
     updateBowlUi();
     closeModal();
@@ -481,17 +482,11 @@ clearCartButton?.addEventListener("click", () => {
 });
 
 checkoutButton?.addEventListener("click", () => {
-  if (!state.cartItems.length) {
-    if (cartStatus) {
-      cartStatus.textContent = "Add a few Woofles first.";
-      window.setTimeout(() => {
-        cartStatus.textContent = "";
-      }, 1400);
-    }
+  if (!state.cartItems || !state.cartItems.length) {
+    if (cartStatus) cartStatus.textContent = "Add a few Woofles first.";
     return;
   }
-
-  window.alert(JSON.stringify(state.cartItems, null, 2));
+  alert(JSON.stringify(state.cartItems, null, 2));
 });
 
 document.addEventListener("keydown", (event) => {
