@@ -672,3 +672,27 @@ body.product-detail-open { overflow: hidden; }
   width: 78%;
   margin: 16px auto -34px;
 }
+
+
+/* Fix intro/cards overlap */
+.shop-intro {
+  padding: 0 16px 42px;
+}
+
+.shop-main {
+  padding-top: 18px;
+}
+
+.products {
+  padding-top: 10px;
+}
+
+@media (max-width: 899px) {
+  .product-image img.woofle {
+    top: -31%;
+  }
+
+  .product-flavor {
+    margin-top: 46px;
+  }
+}
