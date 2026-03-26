@@ -629,3 +629,46 @@ body.product-detail-open { overflow: hidden; }
 .product-modal {
   padding-bottom: 40px;
 }
+
+
+/* Focused modal proportion refinement */
+.product-modal {
+  width: min(91vw, 350px);
+  padding: 12px 16px 34px;
+  max-height: calc(100vh - var(--header-offset, 84px) - 48px);
+}
+
+.product-modal::before {
+  inset: 0;
+}
+
+.modal-image {
+  width: 82%;
+  max-width: 250px;
+  margin: -86px auto 2px;
+  filter: drop-shadow(0 16px 16px rgba(10,10,10,0.20));
+}
+
+.product-modal h2 {
+  margin: 2px 0 0;
+  font-size: 1.68rem;
+  line-height: 1.02;
+}
+
+.modal-description {
+  margin: 6px 0 12px;
+  line-height: 1.42;
+}
+
+.size-options {
+  margin-bottom: 12px;
+}
+
+.quantity {
+  margin-bottom: 12px;
+}
+
+.product-modal .cta {
+  width: 78%;
+  margin: 16px auto -34px;
+}
