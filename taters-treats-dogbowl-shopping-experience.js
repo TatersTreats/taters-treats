@@ -1,33 +1,51 @@
+
+// === Stripe price map (surgical insert) ===
+const PRICE_MAP = {
+  pumpkin: { Regular: "price_1TD3rlDywMn3O3R8psJph7ti", Double: "price_1TD3rlDywMn3O3R8fHQICEqm" },
+  pbmc: { Regular: "price_1TD3rlDywMn3O3R8Kw2mxifP", Double: "price_1TD3rkDywMn3O3R8LhNyxt0V" },
+  ginger: { Regular: "price_1TD3rlDywMn3O3R8CDw2xmaI", Double: "price_1TD3rkDywMn3O3R8PquAjDEM" }
+};
+
+if (!window.cartItems) window.cartItems = [];
+
+function addToCart(productId, size, quantity) {
+  const priceId = PRICE_MAP[productId]?.[size];
+  if (!priceId) return;
+  window.cartItems.push({ priceId, quantity });
+}
+
+async function checkoutNow() {
+  if (!window.cartItems.length) return;
+
+  const res = await fetch("/api/create-dogbowl-checkout-session", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ items: window.cartItems })
+  });
+
+  const data = await res.json();
+  if (data?.url) window.location.href = data.url;
+}
+
+
 const PRODUCTS = [
   {
     id: "pumpkin",
     flavor: "Pumpkin & Turmeric",
     description: "Gentle on sensitive stomachs",
-    image: "assets/images/products/pumpkin-turmeric-woofle.png",
-    prices: {
-      Regular: "price_1TD3rlDywMn3O3R8psJph7ti",
-      Double: "price_1TD3rlDywMn3O3R8fHQICEqm"
-    }
+    image: "assets/images/products/pumpkin-turmeric-woofle.png"
   },
   {
     id: "pbmc",
     flavor: "Mint & Carob",
     description: "Freshens breath naturally",
-    image: "assets/images/products/peanut-butter-mint-carob-woofle.png",
-    prices: {
-      Regular: "price_1TD3rlDywMn3O3R8Kw2mxifP",
-      Double: "price_1TD3rkDywMn3O3R8LhNyxt0V"
-    }
+    image: "assets/images/products/peanut-butter-mint-carob-woofle.png"
   },
   {
     id: "ginger",
     flavor: "Peanut Butter & Ginger",
     description: "Comforts and settles the tummy",
-    image: "assets/images/products/peanut-butter-ginger-woofle.png",
-    prices: {
-      Regular: "price_1TD3rlDywMn3O3R8CDw2xmaI",
-      Double: "price_1TD3rkDywMn3O3R8PquAjDEM"
-    }
+    image: "assets/images/products/peanut-butter-ginger-woofle.png"
   }
 ];
 
@@ -82,9 +100,7 @@ const state = {
   activeModal: null,
   bowlItemsLayer: null,
   isOpening: false,
-  bowlCount: 0,
-  cartItems: [],
-  isCheckingOut: false
+  bowlCount: 0
 };
 
 function renderProducts() {
@@ -253,85 +269,6 @@ function addWoofleToBowl(imageSrc, targetPoint) {
   item.style.zIndex = String(targetPoint.zIndex);
   item.style.transform = `translate(-50%, -50%) rotate(${targetPoint.rotation}deg)`;
   layer.appendChild(item);
-}
-
-
-function addCartItem(product, size, quantity) {
-  if (!product || !size || quantity < 1) return;
-
-  const priceId = product.prices?.[size];
-  if (!priceId) return;
-
-  const existing = state.cartItems.find((item) => item.productId === product.id && item.size === size);
-
-  if (existing) {
-    existing.quantity += quantity;
-  } else {
-    state.cartItems.push({
-      productId: product.id,
-      size,
-      quantity,
-      priceId
-    });
-  }
-
-  state.bowlCount = state.cartItems.reduce((sum, item) => sum + item.quantity, 0);
-}
-
-function clearCartState() {
-  state.cartItems = [];
-  state.bowlCount = 0;
-}
-
-async function beginCheckout() {
-  if (state.isCheckingOut) return;
-  if (!state.cartItems.length) {
-    if (cartStatus) cartStatus.textContent = "Add a few Woofles first.";
-    window.setTimeout(() => {
-      if (cartStatus) cartStatus.textContent = "";
-    }, 1400);
-    return;
-  }
-
-  state.isCheckingOut = true;
-  if (checkoutButton) {
-    checkoutButton.disabled = true;
-    checkoutButton.textContent = "Opening Checkout...";
-  }
-  if (cartStatus) cartStatus.textContent = "Preparing secure checkout...";
-
-  try {
-    const response = await fetch("/api/create-dogbowl-checkout-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        items: state.cartItems.map((item) => ({
-          priceId: item.priceId,
-          quantity: item.quantity
-        }))
-      })
-    });
-
-    const data = await response.json().catch(() => ({}));
-
-    if (!response.ok || !data?.url) {
-      throw new Error(data?.error || "Checkout failed.");
-    }
-
-    window.location.href = data.url;
-  } catch (error) {
-    if (cartStatus) cartStatus.textContent = error?.message || "Checkout failed.";
-    if (checkoutButton) {
-      checkoutButton.disabled = false;
-      checkoutButton.textContent = "Checkout";
-    }
-    state.isCheckingOut = false;
-    window.setTimeout(() => {
-      if (cartStatus) cartStatus.textContent = "";
-    }, 2200);
-  }
 }
 
 function updateBowlUi() {
@@ -512,7 +449,8 @@ function bindModal(modal, overlay, product) {
   ctaButton?.addEventListener("click", () => {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
     launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
-    addCartItem(product, selectedSize, quantity);
+    addToCart(product.id, selectedSize, quantity);
+    state.bowlCount += quantity;
     updateBowlUi();
     closeModal();
   });
@@ -541,19 +479,17 @@ function closeModal() {
 clearCartButton?.addEventListener("click", () => {
   const layer = ensureBowlItemsLayer();
   if (layer) layer.innerHTML = "";
-  clearCartState();
+  state.bowlCount = 0;
   updateBowlUi();
-  if (checkoutButton) {
-    checkoutButton.disabled = false;
-    checkoutButton.textContent = "Checkout";
-  }
   if (cartStatus) cartStatus.textContent = "DogBowl™ cleared.";
   window.setTimeout(() => {
     if (cartStatus) cartStatus.textContent = "";
   }, 1400);
 });
 
-checkoutButton?.addEventListener("click", beginCheckout);
+checkoutButton?.addEventListener("click", checkoutNow);
+  }
+});
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeModal();
