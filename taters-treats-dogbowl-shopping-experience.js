@@ -264,6 +264,72 @@ function clearCartSelections() {
   state.cartItems = [];
 }
 
+
+const PRICE_MAP = {
+  pumpkin: { Regular: "price_1TD3rlDywMn3O3R8psJph7ti", Double: "price_1TD3rlDywMn3O3R8fHQICEqm" },
+  pbmc: { Regular: "price_1TD3rlDywMn3O3R8Kw2mxifP", Double: "price_1TD3rkDywMn3O3R8LhNyxt0V" },
+  ginger: { Regular: "price_1TD3rlDywMn3O3R8CDw2xmaI", Double: "price_1TD3rkDywMn3O3R8PquAjDEM" }
+};
+
+async function beginCheckout() {
+  if (!state.cartItems || !state.cartItems.length) {
+    if (cartStatus) {
+      cartStatus.textContent = "Add a few Woofles first.";
+      window.setTimeout(() => {
+        if (cartStatus) cartStatus.textContent = "";
+      }, 1400);
+    }
+    return;
+  }
+
+  if (checkoutButton) {
+    checkoutButton.disabled = true;
+    checkoutButton.textContent = "Opening Checkout...";
+  }
+  if (cartStatus) cartStatus.textContent = "Preparing secure checkout...";
+
+  try {
+    const items = state.cartItems.map((item) => {
+      const priceId = PRICE_MAP[item.productId]?.[item.size];
+      if (!priceId) {
+        throw new Error(`Missing Stripe price for ${item.productId} ${item.size}`);
+      }
+      return {
+        priceId,
+        quantity: item.quantity
+      };
+    });
+
+    const response = await fetch("/api/create-dogbowl-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ items })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok || !data?.url) {
+      throw new Error(data?.error || "Checkout failed.");
+    }
+
+    window.location.href = data.url;
+  } catch (error) {
+    if (cartStatus) {
+      cartStatus.textContent = error?.message || "Checkout failed.";
+      window.setTimeout(() => {
+        if (cartStatus) cartStatus.textContent = "";
+      }, 2200);
+    }
+    if (checkoutButton) {
+      checkoutButton.disabled = false;
+      checkoutButton.textContent = "Checkout";
+    }
+  }
+}
+
+
 function updateBowlUi() {
   const count = state.bowlCount;
   if (cartCountEl) cartCountEl.textContent = String(count);
@@ -481,13 +547,7 @@ clearCartButton?.addEventListener("click", () => {
   }, 1400);
 });
 
-checkoutButton?.addEventListener("click", () => {
-  if (!state.cartItems || !state.cartItems.length) {
-    if (cartStatus) cartStatus.textContent = "Add a few Woofles first.";
-    return;
-  }
-  alert(JSON.stringify(state.cartItems, null, 2));
-});
+checkoutButton?.addEventListener("click", beginCheckout);
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeModal();
