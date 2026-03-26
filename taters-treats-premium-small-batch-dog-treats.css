@@ -483,20 +483,3 @@ body.product-detail-open { overflow: hidden; }
   .product-image img { max-width: 148px; }
   .lower-grid { grid-template-columns: 1fr 1fr; }
 }
-
-.product-modal {
-  position: relative;
-  overflow: visible;
-}
-
-.product-modal .cta {
-  display: block;
-  margin: 18px auto -28px;
-  position: relative;
-  z-index: 2;
-  width: 80%;
-  text-align: center;
-  background: linear-gradient(180deg, #1f4d2c 0%, #183d23 100%);
-  border: 1px solid rgba(201,162,95,0.8);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.18);
-}

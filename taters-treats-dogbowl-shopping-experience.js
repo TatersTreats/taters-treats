@@ -19,8 +19,8 @@ const PRODUCTS = [
   }
 ];
 
-const SIZE_OPTIONS = ["Regular", "Value"];
-const SIZE_COUNTS = { Regular: 1, Value: 2 };
+const SIZE_OPTIONS = ["Regular", "Double"];
+const SIZE_COUNTS = { Regular: 1, Double: 2 };
 const SCROLL_DURATION_MS = 420;
 const MODAL_CLOSE_DURATION_MS = 320;
 const WOOFLE_FLIGHT_DURATION_MS = 620;
@@ -295,7 +295,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
 
     window.setTimeout(() => {
       addWoofleToBowl(imageSrc, targetPoint);
-      state.bowlCount += 1;
+      
       updateBowlUi();
       flight.remove();
     }, WOOFLE_FLIGHT_DURATION_MS + index * WOOFLE_STAGGER_MS);
@@ -430,6 +430,8 @@ function bindModal(modal, overlay, product) {
   ctaButton?.addEventListener("click", () => {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
     launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
+    state.bowlCount += quantity;
+    updateBowlUi();
     closeModal();
   });
 
