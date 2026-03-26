@@ -153,6 +153,7 @@ function createModalMarkup(product) {
     <h2>${product.flavor}</h2>
     <p class="modal-price">${product.displayPrices?.Regular || "$18 — delivered"}</p>
     <p class="modal-description">${product.description}</p>
+    <p class="modal-value">Small-batch. Premium ingredients. Delivered fresh.</p>
     <div class="size-options">
       ${SIZE_OPTIONS.map((size, index) => `
         <button class="pill ${index === 0 ? "active" : ""}" data-size="${size}" type="button">${size}</button>

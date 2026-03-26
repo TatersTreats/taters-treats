@@ -619,3 +619,12 @@ body.product-detail-open { overflow: hidden; }
   line-height: 1.1;
   color: rgba(29, 26, 23, 0.88);
 }
+
+
+.modal-value {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: rgba(29, 26, 23, 0.65);
+}
