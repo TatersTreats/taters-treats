@@ -130,7 +130,7 @@ button, input { font: inherit; }
 
 /* ===== Product Image / Woofle ===== */
 .product-image {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: auto;
   display: grid;
   place-items: center;
   overflow: visible; /* allow Woofle to hang over */
