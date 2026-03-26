@@ -768,3 +768,10 @@ body.product-detail-open { overflow: hidden; }
 .product-modal .cta {
   transform: translateZ(0);
 }
+
+
+/* Checkout state */
+.checkout-button:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
