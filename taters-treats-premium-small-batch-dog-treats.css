@@ -515,7 +515,7 @@ body.product-detail-open {
 .quantity {
   display: flex;
   justify-content: center;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .brass-stepper {
