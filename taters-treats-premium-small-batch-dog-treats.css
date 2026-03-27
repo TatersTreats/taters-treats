@@ -403,7 +403,7 @@ body.product-detail-open {
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -40%); /* slightly above center */
+  transform: translate(-50%, -55%); /* slightly above center */
 
   width: min(92vw, 360px);
 
