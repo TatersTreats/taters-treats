@@ -403,7 +403,7 @@ body.product-detail-open {
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -55%); /* slightly above center */
+  transform: translate(-50%, -65%); /* pushes modal UP */
 
   width: min(92vw, 360px);
 
@@ -413,7 +413,7 @@ body.product-detail-open {
   background: linear-gradient(180deg, #f7f1e7 0%, #f4eadb 100%);
   border-radius: 24px;
 
-  padding: 72px 16px 48px;
+  padding: 88px 16px 64px; /* more readable space inside */
 
   box-shadow: 0 24px 40px rgba(19, 14, 10, 0.2);
   opacity: 0;
