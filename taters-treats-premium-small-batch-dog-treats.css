@@ -683,3 +683,24 @@ body.product-detail-open { overflow: hidden; }
     right: 0;
   }
 }
+/* ===== MODAL EDGE ANCHOR FIX ===== */
+
+.product-modal {
+  overflow: visible;
+}
+
+.modal-image {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  z-index: 3;
+}
+
+.product-modal .cta {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 3;
+}
