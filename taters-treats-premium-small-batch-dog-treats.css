@@ -683,17 +683,24 @@ body.product-detail-open { overflow: hidden; }
     right: 0;
   }
 }
-/* ===== MODAL EDGE ANCHOR FIX ===== */
 
+/* ===== MODAL POSITION + EDGE ANCHOR RESET | 20260327-152645 ===== */
 .product-modal {
+  top: clamp(88px, 12vh, 112px);
+  width: min(92vw, 380px);
+  max-height: calc(100vh - 132px);
   overflow: visible;
+  padding: 112px 18px 52px;
 }
 
 .modal-image {
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translate(-50%, -40%);
+  transform: translate(-50%, -28%);
+  width: 72%;
+  max-width: 220px;
+  margin: 0;
   z-index: 3;
 }
 
