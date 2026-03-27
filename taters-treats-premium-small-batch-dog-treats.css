@@ -52,7 +52,7 @@ button, input { font: inherit; }
 .hero-badge {
   position: absolute;
   top: 22%;
-  right: 12%;
+  right: 35%;
   width: 180px;
   max-width: none;
   height: auto;
