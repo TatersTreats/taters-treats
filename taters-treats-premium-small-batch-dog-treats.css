@@ -3,7 +3,8 @@
   --cream-deep: #efe4d5;
   --ink: #1d1a17;
   --ink-soft: rgba(29, 26, 23, 0.7);
-  --line: rgba(29, 26, 23, 0.1);
+  --line: rgba(29, 26, 23, 0.1);.HERO
+  
   --shadow: 0 12px 30px rgba(19, 14, 10, 0.12);
   --green: #1f4d2c;
   --green-dark: #183d23;
@@ -43,15 +44,9 @@ button, input { font: inherit; }
   height: auto;
 }
 
-.hero {
-  position: relative;
-  min-height: 60vw;
-  max-height: 640px;
-  background: url("assets/images/hero/taters-treats-hero-premium-small-batch-canine-confections.jpg") center 60% / cover no-repeat;
-}
-.hero-badge {
+.hero .hero-badge {
   position: absolute;
-  top: 22%;
+  top: 25%;
   right: 35%;
   width: 180px;
   max-width: none;
