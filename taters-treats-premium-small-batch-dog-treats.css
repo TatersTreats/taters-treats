@@ -699,8 +699,9 @@ body.product-detail-open { overflow: hidden; }
 
 .product-modal .cta {
   position: absolute;
-  bottom: 0;
   left: 50%;
+  bottom: 0;
   transform: translate(-50%, 50%);
+  margin: 0;
   z-index: 3;
 }
