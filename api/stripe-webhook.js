@@ -160,13 +160,16 @@ const itemsText = buildItemsText(lineItems);
       `Payment status: ${fullSession.payment_status || "unknown"}`
     ].join("\n");
 
-    const sendResult = await resend.emails.send({
-      from: process.env.ORDER_FROM_EMAIL,
-      to: [process.env.ORDER_NOTIFICATION_EMAIL],
-      subject: `New WOOFEL order — ${shippingName} — ${total}`,
-      html,
-      text
-    });
+   const result = await resend.emails.send({
+  from: process.env.ORDER_FROM_EMAIL,
+  to: [process.env.ORDER_NOTIFICATION_EMAIL],
+  subject: "New order",
+  html
+});
+
+if (result.error) {
+  throw new Error(result.error.message);
+}
 
     return res.status(200).json({
       received: true,
