@@ -23,19 +23,19 @@ module.exports = async function handler(req, res) {
 
     const origin = req.headers.origin || process.env.PUBLIC_SITE_URL || "https://example.com";
 
-   const session = await stripe.checkout.sessions.create({
-  mode: "payment",
-  line_items: lineItems,
-  success_url: `${origin}/dogbowl-checkout-success.html`,
-  cancel_url: `${origin}/`,
-  allow_promotion_codes: true,
-  shipping_address_collection: {
-    allowed_countries: ["US"]
-  },
-  phone_number_collection: {
-    enabled: true
-  }
-});
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: lineItems,
+      success_url: `${origin}/dogbowl-checkout-success.html`,
+      cancel_url: `${origin}/`,
+      allow_promotion_codes: true,
+      shipping_address_collection: {
+        allowed_countries: ["US"]
+      },
+      phone_number_collection: {
+        enabled: true
+      }
+    });
 
     return res.status(200).json({ url: session.url });
   } catch (error) {

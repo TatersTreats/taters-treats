@@ -1,0 +1,46 @@
+ORDER EMAIL SETUP
+
+This package adds a Stripe webhook that emails you a clean order summary after a paid checkout.
+
+NEW FILE
+- api/stripe-webhook.js
+
+UPDATED FILES
+- api/create-dogbowl-checkout-session.js
+- package.json
+
+VERCEL ENV VARS TO ADD
+- STRIPE_SECRET_KEY=...
+- STRIPE_WEBHOOK_SECRET=...
+- RESEND_API_KEY=...
+- ORDER_NOTIFICATION_EMAIL=you@yourdomain.com
+- ORDER_FROM_EMAIL=Tater's Treats Orders <orders@yourdomain.com>
+- PUBLIC_SITE_URL=https://your-live-site.com
+
+IMPORTANT
+- ORDER_FROM_EMAIL must use a sending domain/address you have set up with Resend.
+- The checkout session already collects US shipping addresses and phone numbers.
+
+STRIPE WEBHOOK TO ADD
+Endpoint URL:
+https://YOUR-DOMAIN/api/stripe-webhook
+
+Event to subscribe:
+- checkout.session.completed
+
+WHAT THE EMAIL INCLUDES
+- customer name
+- customer email
+- customer phone
+- shipping address
+- line items and quantities
+- order total
+- Stripe session id
+
+DEPLOY
+1. Replace the project files with this package.
+2. In Vercel, add the env vars above.
+3. In Resend, verify your sending domain and get an API key.
+4. In Stripe, add the webhook endpoint and copy the signing secret into STRIPE_WEBHOOK_SECRET.
+5. Redeploy.
+6. Place a test order.
