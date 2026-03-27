@@ -402,19 +402,25 @@ body.product-detail-open {
 .product-modal {
   position: fixed;
   left: 50%;
-  top: calc(var(--header-offset, 84px) + 112px);
+  top: calc(var(--header-offset, 84px) + 120px);
   transform: translateX(-50%) translateY(12px);
-  width: min(92vw, 372px);
+
+  width: min(92vw, 360px);
+
   max-height: none;
-overflow: visible;
-  background: linear-gradient(180deg, #fbf4ea 0%, #f3e4d1 100%);
-  border: 1px solid rgba(201, 162, 95, 0.24);
+  overflow: visible;
+
+  background: linear-gradient(180deg, #f7f1e7 0%, #f4eadb 100%);
   border-radius: 24px;
+
+  padding: 48px 16px 48px;
+
   box-shadow: 0 24px 40px rgba(19, 14, 10, 0.2);
-  padding: 96px 16px 40px;
   opacity: 0;
   transition: opacity 320ms ease, transform 320ms ease;
   z-index: 70;
+
+  border: 1px solid rgba(201, 162, 95, 0.22);
 }
 
 .product-modal.active {
