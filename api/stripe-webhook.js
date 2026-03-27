@@ -107,18 +107,28 @@ module.exports = async function handler(req, res) {
     });
 
     const lineItems = lineItemsResponse.data || [];
-    const customerDetails = fullSession.customer_details || {};
-    const shippingDetails = fullSession.shipping_details || {};
-    const shippingAddress = shippingDetails.address || customerDetails.address || null;
-    const shippingName = shippingDetails.name || customerDetails.name || "Customer";
-    const customerEmail = customerDetails.email || fullSession.customer_email || "";
-    const phone = customerDetails.phone || "";
-    const total = formatMoney(fullSession.amount_total, fullSession.currency);
+const customerDetails = fullSession.customer_details || {};
+const shippingDetails = fullSession.shipping_details || {};
+const shippingAddress =
+  shippingDetails.address ||
+  customerDetails.address ||
+  fullSession.collected_information?.shipping_details?.address ||
+  null;
+const shippingName =
+  shippingDetails.name ||
+  customerDetails.name ||
+  fullSession.collected_information?.shipping_details?.name ||
+  "Customer";
+const customerEmail =
+  customerDetails.email ||
+  fullSession.customer_email ||
+  "";
+const phone = customerDetails.phone || "";
+const total = formatMoney(fullSession.amount_total, fullSession.currency);
 
-    const addressLines = buildAddressLines(shippingAddress);
-    const itemsHtml = buildItemsHtml(lineItems);
-    const itemsText = buildItemsText(lineItems);
-
+const addressLines = buildAddressLines(shippingAddress);
+const itemsHtml = buildItemsHtml(lineItems);
+const itemsText = buildItemsText(lineItems);
     const html = `
       <h1>New WOOFEL Order</h1>
       <p><strong>Order total:</strong> ${escapeHtml(total)}</p>
