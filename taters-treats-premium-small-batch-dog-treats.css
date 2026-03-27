@@ -424,7 +424,7 @@ body.product-detail-open {
 }
 .product-modal.active {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translate(-50%, -55%);
 }
 
 .product-modal::before {
