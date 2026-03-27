@@ -45,11 +45,10 @@ button, input { font: inherit; }
 
 .hero {
   position: relative;
-  min-height: 54vw;
-  max-height: 580px;
-  background: url("assets/images/hero/taters-treats-hero-premium-small-batch-canine-confections.jpg") center center / cover no-repeat;
+  min-height: 60vw;
+  max-height: 640px;
+  background: url("assets/images/hero/taters-treats-hero-premium-small-batch-canine-confections.jpg") center 60% / cover no-repeat;
 }
-
 .hero-badge {
   position: absolute;
   top: 20px;
