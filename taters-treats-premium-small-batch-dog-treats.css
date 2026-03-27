@@ -44,11 +44,15 @@ button, input { font: inherit; }
   height: auto;
 }
 
-.hero .hero-badge {
+.hero {
+  position: relative;
+}
+
+.hero-badge {
   position: absolute;
-  top: 25%;
-  right: 35%;
-  width: 180px;
+  top: 0;
+  right: 0;
+  width: 150px;
   max-width: none;
   height: auto;
   z-index: 5;
