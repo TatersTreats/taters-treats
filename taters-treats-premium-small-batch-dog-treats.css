@@ -51,8 +51,8 @@ button, input { font: inherit; }
 }
 .hero-badge {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 22%;
+  right: 12%;
   width: 180px;
   max-width: none;
   height: auto;
@@ -61,10 +61,11 @@ button, input { font: inherit; }
 
 @media (max-width: 768px) {
   .hero-badge {
+    top: 24%;
+    right: 10%;
     width: 150px;
-    top: 0;
-    right: 0;
   }
+}
 }
 .hero-overlay {
   position: absolute;
