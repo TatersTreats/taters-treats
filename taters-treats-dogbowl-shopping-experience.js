@@ -8,7 +8,8 @@ const PRODUCTS = [
       Regular: "$18 — delivered",
       Double: "$32 — delivered"
     }
-  },f  {
+  },
+  {
     id: "pbmc",
     flavor: "Mint & Carob",
     description: "Freshens breath naturally",
@@ -33,9 +34,9 @@ const PRODUCTS = [
 const SIZE_OPTIONS = ["Regular", "Double"];
 const SIZE_COUNTS = { Regular: 1, Double: 2 };
 const SCROLL_DURATION_MS = 420;
-const MODAL_CLOSE_DURATION_MS = 460;
-const WOOFLE_FLIGHT_DURATION_MS = 820;
-const MODAL_ENTER_DELAY_MS = 90;
+const MODAL_CLOSE_DURATION_MS = 320;
+const WOOFLE_FLIGHT_DURATION_MS = 620;
+const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
 const QUANTITY_DRAG_STEP_PX = 24;
 const FEEDBACK_PULSE_MS = 180;
