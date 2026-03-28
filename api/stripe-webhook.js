@@ -176,8 +176,8 @@ if (result.error) {
 
     return res.status(200).json({
       received: true,
-      emailed: !sendResult.error,
-      emailId: sendResult.data?.id || null
+      emailed: !result.error,
+      emailId: result.data?.id || null
     });
   } catch (error) {
     return res.status(500).send(error.message || "Webhook handler failed");
