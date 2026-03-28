@@ -167,7 +167,7 @@ const itemsText = buildItemsText(lineItems);
    const result = await resend.emails.send({
   from: process.env.ORDER_FROM_EMAIL,
   to: [process.env.ORDER_NOTIFICATION_EMAIL],
-  subject: "New order",
+  subject: `New WOOFEL order — ${shippingName} — ${total}`,
   html
 });
 
