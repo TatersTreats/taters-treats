@@ -9,6 +9,10 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return res.status(500).json({ error: "Missing STRIPE_SECRET_KEY" });
+  }
+
   try {
     const { items } = req.body || {};
 

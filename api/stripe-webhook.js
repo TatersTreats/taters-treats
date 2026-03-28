@@ -68,6 +68,10 @@ module.exports = async function handler(req, res) {
     return res.status(405).send("Method not allowed");
   }
 
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return res.status(500).send("Missing STRIPE_SECRET_KEY");
+  }
+
   if (!process.env.STRIPE_WEBHOOK_SECRET) {
     return res.status(500).send("Missing STRIPE_WEBHOOK_SECRET");
   }
@@ -167,9 +171,6 @@ const itemsText = buildItemsText(lineItems);
   html
 });
 
-if (result.error) {
-  throw new Error(result.error.message);
-}
 if (result.error) {
   throw new Error(result.error.message);
 }
