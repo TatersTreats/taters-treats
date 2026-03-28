@@ -170,6 +170,9 @@ const itemsText = buildItemsText(lineItems);
 if (result.error) {
   throw new Error(result.error.message);
 }
+if (result.error) {
+  throw new Error(result.error.message);
+}
 
     return res.status(200).json({
       received: true,
