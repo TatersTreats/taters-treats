@@ -423,7 +423,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
       handoffWoofle.style.height = "auto";
       handoffWoofle.style.maxWidth = "none";
       handoffWoofle.style.margin = "0";
-      handoffWoofle.style.transform = "translate(-50%, -50%)";
+      handoffWoofle.style.transform = "translate(-50%, -50%) scale(1)";
       handoffWoofle.style.opacity = "1";
       handoffWoofle.style.pointerEvents = "none";
       handoffWoofle.style.zIndex = "0";
@@ -433,24 +433,26 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
         state.activeHandoffWoofle = handoffWoofle;
       }
 
-      // Begin underneath the card woofle, then rise out from under it.
+      // Start underneath the card woofle, then emerge without changing size yet.
       requestAnimationFrame(() => {
-        handoffWoofle.style.transition = "all 260ms ease";
+        handoffWoofle.style.transition = "top 260ms ease";
         handoffWoofle.style.top = `${sharedStartTop + 20}px`;
       });
 
+      // Rise above the card and hold true card size.
       window.setTimeout(() => {
         handoffWoofle.style.zIndex = "95";
-        handoffWoofle.style.transition = "all 800ms ease";
-        handoffWoofle.style.width = "48px";
+        handoffWoofle.style.transition = "top 260ms ease";
         handoffWoofle.style.top = `${sharedStartTop + 8}px`;
       }, 120);
 
+      // Card-size start -> controlled scale-down during flight.
       window.setTimeout(() => {
-        handoffWoofle.style.transition = "all 1000ms cubic-bezier(0.22, 1, 0.36, 1)";
+        handoffWoofle.style.transition = "left 1000ms cubic-bezier(0.22, 1, 0.36, 1), top 1000ms cubic-bezier(0.22, 1, 0.36, 1), width 1000ms ease";
         handoffWoofle.style.left = `${endLeft}px`;
         handoffWoofle.style.top = `${endTop}px`;
-      }, 920);
+        handoffWoofle.style.width = "48px";
+      }, 420);
 
       window.setTimeout(() => {
         addWoofleToBowl(imageSrc, target);
@@ -465,7 +467,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
         if (flightIndex === count - 1 && sourceEl && sourceEl.style) {
           sourceEl.style.opacity = "0";
         }
-      }, 1920);
+      }, 1420);
     }, flightIndex * WOOFLE_MULTI_STAGGER_MS);
   }
 }
