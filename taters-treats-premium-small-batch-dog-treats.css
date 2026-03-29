@@ -234,8 +234,8 @@ button, input { font: inherit; }
 
 .static-bowl-woofle {
   position: absolute;
-  width: 17.5%;
-  max-width: 64px;
+  width: 13.5%;
+  max-width: 48px;
   filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.14));
 }
 
@@ -691,11 +691,11 @@ body.handoff-active .modal-image.is-handoff {
   filter: none !important;
 }
 
-/* Hide item count */
-.summary-row { display:none !important; }
 
-/* Increase woofle size in bowl */
-.bowl .woofle,
-.bowl img[class*="woofle"] {
-  transform: scale(1.18) !important;
+/* Bigger landed woofles */
+.static-bowl-woofle {
+  width: 20% !important;
+  max-width: 72px !important;
 }
+
+.summary-row { display:none !important; }
