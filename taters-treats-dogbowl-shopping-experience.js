@@ -38,20 +38,13 @@ const MODAL_CLOSE_DURATION_MS = 320;
 const WOOFLE_FLIGHT_DURATION_MS = 620;
 const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
-const WOOFLE_PRE_SHRINK_MS = 520;
-const WOOFLE_DROP_MS = 840;
 const QUANTITY_DRAG_STEP_PX = 24;
 const FEEDBACK_PULSE_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
-  centerY: 0.57,
-  ringSlots: [1, 6, 10, 14],
-  ringRadii: [0, 0.050, 0.082, 0.106],
-  startAngleDeg: -90,
-  clampXMin: 0.42,
-  clampXMax: 0.58,
-  clampYMin: 0.50,
-  clampYMax: 0.66
+  centerY: 0.69,
+  radiusX: 0.11,
+  radiusY: 0.045
 };
 
 const productsEl = document.getElementById("products");
@@ -65,11 +58,24 @@ const checkoutButton = document.getElementById("checkoutButton");
 const cartStatus = document.getElementById("cartStatus");
 const headerEl = document.querySelector(".site-header");
 
-const BOWL_NEUTRAL = {
-  image: "assets/images/dogbowl/dogbowl-empty-state.png",
-  note: "Your DogBowl™ is empty."
+const BOWL_STATES = {
+  empty: {
+    image: "assets/images/dogbowl/dogbowl-empty-state.png",
+    note: "Your DogBowl™ is empty."
+  },
+  lightly: {
+    image: "assets/images/dogbowl/dogbowl-lightly-filled-state.png",
+    note: "A little something good is in the bowl."
+  },
+  medium: {
+    image: "assets/images/dogbowl/dogbowl-medium-filled-state.png",
+    note: "Now that looks generous."
+  },
+  full: {
+    image: "assets/images/dogbowl/dogbowl-generously-filled-state.png",
+    note: "That DogBowl™ looks very loved."
+  }
 };
-
 
 const state = {
   activeOverlay: null,
@@ -77,8 +83,7 @@ const state = {
   bowlItemsLayer: null,
   isOpening: false,
   bowlCount: 0,
-  cartItems: [],
-  activeHandoffWoofle: null
+  cartItems: []
 };
 
 function renderProducts() {
@@ -217,49 +222,15 @@ function ensureBowlItemsLayer() {
 
 function createBowlTarget(indexOffset = 0) {
   if (!bowlFrameEl) return null;
-
   const bowlRect = bowlFrameEl.getBoundingClientRect();
-  const layer = ensureBowlItemsLayer();
-  const existingCount = layer
-    ? layer.querySelectorAll(".static-bowl-woofle").length
-    : 0;
-  const placementIndex = existingCount + indexOffset;
-
-  const ringSlots = BOWL_TARGET.ringSlots || [1, 6, 10, 14];
-  const ringRadii = BOWL_TARGET.ringRadii || [0, 0.050, 0.082, 0.106];
-  const startAngle = ((BOWL_TARGET.startAngleDeg || -90) * Math.PI) / 180;
-
-  let ringIndex = 0;
-  let slotIndex = placementIndex;
-  while (ringIndex < ringSlots.length && slotIndex >= ringSlots[ringIndex]) {
-    slotIndex -= ringSlots[ringIndex];
-    ringIndex += 1;
-  }
-
-  const safeRingIndex = Math.min(ringIndex, ringSlots.length - 1);
-  const slotsInRing = ringSlots[safeRingIndex];
-  const radiusNorm = ringRadii[safeRingIndex];
-
-  let xNorm = BOWL_TARGET.centerX;
-  let yNorm = BOWL_TARGET.centerY;
-
-  if (safeRingIndex > 0 && slotsInRing > 0) {
-    const step = (Math.PI * 2) / slotsInRing;
-    const angle = startAngle + step * slotIndex;
-    const xRadiusNorm = radiusNorm;
-    const yRadiusNorm = radiusNorm * 0.78;
-
-    xNorm = BOWL_TARGET.centerX + Math.cos(angle) * xRadiusNorm;
-    yNorm = BOWL_TARGET.centerY + Math.sin(angle) * yRadiusNorm;
-  }
-
-  const clampedX = Math.min(BOWL_TARGET.clampXMax || 0.58, Math.max(BOWL_TARGET.clampXMin || 0.42, xNorm));
-  const clampedY = Math.min(BOWL_TARGET.clampYMax || 0.66, Math.max(BOWL_TARGET.clampYMin || 0.50, yNorm));
-
-  const rotationBase = [0, -8, 10, -12, 14, -6, 8, -10];
-  const rotation = placementIndex === 0
-    ? 0
-    : rotationBase[placementIndex % rotationBase.length];
+  const theta = Math.random() * Math.PI * 2;
+  const radial = Math.sqrt(Math.random());
+  const xNorm = BOWL_TARGET.centerX + Math.cos(theta) * radial * BOWL_TARGET.radiusX;
+  const yNorm = BOWL_TARGET.centerY + Math.sin(theta) * radial * BOWL_TARGET.radiusY;
+  const clampedX = Math.min(0.66, Math.max(0.34, xNorm));
+  const clampedY = Math.min(0.76, Math.max(0.58, yNorm));
+  const rotation = -16 + Math.random() * 32;
+  const zIndex = 4 + indexOffset;
 
   return {
     xPx: clampedX * bowlRect.width,
@@ -267,7 +238,7 @@ function createBowlTarget(indexOffset = 0) {
     xPercent: clampedX * 100,
     yPercent: clampedY * 100,
     rotation,
-    zIndex: 4 + placementIndex
+    zIndex
   };
 }
 
@@ -377,14 +348,20 @@ function updateBowlUi() {
   const count = state.bowlCount;
   if (cartCountEl) cartCountEl.textContent = String(count);
 
-  if (bowlImageEl) {
-    bowlImageEl.src = BOWL_NEUTRAL.image;
+  let bowlState = BOWL_STATES.empty;
+  if (count >= 5) {
+    bowlState = BOWL_STATES.full;
+  } else if (count >= 3) {
+    bowlState = BOWL_STATES.medium;
+  } else if (count >= 1) {
+    bowlState = BOWL_STATES.lightly;
   }
 
+  if (bowlImageEl) {
+    bowlImageEl.src = bowlState.image;
+  }
   if (bowlNoteEl) {
-    bowlNoteEl.textContent = count > 0
-      ? `${count} woofel${count === 1 ? "" : "s"} in your DogBowl™.`
-      : BOWL_NEUTRAL.note;
+    bowlNoteEl.textContent = bowlState.note;
   }
 }
 
@@ -398,8 +375,10 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
 
   const sourceRect = sourceEl.getBoundingClientRect();
   const bowlRect = bowlFrameEl.getBoundingClientRect();
+
   const startLeft = sourceRect.left + sourceRect.width / 2;
   const startTop = sourceRect.top + sourceRect.height / 2;
+
   const endLeft = bowlRect.left + firstTarget.xPx;
   const endTop = bowlRect.top + firstTarget.yPx;
 
@@ -411,35 +390,27 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
   handoffWoofle.style.top = `${startTop}px`;
   handoffWoofle.style.width = `${sourceRect.width}px`;
   handoffWoofle.style.maxWidth = "none";
-  handoffWoofle.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
-  handoffWoofle.style.opacity = "1";
+  handoffWoofle.style.transform = "translate(-50%, -50%)";
   handoffWoofle.style.pointerEvents = "none";
   document.body.appendChild(handoffWoofle);
 
-  // STEP 1: slower shrink
   requestAnimationFrame(() => {
-    handoffWoofle.classList.add("is-shrinking");
+    handoffWoofle.style.transition = "all 800ms ease";
     handoffWoofle.style.width = "48px";
-    handoffWoofle.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
   });
 
-  // STEP 2: slower drop
-  window.setTimeout(() => {
-    handoffWoofle.classList.remove("is-shrinking");
-    handoffWoofle.classList.add("is-dropping");
+  setTimeout(() => {
+    handoffWoofle.style.transition = "all 1000ms cubic-bezier(0.22, 1, 0.36, 1)";
     handoffWoofle.style.left = `${endLeft}px`;
     handoffWoofle.style.top = `${endTop}px`;
-    handoffWoofle.style.width = "48px";
-    handoffWoofle.style.transform = `translate(-50%, -50%) scale(1) rotate(${firstTarget.rotation}deg)`;
-  }, 520); // doubled timing
+  }, 800);
 
-  // STEP 3: finalize
-  window.setTimeout(() => {
+  setTimeout(() => {
     addWoofleToBowl(imageSrc, firstTarget);
 
-    for (let index = 1; index < count; index += 1) {
-      const extraTarget = createBowlTarget(index);
-      if (extraTarget) addWoofleToBowl(imageSrc, extraTarget);
+    for (let i = 1; i < count; i++) {
+      const extra = createBowlTarget(i);
+      if (extra) addWoofleToBowl(imageSrc, extra);
     }
 
     handoffWoofle.remove();
@@ -449,7 +420,15 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
     }
 
     document.body.classList.remove("handoff-active");
-  }, 520 + 840); // full slowed timing
+  }, 1800);
+}
+
+function pulseQuantityFeedback(stepper) {
+  if (!stepper) return;
+  stepper.classList.remove("is-changing");
+  void stepper.offsetWidth;
+  stepper.classList.add("is-changing");
+  window.setTimeout(() => stepper.classList.remove("is-changing"), FEEDBACK_PULSE_MS);
 }
 
 function bindQuantityDial({ dialEl, valueEl, stepperEl, getQuantity, setQuantity }) {
@@ -569,32 +548,25 @@ function bindModal(modal, overlay, product) {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
     launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
     addCartSelection(product, selectedSize, quantity);
-    state.bowlCount += totalWoofles;
+    state.bowlCount += quantity;
     updateBowlUi();
-    closeModal({ preserveHandoffWoofle: true });
+    closeModal();
   });
 
   overlay.addEventListener("click", closeModal);
 }
 
-function closeModal(options = {}) {
+function closeModal() {
   if (!state.activeModal || !state.activeOverlay) return;
   const modal = state.activeModal;
   const overlay = state.activeOverlay;
-  const preserveHandoffWoofle = Boolean(options.preserveHandoffWoofle);
   state.activeModal = null;
   state.activeOverlay = null;
   state.isOpening = false;
   overlay.classList.remove("active");
   modal.classList.remove("active");
-  modal.classList.add("is-closing");
 
   window.setTimeout(() => {
-    if (!preserveHandoffWoofle) {
-      const handoffWoofle = document.querySelector(".modal-image.is-handoff");
-      if (handoffWoofle) handoffWoofle.remove();
-      state.activeHandoffWoofle = null;
-    }
     modal.remove();
     overlay.remove();
     document.body.classList.remove("product-detail-open");
@@ -606,10 +578,6 @@ clearCartButton?.addEventListener("click", () => {
   const layer = ensureBowlItemsLayer();
   if (layer) layer.innerHTML = "";
   state.bowlCount = 0;
-  if (state.activeHandoffWoofle) {
-    state.activeHandoffWoofle.remove();
-    state.activeHandoffWoofle = null;
-  }
   clearCartSelections();
   updateBowlUi();
   if (cartStatus) cartStatus.textContent = "DogBowl™ cleared.";
