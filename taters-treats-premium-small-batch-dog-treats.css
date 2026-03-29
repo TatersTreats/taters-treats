@@ -224,6 +224,7 @@ button, input { font: inherit; }
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.18));
 }
 
 .static-bowl-items {
@@ -692,18 +693,23 @@ body.handoff-active .modal-image.is-handoff {
 }
 
 
-/* Checkout button enhancement */
+.summary-row-hidden {
+  display: none;
+}
+
+
 .checkout-button {
-  border: 1px solid #C6A85C;
   position: relative;
+  border-color: #c9a25f;
 }
 
 .checkout-button::after {
   content: "";
   position: absolute;
+  left: 22%;
+  right: 22%;
   bottom: -6px;
-  left: 20%;
-  width: 60%;
   height: 2px;
-  background: #C6A85C;
+  background: #c9a25f;
+  border-radius: 999px;
 }

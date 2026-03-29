@@ -44,13 +44,13 @@ const WOOFLE_MULTI_STAGGER_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
   centerY: 0.57,
-  ringSlots: [1, 6, 10, 14],
-  ringRadii: [0, 0.050, 0.082, 0.106],
+  ringSlots: [1, 6, 10, 14, 18],
+  ringRadii: [0, 0.11, 0.17, 0.225, 0.265],
   startAngleDeg: -90,
-  clampXMin: 0.42,
-  clampXMax: 0.58,
-  clampYMin: 0.50,
-  clampYMax: 0.66
+  clampXMin: 0.24,
+  clampXMax: 0.76,
+  clampYMin: 0.36,
+  clampYMax: 0.79
 };
 
 const productsEl = document.getElementById("products");
