@@ -236,8 +236,8 @@ button, input { font: inherit; }
 
 .static-bowl-woofle {
   position: absolute;
-  width: 27%;
-  max-width: 96px;
+  width: 13.5%;
+  max-width: 48px;
   filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.14));
 }
 

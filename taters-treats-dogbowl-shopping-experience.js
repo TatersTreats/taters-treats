@@ -42,14 +42,14 @@ const QUANTITY_DRAG_STEP_PX = 24;
 const FEEDBACK_PULSE_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
-  centerY: 0.60,
+  centerY: 0.57,
   ringSlots: [1, 6, 10, 14],
   ringRadii: [0, 0.050, 0.082, 0.106],
   startAngleDeg: -90,
   clampXMin: 0.42,
   clampXMax: 0.58,
-  clampYMin: 0.52,
-  clampYMax: 0.68
+  clampYMin: 0.50,
+  clampYMax: 0.66
 };
 
 const productsEl = document.getElementById("products");
@@ -265,7 +265,7 @@ function createBowlTarget(indexOffset = 0) {
   }
 
   const clampedX = Math.min(BOWL_TARGET.clampXMax || 0.58, Math.max(BOWL_TARGET.clampXMin || 0.42, xNorm));
-  const clampedY = Math.min(BOWL_TARGET.clampYMax || 0.68, Math.max(BOWL_TARGET.clampYMin || 0.52, yNorm));
+  const clampedY = Math.min(BOWL_TARGET.clampYMax || 0.66, Math.max(BOWL_TARGET.clampYMin || 0.50, yNorm));
 
   const rotationBase = [0, -8, 10, -12, 14, -6, 8, -10];
   const rotation = placementIndex === 0
