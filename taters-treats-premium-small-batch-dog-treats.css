@@ -694,8 +694,14 @@ body.handoff-active .modal-image.is-handoff {
 
 /* Bigger landed woofles */
 .static-bowl-woofle {
-  width: 20% !important;
+  width: 18% !important;
   max-width: 72px !important;
 }
 
 .summary-row { display:none !important; }
+
+
+/* Ensure flight woofle never smaller than landed */
+.woofle-flight {
+  transform: translate(-50%, -50%) scale(0.95) !important;
+}
