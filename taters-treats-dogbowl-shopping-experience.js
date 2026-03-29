@@ -65,7 +65,7 @@ const cartStatus = document.getElementById("cartStatus");
 const headerEl = document.querySelector(".site-header");
 
 const BOWL_NEUTRAL = {
-  image: "assets/images/dogbowl/dogbowl-empty-state.png",
+  image: "assets/images/dogbowl/dogbowl-ceramic-bowl-top-down.png",
   note: "Your DogBowl™ is empty."
 };
 

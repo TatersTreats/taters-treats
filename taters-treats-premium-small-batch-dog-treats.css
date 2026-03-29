@@ -215,7 +215,7 @@ button, input { font: inherit; }
   width: 100%;
   border-radius: 18px;
   overflow: hidden;
-  background: url("assets/images/dogbowl/dogbowl-hardwood-floor-with-oat-flour-dusting.png") center center / cover no-repeat;
+  background: none;
 }
 
 .bowl-image {
