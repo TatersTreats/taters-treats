@@ -83,7 +83,8 @@ const state = {
   bowlItemsLayer: null,
   isOpening: false,
   bowlCount: 0,
-  cartItems: []
+  cartItems: [],
+  activeHandoffWoofle: null
 };
 
 function renderProducts() {
@@ -368,30 +369,31 @@ function updateBowlUi() {
 function launchWoofleFromCTA(sourceEl, imageSrc, count) {
   if (!sourceEl || !bowlFrameEl || count < 1) return;
 
-  document.body.classList.add("handoff-active");
-
   const firstTarget = createBowlTarget(0);
   if (!firstTarget) return;
 
   const sourceRect = sourceEl.getBoundingClientRect();
   const bowlRect = bowlFrameEl.getBoundingClientRect();
-
   const startLeft = sourceRect.left + sourceRect.width / 2;
   const startTop = sourceRect.top + sourceRect.height / 2;
-
   const endLeft = bowlRect.left + firstTarget.xPx;
   const endTop = bowlRect.top + firstTarget.yPx;
 
-  const handoffWoofle = sourceEl;
+  const handoffWoofle = sourceEl.cloneNode(true);
   state.activeHandoffWoofle = handoffWoofle;
 
   handoffWoofle.classList.add("is-handoff");
+  handoffWoofle.style.position = "fixed";
   handoffWoofle.style.left = `${startLeft}px`;
   handoffWoofle.style.top = `${startTop}px`;
   handoffWoofle.style.width = `${sourceRect.width}px`;
+  handoffWoofle.style.height = "auto";
   handoffWoofle.style.maxWidth = "none";
+  handoffWoofle.style.margin = "0";
   handoffWoofle.style.transform = "translate(-50%, -50%)";
+  handoffWoofle.style.opacity = "1";
   handoffWoofle.style.pointerEvents = "none";
+  handoffWoofle.style.zIndex = "95";
   document.body.appendChild(handoffWoofle);
 
   requestAnimationFrame(() => {
@@ -399,27 +401,27 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
     handoffWoofle.style.width = "48px";
   });
 
-  setTimeout(() => {
+  window.setTimeout(() => {
     handoffWoofle.style.transition = "all 1000ms cubic-bezier(0.22, 1, 0.36, 1)";
     handoffWoofle.style.left = `${endLeft}px`;
     handoffWoofle.style.top = `${endTop}px`;
   }, 800);
 
-  setTimeout(() => {
+  window.setTimeout(() => {
     addWoofleToBowl(imageSrc, firstTarget);
 
-    for (let i = 1; i < count; i++) {
-      const extra = createBowlTarget(i);
-      if (extra) addWoofleToBowl(imageSrc, extra);
+    for (let index = 1; index < count; index += 1) {
+      const extraTarget = createBowlTarget(index);
+      if (extraTarget) addWoofleToBowl(imageSrc, extraTarget);
     }
 
-    handoffWoofle.remove();
+    state.bowlCount += count;
+    updateBowlUi();
 
+    handoffWoofle.remove();
     if (state.activeHandoffWoofle === handoffWoofle) {
       state.activeHandoffWoofle = null;
     }
-
-    document.body.classList.remove("handoff-active");
   }, 1800);
 }
 
@@ -546,20 +548,19 @@ function bindModal(modal, overlay, product) {
 
   ctaButton?.addEventListener("click", () => {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
-    launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
     addCartSelection(product, selectedSize, quantity);
-    state.bowlCount += quantity;
-    updateBowlUi();
-    closeModal();
+    launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
+    closeModal({ preserveHandoffWoofle: true });
   });
 
   overlay.addEventListener("click", closeModal);
 }
 
-function closeModal() {
+function closeModal(options = {}) {
   if (!state.activeModal || !state.activeOverlay) return;
   const modal = state.activeModal;
   const overlay = state.activeOverlay;
+  const preserveHandoffWoofle = Boolean(options.preserveHandoffWoofle);
   state.activeModal = null;
   state.activeOverlay = null;
   state.isOpening = false;
@@ -567,6 +568,10 @@ function closeModal() {
   modal.classList.remove("active");
 
   window.setTimeout(() => {
+    if (!preserveHandoffWoofle && state.activeHandoffWoofle) {
+      state.activeHandoffWoofle.remove();
+      state.activeHandoffWoofle = null;
+    }
     modal.remove();
     overlay.remove();
     document.body.classList.remove("product-detail-open");
@@ -578,6 +583,10 @@ clearCartButton?.addEventListener("click", () => {
   const layer = ensureBowlItemsLayer();
   if (layer) layer.innerHTML = "";
   state.bowlCount = 0;
+  if (state.activeHandoffWoofle) {
+    state.activeHandoffWoofle.remove();
+    state.activeHandoffWoofle = null;
+  }
   clearCartSelections();
   updateBowlUi();
   if (cartStatus) cartStatus.textContent = "DogBowl™ cleared.";
