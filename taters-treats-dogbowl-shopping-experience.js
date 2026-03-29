@@ -44,13 +44,13 @@ const WOOFLE_MULTI_STAGGER_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
   centerY: 0.57,
-  ringSlots: [1, 6, 10, 14],
-  ringRadii: [0, 0.050, 0.082, 0.106],
+  ringSlots: [1, 4, 6, 8, 10],
+  ringRadii: [0, 0.038, 0.062, 0.084, 0.102],
   startAngleDeg: -90,
-  clampXMin: 0.42,
-  clampXMax: 0.58,
-  clampYMin: 0.50,
-  clampYMax: 0.66
+  clampXMin: 0.31,
+  clampXMax: 0.69,
+  clampYMin: 0.42,
+  clampYMax: 0.74
 };
 
 const productsEl = document.getElementById("products");
@@ -226,37 +226,48 @@ function createBowlTarget(indexOffset = 0) {
     : 0;
   const placementIndex = existingCount + indexOffset;
 
-  // Loose rows with slight overlap, not a radial burst.
-  // This keeps quantity readable and lets the bowl feel fuller sooner.
-  const rows = [
-    { y: 0.43, slots: 3, startX: 0.37, stepX: 0.13 },
-    { y: 0.51, slots: 4, startX: 0.29, stepX: 0.13 },
-    { y: 0.59, slots: 5, startX: 0.24, stepX: 0.13 },
-    { y: 0.67, slots: 4, startX: 0.29, stepX: 0.13 },
-    { y: 0.75, slots: 3, startX: 0.37, stepX: 0.13 }
-  ];
+  const ringSlots = BOWL_TARGET.ringSlots || [1, 4, 6, 8, 10];
+  const ringRadii = BOWL_TARGET.ringRadii || [0, 0.038, 0.062, 0.084, 0.102];
+  const startAngle = ((BOWL_TARGET.startAngleDeg || -90) * Math.PI) / 180;
 
-  let rowIndex = 0;
+  let ringIndex = 0;
   let slotIndex = placementIndex;
-  while (rowIndex < rows.length && slotIndex >= rows[rowIndex].slots) {
-    slotIndex -= rows[rowIndex].slots;
-    rowIndex += 1;
+  while (ringIndex < ringSlots.length && slotIndex >= ringSlots[ringIndex]) {
+    slotIndex -= ringSlots[ringIndex];
+    ringIndex += 1;
   }
 
-  const safeRowIndex = Math.min(rowIndex, rows.length - 1);
-  const row = rows[safeRowIndex];
+  const safeRingIndex = Math.min(ringIndex, ringSlots.length - 1);
+  const slotsInRing = ringSlots[safeRingIndex];
+  const radiusNorm = ringRadii[safeRingIndex];
 
-  // Small deterministic jitter so it feels natural, not robotic.
-  const xJitterBase = [-0.008, 0.006, -0.004, 0.009, -0.006, 0.004];
-  const yJitterBase = [0.004, -0.003, 0.002, -0.004, 0.003, -0.002];
-  const rotationBase = [-7, 5, -4, 8, -6, 4, -3, 6];
+  // Center-first fill, then expand outward.
+  let xNorm = BOWL_TARGET.centerX;
+  let yNorm = BOWL_TARGET.centerY;
 
-  let xNorm = row.startX + row.stepX * slotIndex + xJitterBase[placementIndex % xJitterBase.length];
-  let yNorm = row.y + yJitterBase[placementIndex % yJitterBase.length];
+  if (safeRingIndex > 0 && slotsInRing > 0) {
+    const step = (Math.PI * 2) / slotsInRing;
+    const seed = placementIndex + 1;
+    const angleJitter = ((((seed * 37) % 100) / 100) - 0.5) * step * 0.34;
+    const radialJitter = ((((seed * 53) % 100) / 100) - 0.5) * 0.010;
+    const xJitter = ((((seed * 29) % 100) / 100) - 0.5) * 0.012;
+    const yJitter = ((((seed * 61) % 100) / 100) - 0.5) * 0.010;
 
-  const clampedX = Math.min(0.76, Math.max(0.24, xNorm));
-  const clampedY = Math.min(0.80, Math.max(0.38, yNorm));
-  const rotation = rotationBase[placementIndex % rotationBase.length];
+    const angle = startAngle + step * slotIndex + angleJitter;
+    const xRadiusNorm = Math.max(0, radiusNorm + radialJitter);
+    const yRadiusNorm = Math.max(0, (radiusNorm * 0.78) + radialJitter * 0.82);
+
+    xNorm = BOWL_TARGET.centerX + Math.cos(angle) * xRadiusNorm + xJitter;
+    yNorm = BOWL_TARGET.centerY + Math.sin(angle) * yRadiusNorm + yJitter;
+  }
+
+  const clampedX = Math.min(BOWL_TARGET.clampXMax || 0.69, Math.max(BOWL_TARGET.clampXMin || 0.31, xNorm));
+  const clampedY = Math.min(BOWL_TARGET.clampYMax || 0.74, Math.max(BOWL_TARGET.clampYMin || 0.42, yNorm));
+
+  const rotationBase = [0, -6, 8, -5, 7, -4, 6, -7, 5, -3];
+  const rotation = placementIndex === 0
+    ? 0
+    : rotationBase[placementIndex % rotationBase.length];
 
   return {
     xPx: clampedX * bowlRect.width,
@@ -447,7 +458,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
         handoffWoofle.style.transition = "left 1000ms cubic-bezier(0.22, 1, 0.36, 1), top 1000ms cubic-bezier(0.22, 1, 0.36, 1), width 1000ms ease";
         handoffWoofle.style.left = `${endLeft}px`;
         handoffWoofle.style.top = `${endTop}px`;
-        handoffWoofle.style.width = "60px";
+        handoffWoofle.style.width = "52px";
       }, 420);
 
       window.setTimeout(() => {
