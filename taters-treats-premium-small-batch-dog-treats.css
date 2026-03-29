@@ -235,11 +235,10 @@ button, input { font: inherit; }
 
 .static-bowl-woofle {
   position: absolute;
-  width: 16.2%;
-  max-width: 56px;
+  width: 22%;
+  max-width: 72px;
   filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.14));
 }
-
 .bowl-note {
   margin: 10px 0 0;
   text-align: center;
