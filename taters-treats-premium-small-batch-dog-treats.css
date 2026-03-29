@@ -714,3 +714,16 @@ body.product-detail-open {
     transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
     opacity 420ms ease;
 }
+body.handoff-active .shop,
+body.handoff-active .hero,
+body.handoff-active .story-section,
+body.handoff-active .lower-section,
+body.handoff-active .trust-strip {
+  filter: blur(4px);
+  transition: filter 220ms ease;
+}
+
+body.handoff-active .dogbowl,
+body.handoff-active .modal-image.is-handoff {
+  filter: none !important;
+}
