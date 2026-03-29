@@ -690,3 +690,20 @@ body.handoff-active .dogbowl,
 body.handoff-active .modal-image.is-handoff {
   filter: none !important;
 }
+
+
+/* Checkout button enhancement */
+.checkout-button {
+  border: 1px solid #C6A85C;
+  position: relative;
+}
+
+.checkout-button::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 20%;
+  width: 60%;
+  height: 2px;
+  background: #C6A85C;
+}
