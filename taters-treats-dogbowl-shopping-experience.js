@@ -77,7 +77,8 @@ const state = {
   isOpening: false,
   bowlCount: 0,
   cartItems: [],
-  activeHandoffWoofle: null
+  activeHandoffWoofle: null,
+  activeSourceCard: null
 };
 
 function renderProducts() {
@@ -168,6 +169,7 @@ function createModalMarkup(product) {
 
 async function openDetail(card) {
   if (!card || state.activeModal || state.isOpening) return;
+  state.activeSourceCard = card;
   const product = getProductById(card.dataset.id);
   if (!product) return;
 
@@ -388,14 +390,20 @@ function updateBowlUi() {
 }
 
 function launchWoofleFromCTA(sourceEl, imageSrc, count) {
-  if (!sourceEl || !bowlFrameEl || count < 1) return;
+  if (!bowlFrameEl || count < 1) return;
 
-  const sourceRect = sourceEl.getBoundingClientRect();
+  const cardImageEl = state.activeSourceCard?.querySelector(".woofle");
+  const launchSourceEl = cardImageEl || sourceEl;
+  if (!launchSourceEl) return;
+
+  const sourceRect = launchSourceEl.getBoundingClientRect();
   const sharedStartLeft = sourceRect.left + sourceRect.width / 2;
   const sharedStartTop = sourceRect.top + sourceRect.height / 2 + 18;
   const originalWidth = sourceRect.width;
 
-  sourceEl.style.opacity = "1";
+  if (sourceEl && sourceEl.style) {
+    sourceEl.style.opacity = "1";
+  }
 
   for (let flightIndex = 0; flightIndex < count; flightIndex += 1) {
     window.setTimeout(() => {
@@ -406,7 +414,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
       const endLeft = bowlRect.left + target.xPx;
       const endTop = bowlRect.top + target.yPx;
 
-      const handoffWoofle = sourceEl.cloneNode(true);
+      const handoffWoofle = launchSourceEl.cloneNode(true);
       handoffWoofle.classList.add("is-handoff");
       handoffWoofle.style.position = "fixed";
       handoffWoofle.style.left = `${sharedStartLeft}px`;
@@ -446,7 +454,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
           state.activeHandoffWoofle = null;
         }
 
-        if (flightIndex === count - 1) {
+        if (flightIndex === count - 1 && sourceEl && sourceEl.style) {
           sourceEl.style.opacity = "0";
         }
       }, 1800);
@@ -610,6 +618,7 @@ function closeModal(options = {}) {
     overlay.remove();
     document.body.classList.remove("product-detail-open");
     document.body.style.removeProperty("--header-offset");
+    state.activeSourceCard = null;
   }, MODAL_CLOSE_DURATION_MS);
 }
 
@@ -621,6 +630,7 @@ clearCartButton?.addEventListener("click", () => {
     state.activeHandoffWoofle.remove();
     state.activeHandoffWoofle = null;
   }
+  state.activeSourceCard = null;
   clearCartSelections();
   updateBowlUi();
   if (cartStatus) cartStatus.textContent = "DogBowl™ cleared.";
