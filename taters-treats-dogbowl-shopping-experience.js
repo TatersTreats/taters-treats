@@ -63,24 +63,11 @@ const checkoutButton = document.getElementById("checkoutButton");
 const cartStatus = document.getElementById("cartStatus");
 const headerEl = document.querySelector(".site-header");
 
-const BOWL_STATES = {
-  empty: {
-    image: "assets/images/dogbowl/dogbowl-empty-state.png",
-    note: "Your DogBowl™ is empty."
-  },
-  lightly: {
-    image: "assets/images/dogbowl/dogbowl-lightly-filled-state.png",
-    note: "A little something good is in the bowl."
-  },
-  medium: {
-    image: "assets/images/dogbowl/dogbowl-medium-filled-state.png",
-    note: "Now that looks generous."
-  },
-  full: {
-    image: "assets/images/dogbowl/dogbowl-generously-filled-state.png",
-    note: "That DogBowl™ looks very loved."
-  }
+const BOWL_NEUTRAL = {
+  image: "assets/images/dogbowl/dogbowl-empty-state.png",
+  note: "Your DogBowl™ is empty."
 };
+
 
 const state = {
   activeOverlay: null,
@@ -388,20 +375,14 @@ function updateBowlUi() {
   const count = state.bowlCount;
   if (cartCountEl) cartCountEl.textContent = String(count);
 
-  let bowlState = BOWL_STATES.empty;
-  if (count >= 5) {
-    bowlState = BOWL_STATES.full;
-  } else if (count >= 3) {
-    bowlState = BOWL_STATES.medium;
-  } else if (count >= 1) {
-    bowlState = BOWL_STATES.lightly;
+  if (bowlImageEl) {
+    bowlImageEl.src = BOWL_NEUTRAL.image;
   }
 
-  if (bowlImageEl) {
-    bowlImageEl.src = bowlState.image;
-  }
   if (bowlNoteEl) {
-    bowlNoteEl.textContent = bowlState.note;
+    bowlNoteEl.textContent = count > 0
+      ? `${count} woofel${count === 1 ? "" : "s"} in your DogBowl™.`
+      : BOWL_NEUTRAL.note;
   }
 }
 
