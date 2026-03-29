@@ -690,3 +690,12 @@ body.handoff-active .dogbowl,
 body.handoff-active .modal-image.is-handoff {
   filter: none !important;
 }
+
+/* Hide item count */
+.summary-row { display:none !important; }
+
+/* Increase woofle size in bowl */
+.bowl .woofle,
+.bowl img[class*="woofle"] {
+  transform: scale(1.18) !important;
+}
