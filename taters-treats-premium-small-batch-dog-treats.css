@@ -677,8 +677,19 @@ body.product-detail-open {
 }
 
 
-body.handoff-active > *:not(.dogbowl):not(.modal-image.is-handoff):not(.woofle-flight) {
-  filter: blur(6px);
-  transition: filter 300ms ease;
+/* Controlled blur layer (only shop area, not entire DOM) */
+body.handoff-active .shop,
+body.handoff-active .hero,
+body.handoff-active .story-section,
+body.handoff-active .lower-section,
+body.handoff-active .trust-strip {
+  filter: blur(5px);
+  transition: filter 220ms ease;
+}
+
+/* Exclude bowl + flying woofel */
+body.handoff-active .dogbowl,
+body.handoff-active .modal-image.is-handoff {
+  filter: none !important;
 }
 
