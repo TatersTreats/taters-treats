@@ -407,7 +407,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
 
   for (let flightIndex = 0; flightIndex < count; flightIndex += 1) {
     window.setTimeout(() => {
-      const target = createBowlTarget(0);
+      const target = createBowlTarget(flightIndex);
       if (!target) return;
 
       const bowlRect = bowlFrameEl.getBoundingClientRect();
@@ -426,23 +426,31 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
       handoffWoofle.style.transform = "translate(-50%, -50%)";
       handoffWoofle.style.opacity = "1";
       handoffWoofle.style.pointerEvents = "none";
-      handoffWoofle.style.zIndex = "95";
+      handoffWoofle.style.zIndex = "0";
       document.body.appendChild(handoffWoofle);
 
       if (flightIndex === count - 1) {
         state.activeHandoffWoofle = handoffWoofle;
       }
 
+      // Begin underneath the card woofle, then rise out from under it.
       requestAnimationFrame(() => {
+        handoffWoofle.style.transition = "all 260ms ease";
+        handoffWoofle.style.top = `${sharedStartTop + 20}px`;
+      });
+
+      window.setTimeout(() => {
+        handoffWoofle.style.zIndex = "95";
         handoffWoofle.style.transition = "all 800ms ease";
         handoffWoofle.style.width = "48px";
-      });
+        handoffWoofle.style.top = `${sharedStartTop + 8}px`;
+      }, 120);
 
       window.setTimeout(() => {
         handoffWoofle.style.transition = "all 1000ms cubic-bezier(0.22, 1, 0.36, 1)";
         handoffWoofle.style.left = `${endLeft}px`;
         handoffWoofle.style.top = `${endTop}px`;
-      }, 800);
+      }, 920);
 
       window.setTimeout(() => {
         addWoofleToBowl(imageSrc, target);
@@ -457,7 +465,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
         if (flightIndex === count - 1 && sourceEl && sourceEl.style) {
           sourceEl.style.opacity = "0";
         }
-      }, 1800);
+      }, 1920);
     }, flightIndex * WOOFLE_MULTI_STAGGER_MS);
   }
 }
