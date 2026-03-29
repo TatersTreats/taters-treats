@@ -42,9 +42,10 @@ const QUANTITY_DRAG_STEP_PX = 24;
 const FEEDBACK_PULSE_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
-  centerY: 0.69,
-  radiusX: 0.11,
-  radiusY: 0.045
+  centerY: 0.695,
+  ringSlots: [1, 6, 10, 14],
+  ringRadii: [0, 0.062, 0.105, 0.138],
+  startAngleDeg: -90
 };
 
 const productsEl = document.getElementById("products");
@@ -222,15 +223,54 @@ function ensureBowlItemsLayer() {
 
 function createBowlTarget(indexOffset = 0) {
   if (!bowlFrameEl) return null;
+
   const bowlRect = bowlFrameEl.getBoundingClientRect();
-  const theta = Math.random() * Math.PI * 2;
-  const radial = Math.sqrt(Math.random());
-  const xNorm = BOWL_TARGET.centerX + Math.cos(theta) * radial * BOWL_TARGET.radiusX;
-  const yNorm = BOWL_TARGET.centerY + Math.sin(theta) * radial * BOWL_TARGET.radiusY;
-  const clampedX = Math.min(0.66, Math.max(0.34, xNorm));
-  const clampedY = Math.min(0.76, Math.max(0.58, yNorm));
-  const rotation = -16 + Math.random() * 32;
-  const zIndex = 4 + indexOffset;
+  const existingCount = state.bowlItemsLayer
+    ? state.bowlItemsLayer.querySelectorAll(".static-bowl-woofle").length
+    : 0;
+  const placementIndex = existingCount + indexOffset;
+
+  const ringSlots = BOWL_TARGET.ringSlots || [1, 6, 10, 14];
+  const ringRadii = BOWL_TARGET.ringRadii || [0, 0.062, 0.105, 0.138];
+  const startAngle = ((BOWL_TARGET.startAngleDeg || -90) * Math.PI) / 180;
+
+  let ringIndex = 0;
+  let slotIndex = placementIndex;
+  while (ringIndex < ringSlots.length && slotIndex >= ringSlots[ringIndex]) {
+    slotIndex -= ringSlots[ringIndex];
+    ringIndex += 1;
+  }
+
+  const safeRingIndex = Math.min(ringIndex, ringSlots.length - 1);
+  const slotsInRing = ringSlots[safeRingIndex];
+  const radiusNorm = ringRadii[safeRingIndex];
+
+  let xNorm = BOWL_TARGET.centerX;
+  let yNorm = BOWL_TARGET.centerY;
+
+  if (safeRingIndex > 0 && slotsInRing > 0) {
+    const step = (Math.PI * 2) / slotsInRing;
+    const angle = startAngle + step * slotIndex;
+    const radiusXPx = bowlRect.width * radiusNorm;
+    const radiusYPx = bowlRect.height * (radiusNorm * 0.84);
+
+    const centerXPx = bowlRect.width * BOWL_TARGET.centerX;
+    const centerYPx = bowlRect.height * BOWL_TARGET.centerY;
+
+    const xPx = centerXPx + Math.cos(angle) * radiusXPx;
+    const yPx = centerYPx + Math.sin(angle) * radiusYPx;
+
+    xNorm = xPx / bowlRect.width;
+    yNorm = yPx / bowlRect.height;
+  }
+
+  const clampedX = Math.min(0.61, Math.max(0.39, xNorm));
+  const clampedY = Math.min(0.77, Math.max(0.61, yNorm));
+
+  const rotationBase = [-8, 12, -14, 16, -6, 10, -12, 14];
+  const rotation = placementIndex === 0
+    ? 0
+    : rotationBase[placementIndex % rotationBase.length];
 
   return {
     xPx: clampedX * bowlRect.width,
@@ -238,7 +278,7 @@ function createBowlTarget(indexOffset = 0) {
     xPercent: clampedX * 100,
     yPercent: clampedY * 100,
     rotation,
-    zIndex
+    zIndex: 4 + placementIndex
   };
 }
 
