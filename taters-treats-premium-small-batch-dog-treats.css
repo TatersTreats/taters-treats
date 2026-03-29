@@ -677,3 +677,40 @@ body.product-detail-open {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+
+.product-modal.is-closing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-image.is-handoff {
+  position: fixed;
+  margin: 0;
+  z-index: 95;
+  pointer-events: none;
+  transition:
+    left 180ms ease,
+    top 180ms ease,
+    width 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.modal-image.is-handoff.is-shrinking {
+  transition:
+    left 260ms ease,
+    top 260ms ease,
+    width 260ms ease,
+    transform 260ms ease,
+    opacity 260ms ease;
+}
+
+.modal-image.is-handoff.is-dropping {
+  transition:
+    left 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    top 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 420ms ease;
+}
