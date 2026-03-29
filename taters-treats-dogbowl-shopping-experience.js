@@ -44,13 +44,13 @@ const WOOFLE_MULTI_STAGGER_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
   centerY: 0.57,
-  ringSlots: [1, 4, 6, 8, 10],
-  ringRadii: [0, 0.038, 0.062, 0.084, 0.102],
+  ringSlots: [1, 5, 7, 9, 11],
+  ringRadii: [0, 0.055, 0.092, 0.125, 0.152],
   startAngleDeg: -90,
-  clampXMin: 0.31,
-  clampXMax: 0.69,
-  clampYMin: 0.42,
-  clampYMax: 0.74
+  clampXMin: 0.34,
+  clampXMax: 0.66,
+  clampYMin: 0.44,
+  clampYMax: 0.72
 };
 
 const productsEl = document.getElementById("products");
@@ -221,28 +221,27 @@ function createBowlTarget(indexOffset = 0) {
 
   const bowlRect = bowlFrameEl.getBoundingClientRect();
   const layer = ensureBowlItemsLayer();
-  const existingItems = layer ? Array.from(layer.querySelectorAll(".static-bowl-woofle")) : [];
+  const existingItems = layer
+    ? Array.from(layer.querySelectorAll(".static-bowl-woofle"))
+    : [];
+
   const placementIndex = existingItems.length + indexOffset;
 
-  const centerX = BOWL_TARGET.centerX || 0.5;
-  const centerY = BOWL_TARGET.centerY || 0.57;
-  const clampMinX = BOWL_TARGET.clampXMin || 0.33;
-  const clampMaxX = BOWL_TARGET.clampXMax || 0.67;
-  const clampMinY = BOWL_TARGET.clampYMin || 0.44;
-  const clampMaxY = BOWL_TARGET.clampYMax || 0.72;
+  const centerX = 0.5;
+  const centerY = 0.57;
 
-  // Approx landed woofle size in normalized bowl space.
-  const itemW = 0.162;
-  const itemH = 0.132;
+  const clampMinX = 0.34;
+  const clampMaxX = 0.66;
+  const clampMinY = 0.44;
+  const clampMaxY = 0.72;
 
-  // Allow at most ~15% overlap.
-  const minDx = itemW * 0.85;
-  const minDy = itemH * 0.85;
-  const minDistance = Math.min(minDx, minDy) * 0.98;
+  // Match the larger landed woofle size and enforce about 15% overlap max.
+  const itemW = 0.22;
+  const minDistance = itemW * 0.85;
 
-  // Center-first organic rings, but with jitter so it does not read as rigid radial stacking.
-  const ringRadii = [0.000, 0.040, 0.066, 0.090, 0.110];
-  const ringSlots = [1, 4, 6, 8, 10];
+  // Center-first, randomish radial spread.
+  const ringRadii = [0.000, 0.055, 0.092, 0.125, 0.152];
+  const ringSlots = [1, 5, 7, 9, 11];
 
   let ringIndex = 0;
   let slotIndex = placementIndex;
@@ -252,25 +251,25 @@ function createBowlTarget(indexOffset = 0) {
   }
   ringIndex = Math.min(ringIndex, ringSlots.length - 1);
 
-  const tries = 40;
-  let best = null;
+  let bestCandidate = null;
 
-  for (let attempt = 0; attempt < tries; attempt += 1) {
+  for (let attempt = 0; attempt < 60; attempt += 1) {
     let xNorm = centerX;
     let yNorm = centerY;
 
     if (ringIndex > 0) {
       const slots = ringSlots[ringIndex];
-      const baseStep = (Math.PI * 2) / slots;
-      const seed = placementIndex * 17 + attempt * 13 + 7;
-      const angleBase = (-Math.PI / 2) + baseStep * slotIndex;
-      const angleJitter = ((((seed * 37) % 100) / 100) - 0.5) * baseStep * 0.70;
-      const radialJitter = ((((seed * 53) % 100) / 100) - 0.5) * 0.012;
-      const xJitter = ((((seed * 29) % 100) / 100) - 0.5) * 0.010;
-      const yJitter = ((((seed * 61) % 100) / 100) - 0.5) * 0.008;
+      const step = (Math.PI * 2) / slots;
 
-      const angle = angleBase + angleJitter;
+      const seed = placementIndex * 31 + attempt * 17 + 11;
+      const angleBase = (-Math.PI / 2) + step * slotIndex;
+      const angleJitter = ((((seed * 37) % 100) / 100) - 0.5) * step * 0.55;
+      const radialJitter = ((((seed * 53) % 100) / 100) - 0.5) * 0.010;
+      const xJitter = ((((seed * 29) % 100) / 100) - 0.5) * 0.008;
+      const yJitter = ((((seed * 61) % 100) / 100) - 0.5) * 0.007;
+
       const radius = Math.max(0, ringRadii[ringIndex] + radialJitter);
+      const angle = angleBase + angleJitter;
 
       xNorm = centerX + Math.cos(angle) * radius + xJitter;
       yNorm = centerY + Math.sin(angle) * radius * 0.82 + yJitter;
@@ -280,6 +279,7 @@ function createBowlTarget(indexOffset = 0) {
     yNorm = Math.min(clampMaxY, Math.max(clampMinY, yNorm));
 
     let nearest = Infinity;
+
     for (const item of existingItems) {
       const ex = parseFloat(item.style.left) / 100;
       const ey = parseFloat(item.style.top) / 100;
@@ -290,28 +290,30 @@ function createBowlTarget(indexOffset = 0) {
     }
 
     if (!existingItems.length) {
-      best = { xNorm, yNorm, score: 999 };
+      bestCandidate = { xNorm, yNorm, nearest: 999 };
       break;
     }
 
     if (nearest >= minDistance) {
-      best = { xNorm, yNorm, score: nearest };
+      bestCandidate = { xNorm, yNorm, nearest };
       break;
     }
 
-    if (!best || nearest > best.score) {
-      best = { xNorm, yNorm, score: nearest };
+    if (!bestCandidate || nearest > bestCandidate.nearest) {
+      bestCandidate = { xNorm, yNorm, nearest };
     }
   }
 
-  const rotationBase = [0, -6, 7, -4, 5, -7, 4, -5, 6, -3];
-  const rotation = placementIndex === 0 ? 0 : rotationBase[placementIndex % rotationBase.length];
+  const rotationBase = [0, -5, 6, -4, 5, -6, 4, -5, 6, -3];
+  const rotation = placementIndex === 0
+    ? 0
+    : rotationBase[placementIndex % rotationBase.length];
 
   return {
-    xPx: best.xNorm * bowlRect.width,
-    yPx: best.yNorm * bowlRect.height,
-    xPercent: best.xNorm * 100,
-    yPercent: best.yNorm * 100,
+    xPx: bestCandidate.xNorm * bowlRect.width,
+    yPx: bestCandidate.yNorm * bowlRect.height,
+    xPercent: bestCandidate.xNorm * 100,
+    yPercent: bestCandidate.yNorm * 100,
     rotation,
     zIndex: 4 + placementIndex
   };

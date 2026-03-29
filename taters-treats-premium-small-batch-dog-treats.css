@@ -232,13 +232,13 @@ button, input { font: inherit; }
   pointer-events: none;
 }
 
-
 .static-bowl-woofle {
   position: absolute;
   width: 22%;
   max-width: 72px;
   filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.14));
 }
+
 .bowl-note {
   margin: 10px 0 0;
   text-align: center;
@@ -693,4 +693,12 @@ body.handoff-active .modal-image.is-handoff {
 
 
 /* Bigger landed woofles */
+.static-bowl-woofle {
+  width: 20% !important;
+  max-width: 72px !important;
+}
+
 .summary-row { display:none !important; }
+
+
+.summary-row { display: none !important; }
