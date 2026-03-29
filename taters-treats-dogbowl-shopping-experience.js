@@ -391,6 +391,8 @@ function updateBowlUi() {
 function launchWoofleFromCTA(sourceEl, imageSrc, count) {
   if (!sourceEl || !bowlFrameEl || count < 1) return;
 
+  document.body.classList.add("handoff-active");
+
   const firstTarget = createBowlTarget(0);
   if (!firstTarget) return;
 
@@ -403,6 +405,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
 
   const handoffWoofle = sourceEl;
   state.activeHandoffWoofle = handoffWoofle;
+
   handoffWoofle.classList.add("is-handoff");
   handoffWoofle.style.left = `${startLeft}px`;
   handoffWoofle.style.top = `${startTop}px`;
@@ -413,12 +416,14 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
   handoffWoofle.style.pointerEvents = "none";
   document.body.appendChild(handoffWoofle);
 
+  // STEP 1: slower shrink
   requestAnimationFrame(() => {
     handoffWoofle.classList.add("is-shrinking");
     handoffWoofle.style.width = "48px";
     handoffWoofle.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
   });
 
+  // STEP 2: slower drop
   window.setTimeout(() => {
     handoffWoofle.classList.remove("is-shrinking");
     handoffWoofle.classList.add("is-dropping");
@@ -426,8 +431,9 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
     handoffWoofle.style.top = `${endTop}px`;
     handoffWoofle.style.width = "48px";
     handoffWoofle.style.transform = `translate(-50%, -50%) scale(1) rotate(${firstTarget.rotation}deg)`;
-  }, WOOFLE_PRE_SHRINK_MS);
+  }, 520); // doubled timing
 
+  // STEP 3: finalize
   window.setTimeout(() => {
     addWoofleToBowl(imageSrc, firstTarget);
 
@@ -437,18 +443,13 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
     }
 
     handoffWoofle.remove();
+
     if (state.activeHandoffWoofle === handoffWoofle) {
       state.activeHandoffWoofle = null;
     }
-  }, WOOFLE_PRE_SHRINK_MS + WOOFLE_DROP_MS);
-}
 
-function pulseQuantityFeedback(stepper) {
-  if (!stepper) return;
-  stepper.classList.remove("is-changing");
-  void stepper.offsetWidth;
-  stepper.classList.add("is-changing");
-  window.setTimeout(() => stepper.classList.remove("is-changing"), FEEDBACK_PULSE_MS);
+    document.body.classList.remove("handoff-active");
+  }, 520 + 840); // full slowed timing
 }
 
 function bindQuantityDial({ dialEl, valueEl, stepperEl, getQuantity, setQuantity }) {
