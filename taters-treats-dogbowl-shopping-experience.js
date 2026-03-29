@@ -40,6 +40,7 @@ const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
 const QUANTITY_DRAG_STEP_PX = 24;
 const FEEDBACK_PULSE_MS = 180;
+const WOOFLE_MULTI_STAGGER_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
   centerY: 0.57,
@@ -389,60 +390,68 @@ function updateBowlUi() {
 function launchWoofleFromCTA(sourceEl, imageSrc, count) {
   if (!sourceEl || !bowlFrameEl || count < 1) return;
 
-  const firstTarget = createBowlTarget(0);
-  if (!firstTarget) return;
-
   const sourceRect = sourceEl.getBoundingClientRect();
-  const bowlRect = bowlFrameEl.getBoundingClientRect();
-  const startLeft = sourceRect.left + sourceRect.width / 2;
-  const startTop = sourceRect.top + sourceRect.height / 2;
-  const endLeft = bowlRect.left + firstTarget.xPx;
-  const endTop = bowlRect.top + firstTarget.yPx;
+  const sharedStartLeft = sourceRect.left + sourceRect.width / 2;
+  const sharedStartTop = sourceRect.top + sourceRect.height / 2;
+  const originalWidth = sourceRect.width;
 
-  const handoffWoofle = sourceEl.cloneNode(true);
-  state.activeHandoffWoofle = handoffWoofle;
+  sourceEl.style.opacity = "1";
 
-  handoffWoofle.classList.add("is-handoff");
-  handoffWoofle.style.position = "fixed";
-  handoffWoofle.style.left = `${startLeft}px`;
-  handoffWoofle.style.top = `${startTop}px`;
-  handoffWoofle.style.width = `${sourceRect.width}px`;
-  handoffWoofle.style.height = "auto";
-  handoffWoofle.style.maxWidth = "none";
-  handoffWoofle.style.margin = "0";
-  handoffWoofle.style.transform = "translate(-50%, -50%)";
-  handoffWoofle.style.opacity = "1";
-  handoffWoofle.style.pointerEvents = "none";
-  handoffWoofle.style.zIndex = "95";
-  document.body.appendChild(handoffWoofle);
+  for (let flightIndex = 0; flightIndex < count; flightIndex += 1) {
+    window.setTimeout(() => {
+      const target = createBowlTarget(0);
+      if (!target) return;
 
-  requestAnimationFrame(() => {
-    handoffWoofle.style.transition = "all 800ms ease";
-    handoffWoofle.style.width = "48px";
-  });
+      const bowlRect = bowlFrameEl.getBoundingClientRect();
+      const endLeft = bowlRect.left + target.xPx;
+      const endTop = bowlRect.top + target.yPx;
 
-  window.setTimeout(() => {
-    handoffWoofle.style.transition = "all 1000ms cubic-bezier(0.22, 1, 0.36, 1)";
-    handoffWoofle.style.left = `${endLeft}px`;
-    handoffWoofle.style.top = `${endTop}px`;
-  }, 800);
+      const handoffWoofle = sourceEl.cloneNode(true);
+      handoffWoofle.classList.add("is-handoff");
+      handoffWoofle.style.position = "fixed";
+      handoffWoofle.style.left = `${sharedStartLeft}px`;
+      handoffWoofle.style.top = `${sharedStartTop}px`;
+      handoffWoofle.style.width = `${originalWidth}px`;
+      handoffWoofle.style.height = "auto";
+      handoffWoofle.style.maxWidth = "none";
+      handoffWoofle.style.margin = "0";
+      handoffWoofle.style.transform = "translate(-50%, -50%)";
+      handoffWoofle.style.opacity = "1";
+      handoffWoofle.style.pointerEvents = "none";
+      handoffWoofle.style.zIndex = "95";
+      document.body.appendChild(handoffWoofle);
 
-  window.setTimeout(() => {
-    addWoofleToBowl(imageSrc, firstTarget);
+      if (flightIndex === count - 1) {
+        state.activeHandoffWoofle = handoffWoofle;
+      }
 
-    for (let index = 1; index < count; index += 1) {
-      const extraTarget = createBowlTarget(index);
-      if (extraTarget) addWoofleToBowl(imageSrc, extraTarget);
-    }
+      requestAnimationFrame(() => {
+        handoffWoofle.style.transition = "all 800ms ease";
+        handoffWoofle.style.width = "48px";
+      });
 
-    state.bowlCount += count;
-    updateBowlUi();
+      window.setTimeout(() => {
+        handoffWoofle.style.transition = "all 1000ms cubic-bezier(0.22, 1, 0.36, 1)";
+        handoffWoofle.style.left = `${endLeft}px`;
+        handoffWoofle.style.top = `${endTop}px`;
+      }, 800);
 
-    handoffWoofle.remove();
-    if (state.activeHandoffWoofle === handoffWoofle) {
-      state.activeHandoffWoofle = null;
-    }
-  }, 1800);
+      window.setTimeout(() => {
+        addWoofleToBowl(imageSrc, target);
+        state.bowlCount += 1;
+        updateBowlUi();
+
+        handoffWoofle.remove();
+        if (state.activeHandoffWoofle === handoffWoofle) {
+          state.activeHandoffWoofle = null;
+        }
+
+        if (flightIndex === count - 1) {
+          sourceEl.style.opacity = "0";
+        }
+      }, 1800);
+    }, flightIndex * WOOFLE_MULTI_STAGGER_MS);
+  }
 }
 
 function pulseQuantityFeedback(stepper) {
@@ -586,6 +595,11 @@ function closeModal(options = {}) {
   state.isOpening = false;
   overlay.classList.remove("active");
   modal.classList.remove("active");
+
+  if (preserveHandoffWoofle) {
+    modal.style.opacity = "0";
+    modal.style.pointerEvents = "none";
+  }
 
   window.setTimeout(() => {
     if (!preserveHandoffWoofle && state.activeHandoffWoofle) {
