@@ -367,43 +367,39 @@ function updateBowlUi() {
 
 function launchWoofleFromCTA(sourceEl, imageSrc, count) {
   if (!sourceEl || !bowlFrameEl || count < 1) return;
-
   const sourceRect = sourceEl.getBoundingClientRect();
-  const firstTarget = createBowlTarget(0);
-  if (!firstTarget) return;
 
-  const bowlRect = bowlFrameEl.getBoundingClientRect();
-  const startLeft = sourceRect.left + sourceRect.width / 2;
-  const startTop = sourceRect.top + sourceRect.height / 2;
-  const endLeft = bowlRect.left + firstTarget.xPx;
-  const endTop = bowlRect.top + firstTarget.yPx;
+  for (let index = 0; index < count; index += 1) {
+    const targetPoint = createBowlTarget(index);
+    if (!targetPoint) continue;
+    const bowlRect = bowlFrameEl.getBoundingClientRect();
+    const flight = document.createElement("img");
+    flight.className = "woofle-flight";
+    flight.src = imageSrc;
+    flight.alt = "";
 
-  sourceEl.classList.add("woofle-flight");
-  sourceEl.style.left = `${startLeft}px`;
-  sourceEl.style.top = `${startTop}px`;
-  sourceEl.style.width = `${sourceRect.width}px`;
-  sourceEl.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
-  sourceEl.style.opacity = "1";
-  sourceEl.style.maxWidth = "none";
-  sourceEl.style.pointerEvents = "none";
-  document.body.appendChild(sourceEl);
+    const startLeft = sourceRect.left + sourceRect.width / 2;
+    const startTop = sourceRect.top + sourceRect.height * 0.42;
+    const endLeft = bowlRect.left + targetPoint.xPx;
+    const endTop = bowlRect.top + targetPoint.yPx;
 
-  requestAnimationFrame(() => {
-    sourceEl.style.left = `${endLeft}px`;
-    sourceEl.style.top = `${endTop}px`;
-    sourceEl.style.transform = `translate(-50%, -50%) scale(0.62) rotate(${firstTarget.rotation}deg)`;
-  });
+    flight.style.left = `${startLeft}px`;
+    flight.style.top = `${startTop}px`;
+    flight.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
+    flight.style.opacity = "1";
+    document.body.appendChild(flight);
 
-  window.setTimeout(() => {
-    addWoofleToBowl(imageSrc, firstTarget);
+    window.setTimeout(() => {
+      flight.style.left = `${endLeft}px`;
+      flight.style.top = `${endTop}px`;
+      flight.style.transform = `translate(-50%, -50%) scale(0.9) rotate(${targetPoint.rotation}deg)`;
+    }, index * WOOFLE_STAGGER_MS);
 
-    for (let index = 1; index < count; index += 1) {
-      const extraTarget = createBowlTarget(index);
-      if (extraTarget) addWoofleToBowl(imageSrc, extraTarget);
-    }
-
-    sourceEl.remove();
-  }, WOOFLE_FLIGHT_DURATION_MS);
+    window.setTimeout(() => {
+      addWoofleToBowl(imageSrc, targetPoint);
+      flight.remove();
+    }, WOOFLE_FLIGHT_DURATION_MS + index * WOOFLE_STAGGER_MS);
+  }
 }
 
 function pulseQuantityFeedback(stepper) {

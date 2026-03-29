@@ -198,6 +198,8 @@ button, input { font: inherit; }
 }
 
 .dogbowl {
+  transform: scale(1.04);
+  transform-origin: top center;
   background: linear-gradient(180deg, #f8f2e8 0%, #f4ebde 100%);
   border: 1px solid rgba(44, 31, 18, 0.08);
   border-radius: 22px;
@@ -206,12 +208,12 @@ button, input { font: inherit; }
 }
 
 .dogbowl-top {
-  padding: 16px 16px 12px;
+  padding: 18px 16px 14px;
 }
 
 .bowl-frame {
   position: relative;
-  aspect-ratio: 1 / 0.74;
+  aspect-ratio: 1 / 0.85;
   width: 100%;
   border-radius: 18px;
   overflow: hidden;
