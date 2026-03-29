@@ -226,41 +226,30 @@ function createBowlTarget(indexOffset = 0) {
     : 0;
   const placementIndex = existingCount + indexOffset;
 
-  const ringSlots = BOWL_TARGET.ringSlots || [1, 6, 10, 14];
-  const ringRadii = BOWL_TARGET.ringRadii || [0, 0.050, 0.082, 0.106];
-  const startAngle = ((BOWL_TARGET.startAngleDeg || -90) * Math.PI) / 180;
+  const centerX = BOWL_TARGET.centerX || 0.5;
+  const centerY = BOWL_TARGET.centerY || 0.57;
 
-  let ringIndex = 0;
-  let slotIndex = placementIndex;
-  while (ringIndex < ringSlots.length && slotIndex >= ringSlots[ringIndex]) {
-    slotIndex -= ringSlots[ringIndex];
-    ringIndex += 1;
-  }
+  const clampMinX = BOWL_TARGET.clampXMin || 0.24;
+  const clampMaxX = BOWL_TARGET.clampXMax || 0.76;
+  const clampMinY = BOWL_TARGET.clampYMin || 0.36;
+  const clampMaxY = BOWL_TARGET.clampYMax || 0.79;
 
-  const safeRingIndex = Math.min(ringIndex, ringSlots.length - 1);
-  const slotsInRing = ringSlots[safeRingIndex];
-  const radiusNorm = ringRadii[safeRingIndex];
+  // Grow the usable radius as more woofles are added so larger orders can reach
+  // closer to the inner bowl border without forcing a radial pattern.
+  const growth = Math.min(placementIndex, 18) / 18;
+  const xRadiusNorm = 0.12 + growth * 0.14;
+  const yRadiusNorm = (0.10 + growth * 0.12) * 0.92;
 
-  let xNorm = BOWL_TARGET.centerX;
-  let yNorm = BOWL_TARGET.centerY;
+  // Random point inside an ellipse, biased outward a bit so the bowl reads fuller.
+  const angle = Math.random() * Math.PI * 2;
+  const radius = Math.pow(Math.random(), 0.72);
+  let xNorm = centerX + Math.cos(angle) * xRadiusNorm * radius;
+  let yNorm = centerY + Math.sin(angle) * yRadiusNorm * radius;
 
-  if (safeRingIndex > 0 && slotsInRing > 0) {
-    const step = (Math.PI * 2) / slotsInRing;
-    const angle = startAngle + step * slotIndex;
-    const xRadiusNorm = radiusNorm;
-    const yRadiusNorm = radiusNorm * 0.78;
+  const clampedX = Math.min(clampMaxX, Math.max(clampMinX, xNorm));
+  const clampedY = Math.min(clampMaxY, Math.max(clampMinY, yNorm));
 
-    xNorm = BOWL_TARGET.centerX + Math.cos(angle) * xRadiusNorm;
-    yNorm = BOWL_TARGET.centerY + Math.sin(angle) * yRadiusNorm;
-  }
-
-  const clampedX = Math.min(BOWL_TARGET.clampXMax || 0.58, Math.max(BOWL_TARGET.clampXMin || 0.42, xNorm));
-  const clampedY = Math.min(BOWL_TARGET.clampYMax || 0.66, Math.max(BOWL_TARGET.clampYMin || 0.50, yNorm));
-
-  const rotationBase = [0, -8, 10, -12, 14, -6, 8, -10];
-  const rotation = placementIndex === 0
-    ? 0
-    : rotationBase[placementIndex % rotationBase.length];
+  const rotation = -16 + Math.random() * 32;
 
   return {
     xPx: clampedX * bowlRect.width,
