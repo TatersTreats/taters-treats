@@ -226,30 +226,37 @@ function createBowlTarget(indexOffset = 0) {
     : 0;
   const placementIndex = existingCount + indexOffset;
 
-  const centerX = BOWL_TARGET.centerX || 0.5;
-  const centerY = BOWL_TARGET.centerY || 0.57;
+  // Loose rows with slight overlap, not a radial burst.
+  // This keeps quantity readable and lets the bowl feel fuller sooner.
+  const rows = [
+    { y: 0.43, slots: 3, startX: 0.37, stepX: 0.13 },
+    { y: 0.51, slots: 4, startX: 0.29, stepX: 0.13 },
+    { y: 0.59, slots: 5, startX: 0.24, stepX: 0.13 },
+    { y: 0.67, slots: 4, startX: 0.29, stepX: 0.13 },
+    { y: 0.75, slots: 3, startX: 0.37, stepX: 0.13 }
+  ];
 
-  const clampMinX = BOWL_TARGET.clampXMin || 0.24;
-  const clampMaxX = BOWL_TARGET.clampXMax || 0.76;
-  const clampMinY = BOWL_TARGET.clampYMin || 0.36;
-  const clampMaxY = BOWL_TARGET.clampYMax || 0.79;
+  let rowIndex = 0;
+  let slotIndex = placementIndex;
+  while (rowIndex < rows.length && slotIndex >= rows[rowIndex].slots) {
+    slotIndex -= rows[rowIndex].slots;
+    rowIndex += 1;
+  }
 
-  // Grow the usable radius as more woofles are added so larger orders can reach
-  // closer to the inner bowl border without forcing a radial pattern.
-  const growth = Math.min(placementIndex, 18) / 18;
-  const xRadiusNorm = 0.12 + growth * 0.14;
-  const yRadiusNorm = (0.10 + growth * 0.12) * 0.92;
+  const safeRowIndex = Math.min(rowIndex, rows.length - 1);
+  const row = rows[safeRowIndex];
 
-  // Random point inside an ellipse, biased outward a bit so the bowl reads fuller.
-  const angle = Math.random() * Math.PI * 2;
-  const radius = Math.pow(Math.random(), 0.72);
-  let xNorm = centerX + Math.cos(angle) * xRadiusNorm * radius;
-  let yNorm = centerY + Math.sin(angle) * yRadiusNorm * radius;
+  // Small deterministic jitter so it feels natural, not robotic.
+  const xJitterBase = [-0.008, 0.006, -0.004, 0.009, -0.006, 0.004];
+  const yJitterBase = [0.004, -0.003, 0.002, -0.004, 0.003, -0.002];
+  const rotationBase = [-7, 5, -4, 8, -6, 4, -3, 6];
 
-  const clampedX = Math.min(clampMaxX, Math.max(clampMinX, xNorm));
-  const clampedY = Math.min(clampMaxY, Math.max(clampMinY, yNorm));
+  let xNorm = row.startX + row.stepX * slotIndex + xJitterBase[placementIndex % xJitterBase.length];
+  let yNorm = row.y + yJitterBase[placementIndex % yJitterBase.length];
 
-  const rotation = -16 + Math.random() * 32;
+  const clampedX = Math.min(0.76, Math.max(0.24, xNorm));
+  const clampedY = Math.min(0.80, Math.max(0.38, yNorm));
+  const rotation = rotationBase[placementIndex % rotationBase.length];
 
   return {
     xPx: clampedX * bowlRect.width,
@@ -440,7 +447,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
         handoffWoofle.style.transition = "left 1000ms cubic-bezier(0.22, 1, 0.36, 1), top 1000ms cubic-bezier(0.22, 1, 0.36, 1), width 1000ms ease";
         handoffWoofle.style.left = `${endLeft}px`;
         handoffWoofle.style.top = `${endTop}px`;
-        handoffWoofle.style.width = "48px";
+        handoffWoofle.style.width = "60px";
       }, 420);
 
       window.setTimeout(() => {

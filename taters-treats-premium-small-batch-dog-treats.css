@@ -232,7 +232,12 @@ button, input { font: inherit; }
   pointer-events: none;
 }
 
-
+.static-bowl-woofle {
+  position: absolute;
+  width: 16.5%;
+  max-width: 56px;
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.14));
+}
 
 .bowl-note {
   margin: 10px 0 0;
@@ -688,14 +693,9 @@ body.handoff-active .modal-image.is-handoff {
 
 
 /* Bigger landed woofles */
-
+.static-bowl-woofle {
+  width: 20% !important;
+  max-width: 72px !important;
+}
 
 .summary-row { display:none !important; }
-
-
-.static-bowl-woofle {
-  position: absolute;
-  width: 22.5%;
-  max-width: 80px;
-  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.14));
-}
