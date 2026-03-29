@@ -451,7 +451,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
         handoffWoofle.style.transition = "left 1000ms cubic-bezier(0.22, 1, 0.36, 1), top 1000ms cubic-bezier(0.22, 1, 0.36, 1), width 1000ms ease";
         handoffWoofle.style.left = `${endLeft}px`;
         handoffWoofle.style.top = `${endTop}px`;
-        handoffWoofle.style.width = "48px";
+        handoffWoofle.style.width = `${originalWidth}px`;
       }, 420);
 
       window.setTimeout(() => {
