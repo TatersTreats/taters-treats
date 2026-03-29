@@ -392,7 +392,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
 
   const sourceRect = sourceEl.getBoundingClientRect();
   const sharedStartLeft = sourceRect.left + sourceRect.width / 2;
-  const sharedStartTop = sourceRect.top + sourceRect.height / 2;
+  const sharedStartTop = sourceRect.top + sourceRect.height / 2 + 18;
   const originalWidth = sourceRect.width;
 
   sourceEl.style.opacity = "1";

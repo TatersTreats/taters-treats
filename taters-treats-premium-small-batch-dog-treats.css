@@ -675,3 +675,18 @@ body.product-detail-open {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+
+body.handoff-active .shop,
+body.handoff-active .hero,
+body.handoff-active .story-section,
+body.handoff-active .lower-section,
+body.handoff-active .trust-strip {
+  filter: blur(7px) brightness(0.82);
+  transition: filter 260ms ease;
+}
+
+body.handoff-active .dogbowl,
+body.handoff-active .modal-image.is-handoff {
+  filter: none !important;
+}
