@@ -42,10 +42,14 @@ const QUANTITY_DRAG_STEP_PX = 24;
 const FEEDBACK_PULSE_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
-  centerY: 0.695,
+  centerY: 0.60,
   ringSlots: [1, 6, 10, 14],
-  ringRadii: [0, 0.062, 0.105, 0.138],
-  startAngleDeg: -90
+  ringRadii: [0, 0.050, 0.082, 0.106],
+  startAngleDeg: -90,
+  clampXMin: 0.42,
+  clampXMax: 0.58,
+  clampYMin: 0.52,
+  clampYMax: 0.68
 };
 
 const productsEl = document.getElementById("products");
@@ -225,13 +229,14 @@ function createBowlTarget(indexOffset = 0) {
   if (!bowlFrameEl) return null;
 
   const bowlRect = bowlFrameEl.getBoundingClientRect();
-  const existingCount = state.bowlItemsLayer
-    ? state.bowlItemsLayer.querySelectorAll(".static-bowl-woofle").length
+  const layer = ensureBowlItemsLayer();
+  const existingCount = layer
+    ? layer.querySelectorAll(".static-bowl-woofle").length
     : 0;
   const placementIndex = existingCount + indexOffset;
 
   const ringSlots = BOWL_TARGET.ringSlots || [1, 6, 10, 14];
-  const ringRadii = BOWL_TARGET.ringRadii || [0, 0.062, 0.105, 0.138];
+  const ringRadii = BOWL_TARGET.ringRadii || [0, 0.050, 0.082, 0.106];
   const startAngle = ((BOWL_TARGET.startAngleDeg || -90) * Math.PI) / 180;
 
   let ringIndex = 0;
@@ -251,23 +256,18 @@ function createBowlTarget(indexOffset = 0) {
   if (safeRingIndex > 0 && slotsInRing > 0) {
     const step = (Math.PI * 2) / slotsInRing;
     const angle = startAngle + step * slotIndex;
-    const radiusXPx = bowlRect.width * radiusNorm;
-    const radiusYPx = bowlRect.height * (radiusNorm * 0.84);
 
-    const centerXPx = bowlRect.width * BOWL_TARGET.centerX;
-    const centerYPx = bowlRect.height * BOWL_TARGET.centerY;
+    const xRadiusNorm = radiusNorm;
+    const yRadiusNorm = radiusNorm * 0.78;
 
-    const xPx = centerXPx + Math.cos(angle) * radiusXPx;
-    const yPx = centerYPx + Math.sin(angle) * radiusYPx;
-
-    xNorm = xPx / bowlRect.width;
-    yNorm = yPx / bowlRect.height;
+    xNorm = BOWL_TARGET.centerX + Math.cos(angle) * xRadiusNorm;
+    yNorm = BOWL_TARGET.centerY + Math.sin(angle) * yRadiusNorm;
   }
 
-  const clampedX = Math.min(0.61, Math.max(0.39, xNorm));
-  const clampedY = Math.min(0.77, Math.max(0.61, yNorm));
+  const clampedX = Math.min(BOWL_TARGET.clampXMax || 0.58, Math.max(BOWL_TARGET.clampXMin || 0.42, xNorm));
+  const clampedY = Math.min(BOWL_TARGET.clampYMax || 0.68, Math.max(BOWL_TARGET.clampYMin || 0.52, yNorm));
 
-  const rotationBase = [-8, 12, -14, 16, -6, 10, -12, 14];
+  const rotationBase = [0, -8, 10, -12, 14, -6, 8, -10];
   const rotation = placementIndex === 0
     ? 0
     : rotationBase[placementIndex % rotationBase.length];
@@ -407,39 +407,43 @@ function updateBowlUi() {
 
 function launchWoofleFromCTA(sourceEl, imageSrc, count) {
   if (!sourceEl || !bowlFrameEl || count < 1) return;
+
   const sourceRect = sourceEl.getBoundingClientRect();
+  const firstTarget = createBowlTarget(0);
+  if (!firstTarget) return;
 
-  for (let index = 0; index < count; index += 1) {
-    const targetPoint = createBowlTarget(index);
-    if (!targetPoint) continue;
-    const bowlRect = bowlFrameEl.getBoundingClientRect();
-    const flight = document.createElement("img");
-    flight.className = "woofle-flight";
-    flight.src = imageSrc;
-    flight.alt = "";
+  const bowlRect = bowlFrameEl.getBoundingClientRect();
+  const startLeft = sourceRect.left + sourceRect.width / 2;
+  const startTop = sourceRect.top + sourceRect.height / 2;
+  const endLeft = bowlRect.left + firstTarget.xPx;
+  const endTop = bowlRect.top + firstTarget.yPx;
 
-    const startLeft = sourceRect.left + sourceRect.width / 2;
-    const startTop = sourceRect.top + sourceRect.height * 0.42;
-    const endLeft = bowlRect.left + targetPoint.xPx;
-    const endTop = bowlRect.top + targetPoint.yPx;
+  sourceEl.classList.add("woofle-flight");
+  sourceEl.style.left = `${startLeft}px`;
+  sourceEl.style.top = `${startTop}px`;
+  sourceEl.style.width = `${sourceRect.width}px`;
+  sourceEl.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
+  sourceEl.style.opacity = "1";
+  sourceEl.style.maxWidth = "none";
+  sourceEl.style.pointerEvents = "none";
+  document.body.appendChild(sourceEl);
 
-    flight.style.left = `${startLeft}px`;
-    flight.style.top = `${startTop}px`;
-    flight.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
-    flight.style.opacity = "1";
-    document.body.appendChild(flight);
+  requestAnimationFrame(() => {
+    sourceEl.style.left = `${endLeft}px`;
+    sourceEl.style.top = `${endTop}px`;
+    sourceEl.style.transform = `translate(-50%, -50%) scale(0.62) rotate(${firstTarget.rotation}deg)`;
+  });
 
-    window.setTimeout(() => {
-      flight.style.left = `${endLeft}px`;
-      flight.style.top = `${endTop}px`;
-      flight.style.transform = `translate(-50%, -50%) scale(0.9) rotate(${targetPoint.rotation}deg)`;
-    }, index * WOOFLE_STAGGER_MS);
+  window.setTimeout(() => {
+    addWoofleToBowl(imageSrc, firstTarget);
 
-    window.setTimeout(() => {
-      addWoofleToBowl(imageSrc, targetPoint);
-      flight.remove();
-    }, WOOFLE_FLIGHT_DURATION_MS + index * WOOFLE_STAGGER_MS);
-  }
+    for (let index = 1; index < count; index += 1) {
+      const extraTarget = createBowlTarget(index);
+      if (extraTarget) addWoofleToBowl(imageSrc, extraTarget);
+    }
+
+    sourceEl.remove();
+  }, WOOFLE_FLIGHT_DURATION_MS);
 }
 
 function pulseQuantityFeedback(stepper) {
