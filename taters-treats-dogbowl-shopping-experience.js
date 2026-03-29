@@ -643,7 +643,7 @@ clearCartButton?.addEventListener("click", () => {
   state.activeSourceCard = null;
   clearCartSelections();
   updateBowlUi();
-  if (cartStatus) cartStatus.textContent = "DogBowl™ cleared.";
+  if (cartStatus) cartStatus.textContent = "DogBowl™ emptied.";
   window.setTimeout(() => {
     if (cartStatus) cartStatus.textContent = "";
   }, 1400);
