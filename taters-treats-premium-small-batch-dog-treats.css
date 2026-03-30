@@ -133,6 +133,7 @@ button, input { font: inherit; }
   gap: 6px;
   padding: 0 0 32px;
 }
+
 .product-card {
   position: relative;
   width: 100%;
@@ -720,7 +721,16 @@ body.handoff-active .modal-image.is-handoff {
 .mission-line.lead {
   font-family: "Playfair Display", serif;
   font-size: 1.35rem;
-  margin-bottom: 18px;
+  margin-bottom: 8px;
+}
+
+.hero-continuation {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: clamp(2.15rem, 8.3vw, 4rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  margin-top: 4px;
 }
 
 .mission-line + .mission-line {
@@ -733,25 +743,10 @@ body.handoff-active .modal-image.is-handoff {
 }
 
 .woofles-divider {
-  position: relative;
   text-align: center;
   font-family: "Playfair Display", serif;
   letter-spacing: 0.08em;
-  margin: 32px 0 28px;
-}
-
-.woofles-divider::after {
-  content: "";
-  display: block;
-  width: 72px;
-  height: 1px;
-  margin: 12px auto 0;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(201, 162, 95, 0.7),
-    transparent
-  );
+  margin: 32px 0 12px;
 }
 /* === Hero blur edge === */
 .hero::after {
@@ -766,20 +761,4 @@ body.handoff-active .modal-image.is-handoff {
   -webkit-backdrop-filter: blur(6px);
 
   pointer-events: none;
-}
-.woofles-divider {
-  position: relative;
-  text-align: center;
-  font-family: "Playfair Display", serif;
-  letter-spacing: 0.08em;
-  margin: 28px 0 22px;
-}
-
-.woofles-divider::after {
-  content: "";
-  display: block;
-  width: 56px;
-  height: 2px;
-  margin: 12px auto 0;
-  background: rgba(201, 162, 95, 0.9);
 }
