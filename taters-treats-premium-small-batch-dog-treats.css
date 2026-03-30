@@ -827,3 +827,46 @@ body.handoff-active .modal-image.is-handoff {
 .product-desc {
   margin-top: 10px; /* push it further down */
 }
+
+
+/* --- card spacing cleanup --- */
+.products {
+  padding-top: 76px;
+}
+
+.product-card {
+  min-height: 208px;
+  padding-bottom: 18px;
+}
+
+.product-flavor {
+  margin-top: 58px;
+  padding: 0 6px 34px;
+}
+
+.product-desc {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 14px;
+  margin-top: 0;
+  padding: 0;
+}
+
+@media (min-width: 900px) {
+  .products {
+    padding-top: 86px;
+  }
+
+  .product-card {
+    min-height: 248px;
+  }
+
+  .product-flavor {
+    padding-bottom: 38px;
+  }
+
+  .product-desc {
+    bottom: 16px;
+  }
+}
