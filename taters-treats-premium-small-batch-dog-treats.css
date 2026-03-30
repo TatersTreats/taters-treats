@@ -859,3 +859,10 @@ body.handoff-active .modal-image.is-handoff {
     min-height: 220px;
   }
 }
+.product-desc {
+  min-height: 1.6em;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+}
