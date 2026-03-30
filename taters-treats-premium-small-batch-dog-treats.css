@@ -739,3 +739,17 @@ body.handoff-active .modal-image.is-handoff {
   letter-spacing: 0.08em;
   margin: 32px 0 12px;
 }
+/* === Hero blur edge === */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -40px;
+  height: 120px;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  pointer-events: none;
+}
