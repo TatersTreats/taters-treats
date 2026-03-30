@@ -730,7 +730,7 @@ body.handoff-active .modal-image.is-handoff {
   font-size: clamp(2.15rem, 8.3vw, 4rem);
   line-height: 0.9;
   letter-spacing: -0.045em;
-  margin-top: 6px;
+  margin-top: 0px;
 }
 
 .mission-line + .mission-line {
