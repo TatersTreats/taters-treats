@@ -738,7 +738,7 @@ body.handoff-active .modal-image.is-handoff {
   text-align: center;
   font-family: "Playfair Display", serif;
   letter-spacing: 0.08em;
-  margin: 32px 0 12px;
+  margin: 32px 0 18px;
 }
 /* === Hero blur edge === */
 .hero::after {
