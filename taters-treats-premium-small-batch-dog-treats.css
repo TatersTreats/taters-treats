@@ -767,3 +767,19 @@ body.handoff-active .modal-image.is-handoff {
 
   pointer-events: none;
 }
+.woofles-divider {
+  position: relative;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  letter-spacing: 0.08em;
+  margin: 28px 0 22px;
+}
+
+.woofles-divider::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin: 12px auto 0;
+  background: rgba(201, 162, 95, 0.9);
+}
