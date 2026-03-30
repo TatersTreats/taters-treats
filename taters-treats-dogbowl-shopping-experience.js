@@ -3,6 +3,7 @@ const PRODUCTS = [
     id: "pumpkin",
     flavor: "Pumpkin & Turmeric",
     description: "Gentle on sensitive stomachs",
+    short: "Gentle on tummies",
     image: "assets/images/products/pumpkin-turmeric-woofle.png",
     displayPrices: {
       Regular: "$18 — delivered",
@@ -13,6 +14,7 @@ const PRODUCTS = [
     id: "pbmc",
     flavor: "Mint & Carob",
     description: "Freshens breath naturally",
+    short: "Freshens breath",
     image: "assets/images/products/peanut-butter-mint-carob-woofle.png",
     displayPrices: {
       Regular: "$18 — delivered",
@@ -23,6 +25,7 @@ const PRODUCTS = [
     id: "ginger",
     flavor: "Peanut Butter & Ginger",
     description: "Comforts and settles the tummy",
+    short: "Soothes the stomach",
     image: "assets/images/products/peanut-butter-ginger-woofle.png",
     displayPrices: {
       Regular: "$18 — delivered",
@@ -96,6 +99,7 @@ function renderProducts() {
         <img src="${product.image}" alt="${product.flavor}" class="woofle">
       </div>
       <span class="product-flavor">${formatFlavorLabel(product.flavor)}</span>
+      <span class="product-desc">${product.short || ""}</span>
     </article>
   `).join("");
 

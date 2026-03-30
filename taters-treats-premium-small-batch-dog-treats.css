@@ -787,3 +787,37 @@ body.handoff-active .modal-image.is-handoff {
 
   pointer-events: none;
 }
+
+
+/* --- card descriptor + spacing update --- */
+.product-card {
+  min-height: 182px;
+  padding-bottom: 24px;
+}
+
+.product-flavor {
+  margin-top: 52px;
+}
+
+.product-desc {
+  display: block;
+  margin-top: 6px;
+  padding: 0 6px;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  color: rgba(29, 26, 23, 0.58);
+}
+
+.dogbowl {
+  margin-top: 18px;
+}
+
+@media (min-width: 900px) {
+  .product-card {
+    min-height: 236px;
+  }
+
+  .dogbowl {
+    margin-top: 28px;
+  }
+}
