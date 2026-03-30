@@ -870,3 +870,31 @@ body.handoff-active .modal-image.is-handoff {
     bottom: 16px;
   }
 }
+
+
+/* --- v6: fix card height + spacing --- */
+.products {
+  padding-top: 92px; /* more space above cards */
+}
+
+.product-card {
+  min-height: 182px; /* revert to original feel */
+  padding-bottom: 20px;
+}
+
+.product-desc {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 12px;
+}
+
+@media (min-width: 900px) {
+  .products {
+    padding-top: 104px;
+  }
+
+  .product-card {
+    min-height: 236px;
+  }
+}
