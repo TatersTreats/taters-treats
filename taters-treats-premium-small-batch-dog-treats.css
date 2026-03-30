@@ -892,3 +892,34 @@ body.handoff-active .modal-image.is-handoff {
   filter: blur(6px);
   z-index: -1;
 }
+.hero-badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 130px;
+  z-index: 2;
+}
+
+.hero-badge img {
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-badge::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(246, 240, 231, 0.9) 0%,
+    rgba(246, 240, 231, 0.75) 40%,
+    rgba(246, 240, 231, 0.4) 70%,
+    rgba(246, 240, 231, 0) 100%
+  );
+  filter: blur(10px);
+  z-index: 1;
+}
