@@ -727,7 +727,8 @@ body.handoff-active .modal-image.is-handoff {
 .hero-continuation {
   font-family: "Playfair Display", serif;
   font-weight: 700;
-  font-size: clamp(1.9rem, 7.4vw, 3.6rem);
+   font-size: clamp(2.0rem, 7.8vw, 3.8rem);
+}
 }
   line-height: 0.9;
   letter-spacing: -0.045em;
