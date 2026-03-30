@@ -702,3 +702,40 @@ body.handoff-active .modal-image.is-handoff {
 
 
 .summary-row { display: none !important; }
+
+
+/* === Mission Block === */
+.mission-block {
+  max-width: 560px;
+  margin: 0 auto 48px;
+  text-align: center;
+  padding: 0 12px;
+}
+
+.mission-line {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 1.05rem;
+}
+
+.mission-line.lead {
+  font-family: "Playfair Display", serif;
+  font-size: 1.35rem;
+  margin-bottom: 18px;
+}
+
+.mission-line + .mission-line {
+  margin-top: 14px;
+}
+
+.mission-line.final {
+  margin-top: 26px;
+  font-weight: 600;
+}
+
+.woofles-divider {
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  letter-spacing: 0.08em;
+  margin: 32px 0 12px;
+}
