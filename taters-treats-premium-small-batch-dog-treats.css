@@ -132,6 +132,7 @@ button, input { font: inherit; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
   padding: 0 0 32px;
+  margin-top: 6px;
 }
 
 .product-card {
