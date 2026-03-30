@@ -745,11 +745,11 @@ body.handoff-active .modal-image.is-handoff {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -40px;
-  height: 120px;
+  bottom: 0;
+  height: 48px;
 
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
   pointer-events: none;
 }
