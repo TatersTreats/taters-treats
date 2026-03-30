@@ -718,37 +718,60 @@ body.handoff-active .modal-image.is-handoff {
   font-size: 1.05rem;
 }
 
-.mission-line.lead {
-  font-family: "Playfair Display", serif;
-  font-size: 1.35rem;
-  margin-bottom: 8px;
-}
-
 .hero-continuation {
   font-family: "Playfair Display", serif;
   font-weight: 700;
-   font-size: clamp(2.0rem, 7.8vw, 3.8rem);
-}
-}
+  font-size: clamp(2rem, 7.8vw, 3.8rem);
   line-height: 0.9;
   letter-spacing: -0.045em;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .mission-line + .mission-line {
   margin-top: 14px;
 }
 
-.mission-line.final {
-  margin-top: 26px;
+.woofels-intro {
+  text-align: center;
+  margin: 28px 0 0;
+}
+
+.woofels-kicker {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 0.76rem;
   font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }
 
 .woofles-divider {
+  margin: 0;
   text-align: center;
   font-family: "Playfair Display", serif;
-  letter-spacing: 0.08em;
-  margin: 32px 0 12px;
+  font-weight: 700;
+  font-size: clamp(2rem, 7.8vw, 3.8rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+}
+
+.tm {
+  font-size: 0.38em;
+  vertical-align: super;
+  margin-left: 2px;
+}
+
+.woofels-subtitle {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.products {
+  padding-top: 54px;
 }
 /* === Hero blur edge === */
 .hero::after {
