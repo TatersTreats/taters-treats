@@ -131,7 +131,7 @@ button, input { font: inherit; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
-  padding: 36px 0 32px;
+  padding: 0 0 32px;
 }
 
 .product-card {
@@ -823,78 +823,39 @@ body.handoff-active .modal-image.is-handoff {
 }
 
 
-/* --- v3 tweak: lower descriptors --- */
-.product-desc {
-  margin-top: 10px; /* push it further down */
-}
+/* --- v7: correct spacing + restore card size --- */
 
-
-/* --- card spacing cleanup --- */
+/* tighten gap above cards */
 .products {
-  padding-top: 76px;
+  padding-top: 64px;
 }
 
+/* restore original card feel */
 .product-card {
-  min-height: 208px;
-  padding-bottom: 18px;
+  min-height: 182px;
+  padding-bottom: 16px;
 }
 
+/* keep descriptor low but not stretching layout */
+.product-desc {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 10px;
+}
+
+/* ensure flavor spacing doesn't stretch card */
 .product-flavor {
-  margin-top: 58px;
-  padding: 0 6px 34px;
-}
-
-.product-desc {
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: 14px;
-  margin-top: 0;
-  padding: 0;
+  margin-top: 48px;
+  padding-bottom: 0;
 }
 
 @media (min-width: 900px) {
   .products {
-    padding-top: 86px;
+    padding-top: 72px;
   }
 
   .product-card {
-    min-height: 248px;
-  }
-
-  .product-flavor {
-    padding-bottom: 38px;
-  }
-
-  .product-desc {
-    bottom: 16px;
-  }
-}
-
-
-/* --- v6: fix card height + spacing --- */
-.products {
-  padding-top: 92px; /* more space above cards */
-}
-
-.product-card {
-  min-height: 182px; /* revert to original feel */
-  padding-bottom: 20px;
-}
-
-.product-desc {
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: 12px;
-}
-
-@media (min-width: 900px) {
-  .products {
-    padding-top: 104px;
-  }
-
-  .product-card {
-    min-height: 236px;
+    min-height: 220px;
   }
 }
