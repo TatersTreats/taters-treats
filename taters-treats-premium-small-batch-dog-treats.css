@@ -866,3 +866,29 @@ body.handoff-active .modal-image.is-handoff {
   justify-content: center;
   text-align: center;
 }
+.hero-badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 130px;
+  z-index: 2;
+}
+
+/* soft beige backing */
+.hero-badge::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(246, 240, 231, 0.9) 0%,
+    rgba(246, 240, 231, 0.75) 40%,
+    rgba(246, 240, 231, 0.4) 70%,
+    rgba(246, 240, 231, 0) 100%
+  );
+
+  filter: blur(6px);
+  z-index: -1;
+}
