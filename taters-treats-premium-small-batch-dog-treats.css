@@ -821,3 +821,9 @@ body.handoff-active .modal-image.is-handoff {
     margin-top: 28px;
   }
 }
+
+
+/* --- v3 tweak: lower descriptors --- */
+.product-desc {
+  margin-top: 10px; /* push it further down */
+}
