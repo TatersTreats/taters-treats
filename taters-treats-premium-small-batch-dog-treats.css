@@ -735,10 +735,25 @@ body.handoff-active .modal-image.is-handoff {
 }
 
 .woofles-divider {
+  position: relative;
   text-align: center;
   font-family: "Playfair Display", serif;
   letter-spacing: 0.08em;
-  margin: 32px 0 18px;
+  margin: 32px 0 28px;
+}
+
+.woofles-divider::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 1px;
+  margin: 12px auto 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(201, 162, 95, 0.7),
+    transparent
+  );
 }
 /* === Hero blur edge === */
 .hero::after {
