@@ -372,6 +372,10 @@ const PRICE_MAP = {
 };
 
 async function beginCheckout() {
+  if (navigator.vibrate) {
+    navigator.vibrate([30]);
+  }
+
   if (!state.cartItems || !state.cartItems.length) {
     if (cartStatus) {
       cartStatus.textContent = "Add a few Woofles first.";
