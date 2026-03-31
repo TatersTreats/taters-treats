@@ -811,7 +811,7 @@ body.handoff-active .modal-image.is-handoff {
 }
 
 .dogbowl {
-  margin-top: 12px;
+  margin-top: 6px;
 }
 
 @media (min-width: 900px) {
@@ -820,7 +820,7 @@ body.handoff-active .modal-image.is-handoff {
   }
 
   .dogbowl {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 }
 
