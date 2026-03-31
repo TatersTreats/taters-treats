@@ -73,13 +73,11 @@ button, input { font: inherit; }
   min-height: inherit;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-end;
-  padding: 0 24px 28px 16px;
+  padding: 0 16px 18px;
 }
 
 .hero-content {
-  width: auto;
-  max-width: 260px;
+  width: max-content;
 }
 
 .hero-headline {
@@ -643,8 +641,12 @@ body.product-detail-open {
   }
 
   .hero-content-wrap {
-    padding-bottom: 26px;
-  }
+  position: relative;
+  min-height: inherit;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 16px 18px;
+}
 
   .hero-headline {
     font-size: clamp(3.4rem, 6vw, 5rem);
@@ -777,7 +779,17 @@ body.handoff-active .modal-image.is-handoff {
 }
 /* === Hero blur edge === */
 .hero::after {
-  display: none !important;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 28px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  pointer-events: none;
 }
 
 
