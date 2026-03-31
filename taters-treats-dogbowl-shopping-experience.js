@@ -433,6 +433,34 @@ async function beginCheckout() {
     }
   }
 }
+    const response = await fetch("/api/create-dogbowl-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ items })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok || !data?.url) {
+      throw new Error(data?.error || "Checkout failed.");
+    }
+
+    window.location.href = data.url;
+  } catch (error) {
+    if (cartStatus) {
+      cartStatus.textContent = error?.message || "Checkout failed.";
+      window.setTimeout(() => {
+        if (cartStatus) cartStatus.textContent = "";
+      }, 2200);
+    }
+    if (checkoutButton) {
+      checkoutButton.disabled = false;
+      checkoutButton.textContent = "Checkout";
+    }
+  }
+}
 
   if (checkoutButton) {
     checkoutButton.disabled = true;
