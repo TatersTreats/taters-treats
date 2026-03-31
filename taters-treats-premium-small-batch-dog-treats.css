@@ -923,3 +923,45 @@ body.handoff-active .modal-image.is-handoff {
   filter: blur(10px);
   z-index: 1;
 }
+
+
+/* === Decision Pulse === */
+.dogbowl {
+  position: relative;
+}
+
+.dogbowl::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(201, 162, 95, 0.72);
+  border-radius: 22px;
+  pointer-events: none;
+  z-index: 0;
+  transition: border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.product-modal::before,
+.product-modal .cta,
+.checkout-button {
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease,
+    transform 160ms ease;
+}
+
+.product-modal.is-pulsing::before,
+.dogbowl.is-pulsing::before {
+  border-color: rgba(236, 210, 149, 0.98);
+  box-shadow: 0 0 0 1px rgba(236, 210, 149, 0.22), 0 0 18px rgba(201, 162, 95, 0.22);
+}
+
+.product-modal .cta.is-pulsing,
+.checkout-button.is-pulsing {
+  border-color: rgba(236, 210, 149, 0.98);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 12px 22px rgba(18, 13, 10, 0.18),
+    0 0 18px rgba(201, 162, 95, 0.18);
+}

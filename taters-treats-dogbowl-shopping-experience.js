@@ -43,6 +43,7 @@ const MODAL_ENTER_DELAY_MS = 70;
 const WOOFLE_STAGGER_MS = 60;
 const QUANTITY_DRAG_STEP_PX = 24;
 const FEEDBACK_PULSE_MS = 180;
+const DECISION_PULSE_MS = 180;
 const WOOFLE_MULTI_STAGGER_MS = 180;
 const BOWL_TARGET = {
   centerX: 0.5,
@@ -536,6 +537,25 @@ function pulseQuantityFeedback(stepper) {
   window.setTimeout(() => stepper.classList.remove("is-changing"), FEEDBACK_PULSE_MS);
 }
 
+function triggerDecisionPulse(containerEl, buttonEl) {
+  if (containerEl) {
+    containerEl.classList.remove("is-pulsing");
+    void containerEl.offsetWidth;
+    containerEl.classList.add("is-pulsing");
+  }
+
+  if (buttonEl) {
+    buttonEl.classList.remove("is-pulsing");
+    void buttonEl.offsetWidth;
+    buttonEl.classList.add("is-pulsing");
+  }
+
+  window.setTimeout(() => {
+    if (containerEl) containerEl.classList.remove("is-pulsing");
+    if (buttonEl) buttonEl.classList.remove("is-pulsing");
+  }, DECISION_PULSE_MS);
+}
+
 function bindQuantityDial({ dialEl, valueEl, stepperEl, getQuantity, setQuantity }) {
   if (!dialEl || !valueEl) return;
   let pointerId = null;
@@ -650,10 +670,14 @@ function bindModal(modal, overlay, product) {
   });
 
   ctaButton?.addEventListener("click", () => {
-    const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
-    addCartSelection(product, selectedSize, quantity);
-    launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
-    closeModal({ preserveHandoffWoofle: true });
+    triggerDecisionPulse(modal, ctaButton);
+
+    window.setTimeout(() => {
+      const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
+      addCartSelection(product, selectedSize, quantity);
+      launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
+      closeModal({ preserveHandoffWoofle: true });
+    }, DECISION_PULSE_MS);
   });
 
   overlay.addEventListener("click", closeModal);
@@ -705,7 +729,10 @@ clearCartButton?.addEventListener("click", () => {
   }, 1400);
 });
 
-checkoutButton?.addEventListener("click", beginCheckout);
+checkoutButton?.addEventListener("click", () => {
+  triggerDecisionPulse(document.getElementById("dogbowl"), checkoutButton);
+  window.setTimeout(() => beginCheckout(), DECISION_PULSE_MS);
+});
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeModal();

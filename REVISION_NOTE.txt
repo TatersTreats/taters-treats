@@ -1,8 +1,13 @@
 Revision note
-Timestamp: 2026-03-31_1257
-Source: Rebuilt from the original LIVE BASELINE code you pasted at the beginning of this thread.
-Changes: None. This is intended as a clean reset of those pasted baseline files only.
+Timestamp: 2026-03-31_1318
+Source: 36 baseline
+Changes:
+- Added "Decision Pulse" interaction to the product modal CTA and DogBowl checkout CTA
+- Product CTA now pulses the modal border and CTA border together before handoff
+- Checkout CTA now pulses the DogBowl border and CTA border together before checkout begins
+- No filename changes
 Files included:
 - index.html
 - taters-treats-premium-small-batch-dog-treats.css
 - taters-treats-dogbowl-shopping-experience.js
+- REVISION_NOTE.txt
