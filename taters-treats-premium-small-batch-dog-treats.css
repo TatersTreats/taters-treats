@@ -774,19 +774,7 @@ body.handoff-active .modal-image.is-handoff {
   padding-top: 54px;
 }
 /* === Hero blur edge === */
-.hero::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -10px;
-  height: 28px;
-
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-
-  pointer-events: none;
-}
+.hero::after { display: none !important; }
 
 
 /* --- card descriptor + spacing update --- */
