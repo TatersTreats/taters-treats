@@ -1,9 +1,9 @@
 Revision note
-Timestamp: 2026-03-31_1338
-Source: decision pulse v2
+Timestamp: 2026-03-31_1432
+Source: spacing_final
 Changes:
-- Darkened the modal backdrop
-- Added stronger blur to the modal backdrop
+- Reduced DogBowl lower padding under the CTA
+- .dogbowl-body padding-bottom: 18px -> 10px
 - No other changes
 Files included:
 - index.html
