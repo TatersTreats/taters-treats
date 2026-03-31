@@ -1,10 +1,12 @@
 Revision note
-Timestamp: 2026-03-31_1432
-Source: spacing_final
+Timestamp: 2026-03-31_1510
+Source: 36 baseline
 Changes:
-- Reduced DogBowl lower padding under the CTA
-- .dogbowl-body padding-bottom: 18px -> 10px
-- No other changes
+- Darker modal backdrop with blur
+- Reduced shop gap (mobile)
+- Reduced products bottom padding
+- Trimmed DogBowl space under CTA
+- Fixed checkout button reset after return
 Files included:
 - index.html
 - taters-treats-premium-small-batch-dog-treats.css
