@@ -73,7 +73,7 @@ button, input { font: inherit; }
   min-height: inherit;
   display: flex;
   align-items: flex-end;
-  padding: 0 20px 20px 16px;
+  padding: 0 16px 8px;
 }
 
 .hero-content {
@@ -489,7 +489,7 @@ body.product-detail-open {
 
 .size-options {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 14px;
   margin-bottom: 16px;
 }
@@ -514,7 +514,7 @@ body.product-detail-open {
 
 .quantity {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   margin-bottom: 16px;
 }
 
@@ -557,7 +557,7 @@ body.product-detail-open {
   min-height: 42px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   text-align: center;
   user-select: none;
   cursor: default;
@@ -774,19 +774,7 @@ body.handoff-active .modal-image.is-handoff {
   padding-top: 54px;
 }
 /* === Hero blur edge === */
-.hero::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -10px;
-  height: 28px;
-
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-
-  pointer-events: none;
-}
+.hero::after { display: none !important; }
 
 
 /* --- card descriptor + spacing update --- */
@@ -863,7 +851,7 @@ body.handoff-active .modal-image.is-handoff {
   min-height: 1.6em;
   display: flex;
   align-items: flex-start;
-  justify-content: flex-end;
+  justify-content: center;
   text-align: center;
 }
 .hero-badge {
