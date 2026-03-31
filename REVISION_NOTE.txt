@@ -1,14 +1,10 @@
 Revision note
-Timestamp: 2026-03-31_1510
+Timestamp: 2026-03-31_1514
 Source: 36 baseline
-Changes:
-- Darker modal backdrop with blur
-- Reduced shop gap (mobile)
-- Reduced products bottom padding
-- Trimmed DogBowl space under CTA
-- Fixed checkout button reset after return
-Files included:
-- index.html
-- taters-treats-premium-small-batch-dog-treats.css
-- taters-treats-dogbowl-shopping-experience.js
-- REVISION_NOTE.txt
+Changes (ADD ONLY):
+- Added darker modal overlay + blur (scoped to .product-overlay)
+- Tightened gap via override
+- Reduced products bottom padding via override
+- Trimmed DogBowl bottom padding via override
+- Added checkout reset on visibility return
+No existing code replaced

@@ -73,7 +73,7 @@ button, input { font: inherit; }
   min-height: inherit;
   display: flex;
   align-items: flex-end;
-  padding: 0 16px 8px;
+  padding: 0 16px 18px;
 }
 
 .hero-content {
@@ -123,7 +123,7 @@ button, input { font: inherit; }
 .shop-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 8px;
+  gap: 22px;
   padding: 0 8px;
 }
 
@@ -131,7 +131,7 @@ button, input { font: inherit; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
-  padding: 0 0 6px;
+  padding: 0 0 32px;
 }
 
 .product-card {
@@ -385,9 +385,7 @@ button, input { font: inherit; }
 .product-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(12, 8, 6, 0.62);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(17, 12, 8, 0.48);
   opacity: 0;
   transition: opacity 320ms ease;
   z-index: 60;
@@ -924,4 +922,25 @@ body.handoff-active .modal-image.is-handoff {
   );
   filter: blur(10px);
   z-index: 1;
+}
+
+
+/* === Modal Overlay Enhancement (ADD ONLY) === */
+.product-overlay {
+  background: rgba(12, 8, 6, 0.62) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* === Spacing Adjustments (ADD ONLY overrides) === */
+.shop-layout {
+  gap: 8px !important;
+}
+
+.products {
+  padding-bottom: 6px !important;
+}
+
+.dogbowl-body {
+  padding-bottom: 8px !important;
 }

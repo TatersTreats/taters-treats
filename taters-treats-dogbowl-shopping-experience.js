@@ -715,8 +715,11 @@ renderProducts();
 updateBowlUi();
 
 
+// === Checkout Reset (ADD ONLY) ===
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
+    const checkoutButton = document.querySelector(".checkout-button");
+    const cartStatus = document.querySelector(".cart-status");
     if (checkoutButton) {
       checkoutButton.textContent = "Checkout";
       checkoutButton.disabled = false;
