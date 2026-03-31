@@ -372,6 +372,11 @@ const PRICE_MAP = {
 };
 
 async function beginCheckout() {
+  // HAPTIC: instant confirmation on tap
+  if (navigator.vibrate) {
+    navigator.vibrate(15);
+  }
+
   if (!state.cartItems || !state.cartItems.length) {
     if (cartStatus) {
       cartStatus.textContent = "Add a few Woofles first.";
