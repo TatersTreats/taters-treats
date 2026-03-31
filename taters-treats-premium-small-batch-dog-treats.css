@@ -123,7 +123,7 @@ button, input { font: inherit; }
 .shop-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 22px;
+  gap: 10px;
   padding: 0 8px;
 }
 
@@ -811,7 +811,7 @@ body.handoff-active .modal-image.is-handoff {
 }
 
 .dogbowl {
-  margin-top: 6px;
+  margin-top: 18px;
 }
 
 @media (min-width: 900px) {
@@ -820,7 +820,7 @@ body.handoff-active .modal-image.is-handoff {
   }
 
   .dogbowl {
-    margin-top: 10px;
+    margin-top: 28px;
   }
 }
 
