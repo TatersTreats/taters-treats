@@ -1,11 +1,10 @@
 Revision note
-Timestamp: 2026-03-31_1318
-Source: 36 baseline
+Timestamp: 2026-03-31_1338
+Source: decision pulse v2
 Changes:
-- Added "Decision Pulse" interaction to the product modal CTA and DogBowl checkout CTA
-- Product CTA now pulses the modal border and CTA border together before handoff
-- Checkout CTA now pulses the DogBowl border and CTA border together before checkout begins
-- No filename changes
+- Darkened the modal backdrop
+- Added stronger blur to the modal backdrop
+- No other changes
 Files included:
 - index.html
 - taters-treats-premium-small-batch-dog-treats.css
