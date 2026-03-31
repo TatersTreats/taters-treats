@@ -73,11 +73,13 @@ button, input { font: inherit; }
   min-height: inherit;
   display: flex;
   align-items: flex-end;
-  padding: 0 16px 8px;
+  justify-content: flex-end;
+  padding: 0 24px 28px 16px;
 }
 
 .hero-content {
-  width: max-content;
+  width: auto;
+  max-width: 260px;
 }
 
 .hero-headline {
@@ -774,7 +776,9 @@ body.handoff-active .modal-image.is-handoff {
   padding-top: 54px;
 }
 /* === Hero blur edge === */
-.hero::after { display: none !important; }
+.hero::after {
+  display: none !important;
+}
 
 
 /* --- card descriptor + spacing update --- */
