@@ -107,11 +107,11 @@ button, input { font: inherit; }
   padding-top: 34px;
 }
 
-
 .brand-badge {
   display: flex;
   justify-content: center;
-  margin: -6px 0 6px;
+  margin-top: -10px;
+  margin-bottom: 4px;
 }
 
 .brand-badge img {
