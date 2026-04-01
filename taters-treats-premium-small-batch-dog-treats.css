@@ -741,7 +741,7 @@ body.handoff-active .modal-image.is-handoff {
 
 .woofels-kicker {
   display: block;
-  margin: -6px 0 2px;
+  margin: -11px 0 2px
   font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -782,12 +782,12 @@ body.handoff-active .modal-image.is-handoff {
 
 /* --- card descriptor + spacing update --- */
 .product-card {
-  min-height: 122px;
-  padding-bottom: 12px;
+  min-height: 148px;
+  padding-bottom: 10px;
 }
 
 .product-flavor {
-  margin-top: 44px;
+  margin-top: 36px;
 }
 
 .product-desc {
