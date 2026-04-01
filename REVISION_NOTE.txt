@@ -1,18 +1,11 @@
-Revision timestamp: 2026-04-01-2013
+Revision timestamp: 2026-04-01-2017
 
-Change summary:
-- Removed current hero badge from the hero
-- Removed hero badge halo/blur styling
-- Added new brand badge block above the mission section
-- Added matching 1.5px gold border styling to the new mission-section badge
-- Left JavaScript unchanged
+Change:
+- Included brand badge asset in correct path
+- No further code changes beyond previous revision
 
-Files included:
+Files:
 - index.html
 - taters-treats-premium-small-batch-dog-treats.css
 - taters-treats-dogbowl-shopping-experience.js
-
-Important:
-- The new mission-section badge references:
-  assets/images/branding/taters-treats-masterbadge-2048.png
-- This asset file is not included here because the requested deliverable was the three main files only.
+- assets/images/branding/taters-treats-masterbadge-2048.png
