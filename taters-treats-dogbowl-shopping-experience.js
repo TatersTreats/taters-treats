@@ -134,9 +134,14 @@ function formatFlavorLabel(flavor) {
 }
 
 function getShopScrollTarget() {
-  if (!shopEl) return window.scrollY;
+  const intro = document.getElementById("woofelsIntro");
+  if (!intro) return window.scrollY;
+
   const headerOffset = headerEl ? headerEl.offsetHeight : 0;
-  return Math.max(0, window.scrollY + shopEl.getBoundingClientRect().top - headerOffset - 12);
+  return Math.max(
+    0,
+    window.scrollY + intro.getBoundingClientRect().top - headerOffset - 12
+  );
 }
 
 function scrollToShop() {
@@ -708,3 +713,14 @@ document.addEventListener("keydown", (event) => {
 
 renderProducts();
 updateBowlUi();
+
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    if (checkoutButton) {
+      checkoutButton.textContent = "Checkout";
+      checkoutButton.disabled = false;
+    }
+    if (cartStatus) cartStatus.textContent = "";
+  }
+});

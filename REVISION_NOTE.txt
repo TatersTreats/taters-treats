@@ -1,6 +1,16 @@
-2026-04-01-0104
-Revision: Hero seam adjustment only.
-- Removed detached .hero::after blur strip.
-- Moved bottom-edge softening into .hero-overlay.
-- No HTML changes.
-- No JS changes.
+Revision timestamp: 2026-04-01-0108
+
+Change made:
+- Restored hero badge backing blur only
+
+Files:
+- index.html unchanged
+- taters-treats-premium-small-batch-dog-treats.css updated in one place only
+- taters-treats-dogbowl-shopping-experience.js unchanged
+
+Details:
+- Kept current logo size
+- Added .hero-badge::before soft radial blur backing to match current badge presentation
+- No seam changes
+- No layout changes
+- No JS changes
