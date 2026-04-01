@@ -778,7 +778,21 @@ body.handoff-active .modal-image.is-handoff {
   padding-top: 54px;
 }
 /* === Hero blur edge === */
-
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 12px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(246, 240, 231, 0) 0%,
+    rgba(246, 240, 231, 0.38) 72%,
+    rgba(246, 240, 231, 0.72) 100%
+  );
+}
 /* --- card descriptor + spacing update --- */
 .product-card {
   min-height: 182px;
