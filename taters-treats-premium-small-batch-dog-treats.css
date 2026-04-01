@@ -793,7 +793,7 @@ body.handoff-active .modal-image.is-handoff {
 
 /* --- card descriptor + spacing update --- */
 .product-card {
-  min-height: 142px;
+  min-height: 122px;
   padding-bottom: 12px;
 }
 
