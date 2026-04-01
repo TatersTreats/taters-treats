@@ -876,7 +876,3 @@ body.handoff-active .modal-image.is-handoff {
 /* --- hero badge backing blur restore --- */
 
 
-/* hero height reduction */
-.hero {
-  min-height: 85vh !important;
-}
