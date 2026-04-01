@@ -1,12 +1,9 @@
-Revision timestamp: 2026-04-01-2050
+Revision timestamp: 2026-04-01-2105
 
 Change:
-- Replaced mission badge asset with simplified story badge mark
+- Replaced badge asset with new transparent cutout version (preliminary)
 
-Files unchanged otherwise:
-- index.html
-- CSS
-- JS
+Purpose:
+- Visual test on live site before refinement in Photopea
 
-Asset:
-- assets/images/branding/taters-treats-masterbadge-2048.png (updated image)
+No code changes made.
