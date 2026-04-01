@@ -110,7 +110,7 @@ button, input { font: inherit; }
 .brand-badge {
   display: flex;
   justify-content: center;
-  margin: -10px 0 6px;
+  margin: -5px 0 6px;
 }
 
 .brand-badge img {
@@ -751,7 +751,7 @@ body.handoff-active .modal-image.is-handoff {
 
 .woofels-kicker {
   display: block;
-  margin: 0 0 6px;
+   margin: -2px 0 4px;
   font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -793,17 +793,17 @@ body.handoff-active .modal-image.is-handoff {
 
 /* --- card descriptor + spacing update --- */
 .product-card {
-  min-height: 182px;
-  padding-bottom: 24px;
+  min-height: 162px;
+  padding-bottom: 12px;
 }
 
 .product-flavor {
-  margin-top: 52px;
+  margin-top: 44px;
 }
 
 .product-desc {
   display: block;
-  margin-top: 6px;
+  margin-top: 4px;
   padding: 0 6px;
   font-size: 0.72rem;
   line-height: 1.2;
