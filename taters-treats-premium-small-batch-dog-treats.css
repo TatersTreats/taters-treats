@@ -13,7 +13,9 @@
 }
 
 * { box-sizing: border-box; }
+
 html { scroll-behavior: smooth; }
+
 body {
   margin: 0;
   background: var(--cream);
@@ -22,9 +24,21 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-img { display: block; max-width: 100%; }
-a { color: inherit; text-decoration: none; }
-button, input { font: inherit; }
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
 
 .site-header {
   position: sticky;
@@ -147,20 +161,20 @@ button, input { font: inherit; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
-  padding: 0 0 6px;
+  padding: 54px 0 6px;
 }
 
 .product-card {
   position: relative;
   width: 100%;
-  min-height: 0;
+  min-height: 150px;
   overflow: visible;
   background: linear-gradient(180deg, #fff9f2 0%, #fde9d9 100%);
   border-radius: 16px;
   box-shadow: 0 10px 24px rgba(25, 16, 10, 0.16);
   text-align: center;
   padding-top: 12px;
-  padding-bottom: 16px;
+  padding-bottom: 10px;
   cursor: pointer;
   transition: transform 0.18s ease, box-shadow 0.25s ease, background 0.3s ease;
 }
@@ -195,7 +209,8 @@ button, input { font: inherit; }
 
 .product-flavor {
   display: block;
-  margin-top: 30px;
+  margin-top: 34px;
+  padding-bottom: 0;
   text-align: center;
   font-family: "Playfair Display", serif;
   font-size: 1.05rem;
@@ -213,7 +228,21 @@ button, input { font: inherit; }
   line-height: 0.9;
 }
 
+.product-desc {
+  min-height: 1.6em;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+  margin-top: 2px;
+  padding: 0 6px;
+  font-size: 0.7rem;
+  line-height: 1.15;
+  color: rgba(29, 26, 23, 0.58);
+}
+
 .dogbowl {
+  margin-top: 18px;
   background: linear-gradient(180deg, #f8f2e8 0%, #f4ebde 100%);
   border: 1px solid rgba(44, 31, 18, 0.08);
   border-radius: 22px;
@@ -250,8 +279,8 @@ button, input { font: inherit; }
 
 .static-bowl-woofle {
   position: absolute;
-  width: 22%;
-  max-width: 72px;
+  width: 20% !important;
+  max-width: 72px !important;
   filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.14));
 }
 
@@ -273,10 +302,7 @@ button, input { font: inherit; }
 }
 
 .summary-row {
-  display: inline-flex;
-  gap: 6px;
-  align-items: baseline;
-  color: var(--ink-soft);
+  display: none !important;
 }
 
 .checkout-button,
@@ -340,17 +366,17 @@ button, input { font: inherit; }
 
 .story-card h2,
 .info-card h2 {
+  margin: 0 0 12px;
   font-family: "Playfair Display", serif;
   font-size: clamp(1.6rem, 5vw, 2.2rem);
   line-height: 1.08;
-  margin: 0 0 12px;
 }
 
 .story-card p,
 .info-card p {
+  margin: 0;
   color: var(--ink-soft);
   line-height: 1.65;
-  margin: 0;
 }
 
 .story-card p + p,
@@ -419,25 +445,20 @@ body.product-detail-open {
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -62%);
-
   width: min(92vw, 360px);
-
   max-height: none;
   overflow: visible;
-
+  transform: translate(-50%, -62%);
   background: linear-gradient(180deg, #f7f1e7 0%, #f4eadb 100%);
+  border: 1px solid rgba(201, 162, 95, 0.22);
   border-radius: 24px;
-
   padding: 86px 16px 40px;
-
   box-shadow: 0 24px 40px rgba(19, 14, 10, 0.2);
   opacity: 0;
   transition: opacity 320ms ease, transform 320ms ease;
   z-index: 70;
-
-  border: 1px solid rgba(201, 162, 95, 0.22);
 }
+
 .product-modal.active {
   opacity: 1;
   transform: translate(-50%, -62%);
@@ -605,10 +626,10 @@ body.product-detail-open {
   position: absolute;
   left: 50%;
   bottom: 0;
-  transform: translate(-50%, 50%);
-  display: block;
   width: 82%;
   margin: 0;
+  display: block;
+  transform: translate(-50%, 50%);
   z-index: 3;
   text-align: center;
   border: 1px solid rgba(201, 162, 95, 0.7);
@@ -628,66 +649,6 @@ body.product-detail-open {
     opacity 620ms ease;
 }
 
-@media (min-width: 900px) {
-  .site-header__inner,
-  .hero-content-wrap,
-  .shop-layout,
-  .trust-strip,
-  .story-section,
-  .lower-section,
-  .site-footer {
-    width: min(1100px, calc(100% - 48px));
-    margin: 0 auto;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .hero {
-    min-height: 510px;
-    border-radius: 0 0 28px 28px;
-    overflow: hidden;
-  }
-
-  .hero-content-wrap {
-  position: relative;
-  min-height: inherit;
-  display: flex;
-  align-items: flex-end;
-  padding: 0 16px 18px;
-}
-
-  .hero-headline {
-    font-size: clamp(3.4rem, 6vw, 5rem);
-  }
-
-  .shop-layout {
-    grid-template-columns: minmax(0, 1fr) 360px;
-    align-items: start;
-    gap: 22px;
-    padding: 0;
-  }
-
-  .shop-main {
-    min-width: 0;
-  }
-
-  .products {
-    gap: 14px;
-  }
-
-  .product-card {
-    min-height: 220px;
-  }
-
-  .product-image img {
-    max-width: 148px;
-  }
-
-  .lower-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 body.handoff-active .shop,
 body.handoff-active .hero,
 body.handoff-active .story-section,
@@ -702,15 +663,6 @@ body.handoff-active .modal-image.is-handoff {
   filter: none !important;
 }
 
-/* Bigger landed woofles */
-.static-bowl-woofle {
-  width: 20% !important;
-  max-width: 72px !important;
-}
-
-.summary-row { display: none !important; }
-
-/* === Mission Block === */
 .mission-block {
   display: none;
 }
@@ -722,12 +674,12 @@ body.handoff-active .modal-image.is-handoff {
 }
 
 .hero-continuation {
+  margin-top: 0;
   font-family: "Playfair Display", serif;
   font-weight: 700;
   font-size: clamp(2rem, 7.8vw, 3.8rem);
   line-height: 0.9;
   letter-spacing: -0.045em;
-  margin-top: 0;
 }
 
 .mission-line + .mission-line {
@@ -735,13 +687,13 @@ body.handoff-active .modal-image.is-handoff {
 }
 
 .woofels-intro {
-  text-align: center;
   margin-top: 0;
+  text-align: center;
 }
 
 .woofels-kicker {
   display: block;
-  margin: -11px 0 2px
+  margin: -11px 0 2px;
   font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -768,93 +720,70 @@ body.handoff-active .modal-image.is-handoff {
 
 .woofels-subtitle {
   margin: 8px 0 0;
+  text-align: center;
   font-size: 0.82rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-soft);
-
-  text-align: center;
-}
-
-.products {
-  padding-top: 54px;
-}
-
-/* --- card descriptor + spacing update --- */
-.product-card {
-  min-height: 148px;
-  padding-bottom: 10px;
-}
-
-.product-flavor {
-  margin-top: 36px;
-}
-
-.product-desc {
-  display: block;
-  margin-top: 4px;
-  padding: 0 6px;
-  font-size: 0.72rem;
-  line-height: 1.2;
-  color: rgba(29, 26, 23, 0.58);
-}
-
-.dogbowl {
-  margin-top: 18px;
 }
 
 @media (min-width: 900px) {
-  .product-card {
-    min-height: 236px;
+  .site-header__inner,
+  .hero-content-wrap,
+  .shop-layout,
+  .trust-strip,
+  .story-section,
+  .lower-section,
+  .site-footer {
+    width: min(1100px, calc(100% - 48px));
+    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  .dogbowl {
-    margin-top: 28px;
+  .hero {
+    min-height: 510px;
+    border-radius: 0 0 28px 28px;
+    overflow: hidden;
   }
-}
 
-/* --- v7: correct spacing + restore card size --- */
+  .hero-content-wrap {
+    padding: 0 16px 18px;
+  }
 
-/* tighten gap above cards */
-.products {
-  padding-top: 64px;
-}
+  .hero-headline {
+    font-size: clamp(3.4rem, 6vw, 5rem);
+  }
 
-/* restore original card feel */
-.product-card {
-  min-height: 182px;
-  padding-bottom: 16px;
-}
+  .shop-layout {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    align-items: start;
+    gap: 22px;
+    padding: 0;
+  }
 
-/* keep descriptor low but not stretching layout */
-.product-desc {
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: 10px;
-}
+  .shop-main {
+    min-width: 0;
+  }
 
-/* ensure flavor spacing doesn't stretch card */
-.product-flavor {
-  margin-top: 48px;
-  padding-bottom: 0;
-}
-
-@media (min-width: 900px) {
   .products {
+    gap: 14px;
     padding-top: 72px;
   }
 
   .product-card {
     min-height: 220px;
   }
+
+  .product-image img {
+    max-width: 148px;
+  }
+
+  .dogbowl {
+    margin-top: 28px;
+  }
+
+  .lower-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
-.product-desc {
-  min-height: 1.6em;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  text-align: center;
-}
-/* soft beige backing */
-/* --- hero badge backing blur restore --- */
