@@ -76,7 +76,7 @@ button, input { font: inherit; }
   min-height: inherit;
   display: flex;
   align-items: flex-end;
-  padding: 0 16px 18px;
+  padding: 0 16px 10px;
 }
 
 .hero-content {
