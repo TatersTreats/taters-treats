@@ -1,14 +1,5 @@
-Revision note
-Timestamp: 2026-03-31_1525
-Source: 36 baseline, with hero seam blur behavior referenced from 34
-Changes:
-- Restored hero seam blur behavior from 34
-- Kept modal overlay blur OFF
-- Tightened mobile cards-to-bowl spacing
-- Trimmed DogBowl lower padding under CTA
-- Reset checkout button text/state after return
-Files included:
-- index.html
-- taters-treats-premium-small-batch-dog-treats.css
-- taters-treats-dogbowl-shopping-experience.js
-- REVISION_NOTE.txt
+2026-03-31 20-50 repair
+- Repaired broken index.html that had been replaced with JavaScript content.
+- Restored correct root-level CSS and JS file references in index.html.
+- Preserved current CSS/JS baseline from the uploaded zip, including the current hero overlay treatment.
+- Returned the three main site files plus this note.
