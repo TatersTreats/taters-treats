@@ -107,11 +107,10 @@ button, input { font: inherit; }
   padding-top: 34px;
 }
 
-
 .brand-badge {
   display: flex;
   justify-content: center;
-  margin: 16px 0 20px;
+  margin: 12px 0;
 }
 
 .brand-badge img {
@@ -119,10 +118,14 @@ button, input { font: inherit; }
   width: 220px;
   max-width: 80%;
   height: auto;
+
   border: 1.5px solid #c9a84e;
   border-radius: 12px;
 }
 
+.woofels-intro {
+  margin-top: 0;
+}
 
 .shop-intro {
   text-align: center;
