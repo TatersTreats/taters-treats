@@ -1,11 +1,12 @@
-Revision timestamp: 2026-04-01-2017
+Revision timestamp: 2026-04-01-2050
 
 Change:
-- Included brand badge asset in correct path
-- No further code changes beyond previous revision
+- Replaced mission badge asset with simplified story badge mark
 
-Files:
+Files unchanged otherwise:
 - index.html
-- taters-treats-premium-small-batch-dog-treats.css
-- taters-treats-dogbowl-shopping-experience.js
-- assets/images/branding/taters-treats-masterbadge-2048.png
+- CSS
+- JS
+
+Asset:
+- assets/images/branding/taters-treats-masterbadge-2048.png (updated image)
