@@ -229,18 +229,17 @@ input {
 }
 
 .product-desc {
-  min-height: 1.6em;
+  min-height: 2.2em;          /* creates stable vertical space */
   display: flex;
-  align-items: flex-start;
+  align-items: center;        /* THIS is the key */
   justify-content: center;
   text-align: center;
-  margin-top: 2px;
+  margin-top: 4px;
   padding: 0 6px;
   font-size: 0.7rem;
   line-height: 1.15;
   color: rgba(29, 26, 23, 0.58);
 }
-
 .dogbowl {
   margin-top: 18px;
   background: linear-gradient(180deg, #f8f2e8 0%, #f4ebde 100%);
