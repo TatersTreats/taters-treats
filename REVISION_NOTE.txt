@@ -1,5 +1,6 @@
-2026-03-31 20-50 repair
-- Repaired broken index.html that had been replaced with JavaScript content.
-- Restored correct root-level CSS and JS file references in index.html.
-- Preserved current CSS/JS baseline from the uploaded zip, including the current hero overlay treatment.
-- Returned the three main site files plus this note.
+2026-04-01-0104
+Revision: Hero seam adjustment only.
+- Removed detached .hero::after blur strip.
+- Moved bottom-edge softening into .hero-overlay.
+- No HTML changes.
+- No JS changes.
