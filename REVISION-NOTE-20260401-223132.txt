@@ -1,0 +1,31 @@
+Tater's Treats - 3 live files extraction, analysis, and safe cleanup
+Timestamp: 20260401-223132
+
+Files extracted:
+- index.html
+- taters-treats-premium-small-batch-dog-treats.css
+- taters-treats-dogbowl-shopping-experience.js
+
+What I found:
+- The live site is currently wired to root-level CSS and JS files, not the /assets/css and /assets/javascript paths referenced in the older handoff note.
+- index.html correctly links taters-treats-premium-small-batch-dog-treats.css and taters-treats-dogbowl-shopping-experience.js from the site root.
+- CSS contains layered historical overrides near the bottom. Final cascade values appear intentional, but there is visible duplicate/legacy residue.
+- JavaScript is structurally usable and readable. No obvious syntax break was found during extraction review.
+- Checkout flow hooks exist in the JS and target /api/create-dogbowl-checkout-session.
+
+Safe cleanup performed:
+- Extracted only the 3 live working files.
+- Normalized whitespace and line endings in all 3 files.
+- Fixed minor HTML indentation drift for readability.
+- Removed one empty CSS media-query block.
+- Removed one exact duplicate CSS .summary-row rule.
+- Fixed one malformed closing brace/newline formatting issue in .woofels-subtitle block.
+
+Important caution:
+- I did not do aggressive CSS deduping or behavioral refactors, because this codebase clearly relies on late-stage override stacking. Humans do this and then act surprised when it becomes archaeology.
+- That means this package is cleaned for working use, not rewritten.
+
+Highest-value next cleanup targets later:
+- Consolidate product-card/product-flavor/product-desc rules into one final canonical block.
+- Separate historical notes/dead style sections from active production CSS.
+- Add light guard clauses around any future DOM changes in JS, but only when touching related logic.

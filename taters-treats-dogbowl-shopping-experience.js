@@ -72,7 +72,6 @@ const BOWL_NEUTRAL = {
   note: "Your DogBowl™ is empty."
 };
 
-
 const state = {
   activeOverlay: null,
   activeModal: null,
@@ -342,7 +341,6 @@ function addWoofleToBowl(imageSrc, targetPoint) {
   layer.appendChild(item);
 }
 
-
 function addCartSelection(product, size, quantity) {
   if (!product || !product.id || !size || quantity < 1) return;
 
@@ -363,7 +361,6 @@ function addCartSelection(product, size, quantity) {
 function clearCartSelections() {
   state.cartItems = [];
 }
-
 
 const PRICE_MAP = {
   pumpkin: { Regular: "price_1TD3rlDywMn3O3R8psJph7ti", Double: "price_1TD3rlDywMn3O3R8fHQICEqm" },
@@ -428,7 +425,6 @@ async function beginCheckout() {
     }
   }
 }
-
 
 function updateBowlUi() {
   const count = state.bowlCount;
@@ -713,7 +709,6 @@ document.addEventListener("keydown", (event) => {
 
 renderProducts();
 updateBowlUi();
-
 
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
