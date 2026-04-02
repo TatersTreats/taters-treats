@@ -786,3 +786,9 @@ body.handoff-active .modal-image.is-handoff {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+.product-modal .cta[data-state="success"] {
+  cursor: default;
+  opacity: 0.98;
+  transform: translate(-50%, 50%) scale(0.985);
+}

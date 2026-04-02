@@ -40,6 +40,7 @@ const SCROLL_DURATION_MS = 420;
 const MODAL_CLOSE_DURATION_MS = 320;
 const WOOFLE_FLIGHT_DURATION_MS = 620;
 const MODAL_ENTER_DELAY_MS = 70;
+const CTA_SUCCESS_DURATION_MS = 240;
 const WOOFLE_STAGGER_MS = 60;
 const QUANTITY_DRAG_STEP_PX = 24;
 const FEEDBACK_PULSE_MS = 180;
@@ -648,10 +649,19 @@ function bindModal(modal, overlay, product) {
   });
 
   ctaButton?.addEventListener("click", () => {
+    if (ctaButton.disabled || ctaButton.dataset.state === "success") return;
+
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
+    ctaButton.disabled = true;
+    ctaButton.dataset.state = "success";
+    ctaButton.textContent = "Added ✓";
+
     addCartSelection(product, selectedSize, quantity);
     launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
-    closeModal({ preserveHandoffWoofle: true });
+
+    window.setTimeout(() => {
+      closeModal({ preserveHandoffWoofle: true });
+    }, CTA_SUCCESS_DURATION_MS);
   });
 
   overlay.addEventListener("click", closeModal);
