@@ -864,3 +864,51 @@ body.handoff-active .modal-image.is-handoff {
 #clearCartButton {
   margin-top: auto;
 }
+
+/* DogBowl card and CTA border should match the flavor cards */
+.dogbowl {
+  position: relative;
+  border: 0;
+}
+
+.dogbowl::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid #c9a25f;
+  border-radius: 22px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dogbowl > * {
+  position: relative;
+  z-index: 1;
+}
+
+.checkout-button {
+  border: 2px solid #c9a25f;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+/* Keep the clear action anchored to the bottom edge of the card */
+.cart-summary {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.checkout-button {
+  order: 1;
+}
+
+#cartStatus {
+  order: 2;
+}
+
+#clearCartButton {
+  order: 3;
+  margin-top: auto;
+  padding-bottom: 2px;
+}
