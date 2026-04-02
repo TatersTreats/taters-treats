@@ -799,3 +799,41 @@ document.addEventListener("keydown", (event) => {
 bdLearnMoreEl?.addEventListener("click", () => {
   window.location.href = "/barkers-dozen";
 });
+
+
+const storyTriggerEl = document.querySelector(".story-read-more");
+const storyModalEl = document.getElementById("story-modal");
+const storyModalCloseEl = document.querySelector(".story-modal-close");
+const storyModalBackdropEl = document.querySelector(".story-modal-backdrop");
+
+function openStoryModal() {
+  if (!storyModalEl) return;
+  storyModalEl.classList.remove("hidden");
+  document.body.classList.add("story-modal-open");
+  window.setTimeout(() => {
+    storyModalEl.classList.add("active");
+    storyModalEl.setAttribute("aria-hidden", "false");
+  }, 40);
+}
+
+function closeStoryModal() {
+  if (!storyModalEl) return;
+  storyModalEl.classList.remove("active");
+  storyModalEl.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("story-modal-open");
+  window.setTimeout(() => {
+    if (!storyModalEl.classList.contains("active")) {
+      storyModalEl.classList.add("hidden");
+    }
+  }, MODAL_CLOSE_DURATION_MS);
+}
+
+storyTriggerEl?.addEventListener("click", openStoryModal);
+storyModalCloseEl?.addEventListener("click", closeStoryModal);
+storyModalBackdropEl?.addEventListener("click", closeStoryModal);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && storyModalEl && !storyModalEl.classList.contains("hidden")) {
+    closeStoryModal();
+  }
+});

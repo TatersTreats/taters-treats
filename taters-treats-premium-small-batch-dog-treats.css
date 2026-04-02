@@ -1059,6 +1059,7 @@ body.handoff-active .modal-image.is-handoff {
 }
 
 .bd-modal-visual {
+  padding: 32px 20px 8px;
   min-height: 210px;
   background: linear-gradient(180deg, #f3e6d3 0%, #efe0ca 100%);
   padding: 26px 20px 0;
@@ -1113,5 +1114,100 @@ body.handoff-active .modal-image.is-handoff {
 }
 
 body.bd-modal-open {
+  overflow: hidden;
+}
+
+
+/* Tater's Story modal */
+.story-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+}
+
+.story-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 12, 8, 0.72);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  transition: opacity 360ms ease;
+}
+
+.story-modal-content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: min(92vw, 360px);
+  max-height: min(78vh, 720px);
+  transform: translate(-50%, -46%) scale(0.96);
+  background: linear-gradient(180deg, #f7f1e7 0%, #f4eadb 100%);
+  border: 1px solid rgba(201, 162, 95, 0.22);
+  border-radius: 24px;
+  box-shadow: 0 28px 56px rgba(19, 14, 10, 0.28);
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1), transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
+}
+
+.story-modal.active .story-modal-backdrop {
+  opacity: 1;
+}
+
+.story-modal.active .story-modal-content {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.story-modal-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(201, 162, 95, 0.88);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.story-modal-text {
+  position: relative;
+  z-index: 1;
+  padding: 28px 20px 24px;
+  overflow-y: auto;
+  max-height: min(78vh, 720px);
+  scrollbar-gutter: stable;
+}
+
+.story-modal-text h2 {
+  margin: 0 0 14px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.7rem, 6vw, 2.1rem);
+  line-height: 1.03;
+}
+
+.story-modal-copy p {
+  margin: 0 0 14px;
+  color: var(--ink-soft);
+  line-height: 1.68;
+}
+
+.story-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(19, 14, 10, 0.14);
+}
+
+body.story-modal-open {
   overflow: hidden;
 }
