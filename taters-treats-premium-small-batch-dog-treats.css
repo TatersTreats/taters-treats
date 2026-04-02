@@ -983,3 +983,26 @@ body.handoff-active .modal-image.is-handoff {
 #clearCartButton {
   margin-top: 6px;
 }
+
+
+.hidden {
+  display: none !important;
+}
+
+.lower-grid-single {
+  grid-template-columns: 1fr;
+}
+
+.bd-entry-card {
+  cursor: pointer;
+}
+
+.bd-entry-card:focus-visible,
+.story-read-more:focus-visible {
+  outline: 3px solid rgba(201, 162, 95, 0.35);
+  outline-offset: 4px;
+}
+
+.story-read-more {
+  margin-top: 16px;
+}
