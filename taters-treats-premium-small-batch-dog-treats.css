@@ -792,3 +792,34 @@ body.handoff-active .modal-image.is-handoff {
   opacity: 0.98;
   transform: translate(-50%, 50%) scale(0.985);
 }
+
+/* Spacing between message and CTA */
+.cart-summary .status-message {
+  margin-bottom: 12px;
+}
+
+/* Anchor "Empty the DogBowl" to bottom */
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#clearCartButton {
+  margin-top: auto;
+}
+
+/* Add spacing between status/message area and checkout CTA */
+.checkout-button {
+  margin-top: 12px;
+}
+
+/* Space between checkout CTA and status message */
+#cartStatus {
+  margin-top: 10px;
+}
+
+/* Space between bowl message area and CTA section */
+.bowl-note {
+  margin-bottom: 14px;
+}
