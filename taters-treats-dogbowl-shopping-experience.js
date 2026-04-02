@@ -731,3 +731,71 @@ document.addEventListener("visibilitychange", () => {
     if (cartStatus) cartStatus.textContent = "";
   }
 });
+
+
+const bdTriggerEl = document.getElementById("bd-leader-trigger");
+const bdSectionEl = document.getElementById("barkers-dozen-section");
+const bdModalEl = document.getElementById("bd-modal");
+const bdModalCloseEl = document.querySelector(".bd-modal-close");
+const bdModalBackdropEl = document.querySelector(".bd-modal-backdrop");
+const bdLearnMoreEl = document.querySelector(".bd-learn-more");
+
+function getBarkersScrollTarget() {
+  if (!bdSectionEl) return window.scrollY;
+  const headerOffset = headerEl ? headerEl.offsetHeight : 0;
+  return Math.max(
+    0,
+    window.scrollY + bdSectionEl.getBoundingClientRect().top - headerOffset - 12
+  );
+}
+
+function scrollToBarkersSection() {
+  return new Promise((resolve) => {
+    window.scrollTo({ top: getBarkersScrollTarget(), behavior: "smooth" });
+    window.setTimeout(resolve, SCROLL_DURATION_MS);
+  });
+}
+
+async function openBdModal() {
+  if (!bdModalEl || !bdSectionEl) return;
+  await scrollToBarkersSection();
+  bdModalEl.classList.remove("hidden");
+  document.body.classList.add("bd-modal-open");
+  requestAnimationFrame(() => {
+    bdModalEl.classList.add("active");
+    bdModalEl.setAttribute("aria-hidden", "false");
+  });
+}
+
+function closeBdModal() {
+  if (!bdModalEl) return;
+  bdModalEl.classList.remove("active");
+  bdModalEl.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("bd-modal-open");
+  window.setTimeout(() => {
+    if (!bdModalEl.classList.contains("active")) {
+      bdModalEl.classList.add("hidden");
+    }
+  }, MODAL_CLOSE_DURATION_MS);
+}
+
+bdTriggerEl?.addEventListener("click", openBdModal);
+bdTriggerEl?.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    openBdModal();
+  }
+});
+
+bdModalCloseEl?.addEventListener("click", closeBdModal);
+bdModalBackdropEl?.addEventListener("click", closeBdModal);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && bdModalEl && !bdModalEl.classList.contains("hidden")) {
+    closeBdModal();
+  }
+});
+
+bdLearnMoreEl?.addEventListener("click", () => {
+  window.location.href = "/barkers-dozen";
+});
