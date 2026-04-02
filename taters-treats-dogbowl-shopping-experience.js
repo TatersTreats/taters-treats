@@ -134,12 +134,14 @@ function formatFlavorLabel(flavor) {
 
 function getShopScrollTarget() {
   const intro = document.getElementById("woofelsIntro");
-  if (!intro) return window.scrollY;
+  const introducingAnchor = intro?.querySelector(".woofels-kicker");
+  const targetEl = introducingAnchor || intro;
+  if (!targetEl) return window.scrollY;
 
   const headerOffset = headerEl ? headerEl.offsetHeight : 0;
   return Math.max(
     0,
-    window.scrollY + intro.getBoundingClientRect().top - headerOffset - 12
+    window.scrollY + targetEl.getBoundingClientRect().top - headerOffset - 12
   );
 }
 
