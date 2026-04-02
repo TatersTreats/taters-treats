@@ -761,10 +761,10 @@ async function openBdModal() {
   await scrollToBarkersSection();
   bdModalEl.classList.remove("hidden");
   document.body.classList.add("bd-modal-open");
-  requestAnimationFrame(() => {
+  window.setTimeout(() => {
     bdModalEl.classList.add("active");
     bdModalEl.setAttribute("aria-hidden", "false");
-  });
+  }, 40);
 }
 
 function closeBdModal() {
