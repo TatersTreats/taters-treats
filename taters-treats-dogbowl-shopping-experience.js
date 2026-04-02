@@ -731,3 +731,31 @@ document.addEventListener("visibilitychange", () => {
     if (cartStatus) cartStatus.textContent = "";
   }
 });
+
+
+// Barker’s Dozen Modal Behavior (Batch 3)
+document.addEventListener("DOMContentLoaded", function () {
+  const trigger = document.getElementById("bd-leader-trigger");
+  const modal = document.getElementById("bd-modal");
+  const closeBtn = document.querySelector(".bd-modal-close");
+  const learnMore = document.querySelector(".bd-learn-more");
+  const section = document.getElementById("barkers-dozen-section");
+
+  if (!trigger || !modal || !closeBtn || !learnMore || !section) return;
+
+  trigger.addEventListener("click", () => {
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    setTimeout(() => {
+      modal.classList.remove("hidden");
+    }, 400);
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  learnMore.addEventListener("click", () => {
+    window.location.href = "/barkers-dozen";
+  });
+});
