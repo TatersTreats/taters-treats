@@ -21,7 +21,6 @@
             <span>The Best</span>
           </h1>
         </div>
-              <button class="story-read-more" type="button">Read More</button>
       </div>
     </section>
 
@@ -74,32 +73,7 @@
       <p class="trust-line">Premium, Small-Batch Canine Confections.</p>
     </section>
 
-    <section class="section lower-section">
-      <div class="lower-grid">
-        <div class="info-card bd-entry-card" id="bd-leader-trigger" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="bd-modal">
-          <span class="eyebrow eyebrow-muted">Coming Soon</span>
-          <h2>Join Barker’s Dozen</h2>
-          <p>
-            Monthly exclusive treats you won’t find on the main site.
-            Limited spots—get on the waitlist.
-          </p>
-        </div>
-
-        <div class="info-card newsletter-card">
-          <span class="eyebrow eyebrow-muted">Stay in the loop</span>
-          <h2>The Dog Park</h2>
-          <p>Get early access, insider drops, and first dibs on Barker’s Dozen.</p>
-          <form class="newsletter-form">
-            <input type="email" placeholder="Email address" aria-label="Email address" />
-            <button type="submit" class="newsletter-button">Notify Me</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-
     <section class="section story-section" id="story">
-      <div class="story-teaser-wrap">
       <div class="story-card">
         <span class="eyebrow">Inspired by Tater</span>
         <h2>From one very loved corgi to treats worth sharing.</h2>
@@ -113,6 +87,29 @@
         </p>
       </div>
     </section>
+
+    <section class="section lower-section">
+      <div class="lower-grid">
+        <div class="info-card">
+          <span class="eyebrow eyebrow-muted">Coming Soon</span>
+          <h2>The Barker's Dozen</h2>
+          <p>
+            A future limited-run collection for dogs who deserve something extra special.
+            Seasonal drops, festive flavors, and small-batch surprises are on the way.
+          </p>
+        </div>
+
+        <div class="info-card newsletter-card">
+          <span class="eyebrow eyebrow-muted">Stay in the loop</span>
+          <h2>Join the Treat List</h2>
+          <p>Be the first to hear when new flavors, launches, and small-batch drops arrive.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Email address" aria-label="Email address" />
+            <button type="submit" class="newsletter-button">Notify Me</button>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -122,17 +119,16 @@
   <script src="taters-treats-dogbowl-shopping-experience.js"></script>
 
 <!-- Barker’s Dozen Modal (Batch 2 Structure Only) -->
-<div id="bd-modal" class="bd-modal" aria-hidden="true">
-  <div class="bd-modal-backdrop" data-bd-close="true"></div>
-  <div class="bd-modal-content" role="dialog" aria-modal="true" aria-labelledby="bd-modal-title">
-    <button class="bd-modal-close" type="button" aria-label="Close Barker’s Dozen modal">×</button>
+<div id="bd-modal" class="bd-modal hidden">
+  <div class="bd-modal-content">
+    <button class="bd-modal-close">×</button>
     <div class="bd-modal-visual">
-      <div class="bd-modal-visual-placeholder">Barker’s Dozen</div>
+      <img src="/assets/images/barkers-cake.png" alt="Barker’s Dozen">
     </div>
     <div class="bd-modal-text">
-      <h2 id="bd-modal-title">Barker’s Dozen</h2>
+      <h2>Barker’s Dozen</h2>
       <p>Members-only confections, delivered monthly.</p>
-      <button class="bd-learn-more" type="button">Learn More</button>
+      <button class="bd-learn-more">Learn More</button>
     </div>
   </div>
 </div>
