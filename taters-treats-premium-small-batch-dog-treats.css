@@ -114,7 +114,7 @@ input {
 }
 
 .section {
-  padding: 36px 16px;
+  padding: 24px 16px;
 }
 
 .shop {
@@ -399,7 +399,7 @@ input {
 
 .lower-grid {
   display: grid;
-  gap: 16px;
+  gap: 10px;
 }
 
 .newsletter-form {
