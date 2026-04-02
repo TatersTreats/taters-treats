@@ -823,3 +823,44 @@ body.handoff-active .modal-image.is-handoff {
 .bowl-note {
   margin-bottom: 14px;
 }
+
+/* Force DogBowl body to stretch and anchor clear button to bottom */
+.dogbowl-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+#clearCartButton {
+  margin-top: auto;
+}
+
+/* Keep DogBowl bottom flush while anchoring the clear button */
+.dogbowl {
+  display: flex;
+  flex-direction: column;
+}
+
+.dogbowl-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: auto;
+  padding: 0 16px 0;
+}
+
+.cart-summary {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+#clearCartButton {
+  margin-top: auto;
+}
