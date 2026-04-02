@@ -733,29 +733,44 @@ document.addEventListener("visibilitychange", () => {
 });
 
 
-// Barker’s Dozen Modal Behavior (Batch 3)
-document.addEventListener("DOMContentLoaded", function () {
+// Batch fix: Barker's Dozen trigger + modal behavior
+document.addEventListener("DOMContentLoaded", () => {
   const trigger = document.getElementById("bd-leader-trigger");
   const modal = document.getElementById("bd-modal");
-  const closeBtn = document.querySelector(".bd-modal-close");
-  const learnMore = document.querySelector(".bd-learn-more");
-  const section = document.getElementById("barkers-dozen-section");
+  const closeButton = document.querySelector(".bd-modal-close");
+  const learnMoreButton = document.querySelector(".bd-learn-more");
+  const backdrop = document.querySelector(".bd-modal-backdrop");
+  const lowerSection = document.querySelector(".lower-section");
 
-  if (!trigger || !modal || !closeBtn || !learnMore || !section) return;
+  if (!trigger || !modal || !closeButton || !learnMoreButton || !lowerSection) return;
 
-  trigger.addEventListener("click", () => {
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  const openBdModal = () => {
+    lowerSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => {
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("product-detail-open");
+    }, 420);
+  };
 
-    setTimeout(() => {
-      modal.classList.remove("hidden");
-    }, 400);
+  const closeBdModal = () => {
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("product-detail-open");
+  };
+
+  trigger.addEventListener("click", openBdModal);
+  trigger.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openBdModal();
+    }
   });
 
-  closeBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
+  closeButton.addEventListener("click", closeBdModal);
+  backdrop?.addEventListener("click", closeBdModal);
 
-  learnMore.addEventListener("click", () => {
+  learnMoreButton.addEventListener("click", () => {
     window.location.href = "/barkers-dozen";
   });
 });
