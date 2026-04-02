@@ -114,7 +114,7 @@ input {
 }
 
 .section {
-  padding: 24px 16px;
+  padding: 36px 16px;
 }
 
 .shop {
@@ -1210,4 +1210,64 @@ body.bd-modal-open {
 
 body.story-modal-open {
   overflow: hidden;
+}
+
+
+/* Lower-page cluster tuning: Barker's Dozen -> Tater's Story -> Dog Park */
+#barkers-dozen-section,
+#story,
+#dog-park {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+#barkers-dozen-section {
+  padding-top: 18px;
+  padding-bottom: 8px;
+}
+
+#story {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+#dog-park {
+  padding-top: 8px;
+  padding-bottom: 18px;
+}
+
+#barkers-dozen-section .lower-grid,
+#dog-park .lower-grid {
+  gap: 10px;
+}
+
+#barkers-dozen-section .info-card,
+#story .story-card,
+#dog-park .info-card {
+  padding: 20px 18px;
+}
+
+#barkers-dozen-section .info-card h2,
+#story .story-card h2,
+#dog-park .info-card h2 {
+  margin-bottom: 10px;
+}
+
+#barkers-dozen-section .info-card p,
+#story .story-card p,
+#dog-park .info-card p {
+  line-height: 1.55;
+}
+
+#story .story-read-more {
+  margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+  #barkers-dozen-section,
+  #story,
+  #dog-park {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }
