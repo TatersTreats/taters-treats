@@ -1814,3 +1814,37 @@ body:not(.product-detail-open).handoff-active .trust-strip {
   max-width: 214px;
 }
 /* ===== end locked flow stabilization ===== */
+
+
+/* ===== CTA foreground layer fix ===== */
+.product-overlay {
+  z-index: 60;
+}
+
+.product-modal {
+  z-index: 70;
+}
+
+.primary-cta-global {
+  z-index: 85 !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.primary-cta-global.is-visible {
+  position: fixed !important;
+  left: 50% !important;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 118px) !important;
+  transform: translateX(-50%) !important;
+  width: calc(100% - 32px) !important;
+  max-width: 360px !important;
+  display: block !important;
+  pointer-events: auto !important;
+}
+
+@media (max-width: 767px) {
+  .primary-cta-global.is-visible {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 118px) !important;
+  }
+}
+/* ===== end CTA foreground layer fix ===== */
