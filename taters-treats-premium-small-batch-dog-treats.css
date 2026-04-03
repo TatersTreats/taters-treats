@@ -1408,21 +1408,21 @@ body.story-modal-open {
 
 
 
-/* ===== SCRUBBED LOWER CLUSTER ===== */
+/* ===== PRIORITY LOWER CLUSTER ===== */
 .shop-flow-cluster {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  gap: 8px;
-  min-height: calc(100svh - 235px);
-  margin: 20px 0 0;
+  min-height: calc(100svh - 230px);
+  margin: 12px 0 0;
   padding: 0 12px calc(env(safe-area-inset-bottom, 0px) + 2px);
 }
 
 .trust-card {
+  order: 1;
+  flex: 1 1 auto;
   margin: 0;
-  padding: 10px 14px;
-  min-height: auto;
+  padding: 8px 14px;
+  min-height: 72px;
   border: 1px solid rgba(201, 162, 95, 0.22);
   border-radius: 20px;
   background: linear-gradient(180deg, #f7f1e7 0%, #f4eadb 100%);
@@ -1439,21 +1439,22 @@ body.story-modal-open {
 
 .trust-headline {
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
-  line-height: 1.2;
-  margin: 2px 0 4px;
+  font-size: 0.98rem;
+  line-height: 1.15;
+  margin: 0 0 3px;
 }
 
 .trust-sub {
-  font-size: 0.9rem;
-  line-height: 1.25;
+  font-size: 0.88rem;
+  line-height: 1.2;
   margin: 0;
-  opacity: 0.82;
+  opacity: 0.8;
 }
 
 .dogbowl--landing,
 .dogbowl--landing.dogbowl--cta-above {
-  margin: 0;
+  order: 2;
+  margin: auto 0 0;
   min-height: 0;
   padding: 0;
   background: none;
@@ -1466,7 +1467,6 @@ body.story-modal-open {
 }
 
 .dogbowl-body--cta-above {
-  order: 1;
   width: 100%;
   margin: 0;
   padding: 0 16px;
@@ -1484,7 +1484,8 @@ body.story-modal-open {
 }
 
 .cart-summary--cta-above .summary-row,
-.cart-summary--cta-above #cartStatus {
+.cart-summary--cta-above #cartStatus,
+.cart-summary--cta-above .link-button {
   display: none;
 }
 
@@ -1495,19 +1496,14 @@ body.story-modal-open {
   box-sizing: border-box;
   margin: 0;
   position: relative;
-  transform: translateY(6px);
+  transform: translateY(-10px);
   z-index: 10;
   min-height: 46px;
 }
 
-.cart-summary--cta-above .link-button {
-  display: none;
-}
-
 .dogbowl-top--cta-above {
-  order: 2;
   width: 100%;
-  margin: -8px 0 0;
+  margin: -16px 0 0;
   padding: 0 16px calc(env(safe-area-inset-bottom, 0px) + 1px);
   display: flex;
   flex-direction: column;
@@ -1515,7 +1511,7 @@ body.story-modal-open {
 }
 
 .bowl-frame--cta-above {
-  max-width: 184px;
+  max-width: 182px;
   margin: 0 auto;
 }
 
@@ -1534,5 +1530,11 @@ body.story-modal-open {
   line-height: 1.1;
   opacity: 0.72;
 }
-/* ===== END SCRUBBED LOWER CLUSTER ===== */
+
+@media (max-width: 767px) {
+  .shop-flow-cluster {
+    min-height: calc(100svh - 220px);
+  }
+}
+/* ===== END PRIORITY LOWER CLUSTER ===== */
 
