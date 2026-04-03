@@ -1578,20 +1578,111 @@ body:not(.product-detail-open).handoff-active .trust-strip {
 /* ===== end bugfix ===== */
 
 
-/* ===== dogbowl separation cleanup ===== */
-.dogbowl .primary-cta,
-.cart-summary .primary-cta {
-  display: none !important;
+/* ===== checked handoff rebuild ===== */
+.shop-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-flow-cluster {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - 220px);
+  gap: 10px;
+  padding: 0 12px calc(env(safe-area-inset-bottom, 0px) + 10px);
+}
+
+.trust-box {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 4px 16px;
+}
+
+.trust-box-copy {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.25;
+}
+
+.primary-cta-global {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 132px);
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 360px;
+  z-index: 82;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.primary-cta-global.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.primary-cta-global[data-mode="checkout"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dogbowl,
+.dogbowl--landing,
+.dogbowl--clean {
+  margin-top: auto;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  overflow: visible;
+}
+
+.dogbowl-body,
+.dogbowl-body--landing {
+  padding: 0;
 }
 
 .cart-summary,
 .cart-summary--landing {
-  gap: 0;
+  display: block;
   min-height: 0;
 }
 
-.trust-box {
-  padding-top: 10px;
-  padding-bottom: 10px;
+.cart-summary .summary-row,
+.cart-summary--landing .summary-row {
+  display: none !important;
 }
-/* ===== end dogbowl separation cleanup ===== */
+
+.dogbowl-top,
+.dogbowl-top--clean {
+  padding: 0 0 2px;
+}
+
+.bowl-frame,
+.bowl-frame--landing {
+  max-width: 184px;
+  margin: 0 auto;
+}
+
+.bowl-note {
+  margin: 2px 0 0;
+}
+
+.reset-dogbowl-button,
+#clearCartButton {
+  display: inline-block;
+  margin-top: 4px;
+}
+
+@media (max-width: 767px) {
+  .primary-cta-global {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 118px);
+  }
+
+  .shop-flow-cluster {
+    min-height: calc(100svh - 190px);
+  }
+}
+/* ===== end checked handoff rebuild ===== */

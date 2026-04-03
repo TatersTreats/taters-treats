@@ -65,6 +65,7 @@ const bowlNoteEl = document.getElementById("bowlNote");
 const cartCountEl = document.getElementById("cartCount");
 const clearCartButton = document.getElementById("clearCartButton");
 const checkoutButton = document.getElementById("checkoutButton");
+const primaryCta = document.querySelector(".primary-cta");
 const cartStatus = document.getElementById("cartStatus");
 const headerEl = document.querySelector(".site-header");
 
@@ -175,7 +176,6 @@ function createModalMarkup(product) {
         <button class="qty qty-plus" type="button" aria-label="Increase quantity">+</button>
       </div>
     </div>
-    <button class="cta modal-cta" type="button">Fill the DogBowl™</button>
   `;
 }
 
@@ -203,6 +203,7 @@ async function openDetail(card) {
   state.activeModal = modal;
 
   bindModal(modal, overlay, product);
+  updateCTAState(state.bowlCount > 0);
   requestAnimationFrame(() => overlay.classList.add("active"));
   const scrollPromise = scrollToShop();
 
@@ -345,6 +346,12 @@ function addWoofleToBowl(imageSrc, targetPoint) {
   layer.appendChild(item);
 }
 
+
+function setPrimaryCtaVisibility(isVisible) {
+  if (!primaryCta) return;
+  primaryCta.classList.toggle("is-visible", Boolean(isVisible));
+}
+
 function syncPendingSelection(product, size, quantity) {
   if (!product) {
     state.pendingSelection = null;
@@ -354,7 +361,33 @@ function syncPendingSelection(product, size, quantity) {
   state.pendingSelection = { product, size, quantity };
 }
 
-function updateCTAState() {}
+function updateCTAState(hasItems = state.bowlCount > 0) {
+  if (!primaryCta) return;
+
+  if (state.activeModal && state.pendingSelection?.product) {
+    primaryCta.textContent = "Fill the DogBowl™";
+    primaryCta.dataset.mode = "add";
+    primaryCta.disabled = false;
+    primaryCta.classList.remove("is-disabled");
+    setPrimaryCtaVisibility(true);
+    return;
+  }
+
+  if (hasItems) {
+    primaryCta.textContent = "Checkout";
+    primaryCta.dataset.mode = "checkout";
+    primaryCta.disabled = false;
+    primaryCta.classList.remove("is-disabled");
+    setPrimaryCtaVisibility(true);
+    return;
+  }
+
+  primaryCta.textContent = "Fill the DogBowl™";
+  primaryCta.dataset.mode = "add";
+  primaryCta.disabled = true;
+  primaryCta.classList.add("is-disabled");
+  setPrimaryCtaVisibility(false);
+}
 
 
 function addToDogBowl() {
@@ -371,7 +404,7 @@ function addToDogBowl() {
   document.body.classList.remove("handoff-active");
   state.activeModal.classList.add("is-handoff");
   launchWoofleFromCTA(
-    state.activeModal.querySelector(".modal-image"),
+    state.activeModal.querySelector(".modal-image") || primaryCta,
     selection.product.image,
     totalWoofles
   );
@@ -425,6 +458,10 @@ async function beginCheckout() {
     return;
   }
 
+  if (primaryCta) {
+    primaryCta.disabled = true;
+    primaryCta.textContent = "Opening Checkout...";
+  }
   if (cartStatus) cartStatus.textContent = "Preparing secure checkout...";
 
   try {
@@ -460,6 +497,10 @@ async function beginCheckout() {
       window.setTimeout(() => {
         if (cartStatus) cartStatus.textContent = "";
       }, 2200);
+    }
+    if (primaryCta) {
+      primaryCta.disabled = false;
+      primaryCta.textContent = "Checkout";
     }
   }
 }
@@ -662,7 +703,6 @@ function bindModal(modal, overlay, product) {
   const plusButton = modal.querySelector(".qty-plus");
   const minusButton = modal.querySelector(".qty-minus");
   const sizeButtons = modal.querySelectorAll(".pill");
-  const modalCta = modal.querySelector(".modal-cta");
   const modalImage = modal.querySelector(".modal-image");
   const priceEl = modal.querySelector(".modal-price");
   const titleEl = modal.querySelector("h2");
@@ -745,12 +785,6 @@ function bindModal(modal, overlay, product) {
     });
   });
 
-  modalCta?.addEventListener("click", () => {
-    if (modalCta.disabled) return;
-    modalCta.disabled = true;
-    modalCta.textContent = "Adding...";
-    addToDogBowl();
-  });
 
   modal.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
@@ -886,6 +920,15 @@ clearCartButton?.addEventListener("click", () => {
   window.setTimeout(() => {
     if (cartStatus) cartStatus.textContent = "";
   }, 1400);
+});
+
+primaryCta?.addEventListener("click", (event) => {
+  const mode = event.currentTarget.dataset.mode;
+  if (mode === "add") {
+    addToDogBowl();
+    return;
+  }
+  goToCheckout();
 });
 
 
