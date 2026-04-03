@@ -1,0 +1,3 @@
+Revision note: Increased shared modal close delay from 320ms to 420ms to better match existing close animation timing.
+Files changed:
+- taters-treats-dogbowl-shopping-experience.js
