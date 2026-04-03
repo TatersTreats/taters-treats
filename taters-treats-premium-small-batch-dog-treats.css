@@ -1364,3 +1364,38 @@ body.story-modal-open {
     max-width: 380px;
   }
 }
+
+
+/* Stronger separation from modal/product area */
+.dogbowl--landing {
+  margin-top: 80px !important;
+}
+
+/* Make bowl smaller and tighter */
+.bowl-frame--landing {
+  max-width: 260px !important;
+  transform: scale(0.9);
+  margin-top: 8px;
+}
+
+/* Slightly reduce overall bowl visual weight */
+.bowl-image {
+  transform: scale(0.92);
+}
+
+/* Keep layout centered and clean */
+.dogbowl--landing .dogbowl-top {
+  padding-top: 10px;
+}
+
+
+/* CTA above bowl layout */
+.dogbowl--landing .dogbowl-body--landing {
+  order: -1;
+  margin-bottom: 12px;
+}
+
+.dogbowl--landing .checkout-button {
+  margin-bottom: 6px;
+}
+
