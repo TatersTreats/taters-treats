@@ -354,21 +354,8 @@ function syncPendingSelection(product, size, quantity) {
   state.pendingSelection = { product, size, quantity };
 }
 
-function updateCTAState(){}
+function updateCTAState() {}
 
-  if (hasItems) {
-    cta.textContent = "Checkout";
-    cta.dataset.mode = "checkout";
-    cta.disabled = false;
-    cta.classList.remove("is-disabled");
-    return;
-  }
-
-  cta.textContent = "Fill the DogBowl™";
-  cta.dataset.mode = "add";
-  cta.disabled = true;
-  cta.classList.add("is-disabled");
-}
 
 function addToDogBowl() {
   const selection = state.pendingSelection;
@@ -384,7 +371,7 @@ function addToDogBowl() {
   document.body.classList.remove("handoff-active");
   state.activeModal.classList.add("is-handoff");
   launchWoofleFromCTA(
-    state.activeModal.querySelector(".modal-image") || primaryCta,
+    state.activeModal.querySelector(".modal-image"),
     selection.product.image,
     totalWoofles
   );
@@ -438,7 +425,6 @@ async function beginCheckout() {
     return;
   }
 
-  
   if (cartStatus) cartStatus.textContent = "Preparing secure checkout...";
 
   try {
@@ -475,7 +461,6 @@ async function beginCheckout() {
         if (cartStatus) cartStatus.textContent = "";
       }, 2200);
     }
-    
   }
 }
 
@@ -903,10 +888,6 @@ clearCartButton?.addEventListener("click", () => {
   }, 1400);
 });
 
-    return;
-  }
-  goToCheckout();
-});
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
