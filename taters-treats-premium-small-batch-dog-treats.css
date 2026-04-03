@@ -1855,3 +1855,35 @@ body.story-modal-open {
 .dogbowl-top--cta-above {
   margin-top: -2px !important;
 }
+
+
+/* FINAL: lower checkout + drop DogBowl toward bottom */
+
+.dogbowl-body--cta-above {
+  margin-top: -62px !important; /* pull checkout further down under modal */
+}
+
+.cart-summary--cta-above .checkout-button {
+  position: relative;
+  top: 10px; /* slight downward nudge for alignment */
+}
+
+/* Remove bottom lift and let bowl sit lower */
+.dogbowl--landing {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Pull bowl section down toward bottom */
+.dogbowl-top--cta-above {
+  margin-top: 6px !important;
+}
+
+/* Reduce internal bottom spacing */
+.dogbowl--landing .bowl-note {
+  margin-bottom: 2px !important;
+}
+
+#clearCartButton {
+  margin-bottom: 2px !important;
+}
