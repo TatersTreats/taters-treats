@@ -1284,11 +1284,13 @@ body.story-modal-open {
 
 
 .product-modal.is-handoff {
-  opacity: 0.58;
-  filter: blur(4px) saturate(0.86);
-  background: rgba(244, 234, 219, 0.72);
-  border-color: rgba(201, 162, 95, 0.12);
-  box-shadow: 0 18px 34px rgba(19, 14, 10, 0.12);
+  opacity: 1;
+  filter: none;
+  background: rgba(232, 222, 207, 0.96);
+  border-color: rgba(201, 162, 95, 0.16);
+  box-shadow:
+    0 18px 34px rgba(19, 14, 10, 0.18),
+    inset 0 0 0 999px rgba(232, 222, 207, 0.24);
   pointer-events: none;
 }
 
@@ -1296,4 +1298,15 @@ body.story-modal-open {
 .flying-woofel,
 .handoff-woofel {
   z-index: 1300 !important;
+}
+
+
+.product-modal.is-handoff > * {
+  filter: blur(3px) saturate(0.9);
+  opacity: 0.72;
+  transition: filter 260ms ease, opacity 260ms ease;
+}
+
+.product-modal.is-handoff .modal-close {
+  opacity: 0.55;
 }
