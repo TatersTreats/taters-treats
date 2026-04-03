@@ -1940,3 +1940,22 @@ body:not(.product-detail-open).handoff-active .trust-strip {
 }
 
 /* ===== END FIX ===== */
+
+
+/* ===== FINAL MICRO ADJUST ===== */
+/* move CTA slightly up for true 50/50 split */
+.primary-cta-global.is-visible {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 210px) !important;
+}
+/* ===== END ===== */
+
+
+/* ===== DOGBOX BORDER REMOVAL (FINAL) ===== */
+.dogbox,
+.dogbox * {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+/* ===== END ===== */
