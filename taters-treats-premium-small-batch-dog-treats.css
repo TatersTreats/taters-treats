@@ -1827,3 +1827,31 @@ body.story-modal-open {
 .product-modal .cta {
   box-sizing: border-box !important;
 }
+
+
+/* Checkout overlap + vertical anchor correction */
+.dogbowl-body--cta-above {
+  margin-top: -26px !important;
+  position: relative !important;
+  z-index: 6 !important;
+}
+
+.cart-summary--cta-above {
+  position: relative !important;
+  z-index: 6 !important;
+}
+
+.cart-summary--cta-above .checkout-button {
+  position: relative !important;
+  top: 8px !important;
+  z-index: 7 !important;
+  box-shadow: 0 8px 16px rgba(19, 14, 10, 0.14) !important;
+}
+
+.dogbowl--landing {
+  overflow: visible !important;
+}
+
+.dogbowl-top--cta-above {
+  margin-top: -2px !important;
+}
