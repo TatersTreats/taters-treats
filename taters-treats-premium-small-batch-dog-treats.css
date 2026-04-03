@@ -1848,3 +1848,38 @@ body:not(.product-detail-open).handoff-active .trust-strip {
   }
 }
 /* ===== end CTA foreground layer fix ===== */
+
+
+/* ===== ROUND 2 FIXES ===== */
+
+/* CTA width + position */
+.primary-cta-global.is-visible {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 180px) !important; /* move UP */
+  max-width: 300px !important; /* narrower */
+}
+
+/* Dogbowl remove ALL border remnants */
+.dogbowl,
+.dogbowl--landing,
+.dogbowl--clean {
+  border: none !important;
+  outline: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* Move bowl closer under CTA */
+.cta-gap {
+  margin-top: auto;
+}
+
+.dogbowl {
+  margin-top: 8px !important;
+}
+
+/* Slightly center visual mass */
+.dogbowl-top {
+  align-items: center;
+}
+
+/* ===== END ROUND 2 ===== */
