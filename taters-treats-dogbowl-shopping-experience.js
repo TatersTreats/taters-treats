@@ -496,7 +496,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
 
       // Rise above the card and hold true card size.
       window.setTimeout(() => {
-        handoffWoofle.style.zIndex = "95";
+        handoffWoofle.style.zIndex = "1300";
         handoffWoofle.style.transition = "top 260ms ease";
         handoffWoofle.style.top = `${sharedStartTop + 8}px`;
       }, 120);
@@ -520,7 +520,7 @@ function launchWoofleFromCTA(sourceEl, imageSrc, count) {
         }
 
         if (flightIndex === count - 1 && sourceEl && sourceEl.style) {
-          sourceEl.style.opacity = "0";
+          sourceEl.style.opacity = "1";
         }
       }, 1420);
     }, flightIndex * WOOFLE_MULTI_STAGGER_MS);
@@ -715,6 +715,9 @@ function bindModal(modal, overlay, product) {
 
     window.setTimeout(() => {
       modal.classList.remove("is-handoff");
+      ctaButton.disabled = false;
+      ctaButton.dataset.state = "";
+      ctaButton.textContent = "Fill the DogBowl™";
     }, CTA_SUCCESS_DURATION_MS);
 
     });
