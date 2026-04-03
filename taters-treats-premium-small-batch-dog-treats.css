@@ -441,13 +441,15 @@ body.product-detail-open {
 }
 
 .product-modal {
+  --swipe-shift-x: 0px;
+  touch-action: pan-y;
   position: fixed;
   left: 50%;
   top: 50%;
   width: min(92vw, 360px);
   max-height: none;
   overflow: visible;
-  transform: translate(-50%, -58%) scale(0.96);
+  transform: translate(calc(-50% + var(--swipe-shift-x)), -58%) scale(0.96);
   background: linear-gradient(180deg, #f7f1e7 0%, #f4eadb 100%);
   border: 1px solid rgba(201, 162, 95, 0.22);
   border-radius: 24px;
@@ -460,7 +462,12 @@ body.product-detail-open {
 
 .product-modal.active {
   opacity: 1;
-  transform: translate(-50%, -62%) scale(1);
+  transform: translate(calc(-50% + var(--swipe-shift-x)), -62%) scale(1);
+}
+
+.product-modal.is-swiping,
+.product-modal.is-swipe-settling {
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 140ms ease;
 }
 
 .product-modal::before {

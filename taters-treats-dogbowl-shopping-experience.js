@@ -605,8 +605,18 @@ function bindQuantityDial({ dialEl, valueEl, stepperEl, getQuantity, setQuantity
 }
 
 function bindModal(modal, overlay, product) {
+  let activeProduct = product;
+  let currentProductIndex = Math.max(0, PRODUCTS.findIndex((item) => item.id === product.id));
   let quantity = 1;
   let selectedSize = "Regular";
+  let touchStartX = null;
+  let touchStartY = null;
+  let latestTouchDeltaX = 0;
+
+  const SWIPE_THRESHOLD_PX = 44;
+  const VERTICAL_GUARD_PX = 28;
+  const SWIPE_DRAG_PX = 4;
+  const SWIPE_SETTLE_MS = 70;
 
   const valueEl = modal.querySelector(".qty-value");
   const dialEl = modal.querySelector(".qty-dial");
@@ -617,6 +627,8 @@ function bindModal(modal, overlay, product) {
   const ctaButton = modal.querySelector(".cta");
   const modalImage = modal.querySelector(".modal-image");
   const priceEl = modal.querySelector(".modal-price");
+  const titleEl = modal.querySelector("h2");
+  const descriptionEl = modal.querySelector(".modal-description");
 
   const setQuantity = (nextQuantity) => {
     quantity = Math.max(1, nextQuantity);
@@ -627,11 +639,53 @@ function bindModal(modal, overlay, product) {
     }
   };
 
+  const resetModalSelectionState = () => {
+    selectedSize = "Regular";
+    setQuantity(1);
+    sizeButtons.forEach((button, index) => {
+      button.classList.toggle("active", index === 0);
+    });
+    if (priceEl) {
+      priceEl.textContent = activeProduct.displayPrices?.Regular || "$18 — delivered";
+    }
+    if (ctaButton) {
+      ctaButton.disabled = false;
+      ctaButton.dataset.state = "";
+      ctaButton.textContent = "Fill the DogBowl™";
+    }
+  };
+
+  const syncModalProduct = () => {
+    if (modalImage) {
+      modalImage.src = activeProduct.image;
+      modalImage.alt = activeProduct.flavor;
+    }
+    if (titleEl) {
+      titleEl.textContent = activeProduct.flavor;
+    }
+    if (descriptionEl) {
+      descriptionEl.textContent = activeProduct.description;
+    }
+    modal.setAttribute("aria-label", activeProduct.flavor);
+    resetModalSelectionState();
+  };
+
+  const cycleProduct = (direction) => {
+    if (!PRODUCTS.length) return;
+    currentProductIndex = (currentProductIndex + direction + PRODUCTS.length) % PRODUCTS.length;
+    activeProduct = PRODUCTS[currentProductIndex];
+    syncModalProduct();
+  };
+
   modal.addEventListener("click", (event) => event.stopPropagation());
+  modal.tabIndex = -1;
+  modal.focus({ preventScroll: true });
+
   plusButton?.addEventListener("click", () => {
     setQuantity(quantity + 1);
     pulseQuantityFeedback(stepperEl);
   });
+
   minusButton?.addEventListener("click", () => {
     setQuantity(quantity - 1);
     pulseQuantityFeedback(stepperEl);
@@ -643,7 +697,7 @@ function bindModal(modal, overlay, product) {
       button.classList.add("active");
       selectedSize = button.dataset.size || "Regular";
       if (priceEl) {
-        priceEl.textContent = product.displayPrices?.[selectedSize] || "$18 — delivered";
+        priceEl.textContent = activeProduct.displayPrices?.[selectedSize] || "$18 — delivered";
       }
     });
   });
@@ -656,13 +710,94 @@ function bindModal(modal, overlay, product) {
     ctaButton.dataset.state = "success";
     ctaButton.textContent = "Added ✓";
 
-    addCartSelection(product, selectedSize, quantity);
-    launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
+    addCartSelection(activeProduct, selectedSize, quantity);
+    launchWoofleFromCTA(modalImage || ctaButton, activeProduct.image, totalWoofles);
 
     window.setTimeout(() => {
       closeModal({ preserveHandoffWoofle: true });
     }, CTA_SUCCESS_DURATION_MS);
   });
+
+  modal.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      cycleProduct(-1);
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      cycleProduct(1);
+    }
+  });
+
+  modal.addEventListener("touchstart", (event) => {
+    if (event.touches.length !== 1) return;
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+    latestTouchDeltaX = 0;
+    modal.classList.add("is-swiping");
+    modal.style.setProperty("--swipe-shift-x", "0px");
+  }, { passive: true });
+
+  modal.addEventListener("touchmove", (event) => {
+    if (touchStartX == null || touchStartY == null || !event.touches.length) return;
+
+    const touch = event.touches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+
+    latestTouchDeltaX = deltaX;
+
+    if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+
+    const dragOffset = Math.max(-SWIPE_DRAG_PX, Math.min(SWIPE_DRAG_PX, deltaX * 0.12));
+    modal.style.setProperty("--swipe-shift-x", `${dragOffset.toFixed(2)}px`);
+  }, { passive: true });
+
+  modal.addEventListener("touchend", (event) => {
+    modal.classList.remove("is-swiping");
+
+    if (touchStartX == null || touchStartY == null || !event.changedTouches.length) {
+      modal.style.setProperty("--swipe-shift-x", "0px");
+      return;
+    }
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+
+    touchStartX = null;
+    touchStartY = null;
+    latestTouchDeltaX = 0;
+
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD_PX || Math.abs(deltaY) > Math.abs(deltaX) || Math.abs(deltaY) > VERTICAL_GUARD_PX) {
+      modal.style.setProperty("--swipe-shift-x", "0px");
+      return;
+    }
+
+    modal.classList.add("is-swipe-settling");
+    modal.style.setProperty("--swipe-shift-x", deltaX < 0 ? "-4px" : "4px");
+
+    window.setTimeout(() => {
+      if (deltaX < 0) {
+        cycleProduct(1);
+      } else {
+        cycleProduct(-1);
+      }
+      modal.style.setProperty("--swipe-shift-x", "0px");
+      window.setTimeout(() => {
+        modal.classList.remove("is-swipe-settling");
+      }, 140);
+    }, SWIPE_SETTLE_MS);
+  }, { passive: true });
+
+  modal.addEventListener("touchcancel", () => {
+    touchStartX = null;
+    touchStartY = null;
+    latestTouchDeltaX = 0;
+    modal.classList.remove("is-swiping");
+    modal.classList.remove("is-swipe-settling");
+    modal.style.setProperty("--swipe-shift-x", "0px");
+  }, { passive: true });
 
   overlay.addEventListener("click", closeModal);
 }
