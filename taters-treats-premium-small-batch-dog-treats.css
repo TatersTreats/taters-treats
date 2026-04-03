@@ -1421,3 +1421,16 @@ body.story-modal-open {
     max-width: 380px;
   }
 }
+
+
+/* Tighten DogBowl vertical rhythm */
+.dogbowl-body--landing {
+  padding: 0 16px 6px !important;
+}
+
+.dogbowl--landing .bowl-note {
+  margin-top: 2px;
+  margin-bottom: 4px;
+  min-height: 1.2em;
+  line-height: 1.2;
+}
