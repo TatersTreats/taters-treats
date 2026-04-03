@@ -1473,3 +1473,40 @@ body.story-modal-open {
   margin-top: 6px;
 }
 
+
+
+/* Modal breathing room refinement */
+.product-modal {
+  padding: 96px 18px 48px !important;
+  line-height: 1.35;
+}
+
+.product-modal h2 {
+  margin-bottom: 10px;
+}
+
+.product-modal .modal-price,
+.product-modal .modal-tagline {
+  margin-bottom: 10px;
+}
+
+.product-modal .modal-description {
+  margin-bottom: 14px;
+}
+
+.product-modal .pill-row,
+.product-modal .size-row,
+.product-modal .modal-size-selector {
+  margin-bottom: 16px;
+}
+
+.product-modal .qty-row,
+.product-modal .modal-quantity,
+.product-modal [data-quantity-stepper] {
+  margin-bottom: 18px;
+}
+
+.product-modal .cta {
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
