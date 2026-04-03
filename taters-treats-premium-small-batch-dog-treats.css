@@ -1883,3 +1883,60 @@ body:not(.product-detail-open).handoff-active .trust-strip {
 }
 
 /* ===== END ROUND 2 ===== */
+
+
+/* ===== FINAL FIX 3 ===== */
+
+/* CTA ABOVE EVERYTHING */
+.primary-cta-global {
+  z-index: 9999 !important;
+}
+
+.product-modal {
+  z-index: 900 !important;
+}
+
+.product-overlay {
+  z-index: 800 !important;
+}
+
+/* tighten CTA */
+.primary-cta-global.is-visible {
+  max-width: 280px !important;
+}
+
+/* REMOVE ALL DOGBOWL BORDERS (nuclear) */
+.dogbowl,
+.dogbowl--landing,
+.dogbowl--clean,
+.dogbowl *,
+.bowl-frame,
+.cart-summary {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+/* MOVE BOWL UP INTO GAP */
+.shop-flow-cluster {
+  display: flex;
+  flex-direction: column;
+}
+
+.cta-gap {
+  margin-bottom: 8px;
+}
+
+.dogbowl {
+  margin-top: 0 !important;
+}
+
+/* center bowl vertically better */
+.dogbowl-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== END FIX ===== */
