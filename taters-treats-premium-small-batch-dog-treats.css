@@ -1434,3 +1434,42 @@ body.story-modal-open {
   min-height: 1.2em;
   line-height: 1.2;
 }
+
+
+/* Push DogBowl toward bottom */
+.dogbowl--landing {
+  margin-top: 120px !important;
+}
+
+/* Trust card styling */
+.trust-card {
+  margin: 60px 12px 20px;
+  border: 1px solid rgba(201, 162, 95, 0.25);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #f7f1e7 0%, #f4eadb 100%);
+  padding: 18px 16px;
+  text-align: center;
+}
+
+.trust-card-inner {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.trust-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.trust-sub {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* CTA stacking */
+.cart-summary--cta-above .checkout-button {
+  width: 100%;
+  margin-top: 6px;
+}
+
