@@ -1959,3 +1959,43 @@ body:not(.product-detail-open).handoff-active .trust-strip {
   background: none !important;
 }
 /* ===== END ===== */
+
+
+/* ===== CTA rollback + actual DogBowl box removal ===== */
+
+/* Bring the CTA back down slightly from the overcorrected position. */
+.primary-cta-global.is-visible {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 184px) !important;
+}
+
+/* Kill the actual DogBowl box chrome, not the imaginary dogbox selector. */
+.dogbowl,
+.dogbowl--landing,
+.dogbowl--clean,
+.dogbowl::before,
+.dogbowl::after,
+.dogbowl--landing::before,
+.dogbowl--landing::after,
+.dogbowl--clean::before,
+.dogbowl--clean::after,
+.dogbowl-top,
+.dogbowl-top--clean,
+.dogbowl-body,
+.dogbowl-body--landing,
+.cart-summary,
+.cart-summary--landing,
+.bowl-frame,
+.bowl-frame--landing {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  background-image: none !important;
+}
+
+/* Keep the bowl itself visually present without a surrounding box. */
+.bowl-frame,
+.bowl-frame--landing {
+  overflow: visible !important;
+}
+/* ===== end CTA rollback + actual DogBowl box removal ===== */
