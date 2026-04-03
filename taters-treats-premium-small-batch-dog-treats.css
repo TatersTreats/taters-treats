@@ -1475,27 +1475,7 @@ body.story-modal-open {
   display: none !important;
 }
 
-.primary-cta,
-.checkout-button,
-.newsletter-button,
-.cta {
-  appearance: none;
-  width: 100%;
-  border: 1px solid rgba(201, 162, 95, 0.65);
-  background: linear-gradient(180deg, var(--green) 0%, var(--green-dark) 100%);
-  color: #fff;
-  border-radius: 999px;
-  padding: 13px 20px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
 
-.primary-cta[disabled],
-.primary-cta.is-disabled {
-  opacity: 0.55;
-  cursor: default;
-}
 
 .dogbowl-top,
 .dogbowl-top--clean {
@@ -1553,3 +1533,26 @@ body.story-modal-open {
 }
 /* ===== END MASTER HANDOFF FLOW ===== */
 
+
+
+/* ===== bugfix: restore modal CTA and prevent stuck blur ===== */
+.modal-cta {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 82%;
+  margin: 0;
+  display: block;
+  transform: translate(-50%, 50%);
+  z-index: 3;
+  text-align: center;
+}
+
+body:not(.product-detail-open).handoff-active .shop,
+body:not(.product-detail-open).handoff-active .hero,
+body:not(.product-detail-open).handoff-active .story-section,
+body:not(.product-detail-open).handoff-active .lower-section,
+body:not(.product-detail-open).handoff-active .trust-strip {
+  filter: none !important;
+}
+/* ===== end bugfix ===== */

@@ -65,7 +65,6 @@ const bowlNoteEl = document.getElementById("bowlNote");
 const cartCountEl = document.getElementById("cartCount");
 const clearCartButton = document.getElementById("clearCartButton");
 const checkoutButton = document.getElementById("checkoutButton");
-const primaryCta = document.querySelector(".primary-cta");
 const cartStatus = document.getElementById("cartStatus");
 const headerEl = document.querySelector(".site-header");
 
@@ -176,6 +175,7 @@ function createModalMarkup(product) {
         <button class="qty qty-plus" type="button" aria-label="Increase quantity">+</button>
       </div>
     </div>
+    <button class="cta modal-cta" type="button">Fill the DogBowl™</button>
   `;
 }
 
@@ -354,17 +354,7 @@ function syncPendingSelection(product, size, quantity) {
   state.pendingSelection = { product, size, quantity };
 }
 
-function updateCTAState(hasItems = state.bowlCount > 0) {
-  const cta = primaryCta;
-  if (!cta) return;
-
-  if (state.activeModal && state.pendingSelection?.product) {
-    cta.textContent = "Fill the DogBowl™";
-    cta.dataset.mode = "add";
-    cta.disabled = false;
-    cta.classList.remove("is-disabled");
-    return;
-  }
+function updateCTAState(){}
 
   if (hasItems) {
     cta.textContent = "Checkout";
@@ -391,6 +381,7 @@ function addToDogBowl() {
   addCartSelection(selection.product, selection.size, selection.quantity);
 
   if (cartStatus) cartStatus.textContent = "";
+  document.body.classList.remove("handoff-active");
   state.activeModal.classList.add("is-handoff");
   launchWoofleFromCTA(
     state.activeModal.querySelector(".modal-image") || primaryCta,
@@ -447,10 +438,7 @@ async function beginCheckout() {
     return;
   }
 
-  if (primaryCta) {
-    primaryCta.disabled = true;
-    primaryCta.textContent = "Opening Checkout...";
-  }
+  
   if (cartStatus) cartStatus.textContent = "Preparing secure checkout...";
 
   try {
@@ -487,10 +475,7 @@ async function beginCheckout() {
         if (cartStatus) cartStatus.textContent = "";
       }, 2200);
     }
-    if (primaryCta) {
-      primaryCta.disabled = false;
-      primaryCta.textContent = "Checkout";
-    }
+    
   }
 }
 
@@ -692,6 +677,7 @@ function bindModal(modal, overlay, product) {
   const plusButton = modal.querySelector(".qty-plus");
   const minusButton = modal.querySelector(".qty-minus");
   const sizeButtons = modal.querySelectorAll(".pill");
+  const modalCta = modal.querySelector(".modal-cta");
   const modalImage = modal.querySelector(".modal-image");
   const priceEl = modal.querySelector(".modal-price");
   const titleEl = modal.querySelector("h2");
@@ -705,6 +691,10 @@ function bindModal(modal, overlay, product) {
       dialEl.setAttribute("aria-valuetext", `${quantity}`);
     }
     syncPendingSelection(activeProduct, selectedSize, quantity);
+    if (modalCta) {
+      modalCta.disabled = false;
+      modalCta.textContent = "Fill the DogBowl™";
+    }
     updateCTAState(state.bowlCount > 0);
   };
 
@@ -768,6 +758,13 @@ function bindModal(modal, overlay, product) {
       syncPendingSelection(activeProduct, selectedSize, quantity);
       updateCTAState(state.bowlCount > 0);
     });
+  });
+
+  modalCta?.addEventListener("click", () => {
+    if (modalCta.disabled) return;
+    modalCta.disabled = true;
+    modalCta.textContent = "Adding...";
+    addToDogBowl();
   });
 
   modal.addEventListener("keydown", (event) => {
@@ -862,6 +859,8 @@ function closeModal(options = {}) {
   state.activeModal = null;
   state.activeOverlay = null;
   state.isOpening = false;
+  document.body.classList.remove("handoff-active");
+  document.body.classList.remove("product-detail-open");
   overlay.classList.remove("active");
   modal.classList.remove("active");
 
@@ -877,6 +876,7 @@ function closeModal(options = {}) {
     }
     modal.remove();
     overlay.remove();
+    document.body.classList.remove("handoff-active");
     document.body.classList.remove("product-detail-open");
     document.body.style.removeProperty("--header-offset");
     state.activeSourceCard = null;
@@ -903,17 +903,16 @@ clearCartButton?.addEventListener("click", () => {
   }, 1400);
 });
 
-primaryCta?.addEventListener("click", (event) => {
-  const mode = event.currentTarget.dataset.mode;
-  if (mode === "add") {
-    addToDogBowl();
     return;
   }
   goToCheckout();
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeModal();
+  if (event.key === "Escape") {
+    document.body.classList.remove("handoff-active");
+    closeModal();
+  }
 });
 
 renderProducts();
@@ -921,6 +920,7 @@ updateBowlUi();
 
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
+    document.body.classList.remove("handoff-active");
     updateCTAState(state.bowlCount > 0);
     if (cartStatus) cartStatus.textContent = "";
   }
