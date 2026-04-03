@@ -1766,3 +1766,37 @@ body.story-modal-open {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
+
+
+/* Remove gap + tighten vertical flow */
+.dogbowl-body--cta-above {
+  margin-top: -42px !important;
+}
+
+.cart-summary--cta-above {
+  gap: 2px !important;
+}
+
+.cart-summary--cta-above .checkout-button {
+  width: 82% !important;
+}
+
+.dogbowl--landing {
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+.dogbowl-top--cta-above {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.bowl-frame--cta-above {
+  margin-top: 6px !important;
+}
+
+#clearCartButton {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
