@@ -1408,133 +1408,148 @@ body.story-modal-open {
 
 
 
-/* ===== PRIORITY LOWER CLUSTER ===== */
+/* ===== MASTER HANDOFF FLOW ===== */
+.shop-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.shop-main {
+  display: flex;
+  flex-direction: column;
+}
+
 .shop-flow-cluster {
   display: flex;
   flex-direction: column;
-  min-height: calc(100svh - 230px);
-  margin: 12px 0 0;
-  padding: 0 12px calc(env(safe-area-inset-bottom, 0px) + 2px);
+  flex: 1 1 auto;
+  gap: 12px;
+  margin: 0;
+  padding: 0 12px calc(env(safe-area-inset-bottom, 0px) + 4px);
 }
 
-.trust-card {
-  order: 1;
+.trust-box {
   flex: 1 1 auto;
-  margin: 0;
-  padding: 8px 14px;
-  min-height: 72px;
-  border: 1px solid rgba(201, 162, 95, 0.22);
-  border-radius: 20px;
-  background: linear-gradient(180deg, #f7f1e7 0%, #f4eadb 100%);
-  opacity: 0.92;
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-.trust-card-inner {
-  max-width: 320px;
-  margin: 0 auto;
-}
-
-.trust-headline {
-  font-family: 'Playfair Display', serif;
-  font-size: 0.98rem;
-  line-height: 1.15;
-  margin: 0 0 3px;
-}
-
-.trust-sub {
-  font-size: 0.88rem;
-  line-height: 1.2;
   margin: 0;
-  opacity: 0.8;
+  padding: 6px 4px;
 }
 
-.dogbowl--landing,
-.dogbowl--landing.dogbowl--cta-above {
-  order: 2;
-  margin: auto 0 0;
-  min-height: 0;
+.trust-box-copy {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+  line-height: 1.22;
+  letter-spacing: 0.01em;
+}
+
+.dogbowl,
+.dogbowl--landing {
+  margin-top: auto;
   padding: 0;
   background: none;
-  border: none;
+  border: 0;
+  border-radius: 0;
   box-shadow: none;
   overflow: visible;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 }
 
-.dogbowl-body--cta-above {
+.dogbowl-body,
+.dogbowl-body--landing {
   width: 100%;
   margin: 0;
   padding: 0 16px;
-  position: relative;
-  z-index: 8;
 }
 
-.cart-summary--cta-above {
+.cart-summary,
+.cart-summary--landing {
   display: grid;
-  width: 100%;
-  max-width: none;
-  gap: 0;
   justify-items: stretch;
-  margin: 0 auto;
-}
-
-.cart-summary--cta-above .summary-row,
-.cart-summary--cta-above #cartStatus,
-.cart-summary--cta-above .link-button {
-  display: none;
-}
-
-.cart-summary--cta-above .checkout-button {
+  gap: 6px;
   width: 100%;
-  max-width: none;
-  display: block;
-  box-sizing: border-box;
-  margin: 0;
-  position: relative;
-  transform: translateY(-10px);
-  z-index: 10;
-  min-height: 46px;
 }
 
-.dogbowl-top--cta-above {
+.summary-row {
+  display: none !important;
+}
+
+.primary-cta,
+.checkout-button,
+.newsletter-button,
+.cta {
+  appearance: none;
   width: 100%;
-  margin: -16px 0 0;
-  padding: 0 16px calc(env(safe-area-inset-bottom, 0px) + 1px);
+  border: 1px solid rgba(201, 162, 95, 0.65);
+  background: linear-gradient(180deg, var(--green) 0%, var(--green-dark) 100%);
+  color: #fff;
+  border-radius: 999px;
+  padding: 13px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.primary-cta[disabled],
+.primary-cta.is-disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.dogbowl-top,
+.dogbowl-top--clean {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 2px 16px calc(env(safe-area-inset-bottom, 0px) + 1px);
 }
 
-.bowl-frame--cta-above {
+.bowl-frame,
+.bowl-frame--landing {
   max-width: 182px;
   margin: 0 auto;
 }
 
-.dogbowl--landing .bowl-note {
-  margin-top: 0;
-  margin-bottom: 0;
+.bowl-note {
+  margin: 0;
   min-height: 1.1em;
   text-align: center;
 }
 
+.reset-dogbowl-button,
 #clearCartButton {
-  margin-top: 2px;
-  margin-bottom: 0;
+  margin-top: 4px;
   padding: 0;
   font-size: 0.82rem;
   line-height: 1.1;
   opacity: 0.72;
 }
 
+.status-message {
+  min-height: 1.2em;
+  margin: 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.trust-strip,
+.trust-card,
+.trust-card-inner {
+  display: none !important;
+}
+
 @media (max-width: 767px) {
+  .shop-layout {
+    min-height: calc(100svh - 160px);
+  }
+
   .shop-flow-cluster {
-    min-height: calc(100svh - 220px);
+    min-height: 0;
   }
 }
-/* ===== END PRIORITY LOWER CLUSTER ===== */
+/* ===== END MASTER HANDOFF FLOW ===== */
 

@@ -38,52 +38,41 @@
         <section class="shop-main" aria-label="Products">
           <div id="products" class="products"></div>
         </section>
-      </div>
 
-      
-      <section class="shop-flow-cluster">
-      <section class="trust-card">
-        <div class="trust-card-inner">
-          <p class="trust-headline">Made to order.</p>
-          <p class="trust-sub">Small batch. No shortcuts.</p>
-          
-        </div>
-      </section>
+        <section class="shop-flow-cluster" aria-label="DogBowl flow">
+          <section class="trust-box" aria-label="Why Tater's Treats">
+            <p class="trust-box-copy">Made to order. Small batch. No shortcuts.</p>
+          </section>
 
-      <aside class="dogbowl dogbowl--clean dogbowl--landing dogbowl--cta-above" id="dogbowl" aria-label="DogBowl">
-        <div class="dogbowl-body dogbowl-body--landing dogbowl-body--cta-above">
-          <div class="cart-summary cart-summary--landing cart-summary--cta-above">
-            <div class="summary-row">
-              <span id="cartCount">0</span>
-              <span>items</span>
+          <aside class="dogbowl dogbowl--clean dogbowl--landing" id="dogbowl" aria-label="DogBowl">
+            <div class="dogbowl-body dogbowl-body--landing">
+              <div class="cart-summary cart-summary--landing">
+                <div class="summary-row">
+                  <span id="cartCount">0</span>
+                  <span>items</span>
+                </div>
+                <button class="primary-cta" id="checkoutButton" type="button" data-mode="add">Fill the DogBowl™</button>
+                <div id="cartStatus" class="status-message" aria-live="polite"></div>
+              </div>
             </div>
-            <button class="checkout-button" id="checkoutButton" type="button">Checkout</button>
-            
-            <div id="cartStatus" class="status-message"></div>
-          </div>
-        </div>
 
-        <div class="dogbowl-top dogbowl-top--clean dogbowl-top--cta-above">
-          <div class="bowl-frame bowl-frame--landing bowl-frame--cta-above">
-            <img
-              id="bowlImage"
-              class="bowl-image"
-              src="assets/images/dogbowl/dogbowl-ceramic-bowl-top-down.png"
-              alt="An empty DogBowl"
-            />
-            <div class="static-bowl-items"></div>
-          </div>
+            <div class="dogbowl-top dogbowl-top--clean">
+              <div class="bowl-frame bowl-frame--landing">
+                <img
+                  id="bowlImage"
+                  class="bowl-image"
+                  src="assets/images/dogbowl/dogbowl-ceramic-bowl-top-down.png"
+                  alt="An empty DogBowl"
+                />
+                <div class="static-bowl-items"></div>
+              </div>
 
-          <p id="bowlNote" class="bowl-note">Your DogBowl™ is empty.</p>
-          
-        </div>
-      </aside>
-      </section>
-    </section>
-
-    <section class="trust-strip">
-      <p class="trust-line">Premium, Small-Batch Canine Confections.</p>
-    </section>
+              <p id="bowlNote" class="bowl-note">Your DogBowl™ is empty.</p>
+              <button class="link-button reset-dogbowl-button" id="clearCartButton" type="button">Reset the DogBowl</button>
+            </div>
+          </aside>
+        </section>
+      </div>
 
     <section class="section lower-section" id="barkers-dozen-section">
       <div class="lower-grid lower-grid-single">
@@ -94,7 +83,6 @@
             Monthly exclusive treats you won’t find on the main site.
             Limited spots—get on the waitlist.
           </p>
-          <button class="link-button" id="clearCartButton" type="button">Reset the DogBowl</button>
         </div>
       </div>
     </section>
