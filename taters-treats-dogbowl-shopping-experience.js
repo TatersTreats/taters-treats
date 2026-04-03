@@ -737,10 +737,6 @@ function bindModal(modal, overlay, product) {
       dialEl.setAttribute("aria-valuetext", `${quantity}`);
     }
     syncPendingSelection(activeProduct, selectedSize, quantity);
-    if (modalCta) {
-      modalCta.disabled = false;
-      modalCta.textContent = "Fill the DogBowl™";
-    }
     updateCTAState(state.bowlCount > 0);
   };
 

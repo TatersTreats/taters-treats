@@ -1728,3 +1728,40 @@ body:not(.product-detail-open).handoff-active .trust-strip {
   }
 }
 /* ===== end CTA visibility + modal border positioning fix ===== */
+
+
+/* ===== modal popup CTA visibility fix ===== */
+.primary-cta-global {
+  display: none !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+}
+
+.primary-cta-global.is-visible.is-modal-break,
+.primary-cta-global.is-visible.is-checkout-docked {
+  display: block !important;
+  pointer-events: auto !important;
+}
+
+.primary-cta-global.is-modal-break {
+  position: fixed;
+  left: var(--cta-left, 50%);
+  top: var(--cta-top, 50%);
+  bottom: auto !important;
+  transform: translate(-50%, -50%);
+  width: min(82vw, 295px);
+  max-width: 295px;
+  z-index: 82;
+}
+
+.primary-cta-global.is-checkout-docked {
+  position: fixed;
+  left: 50%;
+  top: auto !important;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 118px);
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 360px;
+  z-index: 82;
+}
+/* ===== end modal popup CTA visibility fix ===== */
