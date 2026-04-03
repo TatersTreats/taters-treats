@@ -1656,3 +1656,44 @@ body.story-modal-open {
     min-height: calc(100vh - 640px) !important;
   }
 }
+
+
+/* Requested cleanup: match CTA widths, tighten CTA stack, remove oversized DogBowl height */
+.dogbowl--landing {
+  min-height: auto !important;
+  padding-top: 0 !important;
+  padding-bottom: 4px !important;
+}
+
+.dogbowl-body--cta-above {
+  margin-top: -18px !important;
+  padding: 0 16px 2px !important;
+}
+
+.cart-summary--cta-above {
+  gap: 4px !important;
+}
+
+.product-modal .cta,
+.cart-summary--cta-above .checkout-button {
+  width: calc(100% - 32px) !important;
+  max-width: none !important;
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.cart-summary--cta-above .checkout-button {
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+}
+
+.dogbowl-top--cta-above {
+  margin-top: 4px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.bowl-frame--cta-above {
+  margin-top: 0 !important;
+}
