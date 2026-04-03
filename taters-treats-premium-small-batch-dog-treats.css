@@ -1767,40 +1767,18 @@ body:not(.product-detail-open).handoff-active .trust-strip {
 /* ===== end modal popup CTA visibility fix ===== */
 
 
-/* ===== final cta-gap flow fix ===== */
-.shop-layout {
-  display: flex;
-  flex-direction: column;
-}
-
-.shop-flow-cluster {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100svh - 190px);
-  gap: 10px;
-  padding: 0 12px calc(env(safe-area-inset-bottom, 0px) + 8px);
-}
-
+/* ===== locked flow stabilization ===== */
 .trust-box {
-  flex: 0 0 auto;
+  min-height: 72px;
   display: flex;
   align-items: center;
-  padding: 8px 4px 0;
-}
-
-.trust-box-copy {
-  margin: 0;
-  font-size: 0.84rem;
-  line-height: 1.22;
 }
 
 .cta-gap {
-  flex: 0 0 auto;
-  min-height: 54px;
+  min-height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0;
 }
 
 .primary-cta-global {
@@ -1814,72 +1792,25 @@ body:not(.product-detail-open).handoff-active .trust-strip {
   width: 100%;
   max-width: 360px;
   opacity: 1 !important;
-  pointer-events: none;
+  pointer-events: none !important;
   z-index: auto !important;
 }
 
 .primary-cta-global.is-visible {
   display: block !important;
-  pointer-events: auto;
+  pointer-events: auto !important;
 }
 
 .dogbowl,
 .dogbowl--landing,
 .dogbowl--clean {
-  margin-top: auto;
   background: none !important;
   border: 0 !important;
   box-shadow: none !important;
-  border-radius: 0 !important;
-  overflow: visible;
-  padding: 0;
-}
-
-.dogbowl-body,
-.dogbowl-body--landing {
-  padding: 0;
-}
-
-.cart-summary,
-.cart-summary--landing {
-  display: block;
-  min-height: 0;
-}
-
-.cart-summary .summary-row,
-.cart-summary--landing .summary-row {
-  display: none !important;
-}
-
-.dogbowl-top,
-.dogbowl-top--clean {
-  padding: 0;
 }
 
 .bowl-frame,
 .bowl-frame--landing {
-  max-width: 206px;
-  margin: 0 auto;
+  max-width: 214px;
 }
-
-.bowl-note {
-  margin: 4px 0 0;
-}
-
-.reset-dogbowl-button,
-#clearCartButton {
-  display: inline-block;
-  margin-top: 4px;
-}
-
-@media (max-width: 767px) {
-  .shop-flow-cluster {
-    min-height: calc(100svh - 172px);
-  }
-
-  .bowl-frame,
-  .bowl-frame--landing {
-    max-width: 214px;
-  }
-}
-/* ===== end final cta-gap flow fix ===== */
+/* ===== end locked flow stabilization ===== */

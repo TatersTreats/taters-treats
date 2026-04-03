@@ -203,7 +203,7 @@ async function openDetail(card) {
   state.activeModal = modal;
 
   bindModal(modal, overlay, product);
-  updateCTAState(state.bowlCount > 0);
+  updateCTAState(state.cartItems.length > 0);
   requestAnimationFrame(() => overlay.classList.add("active"));
   const scrollPromise = scrollToShop();
 
@@ -362,7 +362,7 @@ function syncPendingSelection(product, size, quantity) {
   state.pendingSelection = { product, size, quantity };
 }
 
-function updateCTAState(hasItems = state.bowlCount > 0) {
+function updateCTAState(hasItems = state.cartItems.length > 0) {
   if (!primaryCta) return;
 
   if (state.activeModal && state.pendingSelection?.product) {
@@ -391,10 +391,12 @@ function updateCTAState(hasItems = state.bowlCount > 0) {
 }
 
 
+
+
 function addToDogBowl() {
   const selection = state.pendingSelection;
   if (!selection?.product || !state.activeModal) {
-    updateCTAState(state.bowlCount > 0);
+    updateCTAState(state.cartItems.length > 0);
     return;
   }
 
@@ -413,7 +415,7 @@ function addToDogBowl() {
   window.setTimeout(() => {
     closeModal({ preserveHandoffWoofle: true });
     syncPendingSelection(null);
-    updateCTAState(true);
+    updateCTAState(state.cartItems.length > 0);
   }, 120);
 }
 
@@ -717,7 +719,7 @@ function bindModal(modal, overlay, product) {
       dialEl.setAttribute("aria-valuetext", `${quantity}`);
     }
     syncPendingSelection(activeProduct, selectedSize, quantity);
-    updateCTAState(state.bowlCount > 0);
+    updateCTAState(state.cartItems.length > 0);
   };
 
   const resetModalSelectionState = () => {
@@ -730,7 +732,7 @@ function bindModal(modal, overlay, product) {
       priceEl.textContent = activeProduct.displayPrices?.Regular || "$18 — delivered";
     }
     syncPendingSelection(activeProduct, selectedSize, quantity);
-    updateCTAState(state.bowlCount > 0);
+    updateCTAState(state.cartItems.length > 0);
   };
 
   const syncModalProduct = () => {
@@ -778,7 +780,7 @@ function bindModal(modal, overlay, product) {
         priceEl.textContent = activeProduct.displayPrices?.[selectedSize] || "$18 — delivered";
       }
       syncPendingSelection(activeProduct, selectedSize, quantity);
-      updateCTAState(state.bowlCount > 0);
+      updateCTAState(state.cartItems.length > 0);
     });
   });
 
@@ -898,7 +900,7 @@ function closeModal(options = {}) {
     document.body.style.removeProperty("--header-offset");
     state.activeSourceCard = null;
     syncPendingSelection(null);
-    updateCTAState(state.bowlCount > 0);
+    updateCTAState(state.cartItems.length > 0);
   }, MODAL_CLOSE_DURATION_MS);
 }
 
@@ -943,7 +945,7 @@ updateBowlUi();
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     document.body.classList.remove("handoff-active");
-    updateCTAState(state.bowlCount > 0);
+    updateCTAState(state.cartItems.length > 0);
     if (cartStatus) cartStatus.textContent = "";
   }
 });
