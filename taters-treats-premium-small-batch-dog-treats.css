@@ -1800,3 +1800,30 @@ body.story-modal-open {
   font-size: 0.85rem;
   opacity: 0.7;
 }
+
+
+/* Retry: widen checkout CTA to match modal CTA system more closely */
+.dogbowl-body--cta-above {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+.cart-summary--cta-above {
+  width: 100% !important;
+  max-width: none !important;
+  justify-items: stretch !important;
+}
+
+.cart-summary--cta-above .checkout-button {
+  width: 100% !important;
+  max-width: none !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  min-height: 46px !important;
+}
+
+.product-modal .cta {
+  box-sizing: border-box !important;
+}
