@@ -1389,13 +1389,35 @@ body.story-modal-open {
 }
 
 
-/* CTA above bowl layout */
-.dogbowl--landing .dogbowl-body--landing {
-  order: -1;
-  margin-bottom: 12px;
+/* DogBowl layout: controls above bowl */
+.dogbowl--cta-above {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.dogbowl--landing .checkout-button {
-  margin-bottom: 6px;
+.dogbowl-body--cta-above {
+  width: 100%;
+  padding-bottom: 10px;
 }
 
+.cart-summary--cta-above {
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.dogbowl-top--cta-above {
+  width: 100%;
+  padding-top: 0;
+}
+
+.bowl-frame--cta-above {
+  max-width: 260px !important;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .cart-summary--cta-above {
+    max-width: 380px;
+  }
+}

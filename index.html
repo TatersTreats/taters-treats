@@ -40,8 +40,33 @@
         </section>
       </div>
 
-      <aside class="dogbowl dogbowl--clean dogbowl--landing" id="dogbowl" aria-label="DogBowl">
-        </aside>
+      <aside class="dogbowl dogbowl--clean dogbowl--landing dogbowl--cta-above" id="dogbowl" aria-label="DogBowl">
+        <div class="dogbowl-body dogbowl-body--landing dogbowl-body--cta-above">
+          <div class="cart-summary cart-summary--landing cart-summary--cta-above">
+            <div class="summary-row">
+              <span id="cartCount">0</span>
+              <span>items</span>
+            </div>
+            <button class="checkout-button" id="checkoutButton" type="button">Checkout</button>
+            <button class="link-button" id="clearCartButton" type="button">Empty the DogBowl</button>
+            <div id="cartStatus" class="status-message"></div>
+          </div>
+        </div>
+
+        <div class="dogbowl-top dogbowl-top--clean dogbowl-top--cta-above">
+          <div class="bowl-frame bowl-frame--landing bowl-frame--cta-above">
+            <img
+              id="bowlImage"
+              class="bowl-image"
+              src="assets/images/dogbowl/dogbowl-ceramic-bowl-top-down.png"
+              alt="An empty DogBowl"
+            />
+            <div class="static-bowl-items"></div>
+          </div>
+
+          <p id="bowlNote" class="bowl-note">Your DogBowl™ is empty.</p>
+        </div>
+      </aside>
     </section>
 
     <section class="trust-strip">
