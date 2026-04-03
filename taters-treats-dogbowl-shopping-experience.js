@@ -617,6 +617,7 @@ function bindModal(modal, overlay, product) {
   const VERTICAL_GUARD_PX = 28;
   const SWIPE_DRAG_PX = 4;
   const SWIPE_SETTLE_MS = 70;
+  const MODAL_HANDOFF_RELEASE_DELAY_MS = 180;
 
   const valueEl = modal.querySelector(".qty-value");
   const dialEl = modal.querySelector(".qty-dial");
@@ -714,10 +715,12 @@ function bindModal(modal, overlay, product) {
     launchWoofleFromCTA(modalImage || ctaButton, activeProduct.image, totalWoofles);
 
     window.setTimeout(() => {
-      modal.classList.remove("is-handoff");
-      ctaButton.disabled = false;
-      ctaButton.dataset.state = "";
-      ctaButton.textContent = "Fill the DogBowl™";
+      window.setTimeout(() => {
+        modal.classList.remove("is-handoff");
+        ctaButton.disabled = false;
+        ctaButton.dataset.state = "";
+        ctaButton.textContent = "Fill the DogBowl™";
+      }, MODAL_HANDOFF_RELEASE_DELAY_MS);
     }, CTA_SUCCESS_DURATION_MS);
 
     });
