@@ -1310,3 +1310,57 @@ body.story-modal-open {
 .product-modal.is-handoff .modal-close {
   opacity: 0.55;
 }
+
+
+.dogbowl--landing {
+  margin: 26px 8px 0;
+  padding: 0;
+  border-radius: 24px;
+}
+
+.dogbowl--landing .dogbowl-top {
+  padding: 14px 16px 8px;
+}
+
+.bowl-frame--landing {
+  aspect-ratio: 1 / 0.58;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.dogbowl--landing .bowl-note {
+  margin-top: 8px;
+  font-size: 0.92rem;
+}
+
+.dogbowl-body--landing {
+  padding: 0 16px 16px;
+}
+
+.cart-summary--landing {
+  gap: 8px;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.cart-summary--landing .checkout-button {
+  width: 100%;
+}
+
+.cart-summary--landing .status-message {
+  min-height: 1.1em;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .dogbowl--landing {
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bowl-frame--landing,
+  .cart-summary--landing {
+    max-width: 380px;
+  }
+}
