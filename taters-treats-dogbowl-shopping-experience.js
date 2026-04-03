@@ -717,10 +717,7 @@ function bindModal(modal, overlay, product) {
       modal.classList.remove("is-handoff");
     }, CTA_SUCCESS_DURATION_MS);
 
-    window.setTimeout(() => {
-      closeModal({ preserveHandoffWoofle: true });
-    }, CTA_SUCCESS_DURATION_MS);
-  });
+    });
 
   modal.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
