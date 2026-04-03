@@ -1510,3 +1510,80 @@ body.story-modal-open {
   margin-top: 10px;
   margin-bottom: 6px;
 }
+
+
+/* Checkout CTA breaks border like modal CTA and anchors directly under modal zone */
+.dogbowl--landing {
+  margin-top: 150px !important;
+  min-height: calc(100vh - 420px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 0 !important;
+  padding-bottom: 10px !important;
+  position: relative;
+}
+
+.dogbowl--landing.dogbowl--cta-above {
+  overflow: visible;
+}
+
+.dogbowl-body--cta-above {
+  width: 100%;
+  padding: 0 16px 8px !important;
+  margin-top: -20px;
+  position: relative;
+  z-index: 3;
+}
+
+.cart-summary--cta-above {
+  max-width: 340px;
+  margin: 0 auto;
+  gap: 6px;
+}
+
+.cart-summary--cta-above .checkout-button {
+  width: min(100%, 300px);
+  display: block;
+  margin: 0 auto 6px;
+  position: relative;
+  z-index: 4;
+  border-radius: 999px;
+  box-shadow: 0 10px 20px rgba(19, 14, 10, 0.18);
+}
+
+.cart-summary--cta-above .link-button {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.dogbowl-top--cta-above {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 6px !important;
+  padding-bottom: 0 !important;
+}
+
+.bowl-frame--cta-above {
+  max-width: 230px !important;
+  margin: 0 auto;
+}
+
+.dogbowl--landing .bowl-note {
+  margin-top: 2px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .dogbowl--landing {
+    min-height: calc(100vh - 430px);
+  }
+
+  .cart-summary--cta-above .checkout-button {
+    width: min(100%, 286px);
+  }
+
+  .bowl-frame--cta-above {
+    max-width: 220px !important;
+  }
+}
