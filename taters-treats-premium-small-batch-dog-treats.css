@@ -1686,3 +1686,45 @@ body:not(.product-detail-open).handoff-active .trust-strip {
   }
 }
 /* ===== end checked handoff rebuild ===== */
+
+
+/* ===== CTA visibility + modal border positioning fix ===== */
+.primary-cta-global {
+  display: none;
+  opacity: 1 !important;
+  pointer-events: none;
+}
+
+.primary-cta-global.is-visible {
+  display: block;
+  pointer-events: auto;
+}
+
+.primary-cta-global.is-modal-break {
+  position: fixed;
+  left: var(--cta-left, 50%);
+  top: var(--cta-top, 50%);
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  width: min(82vw, 295px);
+  max-width: 295px;
+  z-index: 82;
+}
+
+.primary-cta-global.is-checkout-docked {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 118px);
+  top: auto;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 360px;
+  z-index: 82;
+}
+
+@media (max-width: 767px) {
+  .primary-cta-global.is-checkout-docked {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 118px);
+  }
+}
+/* ===== end CTA visibility + modal border positioning fix ===== */

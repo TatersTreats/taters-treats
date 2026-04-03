@@ -204,6 +204,7 @@ async function openDetail(card) {
 
   bindModal(modal, overlay, product);
   updateCTAState(state.bowlCount > 0);
+  positionPrimaryCtaToModal(modal);
   requestAnimationFrame(() => overlay.classList.add("active"));
   const scrollPromise = scrollToShop();
 
@@ -347,9 +348,24 @@ function addWoofleToBowl(imageSrc, targetPoint) {
 }
 
 
+
+function positionPrimaryCtaToModal(modal = state.activeModal) {
+  if (!primaryCta || !modal) return;
+
+  const rect = modal.getBoundingClientRect();
+  document.documentElement.style.setProperty("--cta-left", `${rect.left + rect.width / 2}px`);
+  document.documentElement.style.setProperty("--cta-top", `${rect.bottom}px`);
+}
+
 function setPrimaryCtaVisibility(isVisible) {
   if (!primaryCta) return;
   primaryCta.classList.toggle("is-visible", Boolean(isVisible));
+}
+
+function setPrimaryCtaPlacement(mode) {
+  if (!primaryCta) return;
+  primaryCta.classList.remove("is-modal-break", "is-checkout-docked");
+  if (mode) primaryCta.classList.add(mode);
 }
 
 function syncPendingSelection(product, size, quantity) {
@@ -369,15 +385,18 @@ function updateCTAState(hasItems = state.bowlCount > 0) {
     primaryCta.dataset.mode = "add";
     primaryCta.disabled = false;
     primaryCta.classList.remove("is-disabled");
+    setPrimaryCtaPlacement("is-modal-break");
+    positionPrimaryCtaToModal(state.activeModal);
     setPrimaryCtaVisibility(true);
     return;
   }
 
   if (hasItems) {
-    primaryCta.textContent = "Checkout";
+    primaryCta.textContent = "Secure Checkout";
     primaryCta.dataset.mode = "checkout";
     primaryCta.disabled = false;
     primaryCta.classList.remove("is-disabled");
+    setPrimaryCtaPlacement("is-checkout-docked");
     setPrimaryCtaVisibility(true);
     return;
   }
@@ -386,8 +405,10 @@ function updateCTAState(hasItems = state.bowlCount > 0) {
   primaryCta.dataset.mode = "add";
   primaryCta.disabled = true;
   primaryCta.classList.add("is-disabled");
+  setPrimaryCtaPlacement("");
   setPrimaryCtaVisibility(false);
 }
+
 
 
 function addToDogBowl() {
@@ -500,7 +521,7 @@ async function beginCheckout() {
     }
     if (primaryCta) {
       primaryCta.disabled = false;
-      primaryCta.textContent = "Checkout";
+      primaryCta.textContent = "Secure Checkout";
     }
   }
 }
@@ -946,9 +967,20 @@ document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     document.body.classList.remove("handoff-active");
     updateCTAState(state.bowlCount > 0);
+    if (state.activeModal) positionPrimaryCtaToModal(state.activeModal);
     if (cartStatus) cartStatus.textContent = "";
   }
 });
+
+
+window.addEventListener("resize", () => {
+  if (state.activeModal) positionPrimaryCtaToModal(state.activeModal);
+});
+
+window.addEventListener("scroll", () => {
+  if (state.activeModal) positionPrimaryCtaToModal(state.activeModal);
+}, { passive: true });
+
 
 
 const bdTriggerEl = document.getElementById("bd-leader-trigger");
