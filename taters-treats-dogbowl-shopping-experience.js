@@ -617,7 +617,7 @@ function bindModal(modal, overlay, product) {
   const VERTICAL_GUARD_PX = 28;
   const SWIPE_DRAG_PX = 4;
   const SWIPE_SETTLE_MS = 70;
-  const MODAL_HANDOFF_RELEASE_DELAY_MS = 180;
+  const MODAL_HANDOFF_RELEASE_DELAY_MS = 700;
 
   const valueEl = modal.querySelector(".qty-value");
   const dialEl = modal.querySelector(".qty-dial");
