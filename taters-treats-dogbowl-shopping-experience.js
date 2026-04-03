@@ -708,10 +708,14 @@ function bindModal(modal, overlay, product) {
     const totalWoofles = (SIZE_COUNTS[selectedSize] || 1) * quantity;
     ctaButton.disabled = true;
     ctaButton.dataset.state = "success";
-    ctaButton.textContent = "Added ✓";
+    ctaButton.textContent = "Added ✓";    addCartSelection(activeProduct, selectedSize, quantity);
 
-    addCartSelection(activeProduct, selectedSize, quantity);
+    modal.classList.add("is-handoff");
     launchWoofleFromCTA(modalImage || ctaButton, activeProduct.image, totalWoofles);
+
+    window.setTimeout(() => {
+      modal.classList.remove("is-handoff");
+    }, CTA_SUCCESS_DURATION_MS);
 
     window.setTimeout(() => {
       closeModal({ preserveHandoffWoofle: true });
