@@ -454,7 +454,7 @@ body.product-detail-open {
   padding: 86px 16px 40px;
   box-shadow: 0 24px 40px rgba(19, 14, 10, 0.2);
   opacity: 0;
-  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 260ms ease, background 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 70;
 }
 
@@ -805,6 +805,10 @@ body.handoff-active .modal-image.is-handoff {
   height: 100%;
 }
 
+#clearCartButton {
+  margin-top: auto;
+}
+
 /* Add spacing between status/message area and checkout CTA */
 .checkout-button {
   margin-top: 12px;
@@ -833,6 +837,10 @@ body.handoff-active .modal-image.is-handoff {
   flex: 1;
 }
 
+#clearCartButton {
+  margin-top: auto;
+}
+
 /* Keep DogBowl bottom flush while anchoring the clear button */
 .dogbowl {
   display: flex;
@@ -851,6 +859,10 @@ body.handoff-active .modal-image.is-handoff {
   display: flex;
   flex: 1;
   flex-direction: column;
+}
+
+#clearCartButton {
+  margin-top: auto;
 }
 
 /* DogBowl card and CTA border should match the flavor cards */
@@ -895,6 +907,13 @@ body.handoff-active .modal-image.is-handoff {
   order: 2;
 }
 
+#clearCartButton {
+  order: 3;
+  margin-top: auto;
+  padding-bottom: 2px;
+}
+
+
 /* DogBowl compact lower stack refinement */
 .dogbowl {
   display: flex;
@@ -916,6 +935,11 @@ body.handoff-active .modal-image.is-handoff {
   width: 100%;
   margin-top: 8px;
   margin-bottom: 10px;
+}
+
+#clearCartButton {
+  margin-top: 0;
+  align-self: center;
 }
 
 .status-message {
@@ -955,6 +979,11 @@ body.handoff-active .modal-image.is-handoff {
 .status-message {
   margin-bottom: 6px;
 }
+
+#clearCartButton {
+  margin-top: 6px;
+}
+
 
 .hidden {
   display: none !important;
@@ -1007,7 +1036,7 @@ body.handoff-active .modal-image.is-handoff {
   box-shadow: 0 28px 56px rgba(19, 14, 10, 0.28);
   overflow: hidden;
   opacity: 0;
-  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 260ms ease, background 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 1;
 }
 
@@ -1118,7 +1147,7 @@ body.bd-modal-open {
   box-shadow: 0 28px 56px rgba(19, 14, 10, 0.28);
   overflow: hidden;
   opacity: 0;
-  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 260ms ease, background 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 1;
 }
 
@@ -1245,516 +1274,3 @@ body.story-modal-open {
 
 .flying-woofel { z-index: 10 !important; }
 .product-modal, .modal-overlay { z-index: 1000 !important; }
-
-
-.product-modal.is-handoff {
-  opacity: 1;
-  filter: none;
-  background: rgba(232, 222, 207, 0.96);
-  border-color: rgba(201, 162, 95, 0.16);
-  box-shadow:
-    0 18px 34px rgba(19, 14, 10, 0.18),
-    inset 0 0 0 999px rgba(232, 222, 207, 0.24);
-  pointer-events: none;
-}
-
-.woofle-flight,
-.flying-woofel,
-.handoff-woofel {
-  z-index: 1300 !important;
-}
-
-
-.product-modal.is-handoff > * {
-  filter: blur(3px) saturate(0.9);
-  opacity: 0.72;
-  transition: filter 260ms ease, opacity 260ms ease;
-}
-
-.product-modal.is-handoff .modal-close {
-  opacity: 0.55;
-}
-
-
-.dogbowl--landing .dogbowl-top {
-  padding: 14px 16px 8px;
-}
-
-.bowl-frame--landing {
-  aspect-ratio: 1 / 0.58;
-  max-width: 340px;
-  margin: 0 auto;
-}
-
-.dogbowl-body--landing {
-  padding: 0 16px 16px;
-}
-
-.cart-summary--landing {
-  gap: 8px;
-  max-width: 340px;
-  margin: 0 auto;
-}
-
-.cart-summary--landing .checkout-button {
-  width: 100%;
-}
-
-.cart-summary--landing .status-message {
-  min-height: 1.1em;
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .bowl-frame--landing,
-  .cart-summary--landing {
-    max-width: 380px;
-  }
-}
-
-
-
-/* Make bowl smaller and tighter */
-.bowl-frame--landing {
-  max-width: 260px !important;
-  transform: scale(0.9);
-  margin-top: 8px;
-}
-
-/* Slightly reduce overall bowl visual weight */
-.bowl-image {
-  transform: scale(0.92);
-}
-
-/* Keep layout centered and clean */
-.dogbowl--landing .dogbowl-top {
-  padding-top: 10px;
-}
-
-
-
-/* Tighten DogBowl vertical rhythm */
-.dogbowl-body--landing {
-  padding: 0 16px 6px !important;
-}
-
-/* Push DogBowl toward bottom */
-/* Trust card styling */
-/* CTA stacking */
-/* Modal breathing room refinement */
-.product-modal {
-  padding: 96px 18px 48px !important;
-  line-height: 1.35;
-}
-
-.product-modal h2 {
-  margin-bottom: 10px;
-}
-
-.product-modal .modal-price,
-.product-modal .modal-tagline {
-  margin-bottom: 10px;
-}
-
-.product-modal .modal-description {
-  margin-bottom: 14px;
-}
-
-.product-modal .pill-row,
-.product-modal .size-row,
-.product-modal .modal-size-selector {
-  margin-bottom: 16px;
-}
-
-.product-modal .qty-row,
-.product-modal .modal-quantity,
-.product-modal [data-quantity-stepper] {
-  margin-bottom: 18px;
-}
-
-.product-modal .cta {
-  margin-top: 10px;
-  margin-bottom: 6px;
-}
-
-
-/* Checkout CTA breaks border like modal CTA and anchors directly under modal zone */
-@media (max-width: 767px) {
-  }
-
-
-/* DogBowl shorter + stacked CTAs */
-.cart-summary--cta-above .checkout-button,
-@media (max-width: 767px) {
-  }
-
-
-
-/* Checked correction: restore modal CTA width, match checkout to it, trim DogBowl container */
-.product-modal .cta {
-  width: 82% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  left: 50% !important;
-  transform: translate(-50%, 50%) !important;
-}
-
-
-
-/* ===== MASTER HANDOFF FLOW ===== */
-.shop-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.shop-main {
-  display: flex;
-  flex-direction: column;
-}
-
-.shop-flow-cluster {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  gap: 12px;
-  margin: 0;
-  padding: 0 12px calc(env(safe-area-inset-bottom, 0px) + 4px);
-}
-
-.trust-box {
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding: 6px 4px;
-}
-
-.trust-box-copy {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 0.84rem;
-  line-height: 1.22;
-  letter-spacing: 0.01em;
-}
-
-.dogbowl,
-.dogbowl--landing {
-  margin-top: auto;
-  padding: 0;
-  background: none;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  overflow: visible;
-}
-
-.dogbowl-body,
-.dogbowl-body--landing {
-  width: 100%;
-  margin: 0;
-  padding: 0 16px;
-}
-
-.cart-summary,
-.cart-summary--landing {
-  display: grid;
-  justify-items: stretch;
-  gap: 6px;
-  width: 100%;
-}
-
-.summary-row {
-  display: none !important;
-}
-
-.primary-cta,
-.checkout-button,
-.newsletter-button,
-.cta {
-  appearance: none;
-  width: 100%;
-  border: 1px solid rgba(201, 162, 95, 0.65);
-  background: linear-gradient(180deg, var(--green) 0%, var(--green-dark) 100%);
-  color: #fff;
-  border-radius: 999px;
-  padding: 13px 20px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.primary-cta[disabled],
-.primary-cta.is-disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-
-.dogbowl-top,
-.dogbowl-top--clean {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin: 0;
-  padding: 2px 16px calc(env(safe-area-inset-bottom, 0px) + 1px);
-}
-
-.bowl-frame,
-.bowl-frame--landing {
-  max-width: 182px;
-  margin: 0 auto;
-}
-
-.bowl-note {
-  margin: 0;
-  min-height: 1.1em;
-  text-align: center;
-}
-
-.reset-dogbowl-button,
-#clearCartButton {
-  margin-top: 4px;
-  padding: 0;
-  font-size: 0.82rem;
-  line-height: 1.1;
-  opacity: 0.72;
-}
-
-.status-message {
-  min-height: 1.2em;
-  margin: 0;
-  text-align: center;
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-}
-
-.trust-strip,
-.trust-card,
-.trust-card-inner {
-  display: none !important;
-}
-
-@media (max-width: 767px) {
-  .shop-layout {
-    min-height: calc(100svh - 160px);
-  }
-
-  .shop-flow-cluster {
-    min-height: 0;
-  }
-}
-/* ===== END MASTER HANDOFF FLOW ===== */
-
-
-
-/* ===== bugfix: restore modal CTA and prevent stuck blur ===== */
-.modal-cta {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 82%;
-  margin: 0;
-  display: block;
-  transform: translate(-50%, 50%);
-  z-index: 3;
-  text-align: center;
-}
-
-body:not(.product-detail-open).handoff-active .shop,
-body:not(.product-detail-open).handoff-active .hero,
-body:not(.product-detail-open).handoff-active .story-section,
-body:not(.product-detail-open).handoff-active .lower-section,
-body:not(.product-detail-open).handoff-active .trust-strip {
-  filter: none !important;
-}
-/* ===== end bugfix ===== */
-
-
-/* ===== checked handoff rebuild ===== */
-.shop-layout {
-  display: flex;
-  flex-direction: column;
-}
-
-.shop-flow-cluster {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100svh - 220px);
-  gap: 10px;
-  padding: 0 12px calc(env(safe-area-inset-bottom, 0px) + 10px);
-}
-
-.trust-box {
-  flex: 1 1 auto;
-  display: flex;
-  align-items: flex-start;
-  padding: 10px 4px 16px;
-}
-
-.trust-box-copy {
-  margin: 0;
-  font-size: 0.84rem;
-  line-height: 1.25;
-}
-
-.primary-cta-global {
-  position: fixed;
-  left: 50%;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 132px);
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 360px;
-  z-index: 82;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 180ms ease, transform 180ms ease;
-}
-
-.primary-cta-global.is-visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.primary-cta-global[data-mode="checkout"] {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.dogbowl,
-.dogbowl--landing,
-.dogbowl--clean {
-  margin-top: auto;
-  background: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  overflow: visible;
-}
-
-.dogbowl-body,
-.dogbowl-body--landing {
-  padding: 0;
-}
-
-.cart-summary,
-.cart-summary--landing {
-  display: block;
-  min-height: 0;
-}
-
-.cart-summary .summary-row,
-.cart-summary--landing .summary-row {
-  display: none !important;
-}
-
-.dogbowl-top,
-.dogbowl-top--clean {
-  padding: 0 0 2px;
-}
-
-.bowl-frame,
-.bowl-frame--landing {
-  max-width: 184px;
-  margin: 0 auto;
-}
-
-.bowl-note {
-  margin: 2px 0 0;
-}
-
-.reset-dogbowl-button,
-#clearCartButton {
-  display: inline-block;
-  margin-top: 4px;
-}
-
-@media (max-width: 767px) {
-  .primary-cta-global {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 118px);
-  }
-
-  .shop-flow-cluster {
-    min-height: calc(100svh - 190px);
-  }
-}
-/* ===== end checked handoff rebuild ===== */
-
-
-/* ===== CTA visibility + modal border positioning fix ===== */
-.primary-cta-global {
-  display: none;
-  opacity: 1 !important;
-  pointer-events: none;
-}
-
-.primary-cta-global.is-visible {
-  display: block;
-  pointer-events: auto;
-}
-
-.primary-cta-global.is-modal-break {
-  position: fixed;
-  left: var(--cta-left, 50%);
-  top: var(--cta-top, 50%);
-  bottom: auto;
-  transform: translate(-50%, -50%);
-  width: min(82vw, 295px);
-  max-width: 295px;
-  z-index: 82;
-}
-
-.primary-cta-global.is-checkout-docked {
-  position: fixed;
-  left: 50%;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 118px);
-  top: auto;
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 360px;
-  z-index: 82;
-}
-
-@media (max-width: 767px) {
-  .primary-cta-global.is-checkout-docked {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 118px);
-  }
-}
-/* ===== end CTA visibility + modal border positioning fix ===== */
-
-
-/* ===== modal popup CTA visibility fix ===== */
-.primary-cta-global {
-  display: none !important;
-  opacity: 1 !important;
-  pointer-events: none !important;
-}
-
-.primary-cta-global.is-visible.is-modal-break,
-.primary-cta-global.is-visible.is-checkout-docked {
-  display: block !important;
-  pointer-events: auto !important;
-}
-
-.primary-cta-global.is-modal-break {
-  position: fixed;
-  left: var(--cta-left, 50%);
-  top: var(--cta-top, 50%);
-  bottom: auto !important;
-  transform: translate(-50%, -50%);
-  width: min(82vw, 295px);
-  max-width: 295px;
-  z-index: 82;
-}
-
-.primary-cta-global.is-checkout-docked {
-  position: fixed;
-  left: 50%;
-  top: auto !important;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 118px);
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 360px;
-  z-index: 82;
-}
-/* ===== end modal popup CTA visibility fix ===== */

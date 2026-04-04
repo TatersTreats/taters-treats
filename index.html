@@ -39,41 +39,39 @@
           <div id="products" class="products"></div>
         </section>
 
-        <section class="shop-flow-cluster" aria-label="DogBowl flow">
-          <section class="trust-box" aria-label="Why Tater's Treats">
-            <p class="trust-box-copy">Made to order. Small batch. No shortcuts.</p>
-          </section>
-
-          <button class="primary-cta primary-cta-global" id="checkoutButton" type="button" data-mode="add">Fill the DogBowl™</button>
-
-          <aside class="dogbowl dogbowl--clean dogbowl--landing" id="dogbowl" aria-label="DogBowl">
-            <div class="dogbowl-body dogbowl-body--landing">
-              <div class="cart-summary cart-summary--landing">
-                <div class="summary-row">
-                  <span id="cartCount">0</span>
-                  <span>items</span>
-                </div>
-<div id="cartStatus" class="status-message" aria-live="polite"></div>
-              </div>
+        <aside class="dogbowl dogbowl--clean" id="dogbowl" aria-label="DogBowl">
+          <div class="dogbowl-top dogbowl-top--clean">
+            <div class="bowl-frame">
+              <img
+                id="bowlImage"
+                class="bowl-image"
+                src="assets/images/dogbowl/dogbowl-ceramic-bowl-top-down.png"
+                alt="An empty DogBowl"
+              />
+              <div class="static-bowl-items"></div>
             </div>
 
-            <div class="dogbowl-top dogbowl-top--clean">
-              <div class="bowl-frame bowl-frame--landing">
-                <img
-                  id="bowlImage"
-                  class="bowl-image"
-                  src="assets/images/dogbowl/dogbowl-ceramic-bowl-top-down.png"
-                  alt="An empty DogBowl"
-                />
-                <div class="static-bowl-items"></div>
-              </div>
+            <p id="bowlNote" class="bowl-note">Your DogBowl™ is empty.</p>
+          </div>
 
-              <p id="bowlNote" class="bowl-note">Your DogBowl™ is empty.</p>
-              <button class="link-button reset-dogbowl-button" id="clearCartButton" type="button">Reset the DogBowl</button>
+          <div class="dogbowl-body">
+            <div class="cart-summary">
+              <div class="summary-row">
+                <span id="cartCount">0</span>
+                <span>items</span>
+              </div>
+              <button class="checkout-button" id="checkoutButton" type="button">Checkout</button>
+              <button class="link-button" id="clearCartButton" type="button">Empty the DogBowl</button>
+              <div id="cartStatus" class="status-message"></div>
             </div>
-          </aside>
-        </section>
+          </div>
+        </aside>
       </div>
+    </section>
+
+    <section class="trust-strip">
+      <p class="trust-line">Premium, Small-Batch Canine Confections.</p>
+    </section>
 
     <section class="section lower-section" id="barkers-dozen-section">
       <div class="lower-grid lower-grid-single">
