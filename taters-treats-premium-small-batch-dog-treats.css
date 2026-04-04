@@ -2072,3 +2072,41 @@ body:not(.product-detail-open).handoff-active .trust-strip {
   margin: 4px 0 0 !important;
 }
 /* ===== END PRIME DIRECTIVE ===== */
+
+
+/* ===== trust + modal + alignment cleanup ===== */
+
+/* trust should match site cards, be shorter, and align with modal */
+.trust-stack {
+  width: min(92vw, 360px) !important;
+  height: 38vh !important;
+  max-height: 300px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  left: auto !important;
+  transform: none !important;
+}
+
+.trust-box {
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  outline: none !important;
+}
+
+/* blur stays on overlay, modal stays crisp above it */
+.product-overlay {
+  z-index: 1000 !important;
+}
+
+.product-modal {
+  position: fixed !important;
+  z-index: 1001 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.primary-cta-global {
+  z-index: 1002 !important;
+}
+
+/* ===== end trust + modal + alignment cleanup ===== */
