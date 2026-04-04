@@ -1914,3 +1914,23 @@ body:not(.product-detail-open).handoff-active .trust-strip {
   margin-top: 4px !important;
 }
 /* ===== END OPTION A MINIMAL REBUILD ===== */
+
+
+/* ===== FINAL ANCHOR FIX ===== */
+
+.trust-box {
+  flex: 1 !important;
+}
+
+.cta-gap {
+  position: relative !important;
+}
+
+.primary-cta-global {
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* ===== END ===== */
