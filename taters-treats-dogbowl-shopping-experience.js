@@ -203,7 +203,8 @@ async function openDetail(card) {
   state.activeModal = modal;
 
   bindModal(modal, overlay, product);
-  updateCTAState(state.cartItems.length > 0);
+  updateCTAState(state.bowlCount > 0);
+  (modal);
   requestAnimationFrame(() => overlay.classList.add("active"));
   const scrollPromise = scrollToShop();
 
@@ -348,9 +349,23 @@ function addWoofleToBowl(imageSrc, targetPoint) {
 
 
 
+function (modal = state.activeModal) {
+  if (!primaryCta || !modal) return;
+
+  const rect = modal.getBoundingClientRect();
+  document.documentElement.style.setProperty("--cta-left", `${rect.left + rect.width / 2}px`);
+  document.documentElement.style.setProperty("--cta-top", `${rect.bottom}px`);
+}
+
 function setPrimaryCtaVisibility(isVisible) {
   if (!primaryCta) return;
   primaryCta.classList.toggle("is-visible", Boolean(isVisible));
+}
+
+function (mode) {
+  if (!primaryCta) return;
+  primaryCta.classList.remove("is-modal-break", "is-checkout-docked");
+  if (mode) primaryCta.classList.add(mode);
 }
 
 function syncPendingSelection(product, size, quantity) {
@@ -362,7 +377,7 @@ function syncPendingSelection(product, size, quantity) {
   state.pendingSelection = { product, size, quantity };
 }
 
-function updateCTAState(hasItems = state.cartItems.length > 0) {
+function updateCTAState(hasItems = state.bowlCount > 0) {
   if (!primaryCta) return;
 
   if (state.activeModal && state.pendingSelection?.product) {
@@ -370,6 +385,8 @@ function updateCTAState(hasItems = state.cartItems.length > 0) {
     primaryCta.dataset.mode = "add";
     primaryCta.disabled = false;
     primaryCta.classList.remove("is-disabled");
+    ("is-modal-break");
+    (state.activeModal);
     setPrimaryCtaVisibility(true);
     return;
   }
@@ -379,6 +396,7 @@ function updateCTAState(hasItems = state.cartItems.length > 0) {
     primaryCta.dataset.mode = "checkout";
     primaryCta.disabled = false;
     primaryCta.classList.remove("is-disabled");
+    ("is-checkout-docked");
     setPrimaryCtaVisibility(true);
     return;
   }
@@ -387,16 +405,16 @@ function updateCTAState(hasItems = state.cartItems.length > 0) {
   primaryCta.dataset.mode = "add";
   primaryCta.disabled = true;
   primaryCta.classList.add("is-disabled");
+  ("");
   setPrimaryCtaVisibility(false);
 }
-
 
 
 
 function addToDogBowl() {
   const selection = state.pendingSelection;
   if (!selection?.product || !state.activeModal) {
-    updateCTAState(state.cartItems.length > 0);
+    updateCTAState(state.bowlCount > 0);
     return;
   }
 
@@ -415,7 +433,7 @@ function addToDogBowl() {
   window.setTimeout(() => {
     closeModal({ preserveHandoffWoofle: true });
     syncPendingSelection(null);
-    updateCTAState(state.cartItems.length > 0);
+    updateCTAState(true);
   }, 120);
 }
 
@@ -719,7 +737,7 @@ function bindModal(modal, overlay, product) {
       dialEl.setAttribute("aria-valuetext", `${quantity}`);
     }
     syncPendingSelection(activeProduct, selectedSize, quantity);
-    updateCTAState(state.cartItems.length > 0);
+    updateCTAState(state.bowlCount > 0);
   };
 
   const resetModalSelectionState = () => {
@@ -732,7 +750,7 @@ function bindModal(modal, overlay, product) {
       priceEl.textContent = activeProduct.displayPrices?.Regular || "$18 — delivered";
     }
     syncPendingSelection(activeProduct, selectedSize, quantity);
-    updateCTAState(state.cartItems.length > 0);
+    updateCTAState(state.bowlCount > 0);
   };
 
   const syncModalProduct = () => {
@@ -780,7 +798,7 @@ function bindModal(modal, overlay, product) {
         priceEl.textContent = activeProduct.displayPrices?.[selectedSize] || "$18 — delivered";
       }
       syncPendingSelection(activeProduct, selectedSize, quantity);
-      updateCTAState(state.cartItems.length > 0);
+      updateCTAState(state.bowlCount > 0);
     });
   });
 
@@ -866,7 +884,6 @@ function bindModal(modal, overlay, product) {
     modal.style.setProperty("--swipe-shift-x", "0px");
   }, { passive: true });
 
-  syncModalProduct();
   overlay.addEventListener("click", closeModal);
 }
 
@@ -900,7 +917,7 @@ function closeModal(options = {}) {
     document.body.style.removeProperty("--header-offset");
     state.activeSourceCard = null;
     syncPendingSelection(null);
-    updateCTAState(state.cartItems.length > 0);
+    updateCTAState(state.bowlCount > 0);
   }, MODAL_CLOSE_DURATION_MS);
 }
 
@@ -945,13 +962,20 @@ updateBowlUi();
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     document.body.classList.remove("handoff-active");
-    updateCTAState(state.cartItems.length > 0);
+    updateCTAState(state.bowlCount > 0);
+    if (state.activeModal) (state.activeModal);
     if (cartStatus) cartStatus.textContent = "";
   }
 });
 
 
+window.addEventListener("resize", () => {
+  if (state.activeModal) (state.activeModal);
+});
 
+window.addEventListener("scroll", () => {
+  if (state.activeModal) (state.activeModal);
+}, { passive: true });
 
 
 
