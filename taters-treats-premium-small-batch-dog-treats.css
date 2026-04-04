@@ -441,15 +441,13 @@ body.product-detail-open {
 }
 
 .product-modal {
-  --swipe-shift-x: 0px;
-  touch-action: pan-y;
   position: fixed;
   left: 50%;
   top: 50%;
   width: min(92vw, 360px);
   max-height: none;
   overflow: visible;
-  transform: translate(calc(-50% + var(--swipe-shift-x)), -58%) scale(0.96);
+  transform: translate(-50%, -58%) scale(0.96);
   background: linear-gradient(180deg, #f7f1e7 0%, #f4eadb 100%);
   border: 1px solid rgba(201, 162, 95, 0.22);
   border-radius: 24px;
@@ -462,12 +460,7 @@ body.product-detail-open {
 
 .product-modal.active {
   opacity: 1;
-  transform: translate(calc(-50% + var(--swipe-shift-x)), -62%) scale(1);
-}
-
-.product-modal.is-swiping,
-.product-modal.is-swipe-settling {
-  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 140ms ease;
+  transform: translate(-50%, -62%) scale(1);
 }
 
 .product-modal::before {
@@ -1765,76 +1758,3 @@ body:not(.product-detail-open).handoff-active .trust-strip {
   z-index: 82;
 }
 /* ===== end modal popup CTA visibility fix ===== */
-
-
-/* ===== FINAL SYSTEM (CLEAN) ===== */
-
-/* unified center line */
-.trust-stack,
-.product-modal,
-.dogbowl {
-  width: 100%;
-  max-width: 420px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* trust fills remaining space */
-.shop-flow-cluster {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100svh - 160px);
-}
-
-.trust-stack {
-  position: relative;
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-}
-
-/* trust visual */
-.trust-box {
-  position: relative;
-  width: 100%;
-  min-height: 220px;
-
-  border-radius: 16px;
-  border: 1px solid rgba(201,162,95,0.45);
-  background: transparent;
-
-  box-shadow: 0 10px 24px rgba(25,16,10,0.16);
-}
-
-/* CTA anchored to bottom edge */
-.cta-gap {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.primary-cta-global {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 50%);
-  z-index: 3000;
-}
-
-/* layering */
-.product-overlay { z-index: 2000; }
-.product-modal { z-index: 2001; }
-
-/* dogbowl aligned + clean */
-.dogbowl {
-  display: flex;
-  justify-content: center;
-}
-
-.bowl-frame {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ===== END SYSTEM ===== */

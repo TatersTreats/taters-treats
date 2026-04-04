@@ -204,7 +204,7 @@ async function openDetail(card) {
 
   bindModal(modal, overlay, product);
   updateCTAState(state.bowlCount > 0);
-  (modal);
+  positionPrimaryCtaToModal(modal);
   requestAnimationFrame(() => overlay.classList.add("active"));
   const scrollPromise = scrollToShop();
 
@@ -349,7 +349,7 @@ function addWoofleToBowl(imageSrc, targetPoint) {
 
 
 
-function (modal = state.activeModal) {
+function positionPrimaryCtaToModal(modal = state.activeModal) {
   if (!primaryCta || !modal) return;
 
   const rect = modal.getBoundingClientRect();
@@ -362,7 +362,7 @@ function setPrimaryCtaVisibility(isVisible) {
   primaryCta.classList.toggle("is-visible", Boolean(isVisible));
 }
 
-function (mode) {
+function setPrimaryCtaPlacement(mode) {
   if (!primaryCta) return;
   primaryCta.classList.remove("is-modal-break", "is-checkout-docked");
   if (mode) primaryCta.classList.add(mode);
@@ -385,8 +385,8 @@ function updateCTAState(hasItems = state.bowlCount > 0) {
     primaryCta.dataset.mode = "add";
     primaryCta.disabled = false;
     primaryCta.classList.remove("is-disabled");
-    ("is-modal-break");
-    (state.activeModal);
+    setPrimaryCtaPlacement("is-modal-break");
+    positionPrimaryCtaToModal(state.activeModal);
     setPrimaryCtaVisibility(true);
     return;
   }
@@ -396,7 +396,7 @@ function updateCTAState(hasItems = state.bowlCount > 0) {
     primaryCta.dataset.mode = "checkout";
     primaryCta.disabled = false;
     primaryCta.classList.remove("is-disabled");
-    ("is-checkout-docked");
+    setPrimaryCtaPlacement("is-checkout-docked");
     setPrimaryCtaVisibility(true);
     return;
   }
@@ -405,7 +405,7 @@ function updateCTAState(hasItems = state.bowlCount > 0) {
   primaryCta.dataset.mode = "add";
   primaryCta.disabled = true;
   primaryCta.classList.add("is-disabled");
-  ("");
+  setPrimaryCtaPlacement("");
   setPrimaryCtaVisibility(false);
 }
 
@@ -708,14 +708,6 @@ function bindModal(modal, overlay, product) {
   let currentProductIndex = Math.max(0, PRODUCTS.findIndex((item) => item.id === product.id));
   let quantity = 1;
   let selectedSize = "Regular";
-  let touchStartX = null;
-  let touchStartY = null;
-  let latestTouchDeltaX = 0;
-
-  const SWIPE_THRESHOLD_PX = 44;
-  const VERTICAL_GUARD_PX = 28;
-  const SWIPE_DRAG_PX = 4;
-  const SWIPE_SETTLE_MS = 70;
   const MODAL_HANDOFF_RELEASE_DELAY_MS = 700;
 
   const valueEl = modal.querySelector(".qty-value");
@@ -768,12 +760,6 @@ function bindModal(modal, overlay, product) {
     resetModalSelectionState();
   };
 
-  const cycleProduct = (direction) => {
-    if (!PRODUCTS.length) return;
-    currentProductIndex = (currentProductIndex + direction + PRODUCTS.length) % PRODUCTS.length;
-    activeProduct = PRODUCTS[currentProductIndex];
-    syncModalProduct();
-  };
 
   modal.addEventListener("click", (event) => event.stopPropagation());
   modal.tabIndex = -1;
@@ -803,87 +789,8 @@ function bindModal(modal, overlay, product) {
   });
 
 
-  modal.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      cycleProduct(-1);
-    }
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      cycleProduct(1);
-    }
-  });
 
-  modal.addEventListener("touchstart", (event) => {
-    if (event.touches.length !== 1) return;
-    touchStartX = event.touches[0].clientX;
-    touchStartY = event.touches[0].clientY;
-    latestTouchDeltaX = 0;
-    modal.classList.add("is-swiping");
-    modal.style.setProperty("--swipe-shift-x", "0px");
-  }, { passive: true });
-
-  modal.addEventListener("touchmove", (event) => {
-    if (touchStartX == null || touchStartY == null || !event.touches.length) return;
-
-    const touch = event.touches[0];
-    const deltaX = touch.clientX - touchStartX;
-    const deltaY = touch.clientY - touchStartY;
-
-    latestTouchDeltaX = deltaX;
-
-    if (Math.abs(deltaY) > Math.abs(deltaX)) return;
-
-    const dragOffset = Math.max(-SWIPE_DRAG_PX, Math.min(SWIPE_DRAG_PX, deltaX * 0.12));
-    modal.style.setProperty("--swipe-shift-x", `${dragOffset.toFixed(2)}px`);
-  }, { passive: true });
-
-  modal.addEventListener("touchend", (event) => {
-    modal.classList.remove("is-swiping");
-
-    if (touchStartX == null || touchStartY == null || !event.changedTouches.length) {
-      modal.style.setProperty("--swipe-shift-x", "0px");
-      return;
-    }
-
-    const touch = event.changedTouches[0];
-    const deltaX = touch.clientX - touchStartX;
-    const deltaY = touch.clientY - touchStartY;
-
-    touchStartX = null;
-    touchStartY = null;
-    latestTouchDeltaX = 0;
-
-    if (Math.abs(deltaX) < SWIPE_THRESHOLD_PX || Math.abs(deltaY) > Math.abs(deltaX) || Math.abs(deltaY) > VERTICAL_GUARD_PX) {
-      modal.style.setProperty("--swipe-shift-x", "0px");
-      return;
-    }
-
-    modal.classList.add("is-swipe-settling");
-    modal.style.setProperty("--swipe-shift-x", deltaX < 0 ? "-4px" : "4px");
-
-    window.setTimeout(() => {
-      if (deltaX < 0) {
-        cycleProduct(1);
-      } else {
-        cycleProduct(-1);
-      }
-      modal.style.setProperty("--swipe-shift-x", "0px");
-      window.setTimeout(() => {
-        modal.classList.remove("is-swipe-settling");
-      }, 140);
-    }, SWIPE_SETTLE_MS);
-  }, { passive: true });
-
-  modal.addEventListener("touchcancel", () => {
-    touchStartX = null;
-    touchStartY = null;
-    latestTouchDeltaX = 0;
-    modal.classList.remove("is-swiping");
-    modal.classList.remove("is-swipe-settling");
-    modal.style.setProperty("--swipe-shift-x", "0px");
-  }, { passive: true });
-
+  syncModalProduct();
   overlay.addEventListener("click", closeModal);
 }
 
@@ -963,18 +870,18 @@ document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     document.body.classList.remove("handoff-active");
     updateCTAState(state.bowlCount > 0);
-    if (state.activeModal) (state.activeModal);
+    if (state.activeModal) positionPrimaryCtaToModal(state.activeModal);
     if (cartStatus) cartStatus.textContent = "";
   }
 });
 
 
 window.addEventListener("resize", () => {
-  if (state.activeModal) (state.activeModal);
+  if (state.activeModal) positionPrimaryCtaToModal(state.activeModal);
 });
 
 window.addEventListener("scroll", () => {
-  if (state.activeModal) (state.activeModal);
+  if (state.activeModal) positionPrimaryCtaToModal(state.activeModal);
 }, { passive: true });
 
 
