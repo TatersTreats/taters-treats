@@ -1767,217 +1767,79 @@ body:not(.product-detail-open).handoff-active .trust-strip {
 /* ===== end modal popup CTA visibility fix ===== */
 
 
-/* ===== locked flow stabilization ===== */
+/* ===== OPTION A MINIMAL REBUILD: locked flow ===== */
+.shop-layout {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.shop-flow-cluster {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: calc(100svh - 172px) !important;
+  gap: 0 !important;
+  padding: 0 12px calc(env(safe-area-inset-bottom, 0px) + 6px) !important;
+}
+
 .trust-box {
-  min-height: 72px;
-  display: flex;
-  align-items: center;
+  flex: 0 0 auto !important;
+  min-height: 78px !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 8px 4px 0 !important;
+}
+
+.trust-box-copy {
+  margin: 0 !important;
+  color: var(--ink-soft) !important;
+  font-size: 0.84rem !important;
+  line-height: 1.22 !important;
 }
 
 .cta-gap {
-  min-height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative !important;
+  flex: 0 0 auto !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 1400 !important;
 }
 
 .primary-cta-global {
   display: none !important;
-  position: static !important;
-  inset: auto !important;
-  left: auto !important;
-  top: auto !important;
-  bottom: auto !important;
-  transform: none !important;
-  width: 100%;
-  max-width: 360px;
-  opacity: 1 !important;
-  pointer-events: none !important;
-  z-index: auto !important;
-}
-
-.primary-cta-global.is-visible {
-  display: block !important;
-  pointer-events: auto !important;
-}
-
-.dogbowl,
-.dogbowl--landing,
-.dogbowl--clean {
-  background: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-
-.bowl-frame,
-.bowl-frame--landing {
-  max-width: 214px;
-}
-/* ===== end locked flow stabilization ===== */
-
-
-/* ===== CTA foreground layer fix ===== */
-.product-overlay {
-  z-index: 60;
-}
-
-.product-modal {
-  z-index: 70;
-}
-
-.primary-cta-global {
-  z-index: 85 !important;
-  filter: none !important;
-  opacity: 1 !important;
-}
-
-.primary-cta-global.is-visible {
-  position: fixed !important;
+  position: absolute !important;
   left: 50% !important;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 118px) !important;
-  transform: translateX(-50%) !important;
-  width: calc(100% - 32px) !important;
-  max-width: 360px !important;
+  top: 0 !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  width: calc(100% - 92px) !important;
+  max-width: 280px !important;
+  opacity: 1 !important;
+  filter: none !important;
+  pointer-events: none !important;
+  z-index: 1400 !important;
+}
+
+.primary-cta-global.is-visible {
   display: block !important;
   pointer-events: auto !important;
 }
 
-@media (max-width: 767px) {
-  .primary-cta-global.is-visible {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 118px) !important;
-  }
-}
-/* ===== end CTA foreground layer fix ===== */
-
-
-/* ===== ROUND 2 FIXES ===== */
-
-/* CTA width + position */
-.primary-cta-global.is-visible {
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 180px) !important; /* move UP */
-  max-width: 300px !important; /* narrower */
-}
-
-/* Dogbowl remove ALL border remnants */
-.dogbowl,
-.dogbowl--landing,
-.dogbowl--clean {
-  border: none !important;
-  outline: none !important;
-  background: none !important;
-  box-shadow: none !important;
-}
-
-/* Move bowl closer under CTA */
-.cta-gap {
-  margin-top: auto;
-}
-
-.dogbowl {
-  margin-top: 8px !important;
-}
-
-/* Slightly center visual mass */
-.dogbowl-top {
-  align-items: center;
-}
-
-/* ===== END ROUND 2 ===== */
-
-
-/* ===== FINAL FIX 3 ===== */
-
-/* CTA ABOVE EVERYTHING */
-.primary-cta-global {
-  z-index: 9999 !important;
+.product-overlay {
+  z-index: 60 !important;
 }
 
 .product-modal {
   z-index: 900 !important;
 }
 
-.product-overlay {
-  z-index: 800 !important;
-}
-
-/* tighten CTA */
-.primary-cta-global.is-visible {
-  max-width: 280px !important;
-}
-
-/* REMOVE ALL DOGBOWL BORDERS (nuclear) */
-.dogbowl,
-.dogbowl--landing,
-.dogbowl--clean,
-.dogbowl *,
-.bowl-frame,
-.cart-summary {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  background: none !important;
-}
-
-/* MOVE BOWL UP INTO GAP */
-.shop-flow-cluster {
-  display: flex;
-  flex-direction: column;
-}
-
-.cta-gap {
-  margin-bottom: 8px;
-}
-
-.dogbowl {
-  margin-top: 0 !important;
-}
-
-/* center bowl vertically better */
-.dogbowl-top {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* ===== END FIX ===== */
-
-
-/* ===== FINAL MICRO ADJUST ===== */
-/* move CTA slightly up for true 50/50 split */
-.primary-cta-global.is-visible {
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 210px) !important;
-}
-/* ===== END ===== */
-
-
-/* ===== DOGBOX BORDER REMOVAL (FINAL) ===== */
-.dogbox,
-.dogbox * {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  background: none !important;
-}
-/* ===== END ===== */
-
-
-/* ===== CTA rollback + actual DogBowl box removal ===== */
-
-/* Bring the CTA back down slightly from the overcorrected position. */
-.primary-cta-global.is-visible {
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 184px) !important;
-}
-
-/* Kill the actual DogBowl box chrome, not the imaginary dogbox selector. */
 .dogbowl,
 .dogbowl--landing,
 .dogbowl--clean,
 .dogbowl::before,
 .dogbowl::after,
-.dogbowl--landing::before,
-.dogbowl--landing::after,
-.dogbowl--clean::before,
-.dogbowl--clean::after,
 .dogbowl-top,
 .dogbowl-top--clean,
 .dogbowl-body,
@@ -1993,34 +1855,62 @@ body:not(.product-detail-open).handoff-active .trust-strip {
   background-image: none !important;
 }
 
-/* Keep the bowl itself visually present without a surrounding box. */
-.bowl-frame,
-.bowl-frame--landing {
+.dogbowl,
+.dogbowl--landing,
+.dogbowl--clean {
+  flex: 1 1 auto !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
   overflow: visible !important;
 }
-/* ===== end CTA rollback + actual DogBowl box removal ===== */
 
-
-/* ===== MICRO TUNE ===== */
-
-/* CTA up ~4px */
-.primary-cta-global.is-visible {
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 188px) !important;
+.dogbowl-body,
+.dogbowl-body--landing {
+  width: 100% !important;
+  padding: 0 !important;
+  min-height: 0 !important;
 }
 
-/* tighten gap so bowl sits cleanly under CTA */
-.cta-gap {
-  margin-bottom: 4px !important;
-  padding-bottom: 0 !important;
+.cart-summary,
+.cart-summary--landing {
+  display: block !important;
+  min-height: 0 !important;
 }
 
-.dogbowl {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+.summary-row,
+.cart-summary .summary-row,
+.cart-summary--landing .summary-row {
+  display: none !important;
 }
 
-/* ===== END ===== */
+.dogbowl-top,
+.dogbowl-top--clean {
+  width: 100% !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.bowl-frame,
+.bowl-frame--landing {
+  width: min(74vw, 244px) !important;
+  max-width: 244px !important;
+  margin: 0 auto !important;
+  overflow: visible !important;
+}
+
+.bowl-note {
+  margin: 4px 0 0 !important;
+  text-align: center !important;
+}
+
+.reset-dogbowl-button,
+#clearCartButton {
+  margin-top: 4px !important;
+}
+/* ===== END OPTION A MINIMAL REBUILD ===== */
