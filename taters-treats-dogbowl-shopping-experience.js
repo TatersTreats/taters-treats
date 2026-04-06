@@ -84,6 +84,14 @@ const state = {
   activeSourceCard: null
 };
 
+function getDisplayedItemCount() {
+  return state.cartItems.reduce((total, item) => {
+    const sizeUnits = SIZE_COUNTS[item.size] || 1;
+    return total + (sizeUnits * item.quantity);
+  }, 0);
+}
+
+
 function renderProducts() {
   if (!productsEl) return;
 
@@ -376,7 +384,7 @@ async function beginCheckout() {
     if (cartStatus) {
       cartStatus.textContent = "Add a few Woofles first.";
       window.setTimeout(() => {
-        if (cartStatus) updateShippingMessage(state.bowlCount);
+        if (cartStatus) updateShippingMessage(getDisplayedItemCount());
       }, 1400);
     }
     return;
@@ -419,7 +427,7 @@ async function beginCheckout() {
     if (cartStatus) {
       cartStatus.textContent = error?.message || "Checkout failed.";
       window.setTimeout(() => {
-        if (cartStatus) updateShippingMessage(state.bowlCount);
+        if (cartStatus) updateShippingMessage(getDisplayedItemCount());
       }, 2200);
     }
     if (checkoutButton) {
@@ -430,7 +438,7 @@ async function beginCheckout() {
 }
 
 function updateBowlUi() {
-  const count = state.bowlCount;
+  const count = getDisplayedItemCount();
   if (cartCountEl) cartCountEl.textContent = String(count);
   updateShippingMessage(count);
 
@@ -658,6 +666,7 @@ function bindModal(modal, overlay, product) {
     ctaButton.textContent = "Added ✓";
 
     addCartSelection(product, selectedSize, quantity);
+    updateBowlUi();
     launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
 
     window.setTimeout(() => {
@@ -710,7 +719,7 @@ clearCartButton?.addEventListener("click", () => {
   updateBowlUi();
   if (cartStatus) cartStatus.textContent = "DogBowl™ cleared.";
   window.setTimeout(() => {
-    if (cartStatus) updateShippingMessage(state.bowlCount);
+    if (cartStatus) updateShippingMessage(getDisplayedItemCount());
   }, 1400);
 });
 
@@ -729,7 +738,7 @@ document.addEventListener("visibilitychange", () => {
       checkoutButton.textContent = "🔒 Secure Checkout";
       checkoutButton.disabled = false;
     }
-    if (cartStatus) updateShippingMessage(state.bowlCount);
+    if (cartStatus) updateShippingMessage(getDisplayedItemCount());
   }
 });
 
