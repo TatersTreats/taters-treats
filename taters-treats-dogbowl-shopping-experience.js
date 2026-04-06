@@ -837,3 +837,17 @@ document.addEventListener("keydown", (event) => {
     closeStoryModal();
   }
 });
+
+
+function updateShippingMessage(count) {
+  let message = "Free Shipping";
+  if (count >= 3 && count <= 5) {
+    message = "Free 3-Day Shipping";
+  } else if (count >= 6) {
+    message = "Free 2-Day Shipping";
+  }
+  const statusEl = document.getElementById("cartStatus");
+  if (statusEl) statusEl.textContent = message;
+}
+
+updateShippingMessage(0);
