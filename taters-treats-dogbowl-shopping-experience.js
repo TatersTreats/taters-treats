@@ -376,7 +376,7 @@ async function beginCheckout() {
     if (cartStatus) {
       cartStatus.textContent = "Add a few Woofles first.";
       window.setTimeout(() => {
-        if (cartStatus) cartStatus.textContent = "";
+        if (cartStatus) updateShippingMessage(state.bowlCount);
       }, 1400);
     }
     return;
@@ -419,12 +419,12 @@ async function beginCheckout() {
     if (cartStatus) {
       cartStatus.textContent = error?.message || "Checkout failed.";
       window.setTimeout(() => {
-        if (cartStatus) cartStatus.textContent = "";
+        if (cartStatus) updateShippingMessage(state.bowlCount);
       }, 2200);
     }
     if (checkoutButton) {
       checkoutButton.disabled = false;
-      checkoutButton.textContent = "Checkout";
+      checkoutButton.textContent = "🔒 Secure Checkout";
     }
   }
 }
@@ -432,6 +432,7 @@ async function beginCheckout() {
 function updateBowlUi() {
   const count = state.bowlCount;
   if (cartCountEl) cartCountEl.textContent = String(count);
+  updateShippingMessage(count);
 
   if (bowlImageEl) {
     bowlImageEl.src = BOWL_NEUTRAL.image;
@@ -709,7 +710,7 @@ clearCartButton?.addEventListener("click", () => {
   updateBowlUi();
   if (cartStatus) cartStatus.textContent = "DogBowl™ cleared.";
   window.setTimeout(() => {
-    if (cartStatus) cartStatus.textContent = "";
+    if (cartStatus) updateShippingMessage(state.bowlCount);
   }, 1400);
 });
 
@@ -725,10 +726,10 @@ updateBowlUi();
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     if (checkoutButton) {
-      checkoutButton.textContent = "Checkout";
+      checkoutButton.textContent = "🔒 Secure Checkout";
       checkoutButton.disabled = false;
     }
-    if (cartStatus) cartStatus.textContent = "";
+    if (cartStatus) updateShippingMessage(state.bowlCount);
   }
 });
 
