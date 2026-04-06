@@ -1,0 +1,11 @@
+TATER'S TREATS REVISION NOTE
+Timestamp: 20260406-133050
+
+Changed files:
+- index.html
+- taters-treats-premium-small-batch-dog-treats.css
+- taters-treats-dogbowl-shopping-experience.js (extracted copy only; no logic changes)
+
+Revision summary:
+- Reordered DogBowl stack to: Checkout button, feedback message, bowl visual, Empty the DogBowl action.
+- Added scoped CSS override block to support the new structural order without touching checkout logic.

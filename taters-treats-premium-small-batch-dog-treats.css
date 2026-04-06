@@ -1274,3 +1274,58 @@ body.story-modal-open {
 
 .flying-woofel { z-index: 10 !important; }
 .product-modal, .modal-overlay { z-index: 1000 !important; }
+
+
+/* 2026-04-06 structural reset: DogBowl order = checkout, feedback, bowl, reset */
+.dogbowl {
+  display: flex;
+  flex-direction: column;
+}
+
+.dogbowl-body {
+  padding: 16px 16px 0;
+  display: block;
+  flex: 0 0 auto;
+  height: auto;
+}
+
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.checkout-button {
+  width: 100%;
+  margin: 0;
+  order: initial;
+}
+
+.status-message,
+#cartStatus {
+  min-height: 1.2em;
+  margin: 0;
+  text-align: center;
+  order: initial;
+}
+
+.dogbowl-top {
+  padding: 14px 16px 12px;
+}
+
+.bowl-note {
+  margin: 10px 0 0;
+}
+
+.dogbowl-actions {
+  padding: 0 16px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+#clearCartButton {
+  margin: 0;
+  order: initial;
+  align-self: center;
+}
