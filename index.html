@@ -40,19 +40,6 @@
         </section>
 
         <aside class="dogbowl dogbowl--clean" id="dogbowl" aria-label="DogBowl">
-          <div class="dogbowl-body">
-            <div class="cart-summary">
-              <div class="summary-row">
-                <span id="cartCount">0</span>
-                <span>items</span>
-              </div>
-              <button class="checkout-button" id="checkoutButton" type="button">🔒 Secure Checkout</button>
-              
-            </div>
-          </div>
-
-          <div id="cartStatus" class="status-message"></div>
-
           <div class="dogbowl-top dogbowl-top--clean">
             <div class="bowl-frame">
               <img
@@ -63,10 +50,20 @@
               />
               <div class="static-bowl-items"></div>
             </div>
-</div>
 
-          <div class="dogbowl-actions">
-            <button class="link-button" id="clearCartButton" type="button">Empty the DogBowl</button>
+            <p id="bowlNote" class="bowl-note">Your DogBowl™ is empty.</p>
+          </div>
+
+          <div class="dogbowl-body">
+            <div class="cart-summary">
+              <div class="summary-row">
+                <span id="cartCount">0</span>
+                <span>items</span>
+              </div>
+              <button class="checkout-button" id="checkoutButton" type="button">Checkout</button>
+              <button class="link-button" id="clearCartButton" type="button">Empty the DogBowl</button>
+              <div id="cartStatus" class="status-message"></div>
+            </div>
           </div>
         </aside>
       </div>
@@ -138,7 +135,7 @@
     <div class="bd-modal-text">
       <h2 id="bd-modal-title">Barker’s Dozen</h2>
       <p>Members-only confections, delivered monthly.</p>
-      <button class="bd-learn-more" type="button">Learn More</button>
+      <a class="bd-learn-more" href="barkers-dozen.html">Learn More</a>
     </div>
   </div>
 </div>

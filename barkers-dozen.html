@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barker’s Dozen | Tater’s Treats</title>
+  <meta name="description" content="Barker’s Dozen by Tater’s Treats. Monthly small-batch treats, exclusive flavors, and members-only drops." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="taters-treats-premium-small-batch-dog-treats.css" />
+  <style>
+    :root {
+      --bd-max: 1120px;
+      --bd-card: rgba(255,255,255,0.82);
+      --bd-border: rgba(33, 24, 18, 0.10);
+      --bd-shadow: 0 18px 45px rgba(45, 30, 18, 0.08);
+      --bd-accent: #7a573f;
+    }
+    body.bd-page {
+      margin: 0;
+      color: #241a14;
+      background:
+        radial-gradient(circle at top, rgba(212, 180, 141, 0.22), transparent 34%),
+        linear-gradient(180deg, #fcf8f3 0%, #f7f0e7 100%);
+      font-family: "Inter", sans-serif;
+    }
+    .bd-wrap {
+      width: min(var(--bd-max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .bd-header {
+      padding: 18px 0 10px;
+    }
+    .bd-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #5d4434;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .bd-hero {
+      padding: 56px 0 32px;
+      text-align: center;
+    }
+    .bd-eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--bd-accent);
+    }
+    .bd-hero h1,
+    .bd-section h2 {
+      font-family: "Playfair Display", serif;
+      line-height: 1.02;
+      margin: 0 0 14px;
+    }
+    .bd-hero h1 {
+      font-size: clamp(2.6rem, 9vw, 4.9rem);
+    }
+    .bd-hero p {
+      width: min(680px, 100%);
+      margin: 0 auto;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #5b473c;
+    }
+    .bd-section {
+      padding: 20px 0;
+    }
+    .bd-card {
+      background: var(--bd-card);
+      border: 1px solid var(--bd-border);
+      border-radius: 28px;
+      box-shadow: var(--bd-shadow);
+      padding: 24px;
+      backdrop-filter: blur(8px);
+    }
+    .bd-grid {
+      display: grid;
+      gap: 18px;
+    }
+    .bd-grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .bd-feature-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .bd-feature-list li {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(33, 24, 18, 0.08);
+      font-weight: 600;
+      color: #3b2a20;
+    }
+    .bd-plan {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+    .bd-plan.featured {
+      outline: 2px solid rgba(122, 87, 63, 0.22);
+      transform: translateY(-4px);
+    }
+    .bd-plan-badge {
+      display: inline-block;
+      align-self: start;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(122, 87, 63, 0.12);
+      color: var(--bd-accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .bd-price {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #241a14;
+    }
+    .bd-price span {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #6b574c;
+    }
+    .bd-plan p,
+    .bd-section p {
+      margin: 0;
+      color: #5b473c;
+      line-height: 1.7;
+    }
+    .bd-plan ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #4c392f;
+      line-height: 1.7;
+    }
+    .bd-hook {
+      text-align: center;
+    }
+    .bd-hook .bd-card {
+      padding: 28px;
+    }
+    .bd-cta {
+      padding: 30px 0 64px;
+      text-align: center;
+    }
+    .bd-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      border: none;
+      background: #241a14;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 14px 30px rgba(36, 26, 20, 0.18);
+    }
+    .bd-secondary {
+      display: inline-flex;
+      margin-top: 14px;
+      color: #5d4434;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    @media (max-width: 820px) {
+      .bd-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .bd-plan.featured {
+        transform: none;
+      }
+      .bd-hero {
+        padding-top: 42px;
+      }
+    }
+  </style>
+</head>
+<body class="bd-page">
+  <main>
+    <header class="bd-header">
+      <div class="bd-wrap">
+        <a class="bd-back" href="index.html#barkers-dozen-section">← Back to Tater’s Treats</a>
+      </div>
+    </header>
+
+    <section class="bd-hero">
+      <div class="bd-wrap">
+        <span class="bd-eyebrow">Limited Membership</span>
+        <h1>Barker’s Dozen™</h1>
+        <p>Monthly small-batch drops for dogs who deserve better than the boring stuff. Exclusive flavors, member-only releases, and a little extra joy in every delivery.</p>
+      </div>
+    </section>
+
+    <section class="bd-section">
+      <div class="bd-wrap">
+        <div class="bd-card">
+          <h2>What members get</h2>
+          <ul class="bd-feature-list">
+            <li>Monthly small-batch deliveries</li>
+            <li>Exclusive seasonal Woofles you will not find on the main site</li>
+            <li>Made to order in small batches</li>
+            <li>Early access to limited drops and special releases</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="bd-section">
+      <div class="bd-wrap bd-grid bd-grid-3">
+        <article class="bd-card bd-plan">
+          <span class="bd-plan-badge">Starter</span>
+          <h2>Starter Pack</h2>
+          <div class="bd-price">$24 <span>/ month</span></div>
+          <p>A simple monthly drop for smaller pups and polite snackers.</p>
+          <ul>
+            <li>1 curated monthly flavor set</li>
+            <li>Small-batch delivery</li>
+            <li>Member-only access window</li>
+          </ul>
+        </article>
+
+        <article class="bd-card bd-plan featured">
+          <span class="bd-plan-badge">Signature</span>
+          <h2>Barker’s Dozen</h2>
+          <div class="bd-price">$36 <span>/ month</span></div>
+          <p>The core membership. The right amount of ridiculous for most dogs.</p>
+          <ul>
+            <li>Monthly signature drop</li>
+            <li>Exclusive flavors and seasonal releases</li>
+            <li>Priority access to special launches</li>
+          </ul>
+        </article>
+
+        <article class="bd-card bd-plan">
+          <span class="bd-plan-badge">Double Batch</span>
+          <h2>Double Batch</h2>
+          <div class="bd-price">$58 <span>/ month</span></div>
+          <p>For households with multiple dogs or one dog with suspiciously strong opinions.</p>
+          <ul>
+            <li>Expanded monthly delivery</li>
+            <li>Best value for repeat treat households</li>
+            <li>Built for serious snackers</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="bd-section bd-hook">
+      <div class="bd-wrap">
+        <div class="bd-card">
+          <span class="bd-eyebrow">The 13th Treat</span>
+          <h2>A little something extra</h2>
+          <p>Every Barker’s Dozen delivery is built around the idea that your dog should get more than the standard box. More delight. More ritual. More reasons to lose their mind when the package shows up.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bd-cta">
+      <div class="bd-wrap">
+        <a class="bd-primary" href="index.html#newsletter">Join the Waitlist</a>
+        <div><a class="bd-secondary" href="index.html#shop">Shop Woofels Instead</a></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

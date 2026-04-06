@@ -84,14 +84,6 @@ const state = {
   activeSourceCard: null
 };
 
-function getDisplayedItemCount() {
-  return state.cartItems.reduce((total, item) => {
-    const sizeUnits = SIZE_COUNTS[item.size] || 1;
-    return total + (sizeUnits * item.quantity);
-  }, 0);
-}
-
-
 function renderProducts() {
   if (!productsEl) return;
 
@@ -384,7 +376,7 @@ async function beginCheckout() {
     if (cartStatus) {
       cartStatus.textContent = "Add a few Woofles first.";
       window.setTimeout(() => {
-        if (cartStatus) updateShippingMessage(getDisplayedItemCount());
+        if (cartStatus) cartStatus.textContent = "";
       }, 1400);
     }
     return;
@@ -427,20 +419,19 @@ async function beginCheckout() {
     if (cartStatus) {
       cartStatus.textContent = error?.message || "Checkout failed.";
       window.setTimeout(() => {
-        if (cartStatus) updateShippingMessage(getDisplayedItemCount());
+        if (cartStatus) cartStatus.textContent = "";
       }, 2200);
     }
     if (checkoutButton) {
       checkoutButton.disabled = false;
-      checkoutButton.textContent = "🔒 Secure Checkout";
+      checkoutButton.textContent = "Checkout";
     }
   }
 }
 
 function updateBowlUi() {
-  const count = getDisplayedItemCount();
+  const count = state.bowlCount;
   if (cartCountEl) cartCountEl.textContent = String(count);
-  updateShippingMessage(count);
 
   if (bowlImageEl) {
     bowlImageEl.src = BOWL_NEUTRAL.image;
@@ -666,7 +657,6 @@ function bindModal(modal, overlay, product) {
     ctaButton.textContent = "Added ✓";
 
     addCartSelection(product, selectedSize, quantity);
-    updateBowlUi();
     launchWoofleFromCTA(modalImage || ctaButton, product.image, totalWoofles);
 
     window.setTimeout(() => {
@@ -719,7 +709,7 @@ clearCartButton?.addEventListener("click", () => {
   updateBowlUi();
   if (cartStatus) cartStatus.textContent = "DogBowl™ cleared.";
   window.setTimeout(() => {
-    if (cartStatus) updateShippingMessage(getDisplayedItemCount());
+    if (cartStatus) cartStatus.textContent = "";
   }, 1400);
 });
 
@@ -735,10 +725,10 @@ updateBowlUi();
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     if (checkoutButton) {
-      checkoutButton.textContent = "🔒 Secure Checkout";
+      checkoutButton.textContent = "Checkout";
       checkoutButton.disabled = false;
     }
-    if (cartStatus) updateShippingMessage(getDisplayedItemCount());
+    if (cartStatus) cartStatus.textContent = "";
   }
 });
 
@@ -807,7 +797,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 bdLearnMoreEl?.addEventListener("click", () => {
-  window.location.href = "/barkers-dozen";
+  window.location.href = "barkers-dozen.html";
 });
 
 
@@ -847,17 +837,3 @@ document.addEventListener("keydown", (event) => {
     closeStoryModal();
   }
 });
-
-
-function updateShippingMessage(count) {
-  let message = "Free Shipping";
-  if (count >= 3 && count <= 5) {
-    message = "Free 3-Day Shipping";
-  } else if (count >= 6) {
-    message = "Free 2-Day Shipping";
-  }
-  const statusEl = document.getElementById("cartStatus");
-  if (statusEl) statusEl.textContent = message;
-}
-
-updateShippingMessage(0);
