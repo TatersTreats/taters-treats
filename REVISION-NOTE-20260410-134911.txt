@@ -1,0 +1,17 @@
+Revision Note - 20260410-134911
+
+Changed DogBowl area order to:
+1. CTA
+2. Feedback
+3. DogBowl
+4. Reset
+
+Files changed:
+- index.html
+- taters-treats-premium-small-batch-dog-treats.css
+
+Notes:
+- Reordered DogBowl markup so checkout/status render above the bowl.
+- Moved reset action below the bowl.
+- Added minimal CSS to preserve spacing and full-width reset placement.
+- No JS logic changes.
