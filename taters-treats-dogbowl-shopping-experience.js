@@ -424,7 +424,7 @@ async function beginCheckout() {
     }
     if (checkoutButton) {
       checkoutButton.disabled = false;
-      checkoutButton.textContent = "Checkout";
+      checkoutButton.textContent = "🔒 Secure Checkout";
     }
   }
 }
@@ -697,6 +697,8 @@ function closeModal(options = {}) {
 }
 
 clearCartButton?.addEventListener("click", () => {
+  if (!window.confirm("Are you sure you want to reset?")) return;
+
   const layer = ensureBowlItemsLayer();
   if (layer) layer.innerHTML = "";
   state.bowlCount = 0;
@@ -725,7 +727,7 @@ updateBowlUi();
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     if (checkoutButton) {
-      checkoutButton.textContent = "Checkout";
+      checkoutButton.textContent = "🔒 Secure Checkout";
       checkoutButton.disabled = false;
     }
     if (cartStatus) cartStatus.textContent = "";

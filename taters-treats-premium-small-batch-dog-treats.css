@@ -1274,3 +1274,59 @@ body.story-modal-open {
 
 .flying-woofel { z-index: 10 !important; }
 .product-modal, .modal-overlay { z-index: 1000 !important; }
+
+
+/* 2026-04-10 DogBowl order + spacing fix */
+.dogbowl {
+  display: flex;
+  flex-direction: column;
+}
+
+.dogbowl-body {
+  order: 1;
+  padding: 0 16px 0;
+}
+
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  justify-items: stretch;
+  gap: 0;
+}
+
+.checkout-button {
+  width: 100%;
+  margin-top: 0;
+}
+
+#clearCartButton {
+  width: 100%;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.dogbowl-top {
+  order: 2;
+  padding: 0 16px 12px;
+}
+
+.bowl-note {
+  order: 3;
+  margin: 2px 16px 0;
+  text-align: center;
+}
+
+.dogbowl-feedback,
+#cartStatus {
+  order: 4;
+  min-height: 1.2em;
+  margin: 6px 16px 0;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.summary-row {
+  display: none !important;
+}
