@@ -1274,33 +1274,3 @@ body.story-modal-open {
 
 .flying-woofel { z-index: 10 !important; }
 .product-modal, .modal-overlay { z-index: 1000 !important; }
-
-
-/* 2026-04-10 baseline reorder: CTA, feedback, DogBowl, reset */
-.dogbowl-body {
-  padding: 16px 16px 0;
-}
-
-.cart-summary {
-  justify-items: stretch;
-}
-
-.cart-summary .status-message {
-  text-align: center;
-  margin-bottom: 0;
-}
-
-.dogbowl-top {
-  padding-top: 12px;
-}
-
-.dogbowl-reset {
-  padding: 0 16px 18px;
-}
-
-.dogbowl-reset #clearCartButton {
-  display: block;
-  width: 100%;
-  margin-top: 0;
-  text-align: center;
-}
