@@ -1525,21 +1525,16 @@ body.story-modal-open {
   }
 }
 
-/* 2026-04-11 Mobile landing refinement: hero crop + badge size */
+/* 2026-04-11 Mobile landing correction: real hero height + real crop */
 @media (max-width: 899px) {
   .hero {
-    min-height: 46svh;
-    max-height: 500px;
+    min-height: clamp(210px, 34svh, 280px);
+    max-height: 280px;
+    background-position: center 58%;
   }
 
   .hero-content-wrap {
-    padding: 0 16px 18px;
-  }
-
-  .hero-image,
-  .hero img,
-  .hero picture img {
-    object-position: center 42%;
+    padding: 0 16px 12px;
   }
 
   .brand-badge {
