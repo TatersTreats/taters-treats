@@ -1525,20 +1525,20 @@ body.story-modal-open {
   }
 }
 
-/* 2026-04-11 Mobile landing correction v5: mobile hero asset */
+/* 2026-04-11 Mobile landing correction v6: tighter hero with mobile asset */
 @media (max-width: 899px) {
   .hero {
-    min-height: clamp(220px, 35svh, 272px);
-    max-height: 272px;
+    min-height: clamp(188px, 29svh, 228px);
+    max-height: 228px;
     background: url("assets/images/hero/taters-treats-hero-premium-small-batch-canine-confections-mobile.jpg") center 64% / cover no-repeat;
   }
 
   .hero-content-wrap {
-    padding: 0 16px 12px;
+    padding: 0 16px 10px;
   }
 
   .brand-badge {
-    margin: -4px 0 10px;
+    margin: -6px 0 10px;
   }
 
   .brand-badge img {
