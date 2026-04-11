@@ -1524,3 +1524,30 @@ body.story-modal-open {
     min-height: 1.2em;
   }
 }
+
+/* 2026-04-11 Mobile landing refinement: hero crop + badge size */
+@media (max-width: 899px) {
+  .hero {
+    min-height: 46svh;
+    max-height: 500px;
+  }
+
+  .hero-content-wrap {
+    padding: 0 16px 18px;
+  }
+
+  .hero-image,
+  .hero img,
+  .hero picture img {
+    object-position: center 42%;
+  }
+
+  .brand-badge {
+    margin: -4px 0 10px;
+  }
+
+  .brand-badge img {
+    width: min(250px, 76vw);
+    max-width: 100%;
+  }
+}
