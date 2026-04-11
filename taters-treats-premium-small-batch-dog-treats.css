@@ -1330,3 +1330,108 @@ body.story-modal-open {
 .summary-row {
   display: none !important;
 }
+
+
+/* 2026-04-11 Desktop split layout + card repair */
+@media (min-width: 900px) {
+  .shop-layout {
+    grid-template-columns: minmax(0, 1fr) 380px;
+    align-items: start;
+    gap: 32px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .shop-main {
+    min-width: 0;
+  }
+
+  .products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    padding-top: 88px;
+    align-items: stretch;
+  }
+
+  .product-card {
+    min-height: 280px;
+    padding: 124px 16px 18px;
+    overflow: hidden;
+  }
+
+  .product-image {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 136px;
+    pointer-events: none;
+  }
+
+  .product-image img.woofle {
+    top: -6px;
+    width: min(74%, 190px);
+    max-width: 190px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .product-flavor {
+    margin-top: 0;
+    position: relative;
+    z-index: 2;
+    font-size: 1.28rem;
+    line-height: 1.06;
+  }
+
+  .product-desc {
+    min-height: 2.8em;
+    margin-top: 10px;
+    padding: 0 10px;
+    font-size: 0.92rem;
+    line-height: 1.3;
+    position: relative;
+    z-index: 2;
+  }
+
+  .dogbowl {
+    position: sticky;
+    top: 24px;
+    width: 100%;
+    margin-top: 88px;
+    align-self: start;
+  }
+
+  .dogbowl-body {
+    padding: 0 18px 0;
+  }
+
+  .checkout-button {
+    font-size: 1.08rem;
+    padding: 15px 22px;
+  }
+
+  #clearCartButton {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    opacity: 0.84;
+  }
+
+  .dogbowl-top {
+    padding: 0 18px 14px;
+  }
+
+  .bowl-frame {
+    aspect-ratio: 1 / 0.82;
+  }
+
+  .bowl-note {
+    margin: 4px 18px 0;
+    font-size: 1rem;
+  }
+
+  #cartStatus,
+  .dogbowl-feedback {
+    margin: 8px 18px 0;
+  }
+}
