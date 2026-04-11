@@ -1525,16 +1525,18 @@ body.story-modal-open {
   }
 }
 
-/* 2026-04-11 Mobile landing correction v2: deeper crop, fuller hero */
+/* 2026-04-11 Mobile landing correction v3: real shorter hero */
 @media (max-width: 899px) {
   .hero {
-    min-height: clamp(248px, 39svh, 316px);
-    max-height: 316px;
-    background-position: center 62%;
+    min-height: clamp(200px, 31svh, 248px);
+    max-height: 248px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.22)),
+      url("https://i.ibb.co/9kk4Kv7F/Tater-s-Treats-WOOFELS-gourmet-canine-confections-on-cutting-board-hero.png")
+      center 64% / cover no-repeat;
   }
 
   .hero-content-wrap {
-    padding: 0 16px 14px;
+    padding: 0 16px 12px;
   }
 
   .brand-badge {
