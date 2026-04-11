@@ -1525,12 +1525,12 @@ body.story-modal-open {
   }
 }
 
-/* 2026-04-11 Mobile landing correction v4: restore asset and tune crop */
+/* 2026-04-11 Mobile landing correction v5: mobile hero asset */
 @media (max-width: 899px) {
   .hero {
     min-height: clamp(220px, 35svh, 272px);
     max-height: 272px;
-    background-position: center 64%;
+    background: url("assets/images/hero/taters-treats-hero-premium-small-batch-canine-confections-mobile.jpg") center 64% / cover no-repeat;
   }
 
   .hero-content-wrap {
