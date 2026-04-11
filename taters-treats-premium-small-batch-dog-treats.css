@@ -2006,3 +2006,100 @@ body.story-modal-open {
     min-height: 1.2em;
   }
 }
+
+
+/* 2026-04-11 Exact match patch: DogBowl body matches flavor card box, CTA excluded */
+@media (min-width: 900px) {
+  .product-card {
+    height: 312px;
+    min-height: 312px;
+  }
+
+  .dogbowl {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    margin-top: 104px;
+    padding-top: 0;
+    overflow: visible;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .dogbowl::before {
+    inset: 28px 0 0;
+    height: 312px;
+    min-height: 312px;
+    max-height: 312px;
+    border: 2px solid #d2b285;
+    border-radius: 22px;
+    background: linear-gradient(180deg, #fff8ef 0%, #f6e9d9 100%);
+    box-shadow: 0 10px 22px rgba(25, 16, 10, 0.10);
+  }
+
+  .dogbowl-body,
+  .dogbowl-top,
+  .bowl-note,
+  #cartStatus,
+  .dogbowl-feedback {
+    position: relative;
+    z-index: 1;
+  }
+
+  .dogbowl-body {
+    padding: 0 16px 0;
+  }
+
+  .checkout-button {
+    width: calc(100% - 28px);
+    margin: 0 auto 0;
+    position: relative;
+    z-index: 3;
+  }
+
+  #clearCartButton {
+    width: fit-content;
+    align-self: center;
+    margin: 18px auto 14px;
+    font-size: 0.9rem;
+  }
+
+  .dogbowl-top {
+    height: 156px;
+    min-height: 156px;
+    max-height: 156px;
+    padding: 0 14px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bowl-frame {
+    width: 100%;
+    height: 156px;
+    max-height: 156px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bowl-image {
+    display: block;
+    max-width: 74%;
+    max-height: 142px;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+
+  .bowl-note {
+    margin: 2px 16px 14px;
+    text-align: center;
+  }
+
+  #cartStatus,
+  .dogbowl-feedback {
+    margin: 0 16px 14px;
+    text-align: center;
+    min-height: 1.2em;
+  }
+}
