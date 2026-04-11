@@ -1331,302 +1331,7 @@ body.story-modal-open {
   display: none !important;
 }
 
-
-/* 2026-04-11 Desktop split layout + card repair */
-@media (min-width: 900px) {
-  .shop-layout {
-    grid-template-columns: minmax(0, 1fr) 380px;
-    align-items: start;
-    gap: 32px;
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  .shop-main {
-    min-width: 0;
-  }
-
-  .products {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    padding-top: 88px;
-    align-items: stretch;
-  }
-
-  .product-card {
-    min-height: 280px;
-    padding: 124px 16px 18px;
-    overflow: hidden;
-  }
-
-  .product-image {
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 136px;
-    pointer-events: none;
-  }
-
-  .product-image img.woofle {
-    top: -6px;
-    width: min(74%, 190px);
-    max-width: 190px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .product-flavor {
-    margin-top: 0;
-    position: relative;
-    z-index: 2;
-    font-size: 1.28rem;
-    line-height: 1.06;
-  }
-
-  .product-desc {
-    min-height: 2.8em;
-    margin-top: 10px;
-    padding: 0 10px;
-    font-size: 0.92rem;
-    line-height: 1.3;
-    position: relative;
-    z-index: 2;
-  }
-
-  .dogbowl {
-    position: sticky;
-    top: 24px;
-    width: 100%;
-    margin-top: 88px;
-    align-self: start;
-  }
-
-  .dogbowl-body {
-    padding: 0 18px 0;
-  }
-
-  .checkout-button {
-    font-size: 1.08rem;
-    padding: 15px 22px;
-  }
-
-  #clearCartButton {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    opacity: 0.84;
-  }
-
-  .dogbowl-top {
-    padding: 0 18px 14px;
-  }
-
-  .bowl-frame {
-    aspect-ratio: 1 / 0.82;
-  }
-
-  .bowl-note {
-    margin: 4px 18px 0;
-    font-size: 1rem;
-  }
-
-  #cartStatus,
-  .dogbowl-feedback {
-    margin: 8px 18px 0;
-  }
-}
-
-
-/* 2026-04-11 Batch 1 override: desktop foundation without sticky bowl */
-@media (min-width: 900px) {
-  .shop-layout {
-    grid-template-columns: minmax(0, 1fr) 372px;
-    align-items: start;
-    gap: 28px;
-    max-width: 1210px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-
-  .shop-main {
-    min-width: 0;
-  }
-
-  .products {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    padding-top: 86px;
-    align-items: stretch;
-  }
-
-  .product-card {
-    height: 292px;
-    min-height: 292px;
-    padding: 116px 18px 20px;
-    overflow: visible;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-
-  .product-image {
-    position: absolute;
-    top: -86px;
-    left: 0;
-    right: 0;
-    height: 172px;
-    pointer-events: none;
-    overflow: visible;
-  }
-
-  .product-image img.woofle {
-    top: 0;
-    left: 50%;
-    width: min(75%, 188px);
-    max-width: 188px;
-    transform: translateX(-50%);
-  }
-
-  .product-flavor {
-    margin-top: 0;
-    position: relative;
-    z-index: 2;
-    font-size: 1.18rem;
-    line-height: 1.06;
-  }
-
-  .product-desc {
-    min-height: 2.7em;
-    margin-top: 10px;
-    padding: 0 10px;
-    font-size: 0.88rem;
-    line-height: 1.28;
-    position: relative;
-    z-index: 2;
-  }
-
-  .dogbowl {
-    position: relative;
-    top: auto;
-    width: 100%;
-    margin-top: 86px;
-    align-self: start;
-    min-height: 292px;
-    height: 292px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .dogbowl-body {
-    padding: 0 18px 0;
-    flex: 0 0 auto;
-  }
-
-  .dogbowl-top {
-    padding: 0 18px 10px;
-    flex: 1 1 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 0;
-  }
-
-  .bowl-frame {
-    width: 100%;
-    height: 100%;
-    max-height: 136px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .bowl-image {
-    max-width: 78%;
-    max-height: 136px;
-    object-fit: contain;
-  }
-
-  .bowl-note {
-    margin: 2px 18px 0;
-    font-size: 0.96rem;
-  }
-
-  #cartStatus,
-  .dogbowl-feedback {
-    margin: 6px 18px 0;
-    min-height: 1.2em;
-  }
-
-  #clearCartButton {
-    margin-top: 20px;
-    margin-bottom: 18px;
-  }
-}
-
-
-/* 2026-04-11 Batch 2: frame tightening + stronger card/bowl composition */
-.shop {
-  padding-top: 6px;
-}
-
-.woofels-intro {
-  margin: 0 auto 22px;
-  text-align: center;
-}
-
-.brand-badge {
-  margin: -2px 0 8px;
-}
-
-.brand-badge img {
-  width: 236px;
-  max-width: 82%;
-}
-
-.dogbowl {
-  position: relative;
-  overflow: visible;
-  padding-top: 24px;
-  background: linear-gradient(180deg, #fff9f2 0%, #f6eadb 100%);
-  border: 0;
-  box-shadow: 0 12px 28px rgba(25, 16, 10, 0.12);
-}
-
-.dogbowl::before {
-  content: "";
-  position: absolute;
-  inset: 24px 0 0;
-  border: 2px solid #c9a25f;
-  border-radius: 22px;
-  pointer-events: none;
-  z-index: 0;
-  background: linear-gradient(180deg, #fff9f2 0%, #f6eadb 100%);
-}
-
-.dogbowl > * {
-  position: relative;
-  z-index: 1;
-}
-
-.dogbowl-body {
-  padding-top: 0;
-}
-
-.checkout-button {
-  width: calc(100% - 34px);
-  margin: -24px auto 0;
-  position: relative;
-  z-index: 3;
-}
-
-#clearCartButton {
-  margin-top: 20px;
-}
-
-.bowl-note {
-  margin-top: 4px;
-}
-
+/* 2026-04-11 CSS cleanup: consolidated desktop shop system */
 @media (min-width: 900px) {
   .site-header__inner,
   .hero-content-wrap,
@@ -1636,20 +1341,9 @@ body.story-modal-open {
   .story-section,
   .lower-section,
   .site-footer {
-    width: min(980px, calc(100% - 96px));
+    width: min(980px, calc(100% - 112px));
     margin-left: auto;
     margin-right: auto;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .hero {
-    min-height: 500px;
-    max-height: 600px;
-  }
-
-  .hero-content-wrap {
-    padding: 0 18px 14px;
   }
 
   .brand-badge {
@@ -1662,146 +1356,33 @@ body.story-modal-open {
   }
 
   .woofels-intro {
-    margin-bottom: 34px;
-  }
-
-  .shop-layout {
-    grid-template-columns: minmax(0, 1fr) 344px;
-    gap: 22px;
-    max-width: none;
-    padding: 0;
-  }
-
-  .products {
-    gap: 14px;
-    padding-top: 96px;
-  }
-
-  .product-card {
-    height: 300px;
-    min-height: 300px;
-    padding: 130px 18px 20px;
-    overflow: visible;
-  }
-
-  .product-image {
-    top: -102px;
-    height: 194px;
-  }
-
-  .product-image img.woofle {
-    width: min(82%, 198px);
-    max-width: 198px;
-  }
-
-  .product-flavor {
-    font-size: 1.16rem;
-    line-height: 1.05;
-  }
-
-  .product-desc {
-    margin-top: 12px;
-    min-height: 2.8em;
-    font-size: 0.89rem;
-    line-height: 1.3;
-    padding: 0 8px;
-  }
-
-  .dogbowl {
-    margin-top: 96px;
-    height: 300px;
-    min-height: 300px;
-  }
-
-  .dogbowl::before {
-    inset: 26px 0 0;
-  }
-
-  .dogbowl-body {
-    padding: 0 18px 0;
-  }
-
-  .checkout-button {
-    width: calc(100% - 38px);
-    margin-top: -26px;
-    padding: 14px 22px;
-    font-size: 1.02rem;
-  }
-
-  #clearCartButton {
-    margin-top: 18px;
-    margin-bottom: 18px;
-    opacity: 0.88;
-  }
-
-  .dogbowl-top {
-    padding: 0 18px 10px;
-  }
-
-  .bowl-frame {
-    max-height: 142px;
-  }
-
-  .bowl-image {
-    max-width: 82%;
-    max-height: 142px;
-  }
-
-  .bowl-note {
-    margin: 4px 18px 0;
-    font-size: 0.95rem;
-  }
-
-  #cartStatus,
-  .dogbowl-feedback {
-    margin: 6px 18px 0;
-  }
-}
-
-
-/* 2026-04-11 Batch 3: unified desktop four-card system */
-@media (min-width: 900px) {
-  .site-header__inner,
-  .hero-content-wrap,
-  .woofels-intro,
-  .shop-layout,
-  .trust-strip,
-  .story-section,
-  .lower-section,
-  .site-footer {
-    width: min(940px, calc(100% - 112px));
-  }
-
-  .woofels-intro {
     margin-bottom: 40px;
   }
 
   .shop-layout {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
+    gap: 18px;
     align-items: start;
+    padding: 0;
   }
 
   .shop-main {
     grid-column: 1 / span 3;
+    min-width: 0;
   }
 
   .products {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    gap: 18px;
     padding-top: 104px;
-    align-items: stretch;
+    align-items: start;
   }
 
-  .product-card,
-  .dogbowl {
+  .product-card {
     width: 100%;
     height: 312px;
     min-height: 312px;
     border-radius: 22px;
-  }
-
-  .product-card {
     padding: 138px 18px 20px;
     overflow: visible;
     display: flex;
@@ -1810,24 +1391,28 @@ body.story-modal-open {
   }
 
   .product-image {
+    position: absolute;
     top: -114px;
     left: 0;
     right: 0;
     height: 214px;
     overflow: visible;
+    pointer-events: none;
   }
 
   .product-image img.woofle {
-    width: min(86%, 208px);
-    max-width: 208px;
     top: 0;
     left: 50%;
+    width: min(88%, 214px);
+    max-width: 214px;
     transform: translateX(-50%);
   }
 
   .product-flavor {
     font-size: 1.15rem;
     line-height: 1.05;
+    position: relative;
+    z-index: 2;
   }
 
   .product-desc {
@@ -1836,212 +1421,37 @@ body.story-modal-open {
     font-size: 0.88rem;
     line-height: 1.3;
     padding: 0 8px;
+    position: relative;
+    z-index: 2;
   }
 
   .dogbowl {
     grid-column: 4;
-    margin-top: 104px;
-    padding-top: 28px;
-    overflow: visible;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .dogbowl::before {
-    inset: 28px 0 0;
-    border: 2px solid #d2b285;
-    border-radius: 22px;
-    background: linear-gradient(180deg, #fff8ef 0%, #f6e9d9 100%);
-    box-shadow: 0 10px 22px rgba(25, 16, 10, 0.10);
-  }
-
-  .dogbowl-body {
-    padding: 0 16px 0;
-    flex: 0 0 auto;
-  }
-
-  .checkout-button {
-    width: calc(100% - 36px);
-    margin: -28px auto 0;
-    padding: 14px 18px;
-    font-size: 0.98rem;
-  }
-
-  #clearCartButton {
-    width: fit-content;
-    align-self: center;
-    margin: 18px auto 14px;
-    font-size: 0.9rem;
-  }
-
-  .dogbowl-top {
-    flex: 1 1 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 14px 8px;
-    min-height: 0;
-  }
-
-  .bowl-frame {
     width: 100%;
-    height: 100%;
-    max-height: 156px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .bowl-image {
-    display: block;
-    width: auto;
-    max-width: 74%;
-    max-height: 156px;
-    margin: 0 auto;
-    object-fit: contain;
-  }
-
-  .static-bowl-items {
-    left: 50%;
-    transform: translateX(-50%);
-    width: 74%;
-  }
-
-  .bowl-note {
-    margin: 2px 16px 0;
-    text-align: center;
-    font-size: 0.93rem;
-  }
-
-  #cartStatus,
-  .dogbowl-feedback {
-    margin: 6px 16px 0;
-    text-align: center;
-    font-size: 0.9rem;
-    min-height: 1.2em;
-  }
-}
-
-
-/* 2026-04-11 Correction patch: DogBowl body height match, CTA allowed to protrude */
-@media (min-width: 900px) {
-  .product-card {
-    height: 312px;
-    min-height: 312px;
-  }
-
-  .dogbowl {
-    width: 100%;
-    height: auto;
-    min-height: 0;
     margin-top: 104px;
     padding-top: 0;
     background: transparent;
     overflow: visible;
     box-shadow: none;
-  }
-
-  .dogbowl::before {
-    inset: 28px 0 0;
-    border: 2px solid #d2b285;
-    border-radius: 22px;
-    background: linear-gradient(180deg, #fff8ef 0%, #f6e9d9 100%);
-    box-shadow: 0 10px 22px rgba(25, 16, 10, 0.10);
-  }
-
-  .dogbowl-body {
-    padding: 0 16px 0;
-  }
-
-  .checkout-button {
-    width: calc(100% - 36px);
-    margin: -2px auto 0;
     position: relative;
-    z-index: 3;
-  }
-
-  #clearCartButton {
-    margin: 18px auto 14px;
-  }
-
-  .dogbowl-top {
-    height: 156px;
-    min-height: 156px;
-    max-height: 156px;
-    padding: 0 14px 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .bowl-frame {
-    width: 100%;
-    height: 156px;
-    max-height: 156px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .bowl-image {
-    display: block;
-    max-width: 74%;
-    max-height: 142px;
-    margin: 0 auto;
-    object-fit: contain;
-  }
-
-  .bowl-note {
-    margin: 2px 16px 14px;
-    text-align: center;
-  }
-
-  #cartStatus,
-  .dogbowl-feedback {
-    margin: 0 16px 14px;
-    text-align: center;
-    min-height: 1.2em;
-  }
-}
-
-
-/* 2026-04-11 Exact match patch: DogBowl body matches flavor card box, CTA excluded */
-@media (min-width: 900px) {
-  .product-card {
-    height: 312px;
-    min-height: 312px;
-  }
-
-  .dogbowl {
-    width: 100%;
-    height: auto;
-    min-height: 0;
-    margin-top: 104px;
-    padding-top: 0;
-    overflow: visible;
-    background: transparent;
-    box-shadow: none;
   }
 
   .dogbowl::before {
-    inset: 28px 0 0;
+    content: "";
+    position: absolute;
+    top: 28px;
+    left: 0;
+    right: 0;
     height: 312px;
-    min-height: 312px;
-    max-height: 312px;
     border: 2px solid #d2b285;
     border-radius: 22px;
     background: linear-gradient(180deg, #fff8ef 0%, #f6e9d9 100%);
     box-shadow: 0 10px 22px rgba(25, 16, 10, 0.10);
+    pointer-events: none;
+    z-index: 0;
   }
 
-  .dogbowl-body,
-  .dogbowl-top,
-  .bowl-note,
-  #cartStatus,
-  .dogbowl-feedback {
+  .dogbowl > * {
     position: relative;
     z-index: 1;
   }
@@ -2053,6 +1463,8 @@ body.story-modal-open {
   .checkout-button {
     width: calc(100% - 28px);
     margin: 0 auto 0;
+    padding: 14px 18px;
+    font-size: 0.98rem;
     position: relative;
     z-index: 3;
   }
@@ -2085,21 +1497,30 @@ body.story-modal-open {
 
   .bowl-image {
     display: block;
+    width: auto;
     max-width: 74%;
     max-height: 142px;
     margin: 0 auto;
     object-fit: contain;
   }
 
+  .static-bowl-items {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 74%;
+  }
+
   .bowl-note {
     margin: 2px 16px 14px;
     text-align: center;
+    font-size: 0.93rem;
   }
 
   #cartStatus,
   .dogbowl-feedback {
     margin: 0 16px 14px;
     text-align: center;
+    font-size: 0.9rem;
     min-height: 1.2em;
   }
 }
