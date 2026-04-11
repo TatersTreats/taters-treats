@@ -1435,3 +1435,130 @@ body.story-modal-open {
     margin: 8px 18px 0;
   }
 }
+
+
+/* 2026-04-11 Batch 1 override: desktop foundation without sticky bowl */
+@media (min-width: 900px) {
+  .shop-layout {
+    grid-template-columns: minmax(0, 1fr) 372px;
+    align-items: start;
+    gap: 28px;
+    max-width: 1210px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .shop-main {
+    min-width: 0;
+  }
+
+  .products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    padding-top: 86px;
+    align-items: stretch;
+  }
+
+  .product-card {
+    height: 292px;
+    min-height: 292px;
+    padding: 116px 18px 20px;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .product-image {
+    position: absolute;
+    top: -86px;
+    left: 0;
+    right: 0;
+    height: 172px;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  .product-image img.woofle {
+    top: 0;
+    left: 50%;
+    width: min(75%, 188px);
+    max-width: 188px;
+    transform: translateX(-50%);
+  }
+
+  .product-flavor {
+    margin-top: 0;
+    position: relative;
+    z-index: 2;
+    font-size: 1.18rem;
+    line-height: 1.06;
+  }
+
+  .product-desc {
+    min-height: 2.7em;
+    margin-top: 10px;
+    padding: 0 10px;
+    font-size: 0.88rem;
+    line-height: 1.28;
+    position: relative;
+    z-index: 2;
+  }
+
+  .dogbowl {
+    position: relative;
+    top: auto;
+    width: 100%;
+    margin-top: 86px;
+    align-self: start;
+    min-height: 292px;
+    height: 292px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dogbowl-body {
+    padding: 0 18px 0;
+    flex: 0 0 auto;
+  }
+
+  .dogbowl-top {
+    padding: 0 18px 10px;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .bowl-frame {
+    width: 100%;
+    height: 100%;
+    max-height: 136px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bowl-image {
+    max-width: 78%;
+    max-height: 136px;
+    object-fit: contain;
+  }
+
+  .bowl-note {
+    margin: 2px 18px 0;
+    font-size: 0.96rem;
+  }
+
+  #cartStatus,
+  .dogbowl-feedback {
+    margin: 6px 18px 0;
+    min-height: 1.2em;
+  }
+
+  #clearCartButton {
+    margin-top: 20px;
+    margin-bottom: 18px;
+  }
+}
